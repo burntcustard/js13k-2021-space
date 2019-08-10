@@ -1,4 +1,5 @@
 const browserSync = require('browser-sync').create();
+const c = require('ansi-colors');
 const fs = require('fs');
 const rollup = require('rollup');
 const JSZip = require('jszip');
@@ -15,72 +16,99 @@ const config = {
     }
 }
 
+// const paths = {
+//     dist: 'dist/',
+//     js: 'game.js',
+//     map: ''
+// }
+
+function formatMs(duration) {
+    return c.magentaBright(duration.toString().padStart(3, ' ') + ' ms');
+}
+
+/**
+ * Based off rollup-cli error printing
+ * https://github.com/rollup/rollup/blob/master/cli/logging.ts
+ * @param  {[type]} err [description]
+ * @return {[type]}     [description]
+ */
+function printRollupError(err) {
+    let description = err.message || err;
+
+    if (err.name) {
+        description = `${err.name}: ${description}`;
+    }
+
+    console.error(c.bold.red(`[!] ${description}`));
+
+    if (err.loc) {
+        const path = err.loc.file.replace(process.cwd(), '');
+		console.error(`${path} ${err.loc.line}:${err.loc.column}`);
+	}
+
+    if (err.frame) {
+		console.error(c.gray(err.frame));
+	}
+}
+
 const compile = async () => {
     if (devMode) {
-        // watch for changes in source files
         const watcher = rollup.watch({
             input: config.input,
             output: [ config.output ],
             watch: {
               include: 'src/**'
-            },
+            }
         });
 
         watcher.on('event', event => {
-
             switch (event.code) {
                 case 'START':
-                    console.log('Building JS...');
+                    console.log(`Building JS from ${config.input}...`);
                     break;
                 case 'BUNDLE_END':
-                    console.log(`${event.input} (${event.duration}ms)`);
+                    console.log(`${formatMs(event.duration)} ↪ ${config.output.file}`);
                     break;
-                    // when all bundles are done
                 case 'END':
-                    if (inlineMinified(devMode)) {
-                        console.log('inlineMinified worked?');
-                        livereload();
-                        zipReport();
-                    }
+                    inline(minify()) && livereload() && zip();
                     break;
                 case 'ERROR':
                 case 'FATAL':
-                    console.error('rollup Error:', event.error.message);
+                    printRollupError(event.error);
                     break;
             }
         });
     } else {
-        console.log('Building JS...');
+        const startTime = Date.now();
+        console.log(`Building JS from ${config.input}...`);
         const bundle = await rollup.rollup({input: config.input});
         await bundle.write(config.output);
-
-        if (inlineMinified(devMode)) {
-            zipReport();
-        }
+        console.log(`${formatMs(Date.now() - startTime)} ↪ ${config.output.file}`);
+        inline(minify()) && zip();
   }
 }
 
-const inlineMinified = (devMode) => {
+function minify() {
+    const startTime = Date.now();
     const options = {
         compress: {
-          passes: 4,
-          unsafe: true,
-          unsafe_arrows: true,
-          unsafe_comps: true,
-          unsafe_math: true,
+            passes: 4,
+            unsafe: true,
+            unsafe_arrows: true,
+            unsafe_comps: true,
+            unsafe_math: true,
         },
         mangle: true,
         module: true,
         sourceMap: devMode ? {
-            //filename: 'dist/game.js.map',
             content: fs.readFileSync('dist/game.js.map', 'utf8'),
-            url: 'minified.js.map'
+            url: 'game.min.js.map'
         } : false
     };
 
-    // optimize JS bundle
     console.log('Minifying JS...');
-    const code = fs.readFileSync('dist/game.js').toString();
+
+    const code = fs.readFileSync('dist/game.js', 'utf8');
     const result = terser.minify(code, options);
 
     if (result.error) {
@@ -88,43 +116,97 @@ const inlineMinified = (devMode) => {
         return false;
     }
 
-    fs.writeFileSync('dist/game.min.js', result.code, 'utf8');
-    fs.writeFileSync('dist/game.min.js.map', result.map, 'utf8');
+    fs.writeFileSync('dist/game.min.js', result.code);
+    fs.writeFileSync('dist/game.min.js.map', result.map);
+
+    console.log(`${formatMs(Date.now() - startTime)} ↪ ${'dist/game.min.js'}`);
+
+    return result.code;
+}
+
+function inline(minifiedJS) {
+    var startTime = Date.now();
 
     console.log('Inlining JS...');
-    // NOTE:prepend <body> so browsersync can insert its livereload script (development mode only)
-    const html = fs.readFileSync('src/index.html').toString();
-    fs.writeFileSync('dist/index.html', `${devMode ? '<body>' : ''}${html}<script>${result.code}</script>`);
+    // Prepend <body> so browsersync can insert its livereload script in dev mode
+    const html = fs.readFileSync('src/index.html', 'utf8');
+
+    fs.writeFileSync(
+        'dist/index.html',
+        `${devMode ? '<body>' : ''}${html}<script>${minifiedJS}</script>`
+    );
+
+    console.log(`${formatMs(Date.now() - startTime)} ↪ dist/index.html`);
 
     return true;
-};
+}
 
-const zipReport = () => {
+/**
+ * Draw a fancy zip file size bar with KB and % values
+ * @param  {[type]} used Size of zip file in bytes
+ * @return {[type]}      [description]
+ */
+function drawSize(used) {
+    const limit = 1024 * 13; // 13KB (not kB!)
+    const remaining = limit - used;
+    const usedPercent = Math.round((used / limit) * 100 * 100) / 100;
+    const barWidth = process.stdout.columns - 26;
+    const usedBarWidth = Math.round((barWidth / 100) * usedPercent);
+    const usedStr = ((used / 1000).toFixed(1) + ' KB').padStart(7, ' ');
+    const limitStr = ((limit / 1000).toFixed(1) + ' KB').padEnd(7, ' ');
+
+    var output = usedStr + ' / ' + limitStr +  ' [';
+    for (let i = 0; i < barWidth; i++) {
+        output += `${i < usedBarWidth ? '#' : c.gray('-')}`;
+    }
+    output += `] ${usedPercent.toFixed(0)}%`;
+
+    console.log(output);
+}
+
+function zip() {
+    const startTime = Date.now();
+
+    console.log('Zipping...');
+
     var zip = new JSZip();
+    var data = fs.readFileSync('dist/index.html', 'utf8')
+                 .replace('//# sourceMappingURL=game.min.js.map', '')
+                 .replace('<body>', '');
+
     zip.file(
         'index.html',
-        fs.readFileSync('src/index.html').toString(),
-        { createFolders: false }
+        data,
+        {
+            compression: 'DEFLATE',
+            compressionOptions: {
+                level: 9
+            }
+        }
     );
+
     zip.generateNodeStream({type: 'nodebuffer', streamFiles: true})
        .pipe(fs.createWriteStream('dist/game.zip'))
        .on('finish', function() {
-           console.log('created game.zip');
-           var zipSize = fs.statSync('dist/game.zip').size / 1000;
-           console.log(zipSize + ' KB');
+           console.log(`${formatMs(Date.now() - startTime)} ↪ dist/game.zip`);
+           drawSize(fs.statSync('dist/game.zip').size);
+           return true;
        });
 }
 
 let livereload = () => {
   // On first run, start a web server
   browserSync.init({
-    server: ['dist', 'src']
+    server: 'dist'
   });
 
   // On future runs, reload the browser
   livereload = () => {
     browserSync.reload('dist/index.html');
+    return true;
   }
+
+  return true;
 };
 
 compile();
