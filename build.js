@@ -1,15 +1,15 @@
 const browserSync = require('browser-sync').create();
+const fs = require('fs');
 const rollup = require('rollup');
+const JSZip = require('jszip');
 const terser = require('terser');
 
 const devMode = process.argv.slice(2).includes('--watch');
 
-console.log("Dev mode: " + devMode);
-
 const config = {
-    input: 'src/js/main.js',
+    input: 'src/js/game.js',
     output: {
-        file: 'dist/main.js',
+        file: 'dist/game.js',
         format: 'iife',
         sourcemap: devMode
     }
@@ -39,8 +39,8 @@ const compile = async () => {
                 case 'END':
                     if (inlineMinified(devMode)) {
                         console.log('inlineMinified worked?');
-                      //livereload();
-                      //zipReport();
+                        livereload();
+                        zipReport();
                     }
                     break;
                 case 'ERROR':
@@ -55,41 +55,65 @@ const compile = async () => {
         await bundle.write(config.output);
 
         if (inlineMinified(devMode)) {
-            //zipReport();
+            zipReport();
         }
   }
 }
 
 const inlineMinified = (devMode) => {
-  const options = {
-    compress: {
-      passes: 4,
-      unsafe: true,
-      unsafe_arrows: true,
-      unsafe_comps: true,
-      unsafe_math: true,
-    },
-    mangle: true,
-    module: true,
-    sourceMap: devMode ? {
-        filename: 'dist/main.js',
-        url: 'dist/main.js.map'
-    } : false
-  };
+    const options = {
+        compress: {
+          passes: 4,
+          unsafe: true,
+          unsafe_arrows: true,
+          unsafe_comps: true,
+          unsafe_math: true,
+        },
+        mangle: true,
+        module: true,
+        sourceMap: devMode ? {
+            //filename: 'dist/game.js.map',
+            content: fs.readFileSync('dist/game.js.map', 'utf8'),
+            url: 'minified.js.map'
+        } : false
+    };
 
-  // optimize JS bundle
-  console.log('Minifying JS...');
-  const result = terser.minify(config.output.file, options);
+    // optimize JS bundle
+    console.log('Minifying JS...');
+    const code = fs.readFileSync('dist/game.js').toString();
+    const result = terser.minify(code, options);
 
-  if (result.error) {
-    console.error('Terser minification failed: ', result.error.message);
-    return false;
-  }
+    if (result.error) {
+        console.error('Terser minify failed: ', result.error.message);
+        return false;
+    }
 
-  // We need to write result.code and result.map to files?..
+    fs.writeFileSync('dist/game.min.js', result.code, 'utf8');
+    fs.writeFileSync('dist/game.min.js.map', result.map, 'utf8');
 
-  return true;
+    console.log('Inlining JS...');
+    // NOTE:prepend <body> so browsersync can insert its livereload script (development mode only)
+    const html = fs.readFileSync('src/index.html').toString();
+    fs.writeFileSync('dist/index.html', `${devMode ? '<body>' : ''}${html}<script>${result.code}</script>`);
+
+    return true;
 };
+
+const zipReport = () => {
+    var zip = new JSZip();
+    zip.file(
+        'index.html',
+        fs.readFileSync('src/index.html').toString(),
+        { createFolders: false }
+    );
+    zip.generateNodeStream({type: 'nodebuffer', streamFiles: true})
+       .pipe(fs.createWriteStream('dist/game.zip'))
+       .on('finish', function() {
+           console.log('created game.zip');
+           var zipSize = fs.statSync('dist/game.zip').size / 1000;
+           console.log(zipSize + ' KB');
+       });
+}
 
 let livereload = () => {
   // On first run, start a web server

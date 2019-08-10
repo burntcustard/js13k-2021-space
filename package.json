@@ -19,6 +19,7 @@
   "homepage": "https://github.com/burntcustard/js13k-build-scripts#readme",
   "devDependencies": {
     "browser-sync": "^2.26.7",
+    "jszip": "^3.2.2",
     "rollup": "^1.19.4",
     "terser": "^4.1.3"
   }
