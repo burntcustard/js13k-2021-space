@@ -7,21 +7,6 @@ const terser = require('terser');
 
 const devMode = process.argv.slice(2).includes('--watch');
 
-const config = {
-    input: 'src/js/game.js',
-    output: {
-        file: 'dist/game.js',
-        format: 'iife',
-        sourcemap: devMode
-    }
-}
-
-// const paths = {
-//     dist: 'dist/',
-//     js: 'game.js',
-//     map: ''
-// }
-
 function formatMs(duration) {
     return c.magentaBright(duration.toString().padStart(3, ' ') + ' ms');
 }
@@ -52,6 +37,15 @@ function printRollupError(err) {
 }
 
 const compile = async () => {
+    const config = {
+        input: 'src/js/game.js',
+        output: {
+            file: 'dist/game.js',
+            format: 'iife',
+            sourcemap: devMode
+        }
+    }
+
     if (devMode) {
         const watcher = rollup.watch({
             input: config.input,
@@ -82,6 +76,12 @@ const compile = async () => {
         const startTime = Date.now();
         console.log(`Building JS from ${config.input}...`);
         const bundle = await rollup.rollup({input: config.input});
+
+        if (bundle.error) {
+            printRollupError(bundle.error);
+            return false;
+        }
+
         await bundle.write(config.output);
         console.log(`${formatMs(Date.now() - startTime)} ↪ ${config.output.file}`);
         inline(minify()) && zip();
@@ -149,7 +149,7 @@ function inline(minifiedJS) {
 function drawSize(used) {
     const limit = 1024 * 13; // 13KB (not kB!)
     const remaining = limit - used;
-    const usedPercent = Math.round((used / limit) * 100 * 100) / 100;
+    const usedPercent = Math.round((100 / limit) * used);
     const barWidth = process.stdout.columns - 26;
     const usedBarWidth = Math.round((barWidth / 100) * usedPercent);
     const usedStr = ((used / 1000).toFixed(1) + ' KB').padStart(7, ' ');
@@ -159,7 +159,8 @@ function drawSize(used) {
     for (let i = 0; i < barWidth; i++) {
         output += `${i < usedBarWidth ? '#' : c.gray('-')}`;
     }
-    output += `] ${usedPercent.toFixed(0)}%`;
+    output += '] ';
+    output += usedPercent >= 100 ? c.red(usedPercent + '%') : usedPercent + '%';
 
     console.log(output);
 }
