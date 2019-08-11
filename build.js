@@ -82,8 +82,8 @@ const compile = async () => {
 
         rollup
             .rollup({input: config.input})
-            .then(bundle => {
-                bundle.write(config.output);
+            .then(async (bundle) => {
+                await bundle.write(config.output);
                 logOutput(Date.now() - startTime, config.output.file);
                 inline(minify()) && zip();
             })
@@ -122,7 +122,9 @@ function minify() {
     }
 
     fs.writeFileSync('dist/game.min.js', result.code);
-    fs.writeFileSync('dist/game.min.js.map', result.map);
+    if (result.map) {
+        fs.writeFileSync('dist/game.min.js.map', result.map);
+    }
 
     logOutput(Date.now() - startTime, 'dist/game.min.js');
 
