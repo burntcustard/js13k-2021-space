@@ -11,28 +11,32 @@ function formatMs(duration) {
     return c.magentaBright(duration.toString().padStart(3, ' ') + ' ms');
 }
 
+function logOutput(duration, outputFile) {
+    console.log(`${formatMs(duration)} ↪ ${outputFile}`);
+}
+
 /**
  * Based off rollup-cli error printing
  * https://github.com/rollup/rollup/blob/master/cli/logging.ts
  * @param  {[type]} err [description]
  * @return {[type]}     [description]
  */
-function printRollupError(err) {
-    let description = err.message || err;
+function printRollupError(error) {
+    let description = error.message || error;
 
-    if (err.name) {
-        description = `${err.name}: ${description}`;
+    if (error.name) {
+        description = `${error.name}: ${description}`;
     }
 
     console.error(c.bold.red(`[!] ${description}`));
 
-    if (err.loc) {
-        const path = err.loc.file.replace(process.cwd(), '');
-		console.error(`${path} ${err.loc.line}:${err.loc.column}`);
+    if (error.loc) {
+        const path = error.loc.file.replace(process.cwd(), '');
+		console.error(`${path} ${error.loc.line}:${error.loc.column}`);
 	}
 
-    if (err.frame) {
-		console.error(c.gray(err.frame));
+    if (error.frame) {
+		console.error(c.gray(error.frame));
 	}
 }
 
@@ -61,7 +65,7 @@ const compile = async () => {
                     console.log(`Building JS from ${config.input}...`);
                     break;
                 case 'BUNDLE_END':
-                    console.log(`${formatMs(event.duration)} ↪ ${config.output.file}`);
+                    logOutput(event.duration, config.output.file);
                     break;
                 case 'END':
                     inline(minify()) && livereload() && zip();
@@ -75,16 +79,17 @@ const compile = async () => {
     } else {
         const startTime = Date.now();
         console.log(`Building JS from ${config.input}...`);
-        const bundle = await rollup.rollup({input: config.input});
 
-        if (bundle.error) {
-            printRollupError(bundle.error);
-            return false;
-        }
-
-        await bundle.write(config.output);
-        console.log(`${formatMs(Date.now() - startTime)} ↪ ${config.output.file}`);
-        inline(minify()) && zip();
+        rollup
+            .rollup({input: config.input})
+            .then(bundle => {
+                bundle.write(config.output);
+                logOutput(Date.now() - startTime, config.output.file);
+                inline(minify()) && zip();
+            })
+            .catch(error => {
+                printRollupError(error);
+            });
   }
 }
 
@@ -119,7 +124,7 @@ function minify() {
     fs.writeFileSync('dist/game.min.js', result.code);
     fs.writeFileSync('dist/game.min.js.map', result.map);
 
-    console.log(`${formatMs(Date.now() - startTime)} ↪ ${'dist/game.min.js'}`);
+    logOutput(Date.now() - startTime, 'dist/game.min.js');
 
     return result.code;
 }
@@ -128,15 +133,16 @@ function inline(minifiedJS) {
     var startTime = Date.now();
 
     console.log('Inlining JS...');
-    // Prepend <body> so browsersync can insert its livereload script in dev mode
+
     const html = fs.readFileSync('src/index.html', 'utf8');
 
     fs.writeFileSync(
         'dist/index.html',
+        // Prepend <body> so browsersync can insert its script in dev mode
         `${devMode ? '<body>' : ''}${html}<script>${minifiedJS}</script>`
     );
 
-    console.log(`${formatMs(Date.now() - startTime)} ↪ dist/index.html`);
+    logOutput(Date.now() - startTime, 'dist/index.html');
 
     return true;
 }
@@ -160,7 +166,7 @@ function drawSize(used) {
         output += `${i < usedBarWidth ? '#' : c.gray('-')}`;
     }
     output += '] ';
-    output += usedPercent >= 100 ? c.red(usedPercent + '%') : usedPercent + '%';
+    output += usedPercent > 99 ? c.red(usedPercent + '%') : usedPercent + '%';
 
     console.log(output);
 }
@@ -189,7 +195,7 @@ function zip() {
     zip.generateNodeStream({type: 'nodebuffer', streamFiles: true})
        .pipe(fs.createWriteStream('dist/game.zip'))
        .on('finish', function() {
-           console.log(`${formatMs(Date.now() - startTime)} ↪ dist/game.zip`);
+           logOutput(Date.now() - startTime, 'dist/game.zip');
            drawSize(fs.statSync('dist/game.zip').size);
            return true;
        });
