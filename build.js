@@ -5,8 +5,16 @@ const rollup = require('rollup');
 const resolve = require('rollup-plugin-node-resolve');
 const JSZip = require('jszip');
 const terser = require('terser');
+const pp = require('preprocess');
 
-const devMode = process.argv.slice(2).includes('--watch');
+// Enabled/Disables browserSync live reloading rather than just building once
+const DEVMODE = process.argv.slice(2).includes('--watch');
+
+// Enables/Disables DEBUG mode in Kontra
+const DEBUG = process.argv.slice(2).includes('--debug');
+
+// Enables/Disables visual debugging in Kontra
+const VISUAL_DEBUG = process.argv.slice(2).includes('--visual-debug');
 
 /**
  * Formats a duration number (ms) into a nice looking string with ansi-colors
@@ -56,12 +64,11 @@ const compile = async () => {
         output: {
             file: 'dist/game.js',
             format: 'iife',
-            name: 'Game',
-            sourcemap: devMode
+            sourcemap: DEVMODE
         }
     }
 
-    if (devMode) {
+    if (DEVMODE) {
         const watcher = rollup.watch({
             input: config.input,
             output: [ config.output ],
@@ -108,6 +115,10 @@ const compile = async () => {
     }
 }
 
+/**
+ * Minify the JS bundle. Includes using preprocess to remove debug messages.
+ * @return {object} Output code from terser.minify
+ */
 function minify() {
     const startTime = Date.now();
     const options = {
@@ -120,7 +131,7 @@ function minify() {
         },
         mangle: true,
         module: true,
-        sourceMap: devMode ? {
+        sourceMap: DEVMODE ? {
             content: fs.readFileSync('dist/game.js.map', 'utf8'),
             url: 'game.min.js.map'
         } : false
@@ -128,7 +139,8 @@ function minify() {
 
     console.log('Minifying JS...');
 
-    const code = fs.readFileSync('dist/game.js', 'utf8');
+    let code = fs.readFileSync('dist/game.js', 'utf8');
+    code = pp.preprocess(code, { DEBUG, VISUAL_DEBUG }, { type: 'js' });
     const result = terser.minify(code, options);
 
     if (result.error) {
@@ -156,7 +168,7 @@ function inline(minifiedJS) {
     fs.writeFileSync(
         'dist/index.html',
         // Prepend <body> so browsersync can insert its script in dev mode
-        `${devMode ? '<body>' : ''}${html}<script>${minifiedJS}</script>`
+        `${DEVMODE ? '<body>' : ''}${html}<script>${minifiedJS}</script>`
     );
 
     logOutput(Date.now() - startTime, 'dist/index.html');
