@@ -2,6 +2,7 @@ const browserSync = require('browser-sync').create();
 const c = require('ansi-colors');
 const fs = require('fs');
 const rollup = require('rollup');
+const resolve = require('rollup-plugin-node-resolve');
 const JSZip = require('jszip');
 const terser = require('terser');
 
@@ -46,6 +47,7 @@ const compile = async () => {
         output: {
             file: 'dist/game.js',
             format: 'iife',
+            name: 'Game',
             sourcemap: devMode
         }
     }
@@ -56,7 +58,8 @@ const compile = async () => {
             output: [ config.output ],
             watch: {
               include: 'src/**'
-            }
+            },
+            plugins: [ resolve() ]
         });
 
         watcher.on('event', event => {
@@ -80,17 +83,20 @@ const compile = async () => {
         const startTime = Date.now();
         console.log(`Building JS from ${config.input}...`);
 
-        rollup
-            .rollup({input: config.input})
-            .then(async (bundle) => {
-                await bundle.write(config.output);
-                logOutput(Date.now() - startTime, config.output.file);
-                inline(minify()) && zip();
-            })
-            .catch(error => {
-                printRollupError(error);
-            });
-  }
+        rollup.rollup({
+                 input: config.input,
+                 output: [ config.output ],
+                 plugins: [ resolve() ]
+              })
+              .then(async (bundle) => {
+                  await bundle.write(config.output);
+                  logOutput(Date.now() - startTime, config.output.file);
+                  inline(minify()) && zip();
+              })
+              .catch(error => {
+                  printRollupError(error);
+              });
+    }
 }
 
 function minify() {
