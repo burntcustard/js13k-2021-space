@@ -8,10 +8,20 @@ const terser = require('terser');
 
 const devMode = process.argv.slice(2).includes('--watch');
 
+/**
+ * Formats a duration number (ms) into a nice looking string with ansi-colors
+ * @param  {number} duration Duration in milliseconds
+ * @return {string}          Nicely formatted color string
+ */
 function formatMs(duration) {
     return c.magentaBright(duration.toString().padStart(3, ' ') + ' ms');
 }
 
+/**
+ * Console logs a duration (in milliseconds), a fancy arrow char, and a string
+ * @param  {number} duration   [description]
+ * @param  {string} outputFile [description]
+ */
 function logOutput(duration, outputFile) {
     console.log(`${formatMs(duration)} ↪ ${outputFile}`);
 }
@@ -19,8 +29,7 @@ function logOutput(duration, outputFile) {
 /**
  * Based off rollup-cli error printing
  * https://github.com/rollup/rollup/blob/master/cli/logging.ts
- * @param  {[type]} err [description]
- * @return {[type]}     [description]
+ * @param {object} error
  */
 function printRollupError(error) {
     let description = error.message || error;
@@ -157,8 +166,7 @@ function inline(minifiedJS) {
 
 /**
  * Draw a fancy zip file size bar with KB and % values
- * @param  {[type]} used Size of zip file in bytes
- * @return {[type]}      [description]
+ * @param  {number} used Size of zip file in bytes
  */
 function drawSize(used) {
     const limit = 1024 * 13; // 13KB (not kB!)
