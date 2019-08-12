@@ -18,7 +18,6 @@
     "url": "https://github.com/burntcustard/js13k-build-scripts/issues"
   },
   "homepage": "https://github.com/burntcustard/js13k-build-scripts#readme",
-  "devDependencies": {},
   "dependencies": {
     "ansi-colors": "^4.1.1",
     "browser-sync": "^2.26.7",
