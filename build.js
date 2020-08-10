@@ -78,7 +78,7 @@ const compile = async () => {
             plugins: [ resolve() ]
         });
 
-        watcher.on('event', event => {
+        watcher.on('event', async (event) => {
             switch (event.code) {
                 case 'START':
                     console.log(`Building JS from ${config.input}...`);
@@ -87,7 +87,7 @@ const compile = async () => {
                     logOutput(event.duration, config.output.file);
                     break;
                 case 'END':
-                    inline(minify()) && livereload() && zip();
+                    inline(await minify()).then(livereload() && zip());
                     break;
                 case 'ERROR':
                 case 'FATAL':
@@ -107,7 +107,7 @@ const compile = async () => {
               .then(async (bundle) => {
                   await bundle.write(config.output);
                   logOutput(Date.now() - startTime, config.output.file);
-                  inline(minify()) && zip();
+                  inline(await minify()).then(zip());
               })
               .catch(error => {
                   printRollupError(error);
@@ -119,7 +119,7 @@ const compile = async () => {
  * Minify the JS bundle. Includes using preprocess to remove debug messages.
  * @return {object} Output code from terser.minify
  */
-function minify() {
+async function minify() {
     const startTime = Date.now();
     const options = {
         compress: {
@@ -141,7 +141,7 @@ function minify() {
 
     let code = fs.readFileSync('dist/game.js', 'utf8');
     code = pp.preprocess(code, { DEBUG, VISUAL_DEBUG }, { type: 'js' });
-    const result = terser.minify(code, options);
+    const result = await terser.minify(code, options);
 
     if (result.error) {
         console.error('Terser minify failed: ', result.error.message);
@@ -158,7 +158,7 @@ function minify() {
     return result.code;
 }
 
-function inline(minifiedJS) {
+async function inline(minifiedJS) {
     var startTime = Date.now();
 
     console.log('Inlining JS...');
