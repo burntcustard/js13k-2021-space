@@ -22,7 +22,7 @@
     "ansi-colors": "^4.1.1",
     "browser-sync": "^2.26.12",
     "jszip": "^3.5.0",
-    "kontra": "^6.9.1",
+    "kontra": "^7.0.0",
     "preprocess": "^3.2.0",
     "rollup": "^2.23.1",
     "rollup-plugin-node-resolve": "^5.2.0",
