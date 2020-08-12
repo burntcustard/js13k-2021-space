@@ -19,7 +19,7 @@ const DEBUG = process.argv.slice(2).includes('--debug');
  * @return {string}          Nicely formatted color string
  */
 function formatMs(duration) {
-    return c.magentaBright(duration.toString().padStart(3, ' ') + ' ms');
+    return c.magentaBright(duration.toString().padStart(4, ' ') + ' ms');
 }
 
 /**
@@ -107,7 +107,14 @@ const compile = async () => {
         rollup.rollup({
                  input: config.input,
                  output: [ config.output ],
-                 plugins: [ resolve() ]
+                 plugins: [
+                     resolve(),
+                     kontra({
+                         gameObject: {
+                             velocity: true
+                         }
+                     })
+                 ]
               })
               .then(async (bundle) => {
                   await bundle.write(config.output);
@@ -128,13 +135,20 @@ async function minify() {
     const startTime = Date.now();
     const options = {
         compress: {
-            passes: 4,
+            passes: 2,
             unsafe: true,
             unsafe_arrows: true,
             unsafe_comps: true,
             unsafe_math: true,
+            // unsafe_proto: true,
+            // booleans_as_integers: true
         },
-        mangle: true,
+        mangle: {
+            properties: {
+                keep_quoted: true,
+                reserved: [ 'game' ],
+            }
+        },
         module: true,
         sourceMap: DEVMODE ? {
             content: fs.readFileSync('dist/game.js.map', 'utf8'),
@@ -185,13 +199,13 @@ async function inline(minifiedJS) {
  * @param  {number} used Size of zip file in bytes
  */
 function drawSize(used) {
-    const limit = 1024 * 13; // 13KB (not kB!)
+    const limit = 13312; // 13KiB or 'KB' (not kB!)
     const remaining = limit - used;
     const usedPercent = Math.round((100 / limit) * used);
     const barWidth = process.stdout.columns - 26;
     const usedBarWidth = Math.round((barWidth / 100) * usedPercent);
-    const usedStr = ((used / 1000).toFixed(1) + ' KB').padStart(7, ' ');
-    const limitStr = ((limit / 1000).toFixed(1) + ' KB').padEnd(7, ' ');
+    const usedStr = (used + ' B').padStart(7, ' ');
+    const limitStr = ((limit / 1024).toFixed(0) + ' KB').padEnd(5, ' ');
 
     var output = usedStr + ' / ' + limitStr +  ' [';
     for (let i = 0; i < barWidth; i++) {

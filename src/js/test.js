@@ -1,3 +1,3 @@
 export function test() {
-  console.log('Hi');
+  console.log('test file imported');
 }
