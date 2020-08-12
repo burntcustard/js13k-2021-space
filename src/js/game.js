@@ -1,6 +1,8 @@
 import { init, Sprite, GameLoop } from 'kontra';
-
+import { test } from './test';
 let { canvas } = init();
+
+test();
 
 let sprite = Sprite({
   x: 100,        // starting x,y position of the sprite

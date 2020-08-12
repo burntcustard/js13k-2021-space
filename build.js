@@ -5,16 +5,13 @@ const rollup = require('rollup');
 const resolve = require('rollup-plugin-node-resolve');
 const JSZip = require('jszip');
 const terser = require('terser');
-const pp = require('preprocess');
+const kontra = require('rollup-plugin-kontra');
 
 // Enabled/Disables browserSync live reloading rather than just building once
 const DEVMODE = process.argv.slice(2).includes('--watch');
 
 // Enables/Disables DEBUG mode in Kontra
 const DEBUG = process.argv.slice(2).includes('--debug');
-
-// Enables/Disables visual debugging in Kontra
-const VISUAL_DEBUG = process.argv.slice(2).includes('--visual-debug');
 
 /**
  * Formats a duration number (ms) into a nice looking string with ansi-colors
@@ -50,8 +47,8 @@ function printRollupError(error) {
 
     if (error.loc) {
         const path = error.loc.file.replace(process.cwd(), '');
-		console.error(`${path} ${error.loc.line}:${error.loc.column}`);
-	}
+		    console.error(`${path} ${error.loc.line}:${error.loc.column}`);
+    }
 
     if (error.frame) {
 		console.error(c.gray(error.frame));
@@ -75,7 +72,15 @@ const compile = async () => {
             watch: {
               include: 'src/**'
             },
-            plugins: [ resolve() ]
+            plugins: [
+                resolve(),
+                kontra({
+                    gameObject: {
+                        velocity: true
+                    },
+                    debug: DEBUG
+                })
+            ]
         });
 
         watcher.on('event', async (event) => {
@@ -140,7 +145,6 @@ async function minify() {
     console.log('Minifying JS...');
 
     let code = fs.readFileSync('dist/game.js', 'utf8');
-    code = pp.preprocess(code, { DEBUG, VISUAL_DEBUG }, { type: 'js' });
     const result = await terser.minify(code, options);
 
     if (result.error) {
