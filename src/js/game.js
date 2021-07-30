@@ -1,19 +1,19 @@
 import { init, Sprite, GameLoop } from 'kontra';
 import { test } from './test';
-let { canvas } = init();
+const { canvas } = init();
 
 test();
 
-let sprite = Sprite({
-  x: 100,        // starting x,y position of the sprite
+const sprite = Sprite({
+  x: 100, // starting x,y position of the sprite
   y: 80,
-  color: 'red',  // fill color of the sprite rectangle
-  width: 20,     // width and height of the sprite rectangle
+  color: 'red', // fill color of the sprite rectangle
+  width: 20, // width and height of the sprite rectangle
   height: 40,
-  dx: 2          // move the sprite 2px to the right every frame
+  dx: 2, // move the sprite 2px to the right every frame
 });
 
-let loop = GameLoop({  // create the main game loop
+const loop = GameLoop({ // create the main game loop
   update: function() { // update the game state
     sprite.update();
 
@@ -25,7 +25,7 @@ let loop = GameLoop({  // create the main game loop
   },
   render: function() { // render the game state
     sprite.render();
-  }
+  },
 });
 
-loop.start();    // start the game
+loop.start(); // start the game

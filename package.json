@@ -27,5 +27,9 @@
     "rollup-plugin-kontra": "^1.0.1",
     "rollup-plugin-node-resolve": "^5.2.0",
     "terser": "^5.7.1"
+  },
+  "devDependencies": {
+    "eslint": "^7.31.0",
+    "eslint-config-google": "^0.14.0"
   }
 }
