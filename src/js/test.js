@@ -5,3 +5,5 @@
 export function test() {
   console.log('test file imported');
 }
+
+export default test;

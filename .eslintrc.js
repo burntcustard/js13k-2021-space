@@ -5,20 +5,13 @@ module.exports = {
     'node': true,
   },
   'extends': [
-    'google',
+    'airbnb-base',
   ],
   'parserOptions': {
     'ecmaVersion': 12,
     'sourceType': 'module',
   },
   'rules': {
-    'array-bracket-spacing': [ 'error', 'always' ],
-    'object-curly-spacing': [ 'error', 'always' ],
-    'new-cap': 'off',
-    'indent': [
-      'error', 2, {
-        'SwitchCase': 1,
-      },
-    ],
+    'quote-props': ['error', 'consistent'],
   },
 };

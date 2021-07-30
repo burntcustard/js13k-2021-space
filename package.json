@@ -26,10 +26,9 @@
     "rollup": "^2.55.1",
     "rollup-plugin-kontra": "^1.0.1",
     "rollup-plugin-node-resolve": "^5.2.0",
-    "terser": "^5.7.1"
-  },
-  "devDependencies": {
+    "terser": "^5.7.1",
     "eslint": "^7.31.0",
-    "eslint-config-google": "^0.14.0"
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-plugin-import": "^2.23.4"
   }
 }

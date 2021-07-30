@@ -1,5 +1,6 @@
 import { init, Sprite, GameLoop } from 'kontra';
 import { test } from './test';
+
 const { canvas } = init();
 
 test();
@@ -14,7 +15,7 @@ const sprite = Sprite({
 });
 
 const loop = GameLoop({ // create the main game loop
-  update: function() { // update the game state
+  update() { // update the game state
     sprite.update();
 
     // wrap the sprites position when it reaches
@@ -23,7 +24,7 @@ const loop = GameLoop({ // create the main game loop
       sprite.x = -sprite.width;
     }
   },
-  render: function() { // render the game state
+  render() { // render the game state
     sprite.render();
   },
 });
