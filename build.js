@@ -5,13 +5,9 @@ const rollup = require('rollup');
 const resolve = require('rollup-plugin-node-resolve');
 const JSZip = require('jszip');
 const terser = require('terser');
-const kontra = require('rollup-plugin-kontra');
 
 // Enabled/Disables browserSync live reloading rather than just building once
 const DEVMODE = process.argv.slice(2).includes('--watch');
-
-// Enables/Disables DEBUG mode in Kontra
-const DEBUG = process.argv.slice(2).includes('--debug');
 
 /**
  * Formats a duration number (ms) into a nice looking string with ansi-colors
@@ -19,7 +15,7 @@ const DEBUG = process.argv.slice(2).includes('--debug');
  * @return {string}          Nicely formatted color string
  */
 function formatMs(duration) {
-  return c.magentaBright(duration.toString().padStart(4, ' ') + ' ms');
+  return c.magentaBright(`${duration.toString().padStart(4)} ms`);
 }
 
 /**
@@ -55,79 +51,6 @@ function printRollupError(error) {
   }
 }
 
-const compile = async () => {
-  const config = {
-    input: 'src/js/game.js',
-    output: {
-      file: 'dist/game.js',
-      format: 'iife',
-      sourcemap: DEVMODE,
-    },
-  };
-
-  if (DEVMODE) {
-    const watcher = rollup.watch({
-      input: config.input,
-      output: [ config.output ],
-      watch: {
-        include: 'src/**',
-      },
-      plugins: [
-        resolve(),
-        kontra({
-          gameObject: {
-            velocity: true,
-          },
-          debug: DEBUG,
-        }),
-      ],
-    });
-
-    watcher.on('event', async (event) => {
-      switch (event.code) {
-        case 'START':
-          console.log(`Building JS from ${config.input}...`);
-          break;
-        case 'BUNDLE_END':
-          logOutput(event.duration, config.output.file);
-          break;
-        case 'END':
-          inline(await minify()).then(livereload() && zip());
-          break;
-        case 'ERROR':
-        case 'FATAL':
-          printRollupError(event.error);
-          break;
-      }
-    });
-  } else {
-    const startTime = Date.now();
-    console.log(`Building JS from ${config.input}...`);
-
-    rollup
-      .rollup({
-        input: config.input,
-        output: [ config.output ],
-        plugins: [
-          resolve(),
-          kontra({
-            gameObject: {
-              velocity: true,
-            },
-          }),
-        ],
-      })
-      .then(async (bundle) => {
-        await bundle.write(config.output);
-        logOutput(Date.now() - startTime, config.output.file);
-        inline(await minify()).then(zip());
-      })
-      .catch((error) => {
-        printRollupError(error);
-      });
-  }
-};
-
 /**
  * Minify the JS bundle. Includes using preprocess to remove debug messages.
  * @return {object} Output code from terser.minify
@@ -147,7 +70,7 @@ async function minify() {
     mangle: {
       properties: {
         keep_quoted: true,
-        reserved: [ 'game' ],
+        reserved: ['game'],
       },
     },
     module: true,
@@ -209,15 +132,15 @@ function drawSize(used) {
   const usedPercent = Math.round((100 / limit) * used);
   const barWidth = process.stdout.columns - 26;
   const usedBarWidth = Math.round((barWidth / 100) * usedPercent);
-  const usedStr = (used + ' B').padStart(7, ' ');
-  const limitStr = ((limit / 1024).toFixed(0) + ' KB').padEnd(5, ' ');
-  let output = usedStr + ' / ' + limitStr + ' [';
+  const usedStr = (`${used} B`).padStart(7, ' ');
+  const limitStr = (`${(limit / 1024).toFixed(0)} KB`).padEnd(5, ' ');
+  let output = `${usedStr} / ${limitStr} [`;
 
   for (let i = 0; i < barWidth; i++) {
     output += `${i < usedBarWidth ? '#' : c.gray('-')}`;
   }
   output += '] ';
-  output += usedPercent > 99 ? c.red(usedPercent + '%') : usedPercent + '%';
+  output += usedPercent > 99 ? c.red(`${usedPercent}%`) : `${usedPercent}%`;
 
   console.log(output);
 }
@@ -231,13 +154,13 @@ function zip() {
 
   console.log('Zipping...');
 
-  const zip = new JSZip();
+  const jszip = new JSZip();
   const data = fs
     .readFileSync('dist/index.html', 'utf8')
     .replace('//# sourceMappingURL=game.min.js.map', '')
     .replace('<body>', '');
 
-  zip.file(
+  jszip.file(
     'index.html',
     data,
     {
@@ -248,10 +171,10 @@ function zip() {
     },
   );
 
-  zip
+  jszip
     .generateNodeStream({ type: 'nodebuffer', streamFiles: true })
     .pipe(fs.createWriteStream('dist/game.zip'))
-    .on('finish', function() {
+    .on('finish', () => {
       logOutput(Date.now() - startTime, 'dist/game.zip');
       drawSize(fs.statSync('dist/game.zip').size);
       return true;
@@ -273,6 +196,70 @@ let livereload = () => {
   };
 
   return true;
+};
+
+const compile = async () => {
+  const config = {
+    input: 'src/js/game.js',
+    output: {
+      file: 'dist/game.js',
+      format: 'iife',
+      sourcemap: DEVMODE,
+    },
+  };
+
+  if (DEVMODE) {
+    const watcher = rollup.watch({
+      input: config.input,
+      output: [config.output],
+      watch: {
+        include: 'src/**',
+      },
+      plugins: [
+        resolve(),
+      ],
+    });
+
+    watcher.on('event', async (event) => {
+      switch (event.code) {
+        case 'START':
+          console.log(`Building JS from ${config.input}...`);
+          break;
+        case 'BUNDLE_END':
+          logOutput(event.duration, config.output.file);
+          break;
+        case 'END':
+          inline(await minify()).then(livereload() && zip());
+          break;
+        case 'ERROR':
+        case 'FATAL':
+          printRollupError(event.error);
+          break;
+        default:
+          break;
+      }
+    });
+  } else {
+    const startTime = Date.now();
+    console.log(`Building JS from ${config.input}...`);
+
+    rollup
+      .rollup({
+        input: config.input,
+        output: [config.output],
+        plugins: [
+          resolve(),
+        ],
+      })
+      .then(async (bundle) => {
+        await bundle.write(config.output);
+        logOutput(Date.now() - startTime, config.output.file);
+        inline(await minify()).then(zip());
+      })
+      .catch((error) => {
+        printRollupError(error);
+      });
+  }
 };
 
 compile();
