@@ -1,3 +1,5 @@
+/* eslint-disable no-console */
+
 const browserSync = require('browser-sync').create();
 const c = require('ansi-colors');
 const fs = require('fs');
