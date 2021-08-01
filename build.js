@@ -3,6 +3,8 @@ const c = require('ansi-colors');
 const fs = require('fs');
 const rollup = require('rollup');
 const resolve = require('rollup-plugin-node-resolve');
+const postcss = require('rollup-plugin-postcss');
+const postcssImport = require('postcss-easy-import');
 const JSZip = require('jszip');
 const terser = require('terser');
 
@@ -108,14 +110,18 @@ async function minify() {
 async function inline(minifiedJS) {
   const startTime = Date.now();
 
-  console.log('Inlining JS...');
+  console.log('Inlining JS & CSS...');
 
   const html = fs.readFileSync('src/index.html', 'utf8');
+  const css = fs.readFileSync('dist/game.css', 'utf8');
+
+  const script = `<script>${minifiedJS}</script>`;
+  const styles = `<style>${css}</style>`;
 
   fs.writeFileSync(
     'dist/index.html',
     // Prepend <body> so browsersync can insert its script in dev mode
-    `${DEVMODE ? '<body>' : ''}${html}<script>${minifiedJS}</script>`,
+    `${styles}${DEVMODE ? '<body>' : ''}${html}${script}`,
   );
 
   logOutput(Date.now() - startTime, 'dist/index.html');
@@ -217,6 +223,15 @@ const compile = async () => {
       },
       plugins: [
         resolve(),
+        postcss({
+          extract: true,
+          plugins: [
+            postcssImport,
+          ],
+          minimize: {
+            preset: ['default'],
+          },
+        }),
       ],
     });
 
@@ -249,6 +264,15 @@ const compile = async () => {
         output: [config.output],
         plugins: [
           resolve(),
+          postcss({
+            extract: true,
+            plugins: [
+              postcssImport,
+            ],
+            minimize: {
+              preset: ['default'],
+            },
+          }),
         ],
       })
       .then(async (bundle) => {

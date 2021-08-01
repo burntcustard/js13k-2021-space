@@ -1,0 +1,63 @@
+.box {
+  --depth: 120px;
+  --width: 120px;
+
+  width: var(--width);
+  height: var(--depth);
+  background: red;
+}
+
+.box > * {
+  /* All sides */
+}
+
+.box > *:nth-child(n-5) {
+  transform-origin: bottom;
+}
+
+.box > .left {
+  transform:
+    translateX(-50%)
+    translateY(-50%)
+    translateY(12.5px)
+    rotateX(-90deg)
+    rotateY(-90deg);
+}
+
+.box > .right {
+  transform:
+    translateX(-50%)
+    translateY(-50%)
+    translateX(120px)
+    translateY(12.5px)
+    rotateX(-90deg)
+    rotateY(-90deg);
+}
+
+.box > .front {
+  transform:
+    translateX(-50%)
+    translateY(-50%)
+    translateX(60px)
+    translateY(62.5px)
+    rotateX(-90deg);
+}
+
+.box > .back {
+  transform:
+    translateX(-50%)
+    translateY(-50%)
+    translateX(60px)
+    translateY(-37.5px)
+    rotateX(-90deg);
+}
+
+.box > .top {
+  transform:
+    translateX(-50%)
+    translateY(-50%)
+    translateX(60px)
+    translateY(50px)
+    translateZ(75px);
+  transform-origin: center;
+}
