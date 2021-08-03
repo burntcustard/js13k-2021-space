@@ -1,0 +1,12 @@
+.scene {
+  width: 0;
+  height: 0;
+  /* Temporary fixed camera(?) */
+  transform:
+    translateX(0)
+    translateY(0)
+    translateZ(-1px)
+    rotateX(45deg)
+    rotateY(0)
+    rotateZ(-45deg);
+}

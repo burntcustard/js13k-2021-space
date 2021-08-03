@@ -1,5 +1,11 @@
-@import 'box.css';
+@import 'box';
+@import 'camera';
+@import 'ground';
+@import 'scene';
+@import 'viewport';
 
 body {
-  background: green;
+  height: 100vh;
+  margin: 0;
+  background: #6a2;
 }

@@ -1,63 +1,67 @@
 .box {
-  --depth: 120px;
-  --width: 120px;
+  --depth: 80px;
+  --width: 100px;
+  --height: 120px;
 
+  position: relative;
   width: var(--width);
   height: var(--depth);
   background: red;
+  transform:
+    translateX(-50%)
+    translateY(-50%);
 }
 
 .box > * {
-  /* All sides */
+  transform-origin: bottom center;
 }
 
-.box > *:nth-child(n-5) {
-  transform-origin: bottom;
+.box > .top {
+  width: var(--width);
+  height: var(--depth);
+  background: rgba(100, 100, 100, 0.5);
+  transform: translateZ(var(--height));
 }
 
-.box > .left {
-  transform:
-    translateX(-50%)
-    translateY(-50%)
-    translateY(12.5px)
-    rotateX(-90deg)
-    rotateY(-90deg);
-}
-
-.box > .right {
-  transform:
-    translateX(-50%)
-    translateY(-50%)
-    translateX(120px)
-    translateY(12.5px)
-    rotateX(-90deg)
-    rotateY(-90deg);
+.box > *:not(.top) {
+  height: var(--height);
 }
 
 .box > .front {
+  width: var(--width);
+  background: rgba(255, 0, 0, 0.5);
   transform:
-    translateX(-50%)
-    translateY(-50%)
-    translateX(60px)
-    translateY(62.5px)
+    translate(0, calc(var(--width) - var(--height)))
+    rotateX(-90deg);
+  transform-origin: bottom center;
+}
+
+.box > .right {
+  width: var(--width);
+  height: var(--height);
+  background: rgba(255, 255, 0, 0.5);
+  transform:
+    translate(calc(var(--width) / 2), calc(var(--width) / 2 - var(--height)))
+    rotateZ(-90deg)
+    rotateX(-90deg);
+}
+
+.box > .left {
+  width: var(--depth);
+  height: var(--height);
+  background: rgba(0, 255, 255, 0.5);
+  transform:
+    translate(calc(var(--depth) / -2), calc(var(--depth) / 2 - var(--height)))
+    rotateZ(90deg)
     rotateX(-90deg);
 }
 
 .box > .back {
+  width: var(--width);
+  height: var(--height);
+  background: rgba(0, 255, 0, 0.5);
   transform:
-    translateX(-50%)
-    translateY(-50%)
-    translateX(60px)
-    translateY(-37.5px)
+    translate(0, calc(var(--height) * -1))
+    rotateZ(180deg)
     rotateX(-90deg);
-}
-
-.box > .top {
-  transform:
-    translateX(-50%)
-    translateY(-50%)
-    translateX(60px)
-    translateY(50px)
-    translateZ(75px);
-  transform-origin: center;
 }

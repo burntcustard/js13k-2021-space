@@ -39,7 +39,7 @@ function logOutput(duration, outputFile) {
  * https://github.com/rollup/rollup/blob/master/cli/logging.ts
  * @param {object} error
  */
-function printRollupError(error) {
+function printCompileError(error) {
   let description = error.message || error;
 
   if (error.name) {
@@ -217,7 +217,13 @@ async function compileCss() {
   const mainCss = fs.readFileSync('src/css/main.css');
 
   const result = await postcss([postcssImport, cssnano])
-    .process(mainCss, { from: 'src/css/main.css' });
+    .process(mainCss, { from: 'src/css/main.css' })
+    .catch((error) => {
+      printCompileError(error);
+      return { error };
+    });
+
+  if (result.error) return '';
 
   if (DEVMODE) {
     fs.writeFile('dist/game.css', result.css, () => true);
@@ -240,7 +246,7 @@ async function compileJs() {
     input: 'src/js/game.js',
     plugins: [nodeResolve()],
   }).catch((error) => {
-    printRollupError(error);
+    printCompileError(error);
     return { error };
   });
 

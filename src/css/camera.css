@@ -1,3 +1,8 @@
-.camera * {
-  transform-style: preserve-3d;
+.camera {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border: 2px solid red;
 }

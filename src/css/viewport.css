@@ -1,4 +1,12 @@
 .viewport {
-  perspective: 500px;
+  position: relative;
   overflow: hidden;
+  width: 100%;
+  height: 100%;
+  perspective: 500px;
+}
+
+/* Everything inside the viewport has preserve-3d */
+.viewport * {
+  transform-style: preserve-3d;
 }
