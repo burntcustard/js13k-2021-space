@@ -108,11 +108,11 @@ async function minifyJs(compiledJs) {
 }
 
 /**
- * [inline description]
- * @param  {[type]} minifiedJS               [description]
- * @return {[type]}            [description]
+ * Put JS & CSS into minified HTML files
+ * @param  {string} css
+ * @param  {string} js
  */
-async function inline(css, js) {
+async function bundleIntoHtml(css, js) {
   const startTime = Date.now();
   console.log('Inlining JS & CSS...');
 
@@ -151,8 +151,6 @@ async function inline(css, js) {
   fs.writeFileSync('dist/index.html', htmlMinify(inlined, htmlMinifyConfig));
 
   logOutput(Date.now() - startTime, 'dist/index.html');
-
-  return true;
 }
 
 /**
@@ -270,14 +268,14 @@ async function onFileEvent(event, file) {
     isCss ? compileCss() : fs.readFileSync('dist/game.css'),
     isJs ? compileJs() : fs.readFileSync('dist/game.min.js'),
   ]).then(async ([css, js]) => {
-    await inline(css, js);
+    await bundleIntoHtml(css, js);
     if (!isCss) browserSync.reload();
     zip();
   });
 }
 
 // Create /dist if it doesn't already exist
-fs.mkdirSync('dist');
+fs.mkdirSync('dist', { recursive: true });
 
 // Generate CSS & JS at the same time
 Promise.all([
@@ -285,7 +283,7 @@ Promise.all([
   compileJs(),
 ]).then(async ([css, js]) => {
   // When both are finished, inline the CSS & JS into the HTML
-  await inline(css, js);
+  await bundleIntoHtml(css, js);
   // Then create the zip file and print it's size (before browserSync init)
   await zip();
 
