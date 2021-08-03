@@ -1,7 +1,7 @@
 .box {
-  --depth: 80px;
+  --depth: 60px;
   --width: 100px;
-  --height: 120px;
+  --height: 140px;
 
   position: relative;
   width: var(--width);
@@ -13,7 +13,9 @@
 }
 
 .box > * {
+  position: absolute;
   transform-origin: bottom center;
+  // -webkit-backface-visibility: hidden;
 }
 
 .box > .top {
@@ -23,32 +25,29 @@
   transform: translateZ(var(--height));
 }
 
-.box > *:not(.top) {
-  height: var(--height);
-}
-
 .box > .front {
+  height: var(--height);
   width: var(--width);
   background: rgba(255, 0, 0, 0.5);
   transform:
-    translate(0, calc(var(--width) - var(--height)))
+    translate(0, calc(var(--depth) - var(--height)))
     rotateX(-90deg);
   transform-origin: bottom center;
 }
 
 .box > .right {
-  width: var(--width);
   height: var(--height);
+  width: var(--depth);
   background: rgba(255, 255, 0, 0.5);
   transform:
-    translate(calc(var(--width) / 2), calc(var(--width) / 2 - var(--height)))
+    translate(calc(var(--width) / 2), calc(var(--depth) / 2 - var(--height)))
     rotateZ(-90deg)
     rotateX(-90deg);
 }
 
 .box > .left {
-  width: var(--depth);
   height: var(--height);
+  width: var(--depth);
   background: rgba(0, 255, 255, 0.5);
   transform:
     translate(calc(var(--depth) / -2), calc(var(--depth) / 2 - var(--height)))
@@ -57,8 +56,8 @@
 }
 
 .box > .back {
-  width: var(--width);
   height: var(--height);
+  width: var(--width);
   background: rgba(0, 255, 0, 0.5);
   transform:
     translate(0, calc(var(--height) * -1))
