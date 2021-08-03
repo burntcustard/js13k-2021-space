@@ -21,9 +21,12 @@
   "dependencies": {
     "ansi-colors": "^4.1.1",
     "browser-sync": "^2.27.5",
+    "bs-html-injector": "^3.0.3",
+    "cssnano": "^5.0.7",
     "eslint": "^7.31.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-import": "^2.23.4",
+    "html-minifier": "^4.0.0",
     "jszip": "^3.7.0",
     "postcss": "^8.3.6",
     "postcss-easy-import": "^3.0.0",

@@ -1,14 +1,17 @@
 /* eslint-disable no-console */
 
+const path = require('path');
 const browserSync = require('browser-sync').create();
 const c = require('ansi-colors');
 const fs = require('fs');
 const rollup = require('rollup');
-const resolve = require('rollup-plugin-node-resolve');
-const postcss = require('rollup-plugin-postcss');
-const postcssImport = require('postcss-easy-import');
-const JSZip = require('jszip');
+const nodeResolve = require('rollup-plugin-node-resolve');
 const terser = require('terser');
+const postcss = require('postcss');
+const postcssImport = require('postcss-easy-import');
+const cssnano = require('cssnano');
+const htmlMinify = require('html-minifier').minify;
+const JSZip = require('jszip');
 
 // Enabled/Disables browserSync live reloading rather than just building once
 const DEVMODE = process.argv.slice(2).includes('--watch');
@@ -46,8 +49,8 @@ function printRollupError(error) {
   console.error(c.bold.red(`[!] ${description}`));
 
   if (error.loc) {
-    const path = error.loc.file.replace(process.cwd(), '');
-    console.error(`${path} ${error.loc.line}:${error.loc.column}`);
+    const errorPath = error.loc.file.replace(process.cwd(), '');
+    console.error(`${errorPath} ${error.loc.line}:${error.loc.column}`);
   }
 
   if (error.frame) {
@@ -59,8 +62,10 @@ function printRollupError(error) {
  * Minify the JS bundle. Includes using preprocess to remove debug messages.
  * @return {object} Output code from terser.minify
  */
-async function minify() {
+async function minifyJs(code) {
   const startTime = Date.now();
+  console.log('Minifying JS...');
+
   const options = {
     compress: {
       passes: 2,
@@ -84,9 +89,6 @@ async function minify() {
     } : false,
   };
 
-  console.log('Minifying JS...');
-
-  const code = fs.readFileSync('dist/game.js', 'utf8');
   const result = await terser.minify(code, options);
 
   if (result.error) {
@@ -94,9 +96,10 @@ async function minify() {
     return false;
   }
 
-  fs.writeFileSync('dist/game.min.js', result.code);
+  fs.writeFile('dist/game.min.js', result.code, () => true);
+
   if (result.map) {
-    fs.writeFileSync('dist/game.min.js.map', result.map);
+    fs.writeFile('dist/game.min.js.map', result.map, () => true);
   }
 
   logOutput(Date.now() - startTime, 'dist/game.min.js');
@@ -109,22 +112,38 @@ async function minify() {
  * @param  {[type]} minifiedJS               [description]
  * @return {[type]}            [description]
  */
-async function inline(minifiedJS) {
+async function inline(css, js) {
   const startTime = Date.now();
-
   console.log('Inlining JS & CSS...');
 
+  const htmlMinifyConfig = {
+    removeAttributeQuotes: true,
+    collapseWhitespace: true,
+  };
+
   const html = fs.readFileSync('src/index.html', 'utf8');
-  const css = fs.readFileSync('dist/game.css', 'utf8');
 
-  const script = `<script>${minifiedJS}</script>`;
-  const styles = `<style>${css}</style>`;
+  if (DEVMODE) {
+    fs.writeFileSync('dist/index.dev.html', htmlMinify(html, htmlMinifyConfig));
+  }
 
-  fs.writeFileSync(
-    'dist/index.html',
-    // Prepend <body> so browsersync can insert its script in dev mode
-    `${styles}${DEVMODE ? '<body>' : ''}${html}${script}`,
+  let inlined = html;
+  // Remove <body>
+  // htmlInline = htmlInline.replace(/<\/?body>/g, '');
+  // Inline CSS
+  inlined = inlined.replace(
+    /<link rel="stylesheet"[^>]*>/,
+    `<style>${css}</style>`,
   );
+  // Inline JS
+  inlined = inlined.replace(
+    /<script[^>]*><\/script>/,
+    `<script>${js}</script>`,
+  );
+  // Remove <head>
+  // htmlInline = htmlInline.replace(/<\/?head>/g, '');
+
+  fs.writeFileSync('dist/index.html', htmlMinify(inlined, htmlMinifyConfig));
 
   logOutput(Date.now() - startTime, 'dist/index.html');
 
@@ -157,16 +176,14 @@ function drawSize(used) {
  * [zip description]
  * @return {boolean} [description]
  */
-function zip() {
+async function zip() {
   const startTime = Date.now();
-
   console.log('Zipping...');
 
   const jszip = new JSZip();
   const data = fs
     .readFileSync('dist/index.html', 'utf8')
-    .replace('//# sourceMappingURL=game.min.js.map', '')
-    .replace('<body>', '');
+    .replace('//# sourceMappingURL=game.min.js.map', '');
 
   jszip.file(
     'index.html',
@@ -179,113 +196,103 @@ function zip() {
     },
   );
 
-  jszip
-    .generateNodeStream({ type: 'nodebuffer', streamFiles: true })
-    .pipe(fs.createWriteStream('dist/game.zip'))
-    .on('finish', () => {
-      logOutput(Date.now() - startTime, 'dist/game.zip');
-      drawSize(fs.statSync('dist/game.zip').size);
-      return true;
-    });
-
-  return false;
-}
-
-let livereload = () => {
-  // On first run, start a web server
-  browserSync.init({
-    server: 'dist',
+  await new Promise((resolve) => {
+    jszip.generateNodeStream({ type: 'nodebuffer', streamFiles: true })
+      .pipe(fs.createWriteStream('dist/game.zip'))
+      .on('finish', resolve);
   });
 
-  // On future runs, reload the browser
-  livereload = () => {
-    browserSync.reload('dist/index.html');
-    return true;
-  };
+  logOutput(Date.now() - startTime, 'dist/game.zip');
+  drawSize(fs.statSync('dist/game.zip').size);
+}
 
-  return true;
-};
+/**
+ * Compile (transpile & minify) CSS, write it to a file, and return it
+ * @return {[type]} [description]
+ */
+async function compileCss() {
+  const mainCss = fs.readFileSync('src/css/main.css');
 
-const compile = async () => {
-  const config = {
-    input: 'src/js/game.js',
-    output: {
-      file: 'dist/game.js',
-      format: 'iife',
-      sourcemap: DEVMODE,
-    },
-  };
+  const result = await postcss([postcssImport, cssnano])
+    .process(mainCss, { from: 'src/css/main.css' });
 
   if (DEVMODE) {
-    const watcher = rollup.watch({
-      input: config.input,
-      output: [config.output],
-      watch: {
-        include: 'src/**',
+    fs.writeFile('dist/game.css', result.css, () => true);
+  } else {
+    fs.writeFileSync('dist/game.css', result.css);
+  }
+
+  return result.css;
+}
+
+/**
+ * Compile (rollup & minify) JS, write it to a file, and return it
+ * @return {string} [description]
+ */
+async function compileJs() {
+  const startTime = Date.now();
+  console.log('Building JS from src/js/game.js...');
+
+  const bundle = await rollup.rollup({
+    input: 'src/js/game.js',
+    plugins: [nodeResolve()],
+  }).catch((error) => {
+    printRollupError(error);
+    return { error };
+  });
+
+  if (bundle.error) return '';
+
+  const { output } = await bundle.generate({
+    format: 'iife',
+    sourcemap: DEVMODE,
+  });
+
+  fs.writeFile('dist/game.js', output[0].code, () => true);
+
+  logOutput(Date.now() - startTime, 'dist/game.js');
+
+  const minifiedJs = await minifyJs(output[0].code);
+
+  return minifiedJs;
+}
+
+async function onFileEvent(event, file) {
+  const isCss = path.extname(file) === '.css';
+  const isJs = path.extname(file) === '.js';
+
+  Promise.all([
+    isCss ? compileCss() : fs.readFileSync('dist/game.css'),
+    isJs ? compileJs() : fs.readFileSync('dist/game.min.js'),
+  ]).then(async ([css, js]) => {
+    await inline(css, js);
+    if (!isCss) browserSync.reload();
+    zip();
+  });
+}
+
+Promise.all([
+  compileCss(),
+  compileJs(),
+]).then(async ([css, js]) => {
+  await inline(css, js);
+  await zip();
+
+  if (DEVMODE) {
+    browserSync.init({
+      server: {
+        baseDir: 'dist',
+        index: 'index.dev.html',
       },
-      plugins: [
-        resolve(),
-        postcss({
-          extract: true,
-          plugins: [
-            postcssImport,
-          ],
-          minimize: {
-            preset: ['default'],
+      files: [
+        'dist/game.css',
+        {
+          match: ['src/**'],
+          fn(event, file) {
+            onFileEvent(event, file);
           },
-        }),
+        },
       ],
     });
-
-    watcher.on('event', async (event) => {
-      switch (event.code) {
-        case 'START':
-          console.log(`Building JS from ${config.input}...`);
-          break;
-        case 'BUNDLE_END':
-          logOutput(event.duration, config.output.file);
-          break;
-        case 'END':
-          inline(await minify()).then(livereload() && zip());
-          break;
-        case 'ERROR':
-        case 'FATAL':
-          printRollupError(event.error);
-          break;
-        default:
-          break;
-      }
-    });
-  } else {
-    const startTime = Date.now();
-    console.log(`Building JS from ${config.input}...`);
-
-    rollup
-      .rollup({
-        input: config.input,
-        output: [config.output],
-        plugins: [
-          resolve(),
-          postcss({
-            extract: true,
-            plugins: [
-              postcssImport,
-            ],
-            minimize: {
-              preset: ['default'],
-            },
-          }),
-        ],
-      })
-      .then(async (bundle) => {
-        await bundle.write(config.output);
-        logOutput(Date.now() - startTime, config.output.file);
-        inline(await minify()).then(zip());
-      })
-      .catch((error) => {
-        printRollupError(error);
-      });
   }
-};
-
-compile();
+});
