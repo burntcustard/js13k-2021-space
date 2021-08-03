@@ -116,6 +116,7 @@ async function inline(css, js) {
   const startTime = Date.now();
   console.log('Inlining JS & CSS...');
 
+  // Options: https://github.com/kangax/html-minifier#options-quick-reference
   const htmlMinifyConfig = {
     removeAttributeQuotes: true,
     collapseWhitespace: true,
@@ -128,20 +129,24 @@ async function inline(css, js) {
   }
 
   let inlined = html;
-  // Remove <body>
-  // htmlInline = htmlInline.replace(/<\/?body>/g, '');
+
   // Inline CSS
   inlined = inlined.replace(
     /<link rel="stylesheet"[^>]*>/,
     `<style>${css}</style>`,
   );
+
   // Inline JS
   inlined = inlined.replace(
     /<script[^>]*><\/script>/,
     `<script>${js}</script>`,
   );
+
+  // Extra HTML hacks to reduce filesize
   // Remove <head>
   // htmlInline = htmlInline.replace(/<\/?head>/g, '');
+  // Remove <body>
+  // htmlInline = htmlInline.replace(/<\/?body>/g, '');
 
   fs.writeFileSync('dist/index.html', htmlMinify(inlined, htmlMinifyConfig));
 
