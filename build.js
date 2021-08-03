@@ -62,11 +62,11 @@ function printRollupError(error) {
  * Minify the JS bundle. Includes using preprocess to remove debug messages.
  * @return {object} Output code from terser.minify
  */
-async function minifyJs(code) {
+async function minifyJs(compiledJs) {
   const startTime = Date.now();
   console.log('Minifying JS...');
 
-  const options = {
+  const minifyJsOptions = {
     compress: {
       passes: 2,
       unsafe: true,
@@ -84,12 +84,12 @@ async function minifyJs(code) {
     },
     module: true,
     sourceMap: DEVMODE ? {
-      content: fs.readFileSync('dist/game.js.map', 'utf8'),
+      content: compiledJs.map,
       url: 'game.min.js.map',
     } : false,
   };
 
-  const result = await terser.minify(code, options);
+  const result = await terser.minify(compiledJs.code, minifyJsOptions);
 
   if (result.error) {
     console.error('Terser minify failed: ', result.error.message);
@@ -174,7 +174,7 @@ function drawSize(used) {
 
 /**
  * [zip description]
- * @return {boolean} [description]
+ * @return {void}
  */
 async function zip() {
   const startTime = Date.now();
@@ -252,7 +252,7 @@ async function compileJs() {
 
   logOutput(Date.now() - startTime, 'dist/game.js');
 
-  const minifiedJs = await minifyJs(output[0].code);
+  const minifiedJs = await minifyJs(output[0]);
 
   return minifiedJs;
 }
@@ -271,11 +271,17 @@ async function onFileEvent(event, file) {
   });
 }
 
+// Create /dist if it doesn't already exist
+fs.mkdirSync('dist');
+
+// Generate CSS & JS at the same time
 Promise.all([
   compileCss(),
   compileJs(),
 ]).then(async ([css, js]) => {
+  // When both are finished, inline the CSS & JS into the HTML
   await inline(css, js);
+  // Then create the zip file and print it's size (before browserSync init)
   await zip();
 
   if (DEVMODE) {
