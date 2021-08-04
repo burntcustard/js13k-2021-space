@@ -308,6 +308,7 @@ Promise.all([
           },
         },
       ],
+      open: false,
     });
   }
 });

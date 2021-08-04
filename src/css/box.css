@@ -1,21 +1,19 @@
 .box {
-  --depth: 60px;
   --width: 100px;
+  --depth: 60px;
   --height: 140px;
 
-  position: relative;
   width: var(--width);
   height: var(--depth);
-  background: red;
-  transform:
-    translateX(-50%)
-    translateY(-50%);
+
+  top: 200px;
+  left: 160px;
+
+  background: rgba(200, 200, 200, 0.5);
 }
 
 .box > * {
-  position: absolute;
   transform-origin: bottom center;
-  // -webkit-backface-visibility: hidden;
 }
 
 .box > .top {
@@ -26,41 +24,40 @@
 }
 
 .box > .front {
-  height: var(--height);
   width: var(--width);
+  height: var(--height);
   background: rgba(255, 0, 0, 0.5);
   transform:
     translate(0, calc(var(--depth) - var(--height)))
     rotateX(-90deg);
-  transform-origin: bottom center;
 }
 
 .box > .right {
-  height: var(--height);
   width: var(--depth);
+  height: var(--height);
   background: rgba(255, 255, 0, 0.5);
   transform:
-    translate(calc(var(--width) / 2), calc(var(--depth) / 2 - var(--height)))
+    translate(calc(var(--width) - var(--depth) / 2), calc(var(--depth) / 2 - var(--height)))
     rotateZ(-90deg)
     rotateX(-90deg);
 }
 
-.box > .left {
-  height: var(--height);
-  width: var(--depth);
-  background: rgba(0, 255, 255, 0.5);
-  transform:
-    translate(calc(var(--depth) / -2), calc(var(--depth) / 2 - var(--height)))
-    rotateZ(90deg)
-    rotateX(-90deg);
-}
-
 .box > .back {
-  height: var(--height);
   width: var(--width);
+  height: var(--height);
   background: rgba(0, 255, 0, 0.5);
   transform:
     translate(0, calc(var(--height) * -1))
     rotateZ(180deg)
+    rotateX(-90deg);
+}
+
+.box > .left {
+  width: var(--depth);
+  height: var(--height);
+  background: rgba(0, 255, 255, 0.5);
+  transform:
+    translate(calc(var(--depth) / -2), calc(var(--depth) / 2 - var(--height)))
+    rotateZ(90deg)
     rotateX(-90deg);
 }

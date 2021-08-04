@@ -1,12 +1,16 @@
 .viewport {
-  position: relative;
+  width: 100vw;
+  height: 100vh;
   overflow: hidden;
-  width: 100%;
-  height: 100%;
   perspective: 500px;
+
+  /* Prevent scrolling by touch in the viewport */
+  touch-action: none;
 }
 
-/* Everything inside the viewport has preserve-3d */
 .viewport * {
   transform-style: preserve-3d;
+  box-sizing: border-box;
+  /* backface-visibility: hidden;
+  -webkit-backface-visibility: hidden; */
 }

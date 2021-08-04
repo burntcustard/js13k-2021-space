@@ -1,15 +1,10 @@
 .camera {
   --zoom: 20px;
-
-  position: absolute;
-  top: 50%;
-  left: 50%;
   transform: translateZ(var(--zoom));
-}
 
-/* The camera center dot */
-.camera::after {
-  border: 2px solid #fff;
-  box-shadow: 0 0 0 2px #000;
-  content: '';
+  width: 0;
+  height: 0;
+  position: relative;
+  top: 50vh;
+  left: 50vw;
 }

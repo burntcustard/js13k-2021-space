@@ -1,10 +1,5 @@
 .ground {
-  position: absolute;
   width: 450px;
   height: 450px;
   background: #8d8;
-  transform:
-    translateX(-50%)
-    translateY(-50%);
-  transform-origin: center;
 }

@@ -1,5 +1,6 @@
 @import 'box';
 @import 'camera';
+@import 'debug';
 @import 'ground';
 @import 'scene';
 @import 'viewport';
@@ -8,4 +9,5 @@ body {
   height: 100vh;
   margin: 0;
   background: #6a2;
+  font-family: sans-serif;
 }

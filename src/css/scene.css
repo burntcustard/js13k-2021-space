@@ -1,12 +1,13 @@
 .scene {
-  width: 0;
-  height: 0;
-  /* Temporary fixed camera(?) */
-  transform:
-    translateX(0)
-    translateY(0)
-    translateZ(-1px)
-    rotateX(45deg)
-    rotateY(0)
-    rotateZ(-245deg);
+  --default-rotation-x: 45deg;
+  --default-rotation-z: 45deg;
+  
+  transform-origin: 0 0;
+  transform: 
+    rotateX(var(--default-rotation-x))
+    rotateZ(var(--default-rotation-z));
+}
+
+.scene * { 
+  position: absolute;
 }
