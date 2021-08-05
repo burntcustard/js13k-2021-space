@@ -68,12 +68,17 @@ function resetPosition() {
   moveCamera();
 }
 
+// TODO: Should these be on the viewport element instead of document?
 document.addEventListener('mousedown', handleDown);
 document.addEventListener('touchstart', handleDown);
 document.addEventListener('mouseup', handleUp);
 document.addEventListener('touchend', handleUp);
 document.addEventListener('mousemove', handleMove);
 document.addEventListener('touchmove', handleMove);
+document.addEventListener('wheel', (event) => {
+  zoom += event.deltaY * 1;
+  moveCamera();
+});
 
 moveCamera();
 
