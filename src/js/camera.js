@@ -1,4 +1,5 @@
 import { toRad, toDeg } from './util';
+import keys from './keyboard';
 
 const camera = document.querySelector('.camera');
 const scene = document.querySelector('.scene');
@@ -10,13 +11,12 @@ const defaultRotation = {
   z: toRad(parseInt(getComputedStyle(scene).getPropertyValue('--default-rotation-z').replace('deg', ''), 10)),
 };
 const rotation = { x: defaultRotation.x, z: defaultRotation.z };
-const prevRotation = { x: rotation.x, z: rotation.z };
 const position = { x: 0, y: 0, z: 0 };
 let zoom = 0;
 const rotationSpeed = 0.01;
 
-let mouseDown = false;
-const mouseDownPos = { x: 0, y: 0 };
+const mouseOldPos = { x: 0, y: 0 };
+const mouseNewPos = { x: 0, y: 0 };
 
 function moveCamera() {
   camera.style.transform = `translateZ(${zoom}px)`;
@@ -24,31 +24,20 @@ function moveCamera() {
   cameraDebug.innerText = `Position: ${Math.round(position.x)}x, ${Math.round(position.y)}y ${Math.round(position.z)}z\nRotation: ${Math.round(toDeg(rotation.x))}°x, ${Math.round(toDeg(rotation.z))}°z\nZoom: ${Math.round(zoom)}px`;
 }
 
-function handleDown(event) {
-  event.preventDefault();
-  mouseDown = true;
-  mouseDownPos.x = event.clientX || event.touches[0].clientX;
-  mouseDownPos.y = event.clientY || event.touches[0].clientY;
-  // console.log(`Mouse down at ${mouseDownPos.x}, ${mouseDownPos.y}`)
-}
-
-function handleUp() {
-  mouseDown = false;
-  prevRotation.x = rotation.x;
-  prevRotation.z = rotation.z;
-  // console.log('Mouse up')
-}
-
 function handleMove(event) {
-  if (mouseDown) {
+  mouseNewPos.x = event.clientX || event.touches[0].clientX;
+  mouseNewPos.y = event.clientY || event.touches[0].clientY;
+
+  if (event.buttons === 1) {
     event.preventDefault();
-    const x = event.clientX || event.touches[0].clientX;
-    const y = event.clientY || event.touches[0].clientY;
-    rotation.x = (mouseDownPos.y - y) * rotationSpeed + prevRotation.x;
-    rotation.z = (mouseDownPos.x - x) * rotationSpeed + prevRotation.z;
+    rotation.z += (mouseNewPos.x - mouseOldPos.x) * rotationSpeed;
+    rotation.x += (mouseNewPos.y - mouseOldPos.y) * rotationSpeed;
     moveCamera();
     // console.log(`Rotating ${tempRotation.x}, ${tempRotation.z}`)
   }
+
+  mouseOldPos.x = mouseNewPos.x;
+  mouseOldPos.y = mouseNewPos.y;
 }
 
 // eslint-disable-next-line no-unused-vars
@@ -69,10 +58,10 @@ function resetPosition() {
 }
 
 // TODO: Should these be on the viewport element instead of document?
-document.addEventListener('mousedown', handleDown);
-document.addEventListener('touchstart', handleDown);
-document.addEventListener('mouseup', handleUp);
-document.addEventListener('touchend', handleUp);
+// document.addEventListener('mousedown', handleDown);
+// document.addEventListener('touchstart', handleDown);
+// document.addEventListener('mouseup', handleUp);
+// document.addEventListener('touchend', handleUp);
 document.addEventListener('mousemove', handleMove);
 document.addEventListener('touchmove', handleMove);
 document.addEventListener('wheel', (event) => {
@@ -84,18 +73,9 @@ moveCamera();
 
 /* Game loop */
 
-const keys = new Set();
 let previousTimestamp;
 const movementSpeed = 0.2;
 const zoomSpeed = 0.2;
-
-document.onkeydown = (event) => {
-  keys.add(event.key);
-};
-
-document.onkeyup = (event) => {
-  keys.delete(event.key);
-};
 
 function main(timestamp) {
   window.requestAnimationFrame(main);
