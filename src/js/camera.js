@@ -15,29 +15,21 @@ const position = { x: 0, y: 0, z: 0 };
 let zoom = 0;
 const rotationSpeed = 0.01;
 
-const mouseOldPos = { x: 0, y: 0 };
-const mouseNewPos = { x: 0, y: 0 };
-
 function moveCamera() {
   camera.style.transform = `translateZ(${zoom}px)`;
   scene.style.transform = `rotateX(${rotation.x}rad) rotateZ(${rotation.z}rad) translateX(${position.x}px) translateY(${position.y}px)`;
   cameraDebug.innerText = `Position: ${Math.round(position.x)}x, ${Math.round(position.y)}y ${Math.round(position.z)}z\nRotation: ${Math.round(toDeg(rotation.x))}°x, ${Math.round(toDeg(rotation.z))}°z\nZoom: ${Math.round(zoom)}px`;
 }
 
-function handleMove(event) {
-  mouseNewPos.x = event.clientX || event.touches[0].clientX;
-  mouseNewPos.y = event.clientY || event.touches[0].clientY;
-
-  if (event.buttons === 1) {
-    event.preventDefault();
-    rotation.z += (mouseNewPos.x - mouseOldPos.x) * rotationSpeed;
-    rotation.x += (mouseNewPos.y - mouseOldPos.y) * rotationSpeed;
+function mouseMoveHandler(event) {
+  if (event.buttons > 1) {
+    rotation.z += (event.clientX - this.mousePosOldX ?? 0) * rotationSpeed;
+    rotation.x += (event.clientY - this.mousePosOldY ?? 0) * rotationSpeed;
     moveCamera();
-    // console.log(`Rotating ${tempRotation.x}, ${tempRotation.z}`)
   }
 
-  mouseOldPos.x = mouseNewPos.x;
-  mouseOldPos.y = mouseNewPos.y;
+  this.mousePosOldX = event.clientX;
+  this.mousePosOldY = event.clientY;
 }
 
 // eslint-disable-next-line no-unused-vars
@@ -62,8 +54,7 @@ function resetPosition() {
 // document.addEventListener('touchstart', handleDown);
 // document.addEventListener('mouseup', handleUp);
 // document.addEventListener('touchend', handleUp);
-document.addEventListener('mousemove', handleMove);
-document.addEventListener('touchmove', handleMove);
+document.addEventListener('mousemove', mouseMoveHandler);
 document.addEventListener('wheel', (event) => {
   zoom += event.deltaY * 1;
   moveCamera();
