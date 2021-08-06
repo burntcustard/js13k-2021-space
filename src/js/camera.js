@@ -1,113 +1,67 @@
 import { toRad, toDeg } from './util';
-import keys from './keyboard';
+import settings from './settings';
 
-const camera = document.querySelector('.camera');
+const cameraElement = document.querySelector('.camera');
 const scene = document.querySelector('.scene');
 const cameraDebug = document.querySelector('.debug .view');
-const perfDebug = document.querySelector('.debug .perf');
 
-const defaultRotation = {
-  x: toRad(parseInt(getComputedStyle(scene).getPropertyValue('--default-rotation-x').replace('deg', ''), 10)),
-  z: toRad(parseInt(getComputedStyle(scene).getPropertyValue('--default-rotation-z').replace('deg', ''), 10)),
-};
-const rotation = { x: defaultRotation.x, z: defaultRotation.z };
-const position = { x: 0, y: 0, z: 0 };
-let zoom = 0;
-const rotationSpeed = 0.01;
+function Camera() {
+  this.x = 0;
+  this.y = 0;
+  this.z = 0;
+  this.rx = toRad(45);
+  this.ry = 0;
+  this.rz = toRad(45);
+  this.dx = 0;
+  this.dy = 0;
+  this.zoom = 0;
+  this.dZoom = 0;
+  this.moveY = 0;
+  this.moveX = 0;
 
-function moveCamera() {
-  camera.style.transform = `translateZ(${zoom}px)`;
-  scene.style.transform = `rotateX(${rotation.x}rad) rotateZ(${rotation.z}rad) translateX(${position.x}px) translateY(${position.y}px)`;
-  cameraDebug.innerText = `Position: ${Math.round(position.x)}x, ${Math.round(position.y)}y ${Math.round(position.z)}z\nRotation: ${Math.round(toDeg(rotation.x))}°x, ${Math.round(toDeg(rotation.z))}°z\nZoom: ${Math.round(zoom)}px`;
+  this.setTransform = () => {
+    scene.style.transform = `rotateX(${this.rx}rad) rotateZ(${this.rz}rad) translateX(${this.x}px) translateY(${this.y}px)`;
+  };
+
+  this.setZoom = () => {
+    cameraElement.style.transform = `translateZ(${this.zoom}px)`;
+  };
+
+  this.update = (elapsed) => {
+    // Normalize dx and dy so moving diagonally isn't 2x as fast
+    if (this.moveX || this.moveY) {
+      if (this.moveX && this.moveY) {
+        this.moveX *= 0.7071;
+        this.moveY *= 0.7071;
+      }
+
+      if (this.moveY) {
+        this.dx += this.moveY * Math.sin(this.rz);
+        this.dy += this.moveY * Math.cos(this.rz);
+        this.moveY = 0;
+      }
+
+      if (this.moveX) {
+        this.dx -= this.moveX * Math.cos(this.rz);
+        this.dy += this.moveX * Math.sin(this.rz);
+        this.moveX = 0;
+      }
+
+      this.x += this.dx * settings.camera.panSpeed * elapsed;
+      this.y += this.dy * settings.camera.panSpeed * elapsed;
+      this.dx = 0;
+      this.dy = 0;
+      this.setTransform();
+    }
+
+    if (this.dZoom) {
+      this.zoom += this.dZoom * settings.camera.zoomSpeed * elapsed;
+      this.dZoom = 0;
+      this.setZoom();
+    }
+
+    cameraDebug.innerText = `Position: ${Math.round(this.x)}x, ${Math.round(this.y)}y, ${Math.round(this.z)}z\nRotation: ${Math.round(toDeg(this.rx))}°x, ${Math.round(toDeg(this.rz))}°z\nZoom: ${Math.round(this.zoom)}px`;
+  };
 }
 
-function mouseMoveHandler(event) {
-  if (event.buttons > 1) {
-    rotation.z += (event.clientX - this.mousePosOldX ?? 0) * rotationSpeed;
-    rotation.x += (event.clientY - this.mousePosOldY ?? 0) * rotationSpeed;
-    moveCamera();
-  }
-
-  this.mousePosOldX = event.clientX;
-  this.mousePosOldY = event.clientY;
-}
-
-// eslint-disable-next-line no-unused-vars
-function resetRotation() {
-  // console.log('Resetting rotation');
-  rotation.x = defaultRotation.x;
-  rotation.z = defaultRotation.z;
-  moveCamera();
-}
-
-// eslint-disable-next-line no-unused-vars
-function resetPosition() {
-  // console.log('Resetting position');
-  position.x = 0;
-  position.y = 0;
-  position.z = 0;
-  moveCamera();
-}
-
-// TODO: Should these be on the viewport element instead of document?
-// document.addEventListener('mousedown', handleDown);
-// document.addEventListener('touchstart', handleDown);
-// document.addEventListener('mouseup', handleUp);
-// document.addEventListener('touchend', handleUp);
-document.addEventListener('mousemove', mouseMoveHandler);
-document.addEventListener('wheel', (event) => {
-  zoom += event.deltaY * 1;
-  moveCamera();
-});
-
-moveCamera();
-
-/* Game loop */
-
-let previousTimestamp;
-const movementSpeed = 0.2;
-const zoomSpeed = 0.2;
-
-function main(timestamp) {
-  window.requestAnimationFrame(main);
-
-  if (previousTimestamp === undefined) previousTimestamp = timestamp;
-  const elapsed = timestamp - previousTimestamp;
-
-  // Do stuff
-  let moveX = 0; let moveY = 0; let
-    moveZoom = 0;
-  if (keys.has('w')) {
-    moveX += Math.sin(rotation.z) * movementSpeed * elapsed;
-    moveY += Math.cos(rotation.z) * movementSpeed * elapsed;
-  }
-  if (keys.has('a')) {
-    moveX += Math.cos(rotation.z) * movementSpeed * elapsed;
-    moveY -= Math.sin(rotation.z) * movementSpeed * elapsed;
-  }
-  if (keys.has('s')) {
-    moveX -= Math.sin(rotation.z) * movementSpeed * elapsed;
-    moveY -= Math.cos(rotation.z) * movementSpeed * elapsed;
-  }
-  if (keys.has('d')) {
-    moveX -= Math.cos(rotation.z) * movementSpeed * elapsed;
-    moveY += Math.sin(rotation.z) * movementSpeed * elapsed;
-  }
-  if (keys.has('z')) {
-    moveZoom += zoomSpeed * elapsed;
-  }
-  if (keys.has('x')) {
-    moveZoom -= zoomSpeed * elapsed;
-  }
-  if (moveX || moveY || moveZoom) {
-    position.x += moveX;
-    position.y += moveY;
-    zoom += moveZoom;
-    moveCamera();
-  }
-
-  previousTimestamp = timestamp;
-  perfDebug.innerText = `Elapsed: ${elapsed.toFixed(2)} FPS: ${(1000 / elapsed).toFixed()}`;
-}
-
-window.requestAnimationFrame(main);
+export default new Camera();
