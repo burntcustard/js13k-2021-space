@@ -85,7 +85,7 @@ async function minifyJs(compiledJs) {
     module: true,
     sourceMap: DEVMODE ? {
       content: compiledJs.map,
-      url: 'game.min.js.map',
+      url: 'main.min.js.map',
     } : false,
   };
 
@@ -96,13 +96,13 @@ async function minifyJs(compiledJs) {
     return false;
   }
 
-  fs.writeFile('dist/game.min.js', result.code, () => true);
+  fs.writeFile('dist/main.min.js', result.code, () => true);
 
   if (result.map) {
-    fs.writeFile('dist/game.min.js.map', result.map, () => true);
+    fs.writeFile('dist/main.min.js.map', result.map, () => true);
   }
 
-  logOutput(Date.now() - startTime, 'dist/game.min.js');
+  logOutput(Date.now() - startTime, 'dist/main.min.js');
 
   return result.code;
 }
@@ -186,7 +186,7 @@ async function zip() {
   const jszip = new JSZip();
   const data = fs
     .readFileSync('dist/index.html', 'utf8')
-    .replace('//# sourceMappingURL=game.min.js.map', '');
+    .replace('//# sourceMappingURL=main.min.js.map', '');
 
   jszip.file(
     'index.html',
@@ -226,9 +226,9 @@ async function compileCss() {
   if (result.error) return '';
 
   if (DEVMODE) {
-    fs.writeFile('dist/game.css', result.css, () => true);
+    fs.writeFile('dist/main.css', result.css, () => true);
   } else {
-    fs.writeFileSync('dist/game.css', result.css);
+    fs.writeFileSync('dist/main.css', result.css);
   }
 
   return result.css;
@@ -240,10 +240,10 @@ async function compileCss() {
  */
 async function compileJs() {
   const startTime = Date.now();
-  console.log('Building JS from src/js/game.js...');
+  console.log('Building JS from src/js/main.js...');
 
   const bundle = await rollup.rollup({
-    input: 'src/js/game.js',
+    input: 'src/js/main.js',
     plugins: [nodeResolve()],
   }).catch((error) => {
     printCompileError(error);
@@ -257,7 +257,7 @@ async function compileJs() {
     sourcemap: DEVMODE,
   });
 
-  fs.writeFile('dist/game.js', output[0].code, () => true);
+  fs.writeFile('dist/main.js', output[0].code, () => true);
 
   logOutput(Date.now() - startTime, 'dist/game.js');
 
@@ -271,8 +271,8 @@ async function onFileEvent(event, file) {
   const isJs = path.extname(file) === '.js';
 
   Promise.all([
-    isCss ? compileCss() : fs.readFileSync('dist/game.css'),
-    isJs ? compileJs() : fs.readFileSync('dist/game.min.js'),
+    isCss ? compileCss() : fs.readFileSync('dist/main.css'),
+    isJs ? compileJs() : fs.readFileSync('dist/main.min.js'),
   ]).then(async ([css, js]) => {
     await bundleIntoHtml(css, js);
     if (!isCss) browserSync.reload();
@@ -300,7 +300,7 @@ Promise.all([
         index: 'index.dev.html',
       },
       files: [
-        'dist/game.css',
+        'dist/main.css',
         {
           match: ['src/**'],
           fn(event, file) {
