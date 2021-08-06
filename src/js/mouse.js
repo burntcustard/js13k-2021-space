@@ -8,8 +8,8 @@ export default function initMouse() {
 
   viewport.addEventListener('mousemove', (event) => {
     if (event.buttons === 1) {
-      camera.rz += (mouseOld.x - event.clientX ?? 0) * settings.camera.rotateSpeed;
-      camera.rx += (mouseOld.y - event.clientY ?? 0) * settings.camera.rotateSpeed;
+      camera.rz += ((mouseOld.x ?? event.clientX) - event.clientX) * settings.camera.rotateSpeed;
+      camera.rx += ((mouseOld.y ?? event.clientY) - event.clientY) * settings.camera.rotateSpeed;
       camera.setTransform();
     }
 
