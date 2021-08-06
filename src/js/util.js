@@ -5,3 +5,7 @@ export function toRad(angle) {
 export function toDeg(angle) {
   return (angle * 180) / Math.PI;
 }
+
+export function $(selectors) {
+  return document.querySelector(selectors);
+}

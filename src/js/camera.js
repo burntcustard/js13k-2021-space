@@ -1,9 +1,9 @@
-import { toRad, toDeg } from './util';
+import { $, toRad, toDeg } from './util';
 import settings from './settings';
 
-const cameraElement = document.querySelector('.camera');
-const scene = document.querySelector('.scene');
-const cameraDebug = document.querySelector('.debug .view');
+const cameraElement = $('.camera');
+const scene = $('.scene');
+const cameraDebug = $('.debug .view');
 
 function Camera() {
   this.x = 0;
