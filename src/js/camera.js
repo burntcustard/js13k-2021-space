@@ -14,23 +14,28 @@ function Camera() {
   this.rz = toRad(45);
   this.dx = 0;
   this.dy = 0;
-  this.zoom = 0;
+  this.zoom = settings.camera.zoom.min;
   this.dZoom = 0;
   this.moveY = 0;
   this.moveX = 0;
 
   this.setTransform = () => {
+    // Clamp so the camera can't flip (values in radians)
+    this.rx = Math.min(Math.max(this.rx, 0), 1.5);
     scene.style.transform = `rotateX(${this.rx}rad) rotateZ(${this.rz}rad) translateX(${this.x}px) translateY(${this.y}px)`;
   };
+
+  this.setZoom = () => {
+    this.zoom = Math.min(Math.max(this.zoom, settings.camera.zoom.min), settings.camera.zoom.max);
+    cameraElement.style.transform = `translateZ(${500 - this.zoom}px)`;
+  };
+
+  this.setZoom();
 
   this.rotate = (x, y) => {
     this.rz += x * settings.camera.rotateSpeed;
     this.rx += y * settings.camera.rotateSpeed;
     this.setTransform();
-  };
-
-  this.setZoom = () => {
-    cameraElement.style.transform = `translateZ(${this.zoom}px)`;
   };
 
   this.update = (elapsed) => {
@@ -53,8 +58,8 @@ function Camera() {
         this.moveX = 0;
       }
 
-      this.x += this.dx * settings.camera.panSpeed * elapsed;
-      this.y += this.dy * settings.camera.panSpeed * elapsed;
+      this.x += this.dx * settings.camera.panSpeed * (this.zoom / 300) * elapsed;
+      this.y += this.dy * settings.camera.panSpeed * (this.zoom / 300) * elapsed;
       this.dx = 0;
       this.dy = 0;
       this.setTransform();

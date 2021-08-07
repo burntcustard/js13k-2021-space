@@ -1,7 +1,4 @@
 .camera {
-  --zoom: 20px;
-  transform: translateZ(var(--zoom));
-
   width: 0;
   height: 0;
   position: relative;
