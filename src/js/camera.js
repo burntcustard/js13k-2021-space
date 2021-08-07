@@ -23,6 +23,12 @@ function Camera() {
     scene.style.transform = `rotateX(${this.rx}rad) rotateZ(${this.rz}rad) translateX(${this.x}px) translateY(${this.y}px)`;
   };
 
+  this.rotate = (x, y) => {
+    this.rz += x * settings.camera.rotateSpeed;
+    this.rx += y * settings.camera.rotateSpeed;
+    this.setTransform();
+  };
+
   this.setZoom = () => {
     cameraElement.style.transform = `translateZ(${this.zoom}px)`;
   };
