@@ -15,7 +15,7 @@ function Camera() {
   this.rz = toRad(45);
   this.dx = 0;
   this.dy = 0;
-  this.zoom = settings.camera.zoom.min;
+  this.zoom = settings.camera.zoom.default;
   this.dZoom = 0;
   this.moveY = 0;
   this.moveX = 0;
