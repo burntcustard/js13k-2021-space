@@ -1,7 +1,7 @@
 import camera from './camera';
 import initMouse from './mouse';
 import { initKeyboard, doKeyboardInput } from './keyboard';
-import { $ } from './util';
+import { $, toRad } from './util';
 
 const perfDebug = $('.debug .perf');
 
@@ -24,8 +24,8 @@ initMouse();
 initKeyboard();
 
 $('#reset-rotation').addEventListener('click', () => {
-  camera.rx = 45;
-  camera.rz = 45;
+  camera.rx = toRad(45);
+  camera.rz = toRad(45);
   camera.setTransform();
 });
 
