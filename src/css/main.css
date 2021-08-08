@@ -2,6 +2,7 @@
 @import 'camera';
 @import 'debug';
 @import 'ground';
+@import 'hexagon';
 @import 'scene';
 @import 'viewport';
 

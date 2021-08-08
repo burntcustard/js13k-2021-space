@@ -1,0 +1,83 @@
+.hexagon {
+  --radius: 100px;
+  --width: calc(1.155 * var(--radius));
+  --height: 140px;
+
+  background: rgba(200, 200, 200, 0.5);
+}
+
+.hexagon > * {
+  transform-origin: bottom center;
+}
+
+.hexagon > .top {
+  width: calc(2 * var(--width));
+  height: calc(2 * var(--radius));
+  background: rgba(100, 100, 100, 0.5);
+  clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+  transform:
+    translateX(calc(-0.577 * var(--radius)))
+    translateY(calc(var(--height) - 2 * var(--radius)))
+    translateZ(var(--height));
+}
+
+.hexagon > .front {
+  width: var(--width);
+  height: var(--height);
+  background: rgba(255, 0, 0, 0.5);
+  transform: rotateX(-90deg);
+}
+
+.hexagon > .front-right {
+  width: var(--width);
+  height: var(--height);
+  background: rgba(255, 255, 0, 0.5);
+  transform:
+    rotateX(-90deg)
+    translateX(calc(0.866 * var(--radius)))
+    translateZ(calc(-0.5 * var(--radius)))
+    rotateY(60deg);
+}
+
+.hexagon > .back-right {
+  width: var(--width);
+  height: var(--height);
+  background: rgba(0, 255, 0, 0.5);
+  transform:
+    rotateX(-90deg)
+    translateX(calc(0.866 * var(--radius)))
+    translateZ(calc(-1.5 * var(--radius)))
+    rotateY(120deg);
+}
+
+.hexagon > .back {
+  width: var(--width);
+  height: var(--height);
+  background: rgba(0, 255, 255, 0.5);
+  transform:
+    rotateX(-90deg)
+    translateZ(calc(-2 * var(--radius)))
+    rotateY(180deg);
+}
+
+.hexagon > .back-left {
+  width: var(--width);
+  height: var(--height);
+  background: rgba(0, 0, 255, 0.5);
+  transform:
+    rotateX(-90deg)
+    translateX(calc(-0.866 * var(--radius)))
+    translateZ(calc(-1.5 * var(--radius)))
+    rotateY(240deg);
+}
+
+.hexagon > .front-left {
+  width: var(--width);
+  height: var(--height);
+  background: rgba(255, 0, 255, 0.5);
+  transform:
+    rotateX(-90deg)
+    translateX(calc(-0.866 * var(--radius)))
+    translateZ(calc(-0.5 * var(--radius)))
+    rotateY(300deg);
+}
