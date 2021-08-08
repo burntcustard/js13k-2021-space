@@ -1,7 +1,7 @@
 .camera {
-  width: 0;
-  height: 0;
   position: relative;
   top: 50vh;
   left: 50vw;
+  width: 0;
+  height: 0;
 }

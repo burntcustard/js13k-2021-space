@@ -1,7 +1,4 @@
 .scene {
-  --default-rotation-x: 45deg;
-  --default-rotation-z: 45deg;
-
   transform-origin: 0 0;
 }
 

@@ -1,14 +1,14 @@
 .viewport {
+  overflow: hidden;
   width: 100vw;
   height: 100vh;
-  overflow: hidden;
+
   /* Prevent scrolling by touch in the viewport */
   touch-action: none;
 }
 
 .viewport * {
-  transform-style: preserve-3d;
   box-sizing: border-box;
-  /* backface-visibility: hidden;
-  -webkit-backface-visibility: hidden; */
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
 }

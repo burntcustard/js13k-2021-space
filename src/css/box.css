@@ -3,12 +3,10 @@
   --depth: 60px;
   --height: 140px;
 
-  width: var(--width);
-  height: var(--depth);
-
   top: 200px;
   left: 160px;
-
+  width: var(--width);
+  height: var(--depth);
   background: rgba(200, 200, 200, 0.5);
 }
 
