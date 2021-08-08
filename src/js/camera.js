@@ -3,6 +3,7 @@ import settings from './settings';
 
 const cameraElement = $('.camera');
 const scene = $('.scene');
+const viewport = $('.viewport');
 const cameraDebug = $('.debug .view');
 
 function Camera() {
@@ -18,6 +19,8 @@ function Camera() {
   this.dZoom = 0;
   this.moveY = 0;
   this.moveX = 0;
+  this.perspective = settings.camera.perspective;
+  viewport.style.perspective = `${this.perspective}px`;
 
   this.setTransform = () => {
     // Clamp so the camera can't flip (values in radians)
@@ -27,15 +30,21 @@ function Camera() {
 
   this.setZoom = () => {
     this.zoom = Math.min(Math.max(this.zoom, settings.camera.zoom.min), settings.camera.zoom.max);
-    cameraElement.style.transform = `translateZ(${500 - this.zoom}px)`;
+    cameraElement.style.transform = `translateZ(${settings.camera.perspective - this.zoom}px)`;
   };
 
+  this.setTransform();
   this.setZoom();
 
   this.rotate = (x, y) => {
     this.rz += x * settings.camera.rotateSpeed;
     this.rx += y * settings.camera.rotateSpeed;
     this.setTransform();
+  };
+
+  this.changeZoom = (value) => {
+    this.zoom += (value * this.zoom * settings.camera.zoomSpeed) / 500;
+    this.setZoom();
   };
 
   this.update = (elapsed) => {
@@ -66,9 +75,8 @@ function Camera() {
     }
 
     if (this.dZoom) {
-      this.zoom += this.dZoom * settings.camera.zoomSpeed * elapsed;
+      this.changeZoom(this.dZoom * elapsed);
       this.dZoom = 0;
-      this.setZoom();
     }
 
     cameraDebug.innerText = `Position: ${Math.round(this.x)}x, ${Math.round(this.y)}y, ${Math.round(this.z)}z\nRotation: ${Math.round(toDeg(this.rx))}°x, ${Math.round(toDeg(this.rz))}°z\nZoom: ${Math.round(this.zoom)}px`;

@@ -1,12 +1,13 @@
 const settings = {
   camera: {
     panSpeed: 0.2,
-    zoomSpeed: 0.2,
+    perspective: 500,
     rotateSpeed: 0.01,
     zoom: {
-      min: 100,
       max: 4000,
+      min: 100,
     },
+    zoomSpeed: 1,
   },
 };
 

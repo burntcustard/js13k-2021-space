@@ -15,7 +15,6 @@ export default function initMouse() {
   });
 
   viewport.addEventListener('wheel', (event) => {
-    camera.zoom += event.deltaY * 1;
-    camera.setZoom();
+    camera.changeZoom(event.deltaY);
   });
 }

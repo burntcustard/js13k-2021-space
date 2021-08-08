@@ -1,11 +1,5 @@
-export function toRad(angle) {
-  return angle * (Math.PI / 180);
-}
+export const toRad = (angle) => angle * (Math.PI / 180);
 
-export function toDeg(angle) {
-  return (angle * 180) / Math.PI;
-}
+export const toDeg = (angle) => (angle * 180) / Math.PI;
 
-export function $(selectors) {
-  return document.querySelector(selectors);
-}
+export const $ = (selectors) => document.querySelector(selectors);

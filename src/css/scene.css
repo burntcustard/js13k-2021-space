@@ -1,13 +1,10 @@
 .scene {
   --default-rotation-x: 45deg;
   --default-rotation-z: 45deg;
-  
+
   transform-origin: 0 0;
-  transform: 
-    rotateX(var(--default-rotation-x))
-    rotateZ(var(--default-rotation-z));
 }
 
-.scene * { 
+.scene * {
   position: absolute;
 }
