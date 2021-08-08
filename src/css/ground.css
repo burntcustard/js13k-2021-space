@@ -1,5 +1,7 @@
 .ground {
-  width: 450px;
-  height: 450px;
+  top: -500px;
+  left: -500px;
+  width: 1000px;
+  height: 1000px;
   background: #8d8;
 }
