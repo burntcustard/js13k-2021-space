@@ -5,6 +5,8 @@
 }
 
 .hexagon > * {
+  width: var(--width);
+  height: var(--height);
   transform-origin: bottom center;
 }
 
@@ -20,8 +22,6 @@
 }
 
 .hexagon > .front {
-  width: var(--width);
-  height: var(--height);
   background: rgba(255, 0, 0, 0.5);
   transform:
     translateX(calc(-0.5 * var(--width)))
@@ -30,8 +30,6 @@
 }
 
 .hexagon > .front-right {
-  width: var(--width);
-  height: var(--height);
   background: rgba(255, 255, 0, 0.5);
   transform:
     rotateX(-90deg)
@@ -41,8 +39,6 @@
 }
 
 .hexagon > .back-right {
-  width: var(--width);
-  height: var(--height);
   background: rgba(0, 255, 0, 0.5);
   transform:
     rotateX(-90deg)
@@ -52,8 +48,6 @@
 }
 
 .hexagon > .back {
-  width: var(--width);
-  height: var(--height);
   background: rgba(0, 255, 255, 0.5);
   transform:
     rotateX(-90deg)
@@ -63,8 +57,6 @@
 }
 
 .hexagon > .back-left {
-  width: var(--width);
-  height: var(--height);
   background: rgba(0, 0, 255, 0.5);
   transform:
     rotateX(-90deg)
@@ -74,8 +66,6 @@
 }
 
 .hexagon > .front-left {
-  width: var(--width);
-  height: var(--height);
   background: rgba(255, 0, 255, 0.5);
   transform:
     rotateX(-90deg)
