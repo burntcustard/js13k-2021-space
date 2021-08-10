@@ -6,6 +6,8 @@ export default function initMouse() {
   const mouseOld = {};
 
   viewport.addEventListener('mousemove', (event) => {
+    event.preventDefault();
+
     if (mouseOld.x !== undefined && event.buttons === 1) {
       camera.rotate(mouseOld.x - event.clientX, mouseOld.y - event.clientY);
     }
