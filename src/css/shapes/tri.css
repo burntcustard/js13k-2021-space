@@ -3,12 +3,21 @@
   --h: 140;
   --width: calc(var(--w) * 1px);
   --height: calc(var(--h) * 1px);
-  --a: calc(var(--h) / (var(--w) / 2));
-  --tan-a: calc(var(--a) + ((1 / 3) * (var(--a) * var(--a) * var(--a))) + ((2 / 15) * (var(--a) * var(--a) * var(--a) * var(--a) * var(--a))) + ((17 / 315) * (var(--a) * var(--a) * var(--a) * var(--a) * var(--a) * var(--a) * var(--a))));
-  --angle: calc((-1 / var(--tan-a)));
+  --a: calc((var(--w) / 2) / var(--h));
+
+  /* https://people.math.sc.edu/girardi/m142/handouts/10sTaylorPolySeries.pdf */
+  --atan-a:
+    calc(
+      (var(--a) - ((var(--a) * var(--a) * var(--a)) / 3) + ((var(--a) * var(--a) * var(--a) * var(--a) * var(--a)) / 5) - ((var(--a) * var(--a) * var(--a) * var(--a) * var(--a) * var(--a) * var(--a)) / 7) + ((var(--a) * var(--a) * var(--a) * var(--a) * var(--a) * var(--a) * var(--a) * var(--a) * var(--a)) / 9))
+    );
+  --angle: calc(var(--atan-a) - 1.57079632);
 
   top: -250px;
   left: -200px;
+
+  /* Just to check atan-a is -0.3430239404207034 like it should be: */
+  right: calc(var(--atan-a) * 1px);
+
   width: var(--width);
   height: var(--width);
   background: rgba(200, 200, 200, 0.5);
