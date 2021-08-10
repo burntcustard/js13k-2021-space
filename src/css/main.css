@@ -1,8 +1,9 @@
-@import 'box';
 @import 'camera';
 @import 'debug';
 @import 'ground';
-@import 'hexagon';
+@import 'shapes/box';
+@import 'shapes/hexagon';
+@import 'shapes/tri';
 @import 'scene';
 @import 'viewport';
 
