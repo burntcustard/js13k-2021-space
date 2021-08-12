@@ -12,6 +12,7 @@ module.exports = {
     'sourceType': 'module',
   },
   'rules': {
+    'no-multi-assign': 'off',
     'no-plusplus': 'off',
     'quote-props': ['error', 'consistent'],
   },

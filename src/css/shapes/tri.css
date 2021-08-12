@@ -8,7 +8,7 @@
   /* https://people.math.sc.edu/girardi/m142/handouts/10sTaylorPolySeries.pdf */
   --atan-a:
     calc(
-      (var(--a) - ((var(--a) * var(--a) * var(--a)) / 3) + ((var(--a) * var(--a) * var(--a) * var(--a) * var(--a)) / 5) - ((var(--a) * var(--a) * var(--a) * var(--a) * var(--a) * var(--a) * var(--a)) / 7) + ((var(--a) * var(--a) * var(--a) * var(--a) * var(--a) * var(--a) * var(--a) * var(--a) * var(--a)) / 9))
+      (var(--a) - ((var(--a) * var(--a) * var(--a)) / 3) + ((var(--a) * var(--a) * var(--a) * var(--a) * var(--a)) / 5) - ((var(--a) * var(--a) * var(--a) * var(--a) * var(--a) * var(--a) * var(--a)) / 7))
     );
   --angle: calc(var(--atan-a) - 1.57079632);
 
@@ -64,4 +64,34 @@
     translate(calc(var(--width) / -2), calc(var(--width) / 2 - var(--height)))
     rotateZ(90deg)
     rotateX(calc(var(--angle) * 1rad));
+}
+
+.pyramid {
+
+}
+
+.pyramid * {
+  clip-path:
+    polygon(
+      0 100%,
+      50% 0,
+      100% 100%
+    );
+  transform-origin: bottom center;
+}
+
+.pyramid *:nth-child(1) {
+  background: rgba(255, 0, 0, 0.5);
+}
+
+.pyramid *:nth-child(2) {
+  background: rgba(255, 255, 0, 0.5);
+}
+
+.pyramid *:nth-child(3) {
+  background: rgba(0, 255, 0, 0.5);
+}
+
+.pyramid *:nth-child(4) {
+  background: rgba(0, 255, 255, 0.5);
 }
