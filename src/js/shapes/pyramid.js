@@ -7,7 +7,7 @@ export default class Pyramid extends Shape {
 
     this.element.className = 'pyramid';
 
-    const hypotenuse = Math.sqrt(this.w * this.w + this.h * this.h);
+    const hypotenuse = Math.hypot(this.w / 2, this.h);
     this.a = Math.atan2(this.h * 2, this.w) * -1;
 
     this.sides = [

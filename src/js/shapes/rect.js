@@ -11,10 +11,8 @@ export default class Rect {
     this.rz = rz ?? 0;
     this.element = document.createElement('div');
     this.element.className = 'rect';
-    console.log(w);
     this.element.style.width = `${w}px`;
     this.element.style.height = `${h}px`;
-
     this.update();
   }
 

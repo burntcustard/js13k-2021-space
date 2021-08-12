@@ -9,10 +9,10 @@ const perfDebug = $('.debug .perf');
 let previousTimestamp;
 
 const pyramid = new Pyramid({
-  w: 100,
-  h: 130,
-  x: -200,
-  y: -200,
+  w: 150,
+  h: 200,
+  x: -300,
+  y: -300,
 });
 
 console.log(pyramid);
