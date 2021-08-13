@@ -1,6 +1,6 @@
 export default class Shape {
   /* eslint-disable object-curly-newline */
-  constructor({ w, h, d, x, y, z, rx, ry, rz }) {
+  constructor({ w, h, d, x, y, z, rx, ry, rz, className }) {
     this.w = w;
     this.h = h;
     this.d = d ?? w;
@@ -11,6 +11,7 @@ export default class Shape {
     this.ry = ry ?? 0;
     this.rz = rz ?? 0;
     this.element = document.createElement('div');
+    this.element.className = `shape ${className}`;
     this.element.style.width = `${w}px`;
     this.element.style.height = `${d ?? w}px`;
     document.querySelector('.scene').append(this.element);

@@ -3,6 +3,7 @@ import initMouse from './mouse';
 import { initKeyboard, doKeyboardInput } from './keyboard';
 import { $, toRad } from './util';
 import Pyramid from './shapes/pyramid';
+import Box from './shapes/box';
 
 const perfDebug = $('.debug .perf');
 
@@ -15,7 +16,13 @@ const pyramid = new Pyramid({
   y: -300,
 });
 
-console.log(pyramid);
+const box = new Box({
+  w: 100,
+  d: 60,
+  h: 140,
+  x: 200,
+  y: 160,
+});
 
 function main(timestamp) {
   window.requestAnimationFrame(main);
@@ -24,6 +31,10 @@ function main(timestamp) {
   const elapsed = timestamp - previousTimestamp;
 
   doKeyboardInput();
+  box.rz += 0.01;
+  box.update();
+  pyramid.rz -= 0.01;
+  pyramid.update();
   camera.update(elapsed);
 
   previousTimestamp = timestamp;

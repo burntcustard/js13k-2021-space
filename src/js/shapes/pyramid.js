@@ -1,46 +1,48 @@
 import Shape from './shape';
-import Rect from './rect';
+import Face from './face';
 
 export default class Pyramid extends Shape {
   constructor(props) {
-    super(props);
-
-    this.element.className = 'pyramid';
+    super({ ...props, className: 'pyramid' });
 
     const hypotenuse = Math.hypot(this.w / 2, this.h);
-    this.a = Math.atan2(this.h * 2, this.w) * -1;
+    const angle = Math.atan2(this.h * 2, this.w) * -1;
 
     this.sides = [
-      new Rect({
+      new Face({
         w: this.w,
         h: hypotenuse,
         x: 0,
         y: this.w - hypotenuse,
-        rx: this.a,
+        rx: angle,
+        className: 'tri',
       }),
-      new Rect({
+      new Face({
         w: this.w,
         h: hypotenuse,
         x: this.w / 2,
         y: this.w / 2 - hypotenuse,
-        rx: this.a,
+        rx: angle,
         rz: Math.PI / -2,
+        className: 'tri',
       }),
-      new Rect({
+      new Face({
         w: this.w,
         h: hypotenuse,
         x: 0,
         y: -hypotenuse,
-        rx: this.a,
+        rx: angle,
         rz: Math.PI,
+        className: 'tri',
       }),
-      new Rect({
+      new Face({
         w: this.w,
         h: hypotenuse,
         x: this.w / -2,
         y: this.w / 2 - hypotenuse,
-        rx: this.a,
+        rx: angle,
         rz: Math.PI / 2,
+        className: 'tri',
       }),
     ];
 
