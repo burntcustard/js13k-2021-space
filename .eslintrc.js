@@ -14,6 +14,7 @@ module.exports = {
   'rules': {
     'no-multi-assign': 'off',
     'no-plusplus': 'off',
+    'object-curly-newline': 'off',
     'quote-props': ['error', 'consistent'],
   },
 };

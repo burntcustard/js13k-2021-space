@@ -4,10 +4,18 @@ import { initKeyboard, doKeyboardInput } from './keyboard';
 import { $, toRad } from './util';
 import Pyramid from './shapes/pyramid';
 import Box from './shapes/box';
+import Sphere from './shapes/sphere';
 
 const perfDebug = $('.debug .perf');
 
 let previousTimestamp;
+
+const sphere = new Sphere({
+  radius: 40,
+  x: -300,
+  y: 300,
+  z: 20,
+});
 
 const pyramid = new Pyramid({
   w: 150,

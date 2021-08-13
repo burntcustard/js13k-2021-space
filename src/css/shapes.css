@@ -8,7 +8,10 @@
 
 .face {
   transform-origin: bottom center;
-  transition: transform 1s;
+}
+
+.circle {
+  border-radius: 50%;
 }
 
 /* Temporary (hopefully) debug face colors */

@@ -1,5 +1,4 @@
 export default class Shape {
-  /* eslint-disable object-curly-newline */
   constructor({ w, h, d, x, y, z, rx, ry, rz, className }) {
     this.w = w;
     this.h = h;
