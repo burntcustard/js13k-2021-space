@@ -5,6 +5,7 @@ import { $, toRad } from './util';
 import Pyramid from './shapes/pyramid';
 import Box from './shapes/box';
 import Sphere from './shapes/sphere';
+import Hexagon from './shapes/hexagon';
 
 const perfDebug = $('.debug .perf');
 
@@ -30,6 +31,13 @@ const box = new Box({
   h: 140,
   x: 200,
   y: 160,
+});
+
+const hexagon = new Hexagon({
+  radius: 100,
+  h: 200,
+  x: 0,
+  y: 0,
 });
 
 function main(timestamp) {
