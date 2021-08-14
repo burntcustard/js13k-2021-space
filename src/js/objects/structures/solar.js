@@ -9,7 +9,6 @@ export default class Solar extends Structure {
 
     super({ w, h, d, ...props, powerGen: 10 });
 
-    // Create a new box shape
     this.model = new Box({
       w: 50,
       h: 2,
