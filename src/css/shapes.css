@@ -14,6 +14,11 @@
   border-radius: 50%;
 }
 
+/* Should be in "textures.css"? */
+.solar {
+  background: rgb(0, 0, 255);
+}
+
 /* Temporary (hopefully) debug face colors */
 
 .face:nth-child(1) {

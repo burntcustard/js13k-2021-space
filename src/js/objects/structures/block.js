@@ -7,7 +7,7 @@ export default class Block extends Structure {
     const h = 20;
     const d = 20;
 
-    super({ w, h, d, ...props, powerUse: 10 });
+    super({ w, h, d, ...props, powerUse: 20 });
 
     // Create a new box shape
     this.model = new Box({

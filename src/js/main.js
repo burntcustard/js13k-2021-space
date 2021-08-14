@@ -8,6 +8,7 @@ import Box from './shapes/box';
 import Sphere from './shapes/sphere';
 import Hexagon from './shapes/hexagon';
 import Block from './objects/structures/block';
+import Solar from './objects/structures/solar';
 
 const perfDebug = $('.debug .perf');
 const powerDebug = $('.debug .power');
@@ -16,6 +17,12 @@ let previousTimestamp;
 
 const stationBlock = new Block({
   x: 0,
+  y: 0,
+  z: 40,
+});
+
+const stationSolar = new Solar({
+  x: 20,
   y: 0,
   z: 40,
 });
@@ -61,12 +68,13 @@ function main(timestamp) {
   pyramid.rz -= 0.01;
   pyramid.update();
   camera.update(elapsed);
-  stationBlock.update();
-  resources.update(elapsed);
+  stationBlock.update(elapsed);
+  stationSolar.update(elapsed);
+  // resources.update(elapsed);
 
   previousTimestamp = timestamp;
   perfDebug.innerText = `Elapsed: ${elapsed.toFixed(2)} FPS: ${(1000 / elapsed).toFixed()}`;
-  powerDebug.innerText = `Power: ${Math.floor(resources.power.current)}`;
+  powerDebug.innerText = `Power: ${Math.floor(resources.power.current)}/${resources.power.capacity} (+${resources.power.gen}/-${resources.power.use})`;
 }
 
 initMouse();
