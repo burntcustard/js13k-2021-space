@@ -1,5 +1,5 @@
 import Structure from './structure';
-import Face from '../../shapes/face';
+import Box from '../../shapes/box';
 
 export default class Solar extends Structure {
   constructor(props) {
@@ -10,31 +10,13 @@ export default class Solar extends Structure {
     super({ w, h, d, ...props, powerGen: 10 });
 
     // Create a new box shape
-    this.model = [
-      new Face({
-        w,
-        h: d,
-        x: props.x,
-        y: props.y,
-        z: props.z - 1,
-        className: 'solar',
-      }),
-      new Face({
-        w,
-        h: d,
-        x: props.x,
-        y: props.y,
-        z: props.z,
-        className: 'solar',
-      }),
-      new Face({
-        w,
-        h: d,
-        x: props.x,
-        y: props.y,
-        z: props.z + 1,
-        className: 'solar',
-      }),
-    ];
+    this.model = new Box({
+      w: 50,
+      h: 2,
+      d: 20,
+      x: props.x,
+      y: props.y,
+      z: props.z,
+    });
   }
 }
