@@ -16,12 +16,59 @@ export default class Shape {
     document.querySelector('.scene').append(this.element);
   }
 
-  update() {
+  updateTransform() {
     this.element.style.transform = `
       translate3D(${this.x}px, ${this.y}px, ${this.z}px)
       rotateZ(${this.rz}rad)
       rotateY(${this.ry}rad)
       rotateX(${this.rx}rad)
     `;
+  }
+
+  /**
+   * Update lighting CSS variable based on angle to light source.
+   * We can probably assume the light source is a sun at 0, 0, 0.
+   * @return {void}
+   */
+  updateLighting() {
+    // Do we need any shape-based, i.e. not face-based maths?
+    // e.g. vector stuff between light source and center of shape
+    // (which could be used instead of center of face?)
+
+    this.sides.forEach((side) => {
+      // Rotation of face from shape space to world space (face + shape)
+      //  - this is placeholder / probably very wrong:
+      const rx = this.rx + side.rx;
+      const ry = this.ry + side.ry;
+      const rz = this.rz + side.rz;
+
+      // Figure out surface normal from rotations
+      //  - again, placeholder, probably wrong. This might help:
+      // https://stackoverflow.com/a/27486532
+      const sinRx = Math.sin(rx);
+      const sinRy = Math.sin(ry);
+      const sinRz = Math.sin(rz);
+      const cosRx = Math.sin(rx);
+      const cosRy = Math.sin(ry);
+      const cosRz = Math.sin(rz);
+      const nx = sinRy * cosRx * cosRz + sinRx * sinRz;
+      const ny = sinRy * sinRz * cosRx - sinRx * cosRz;
+      const nz = cosRx * cosRy;
+
+      // Figure out angle to 0,0,0
+      // NOPE this doesn't matter, we already have two vectors:
+      //  - the surface normal
+      //  - the x,y,z of the center of the shape (close enough to the face)
+
+      // Figure out difference between surface normal and angle to 0,0,0
+
+      // Set lightness to 99% when facing directly to 0,0,0
+      // and some minimum 9%? when facing directly away from 0,0,0
+    });
+  }
+
+  update() {
+    this.updateTransform();
+    this.updateLighting(); // Maybe only do every few frames to save perf
   }
 }
