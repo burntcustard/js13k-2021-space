@@ -1,4 +1,5 @@
 import camera from './camera';
+import resources from './resources';
 import initMouse from './mouse';
 import { initKeyboard, doKeyboardInput } from './keyboard';
 import { $, toRad } from './util';
@@ -6,10 +7,18 @@ import Pyramid from './shapes/pyramid';
 import Box from './shapes/box';
 import Sphere from './shapes/sphere';
 import Hexagon from './shapes/hexagon';
+import Block from './objects/structures/block';
 
 const perfDebug = $('.debug .perf');
+const powerDebug = $('.debug .power');
 
 let previousTimestamp;
+
+const stationBlock = new Block({
+  x: 0,
+  y: 0,
+  z: 40,
+});
 
 const sphere = new Sphere({
   radius: 40,
@@ -52,9 +61,12 @@ function main(timestamp) {
   pyramid.rz -= 0.01;
   pyramid.update();
   camera.update(elapsed);
+  stationBlock.update();
+  resources.update(elapsed);
 
   previousTimestamp = timestamp;
   perfDebug.innerText = `Elapsed: ${elapsed.toFixed(2)} FPS: ${(1000 / elapsed).toFixed()}`;
+  powerDebug.innerText = `Power: ${Math.floor(resources.power.current)}`;
 }
 
 initMouse();
