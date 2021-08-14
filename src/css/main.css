@@ -1,7 +1,6 @@
 @import 'camera';
 @import 'debug';
 @import 'ground';
-@import 'shapes/hexagon';
 @import 'scene';
 @import 'shapes';
 @import 'viewport';
