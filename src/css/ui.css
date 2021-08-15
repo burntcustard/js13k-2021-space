@@ -1,0 +1,51 @@
+.ui {
+  position: absolute;
+  top: 0;
+  overflow: hidden;
+  width: 100vw;
+  height: 100vh;
+  perspective: 200px;
+  pointer-events: none;
+}
+
+.ui * {
+  transform-style: preserve-3d;
+}
+
+.ui__bar {
+  position: absolute;
+  width: 35vmax;
+  height: 3vmin;
+  background: #666;
+  border-top: 1vmin solid #ccc;
+  border-bottom: 1vmin solid #ccc;
+}
+
+.ui__bar:nth-child(2) {
+  top: 50%;
+  left: 50%;
+  transform: translate(40vmax, calc(-50% - 28vmin)) rotate(-35deg) translateX(-5vmin) rotateY(0deg);
+  transform-origin: left center;
+}
+
+.ui__bar:nth-child(3) {
+  top: 50%;
+  left: 50%;
+  transform: translateY(-50%) rotate(35deg) translateX(47.8vmin) rotateY(-45deg);
+  transform-origin: left center;
+}
+
+.ui__circle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 80vw;
+  height: 80vh;
+  border: 1vmin solid #ccc;
+  border-radius: 40vmax;
+  box-shadow:
+    0 0 0 3vmin #666,
+    0 0 0 4vmin #ccc,
+    inset 0 0 5vmin #6666;
+  transform: translate(-50%, -50%);
+}

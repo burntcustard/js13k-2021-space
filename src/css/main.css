@@ -1,13 +1,8 @@
+@import 'body';
 @import 'camera';
 @import 'debug';
 @import 'ground';
 @import 'scene';
 @import 'shapes';
 @import 'viewport';
-
-body {
-  height: 100vh;
-  margin: 0;
-  background: #6a2;
-  font-family: sans-serif;
-}
+@import 'ui';
