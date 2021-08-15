@@ -1,51 +1,87 @@
 .ui {
   position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   top: 0;
   overflow: hidden;
   width: 100vw;
   height: 100vh;
-  perspective: 200px;
+  perspective: 250px;
   pointer-events: none;
+  padding: 5vmin;
+  box-sizing: border-box;
 }
 
-.ui * {
+.ui > * {
   transform-style: preserve-3d;
 }
 
-.ui__bar {
+.ui__hex {
+  position: relative;
+  height: 100%;
+  max-height: 55vw;
+  aspect-ratio: 8 / 5;
+  outline: 1px solid red;
+}
+
+.ui__hex > * {
   position: absolute;
-  width: 35vmax;
-  height: 3vmin;
-  background: #666;
-  border-top: 1vmin solid #ccc;
-  border-bottom: 1vmin solid #ccc;
+  box-sizing: border-box;
 }
 
-.ui__bar:nth-child(2) {
-  top: 50%;
-  left: 50%;
-  transform: translate(40vmax, calc(-50% - 28vmin)) rotate(-35deg) translateX(-5vmin) rotateY(0deg);
-  transform-origin: left center;
+/* Center hexagon */
+.ui__hex *:nth-child(1) {
+  width: 100%;
+  height: 100%;
+  background: #f002;
+  clip-path:
+    polygon(
+      50% 0,
+      100% 25%,
+      100% 75%,
+      50% 100%,
+      0 75%,
+      0 25%
+    );
 }
 
-.ui__bar:nth-child(3) {
-  top: 50%;
-  left: 50%;
-  transform: translateY(-50%) rotate(35deg) translateX(47.8vmin) rotateY(-45deg);
-  transform-origin: left center;
+.ui__hex *:nth-child(n+2) {
 }
 
-.ui__circle {
-  position: absolute;
-  top: 50%;
+.ui__hex *:nth-child(2) {
+  top: -50%;
   left: 50%;
-  width: 80vw;
-  height: 80vh;
-  border: 1vmin solid #ccc;
-  border-radius: 40vmax;
-  box-shadow:
-    0 0 0 3vmin #666,
-    0 0 0 4vmin #ccc,
-    inset 0 0 5vmin #6666;
-  transform: translate(-50%, -50%);
+  width: calc(50% * 1.05);
+  height: 50%;
+  border-right: 48px solid hsl(0, 0%, 50%);
+  border-bottom: 12px solid hsl(0, 0%, 45%);
+  border-left: 42px solid hsl(0, 0%, 40%);
+  transform: rotateZ(17.4deg) rotateX(-90deg);
+  transform-origin: bottom left;
+}
+
+.ui__hex *:nth-child(3) {
+  top: 25%;
+  left: 100%;
+  width: 100%;
+  height: 50%;
+  padding-top: 32px;
+  border-top: 32px solid hsl(0, 0%, 55%);
+  border-bottom: 32px solid hsl(0, 0%, 65%);
+  border-left: 8px solid hsl(0, 0%, 60%);
+  text-orientation: upright;
+  transform: rotateY(-90deg);
+  transform-origin: left;
+  writing-mode: vertical-lr;
+}
+
+.ui__hex *:nth-child(4) {
+  top: 100%;
+  left: 50%;
+  width: calc(50% * 1.05);
+  height: 50%;
+  transform-origin: top left;
+  //background: #00f3;
+  transform: rotateZ(-17.4deg) rotateX(90deg);
 }
