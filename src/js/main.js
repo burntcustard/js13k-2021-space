@@ -2,56 +2,36 @@ import camera from './camera';
 import resources from './resources';
 import initMouse from './mouse';
 import { initKeyboard, doKeyboardInput } from './keyboard';
-import { $, toRad } from './util';
+import { $, halfPi, toRad } from './util';
 import Pyramid from './shapes/pyramid';
 import Box from './shapes/box';
 import Sphere from './shapes/sphere';
 import Hexagon from './shapes/hexagon';
 import Block from './objects/structures/block';
 import Solar from './objects/structures/solar';
+import Plane from './shapes/plane';
 
 const perfDebug = $('.debug .perf');
 const powerDebug = $('.debug .power');
 
 let previousTimestamp;
 
-const stationBlock = new Block({
-  x: 0,
-  y: 0,
-  z: 40,
-});
-
-const stationSolar = new Solar({
-  x: 20,
-  y: 0,
-  z: 40,
-});
-
-const sphere = new Sphere({
-  radius: 40,
-  x: -300,
-  y: 300,
-  z: 20,
-});
-
-const pyramid = new Pyramid({
-  w: 150,
-  h: 200,
-  x: -300,
-  y: -300,
-});
+// const box = new Box({
+//   w: 100,
+//   d: 60,
+//   h: 140,
+//   x: 0,
+//   y: 0,
+// });
 
 const box = new Box({
-  w: 100,
-  d: 60,
-  h: 140,
-  x: 200,
-  y: 160,
+  w: 50,
+  h: 100,
 });
 
-const hexagon = new Hexagon({
-  radius: 100,
-  h: 200,
+const plane = new Plane({
+  w: 100,
+  h: 60,
   x: 0,
   y: 0,
 });
@@ -65,11 +45,8 @@ function main(timestamp) {
   doKeyboardInput();
   box.rz += 0.01;
   box.update();
-  pyramid.rz -= 0.01;
-  pyramid.update();
+  plane.update();
   camera.update(elapsed);
-  stationBlock.update(elapsed);
-  stationSolar.update(elapsed);
   // resources.update(elapsed);
 
   previousTimestamp = timestamp;

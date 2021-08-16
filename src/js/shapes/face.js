@@ -8,6 +8,7 @@ export default class Face {
     this.rz = rz ?? 0;
     this.ry = ry ?? 0;
     this.rx = rx ?? 0;
+    this.lightness = 0.5;
     this.element = document.createElement('div');
     this.element.className = `face ${className ?? 'rect'}`;
     this.element.style.width = `${w}px`;
@@ -22,5 +23,13 @@ export default class Face {
       rotateY(${this.ry}rad)
       rotateX(${this.rx}rad)
     `;
+  }
+
+  updateLighting() {
+    this.element.style.background = `hsl(0, 100%, ${this.lightness * 100}%)`;
+  }
+
+  setLightness(lightness) {
+    this.lightness = lightness;
   }
 }

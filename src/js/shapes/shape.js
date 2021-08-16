@@ -1,3 +1,6 @@
+import { lerp } from '../util';
+import Vec3 from '../vec3';
+
 export default class Shape {
   constructor({ w, h, d, x, y, z, rx, ry, rz, className }) {
     this.w = w;
@@ -48,12 +51,28 @@ export default class Shape {
       const sinRx = Math.sin(rx);
       const sinRy = Math.sin(ry);
       const sinRz = Math.sin(rz);
-      const cosRx = Math.sin(rx);
-      const cosRy = Math.sin(ry);
-      const cosRz = Math.sin(rz);
-      const nx = sinRy * cosRx * cosRz + sinRx * sinRz;
-      const ny = sinRy * sinRz * cosRx - sinRx * cosRz;
-      const nz = cosRx * cosRy;
+      const cosRx = Math.cos(rx);
+      const cosRy = Math.cos(ry);
+      const cosRz = Math.cos(rz);
+      const normal = new Vec3(
+        sinRy * cosRx * cosRz + sinRx * sinRz,
+        sinRy * sinRz * cosRx - sinRx * cosRz,
+        cosRx * cosRy,
+      );
+
+      // Sun is shining along +x (left to right)
+      const sunVector = new Vec3(1, 0, 0);
+
+      // Angle between sun vector and face normal
+      const angle = normal.angleTo(sunVector);
+
+      // If angle = PI then full lightness, if 0 then minimum lightness
+      const lightness = lerp(0.2, 0.8, angle / Math.PI);
+      side.setLightness(lightness);
+      side.updateLighting();
+
+      // console.log(rx, ry, rz, normal, sunVector, angle, lightness);
+      // console.log(this, side);
 
       // Figure out angle to 0,0,0
       // NOPE this doesn't matter, we already have two vectors:
