@@ -24,4 +24,13 @@ export default class Vec3 {
   angleTo(other) {
     return Math.acos(this.dot(other) / (this.length() * other.length()));
   }
+
+  normalise() {
+    const len = this.length();
+    return new Vec3(this.x / len, this.y / len, this.z / len);
+  }
+
+  multiply(multiplier) {
+    return new Vec3(this.x * multiplier, this.y * multiplier, this.z * multiplier);
+  }
 }

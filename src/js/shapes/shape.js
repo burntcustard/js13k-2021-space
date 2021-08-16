@@ -1,4 +1,3 @@
-import { lerp } from '../util';
 import Vec3 from '../vec3';
 
 export default class Shape {
@@ -30,7 +29,6 @@ export default class Shape {
 
   /**
    * Update lighting CSS variable based on angle to light source.
-   * We can probably assume the light source is a sun at 0, 0, 0.
    * @return {void}
    */
   updateLighting() {
@@ -40,13 +38,11 @@ export default class Shape {
 
     this.sides.forEach((side) => {
       // Rotation of face from shape space to world space (face + shape)
-      //  - this is placeholder / probably very wrong:
       const rx = this.rx + side.rx;
       const ry = this.ry + side.ry;
       const rz = this.rz + side.rz;
 
       // Figure out surface normal from rotations
-      //  - again, placeholder, probably wrong. This might help:
       // https://stackoverflow.com/a/27486532
       const sinRx = Math.sin(rx);
       const sinRy = Math.sin(ry);
@@ -58,31 +54,25 @@ export default class Shape {
         sinRy * cosRx * cosRz + sinRx * sinRz,
         sinRy * sinRz * cosRx - sinRx * cosRz,
         cosRx * cosRy,
-      );
+      ).normalise();
 
-      // Sun is shining along +x (left to right)
-      const sunVector = new Vec3(1, 0, 0);
+      // Direction towards the light source
+      const sunVector = new Vec3(1, 0, 1).normalise();
 
-      // Angle between sun vector and face normal
-      const angle = normal.angleTo(sunVector);
+      // https://cglearn.codelight.eu/pub/computer-graphics/shading-and-lighting#material-lambert-lighting-model-1
+      // When vectors are noralised the cosine between them is just a dot b
+      // The cosine is 1 at 0deg separation and 0 at 90deg
+      const cosine = normal.dot(sunVector);
 
-      // If angle = PI then full lightness, if 0 then minimum lightness
-      const lightness = lerp(0.2, 0.8, angle / Math.PI);
+      // We only care about the cosine between 1 and 0
+      // Multiplying by some factor here so it doesn't blow out to just white
+      let lightness = Math.max(cosine, 0) * 0.7;
+
+      // Add base level of ambient lighting
+      lightness += 0.5;
+
       side.setLightness(lightness);
       side.updateLighting();
-
-      // console.log(rx, ry, rz, normal, sunVector, angle, lightness);
-      // console.log(this, side);
-
-      // Figure out angle to 0,0,0
-      // NOPE this doesn't matter, we already have two vectors:
-      //  - the surface normal
-      //  - the x,y,z of the center of the shape (close enough to the face)
-
-      // Figure out difference between surface normal and angle to 0,0,0
-
-      // Set lightness to 99% when facing directly to 0,0,0
-      // and some minimum 9%? when facing directly away from 0,0,0
     });
   }
 

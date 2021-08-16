@@ -16,24 +16,17 @@ const powerDebug = $('.debug .power');
 
 let previousTimestamp;
 
-// const box = new Box({
-//   w: 100,
-//   d: 60,
-//   h: 140,
-//   x: 0,
-//   y: 0,
-// });
-
 const box = new Box({
   w: 50,
-  h: 100,
+  h: 50,
+  z: 80,
 });
 
-const plane = new Plane({
-  w: 100,
+const box2 = new Box({
+  w: 80,
   h: 60,
-  x: 0,
-  y: 0,
+  x: 100,
+  y: -100,
 });
 
 function main(timestamp) {
@@ -43,9 +36,14 @@ function main(timestamp) {
   const elapsed = timestamp - previousTimestamp;
 
   doKeyboardInput();
+
+  box.rx += 0.02;
   box.rz += 0.01;
   box.update();
-  plane.update();
+
+  box2.rz -= 0.01;
+  box2.update();
+
   camera.update(elapsed);
   // resources.update(elapsed);
 

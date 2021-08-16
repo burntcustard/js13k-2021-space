@@ -4,5 +4,6 @@
   "less.validate": false,
   "scss.validate": false,
   "files.trimFinalNewlines": true,
-  "files.trimTrailingWhitespace": true
+  "files.trimTrailingWhitespace": true,
+  "javascript.preferences.quoteStyle": "single"
 }
