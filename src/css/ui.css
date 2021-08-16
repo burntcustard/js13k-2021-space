@@ -77,15 +77,16 @@
   top: -50%;
   align-items: end;
   justify-content: center;
-  border-bottom: 8px solid hsl(0, 0%, 80%);
 }
 
 .ui__hex .top--right {
+  border-bottom: 16px solid hsl(0, 0%, 25%);
   transform: rotateZ(17.4deg) rotateX(-90deg);
   transform-origin: bottom left;
 }
 
 .ui__hex .top--left {
+  border-bottom: 16px solid hsl(0, 0%, 30%);
   transform: rotateZ(-17.4deg) rotateX(-90deg);
   transform-origin: bottom right;
 }
@@ -94,16 +95,18 @@
 .ui__hex .left {
   top: 25%;
   height: 50%;
-  border-right: 8px solid hsl(0, 0%, 85%);
-  border-left: 8px solid hsl(0, 0%, 85%);
+  border-right: 16px solid hsl(0, 0%, 35%);
+  border-left: 16px solid hsl(0, 0%, 35%);
   text-orientation: upright;
   writing-mode: vertical-lr;
+  justify-content: center;
 }
 
 .ui__hex .right {
   left: 100%;
   transform: rotateY(-90deg);
   transform-origin: left;
+  align-items: start;
 }
 
 .ui__hex .left {
@@ -114,15 +117,16 @@
 
 .ui__hex .bottom {
   top: 100%;
-  border-top: 8px solid hsl(0, 0%, 95%);
 }
 
 .ui__hex .bottom--right {
+  border-top: 16px solid hsl(0, 0%, 40%);
   transform: rotateZ(-17.4deg) rotateX(90deg);
   transform-origin: top left;
 }
 
 .ui__hex .bottom--left {
+  border-top: 16px solid hsl(0, 0%, 45%);
   transform: rotateZ(17.4deg) rotateX(90deg);
   transform-origin: top right;
 }
@@ -130,33 +134,33 @@
 .ui__hex .side::before {
   position: absolute;
   z-index: -1;
-  top: 16px;
-  right: 16px;
-  bottom: 16px;
-  left: 16px;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
   border-top: 8px solid hsl(0, 0%, 70%);
   border-right: 16px solid hsl(0, 0%, 75%);
   border-bottom: 8px solid hsl(0, 0%, 80%);
   border-left: 16px solid hsl(0, 0%, 75%);
-  box-shadow: 0 0 0 16px hsl(0, 0%, 40%);
   content: '';
 }
 
 .ui__hex .right::before,
 .ui__hex .left::before {
-  top: 10px;
-  right: 10px;
-  bottom: 10px;
-  left: 10px;
   border-right: 8px solid hsl(0, 0%, 75%);
   border-left: 8px solid hsl(0, 0%, 75%);
-  box-shadow: 0 0 0 10px hsl(0, 0%, 40%);
 }
 
 .test-power {
-  transform: translateY(-28px);
   background: #f604;
   color: #ff0;
   letter-spacing: 2px;
-  padding: 4px 8px;
+}
+
+.ui__hex .right .panel {
+  width: 20px;
+  height: 100px;
+  background: hsl(0, 0%, 40%);
+  transform: rotateX(-90deg);
+  background: linear-gradient(90deg, red, blue);
 }
