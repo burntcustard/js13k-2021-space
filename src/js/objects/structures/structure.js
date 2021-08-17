@@ -60,6 +60,6 @@ export default class Structure extends Object {
   // If you run out of power, shut down this structure
   shutdown() {
     this.disable();
-    this.restartTimer = 5000; // Reboot after 5s
+    this.restartTimer = 1000; // Reboot after 1s
   }
 }

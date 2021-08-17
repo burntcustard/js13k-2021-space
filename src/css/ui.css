@@ -10,10 +10,11 @@
   justify-content: center;
   padding: 5vmin;
   perspective: 300px;
-  pointer-events: none;
+  text-align: center;
+  font-family: monospace;
 }
 
-.ui > * {
+.ui * {
   transform-style: preserve-3d;
 }
 
@@ -22,7 +23,6 @@
   height: 100%;
   max-height: 55vw;
   aspect-ratio: 8 / 5;
-  outline: 1px solid red;
 }
 
 .ui__hex .side {
@@ -75,7 +75,7 @@
 
 .ui__hex .top {
   top: -50%;
-  align-items: end;
+  align-items: flex-end;
   justify-content: center;
 }
 
@@ -97,16 +97,13 @@
   height: 50%;
   border-right: 16px solid hsl(0, 0%, 35%);
   border-left: 16px solid hsl(0, 0%, 35%);
-  text-orientation: upright;
-  writing-mode: vertical-lr;
-  justify-content: center;
 }
 
 .ui__hex .right {
   left: 100%;
+  align-items: start;
   transform: rotateY(-90deg);
   transform-origin: left;
-  align-items: start;
 }
 
 .ui__hex .left {
@@ -157,10 +154,131 @@
   letter-spacing: 2px;
 }
 
+.power {
+  display: flex;
+}
+
+.power__dot {
+  width: 28px;
+  height: 28px;
+  margin-right: 8px;
+  background: #333;
+  line-height: 28px;
+  transition: all 0.2s;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.power__dot:not(.empty) {
+  background: #ff0;
+  box-shadow: 0 0 5px #fd0, 0 0 0 1px #333;
+  box-sizing: border-box;
+  border-bottom: 2px solid #ca0;
+  border-right: 1px solid #cb0;
+}
+
+.power__bar {
+  position: relative;
+  width: 102px;
+  height: 5px;
+  background: #333;
+  box-shadow: 0 1px inset #222;
+}
+
+.power__bar::before,
+.power__bar::after {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 7px;
+  content: '';
+  background:
+    repeating-linear-gradient(
+      90deg,
+      #333,
+      #333 3px,
+      #0000 0 9px
+    );
+}
+
+.power__bar__fill {
+  height: 100%;
+  width: 35%;
+  background: #ff0;
+  box-shadow: 0 -1px 0 inset #ca0, 0 0 5px #fd0, 0 0 0 1px #333;
+}
+
+.power__bar::before {
+  bottom: -12px;
+}
+
+.power__bar::after {
+  top: -12px;
+}
+
+.power__numbers {
+  display: flex;
+  align-items: center;
+  margin: 0 0 -2px 6px;
+  padding: 4px 4px 0 4px;
+  font-size: 14px;
+  line-height: 16px;
+  background: #333;
+  box-shadow: 2px 2px inset #222;
+}
+
+.power .use {
+  color: #f20;
+  margin-top: 4px;
+}
+
+.power .gen {
+  color: #0f9;
+}
+
+.power .num {
+  margin-left: 3px;
+  color: #0f9;
+  font-size: 18px;
+}
+
+.power .num.pos {
+  color: #f20;
+}
+
+.ui__hex .top .panel {
+  transform: rotateX(85deg) translateY(calc(3vmin + 16px));
+}
+
 .ui__hex .right .panel {
-  width: 20px;
-  height: 100px;
-  background: hsl(0, 0%, 40%);
-  transform: rotateX(-90deg);
-  background: linear-gradient(90deg, red, blue);
+  width: min-content;
+  transform: rotateY(85deg) translateX(-40px);
+}
+
+.panel {
+  padding: 8px;
+  border: 3px solid #aaa;
+  background:
+    linear-gradient(
+      135deg,
+      #333 50%,
+      #444 0
+    );
+  box-shadow: 1px 2px 8px #0009;
+}
+
+.panel__inner {
+  display: flex;
+  align-items: center;
+  padding: 8px;
+  background: #777;
+  box-shadow: 0 1px 0 2px #222;
+}
+
+.ui__hex .top .panel {
+
+}
+
+button {
+
 }

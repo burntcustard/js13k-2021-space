@@ -12,6 +12,11 @@ import Solar from './objects/structures/solar';
 
 const perfDebug = $('.debug .perf');
 const powerDebug = $('.debug .power');
+const power = $('.power__bar__fill');
+const powerDot = $('.power__dot');
+const powerGen = $('.power .gen');
+const powerUse = $('.power .use');
+const powerNum = $('.power .num');
 
 let previousTimestamp;
 
@@ -75,6 +80,13 @@ function main(timestamp) {
   previousTimestamp = timestamp;
   perfDebug.innerText = `Elapsed: ${elapsed.toFixed(2)} FPS: ${(1000 / elapsed).toFixed()}`;
   powerDebug.innerText = `Power: ${Math.floor(resources.power.current)}/${resources.power.capacity} (+${resources.power.gen}/-${resources.power.use})`;
+  power.style.width = `${(100 / resources.power.capacity) * resources.power.current}%`;
+  powerDot.classList.toggle('empty', resources.power.current < 1);
+  powerGen.innerText = resources.power.gen;
+  powerUse.innerText = resources.power.use;
+  const num = resources.power.gen - resources.power.use;
+  powerNum.innerText = (num <= 0 ? '' : '+') + num;
+  powerNum.classList.toggle('pos', num <= 0);
 }
 
 initMouse();
