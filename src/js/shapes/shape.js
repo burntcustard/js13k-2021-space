@@ -56,20 +56,20 @@ export default class Shape {
         cosRx * cosRy,
       ).normalise();
 
-      // Direction towards the light source
-      const sunVector = new Vec3(1, 0, 1).normalise();
+      // Direction towards the light sources
+      const light1 = new Vec3(1, 0, 1).normalise();
+      const light2 = new Vec3(-1, 1, 0).normalise();
+
+      // Start with base level of ambient lighting
+      let lightness = 0.2;
 
       // https://cglearn.codelight.eu/pub/computer-graphics/shading-and-lighting#material-lambert-lighting-model-1
       // When vectors are noralised the cosine between them is just a dot b
       // The cosine is 1 at 0deg separation and 0 at 90deg
-      const cosine = normal.dot(sunVector);
-
       // We only care about the cosine between 1 and 0
-      // Multiplying by some factor here so it doesn't blow out to just white
-      let lightness = Math.max(cosine, 0) * 0.7;
-
-      // Add base level of ambient lighting
-      lightness += 0.5;
+      // Multiplying by some factor so it doesn't blow out to just white
+      lightness += Math.max(normal.dot(light1), 0) * 0.6;
+      lightness += Math.max(normal.dot(light2), 0) * 0.2;
 
       side.setLightness(lightness);
       side.updateLighting();

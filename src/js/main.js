@@ -17,8 +17,8 @@ const powerDebug = $('.debug .power');
 let previousTimestamp;
 
 const box = new Box({
-  w: 50,
-  h: 50,
+  w: 60,
+  h: 60,
   z: 80,
 });
 

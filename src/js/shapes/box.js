@@ -12,14 +12,14 @@ export default class Box extends Shape {
         w: this.w,
         h: this.d,
         z: this.h,
-        colour: new Vec3(1, 0, 0),
+        colour: new Vec3(1, 1, 1),
       }),
       new Face({
         w: this.w,
         h: this.h,
         y: this.d - this.h,
         rx: toRad(-90),
-        colour: new Vec3(1, 1, 0),
+        colour: new Vec3(1, 1, 1),
       }),
       new Face({
         w: this.d,
@@ -28,7 +28,7 @@ export default class Box extends Shape {
         y: this.d / 2 - this.h,
         rz: toRad(-90),
         rx: toRad(-90),
-        colour: new Vec3(0, 1, 0),
+        colour: new Vec3(1, 1, 1),
       }),
       new Face({
         w: this.w,
@@ -36,7 +36,7 @@ export default class Box extends Shape {
         y: -this.h,
         rz: toRad(180),
         rx: toRad(-90),
-        colour: new Vec3(0, 1, 1),
+        colour: new Vec3(1, 1, 1),
       }),
       new Face({
         w: this.d,
@@ -45,14 +45,14 @@ export default class Box extends Shape {
         y: this.d / 2 - this.h,
         rz: toRad(90),
         rx: toRad(-90),
-        colour: new Vec3(0, 0, 1),
+        colour: new Vec3(1, 1, 1),
       }),
       new Face({
         w: this.w,
         h: this.d,
         y: -this.d,
         rx: Math.PI,
-        colour: new Vec3(1, 0, 1),
+        colour: new Vec3(1, 1, 1),
       }),
     ];
 

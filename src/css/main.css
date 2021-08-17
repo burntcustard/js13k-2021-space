@@ -8,6 +8,6 @@
 body {
   height: 100vh;
   margin: 0;
-  background: #6a2;
+  background: hsl(200, 30%, 20%);
   font-family: sans-serif;
 }
