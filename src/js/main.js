@@ -17,6 +17,7 @@ const powerDot = $('.power__dot');
 const powerGen = $('.power .gen');
 const powerUse = $('.power .use');
 const powerNum = $('.power .num');
+const powerCap = $('.power .cap');
 
 let previousTimestamp;
 
@@ -87,6 +88,7 @@ function main(timestamp) {
   const num = resources.power.gen - resources.power.use;
   powerNum.innerText = (num <= 0 ? '' : '+') + num;
   powerNum.classList.toggle('pos', num <= 0);
+  powerCap.innerText = `${Math.floor(resources.power.current)} /  ${resources.power.capacity}`;
 }
 
 initMouse();
