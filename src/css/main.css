@@ -1,7 +1,9 @@
 @import 'body';
 @import 'camera';
 @import 'debug';
+@import 'eco';
 @import 'ground';
+@import 'panel';
 @import 'scene';
 @import 'shapes';
 @import 'viewport';

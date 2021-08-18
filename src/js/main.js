@@ -11,9 +11,8 @@ import Block from './objects/structures/block';
 import Solar from './objects/structures/solar';
 
 const perfDebug = $('.debug .perf');
-const powerDebug = $('.debug .power');
-const power = $('.power__bar__fill');
-const powerDot = $('.power__dot');
+const powerBar = $('.power .fill');
+const powerDot = $('.power .dot');
 const powerGen = $('.power .gen');
 const powerUse = $('.power .use');
 const powerNum = $('.power .num');
@@ -76,12 +75,10 @@ function main(timestamp) {
   camera.update(elapsed);
   stationBlock.update(elapsed);
   stationSolar.update(elapsed);
-  // resources.update(elapsed);
 
   previousTimestamp = timestamp;
   perfDebug.innerText = `Elapsed: ${elapsed.toFixed(2)} FPS: ${(1000 / elapsed).toFixed()}`;
-  powerDebug.innerText = `Power: ${Math.floor(resources.power.current)}/${resources.power.capacity} (+${resources.power.gen}/-${resources.power.use})`;
-  power.style.width = `${(100 / resources.power.capacity) * resources.power.current}%`;
+  powerBar.style.width = `${(100 / resources.power.capacity) * resources.power.current}%`;
   powerDot.classList.toggle('empty', resources.power.current < 1);
   powerGen.innerText = resources.power.gen;
   powerUse.innerText = resources.power.use;
