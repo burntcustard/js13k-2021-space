@@ -81,20 +81,17 @@
 }
 
 .eco .use {
-  margin-top: 4px;
+  margin-top: 5px;
   color: #f20;
 }
 
-.eco .gen {
+.eco .gen,
+.eco .nun.neg {
   color: #0f9;
 }
 
 .eco .num {
   margin-left: 4px;
-  color: #0f9;
-  font-size: 18px;
-}
-
-.eco .num.pos {
   color: #f20;
+  font-size: 18px;
 }
