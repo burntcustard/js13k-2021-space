@@ -57,23 +57,63 @@ export default class Shape {
 
     this.sides.forEach((side) => {
       // Rotation of face from shape space to world space (face + shape)
-      const rx = this.rx + side.rx;
-      const ry = this.ry + side.ry;
-      const rz = this.rz + side.rz;
+      // const rx = this.rx + side.rx;
+      // const ry = this.ry + side.ry;
+      // const rz = this.rz + side.rz;
 
       // Figure out surface normal from rotations
       // https://stackoverflow.com/a/27486532
-      const sinRx = Math.sin(rx);
-      const sinRy = Math.sin(ry);
-      const sinRz = Math.sin(rz);
-      const cosRx = Math.cos(rx);
-      const cosRy = Math.cos(ry);
-      const cosRz = Math.cos(rz);
+      const sx = Math.sin(this.rx);
+      const sy = Math.sin(this.ry);
+      const sz = Math.sin(this.rz);
+      const cx = Math.cos(this.rx);
+      const xy = Math.cos(this.ry);
+      const cz = Math.cos(this.rz);
+
+      const ms = [
+        [cz * xy, cz * sy * sx - sz * cx, cz * sy * cx + sz * sx],
+        [sz * xy, sz * sy * sx + cz * cx, sz * sy * cx - cz * sx],
+        [-sy, xy * sx, xy * cx],
+      ];
+
+      const fsx = Math.sin(side.rx);
+      const fsy = Math.sin(side.ry);
+      const fsz = Math.sin(side.rz);
+      const fcx = Math.cos(side.rx);
+      const fxy = Math.cos(side.ry);
+      const fcz = Math.cos(side.rz);
+
+      const mf = [
+        [fcz * fxy, fcz * fsy * fsx - fsz * fcx, fcz * fsy * fcx + fsz * fsx],
+        [fsz * fxy, fsz * fsy * fsx + fcz * fcx, fsz * fsy * fcx - fcz * fsx],
+        [-fsy, fxy * fsx, fxy * fcx],
+      ];
+
+      const combined = [
+        [
+          ms[0][0] * mf[0][0] + ms[0][1] * mf[1][0] + ms[0][2] * mf[2][0],
+          ms[0][0] * mf[0][1] + ms[0][1] * mf[1][1] + ms[0][2] * mf[2][1],
+          ms[0][0] * mf[0][2] + ms[0][1] * mf[1][2] + ms[0][2] * mf[2][2],
+        ],
+        [
+          ms[1][0] * mf[0][0] + ms[1][1] * mf[1][0] + ms[1][2] * mf[2][0],
+          ms[1][0] * mf[0][1] + ms[1][1] * mf[1][1] + ms[1][2] * mf[2][1],
+          ms[1][0] * mf[0][2] + ms[1][1] * mf[1][2] + ms[1][2] * mf[2][2],
+        ],
+        [
+          ms[2][0] * mf[0][0] + ms[2][1] * mf[1][0] + ms[2][2] * mf[2][0],
+          ms[2][0] * mf[0][1] + ms[2][1] * mf[1][1] + ms[2][2] * mf[2][1],
+          ms[2][0] * mf[0][2] + ms[2][1] * mf[1][2] + ms[2][2] * mf[2][2],
+        ],
+      ];
+
       const normal = new Vec3(
-        sinRy * cosRx * cosRz + sinRx * sinRz,
-        sinRy * sinRz * cosRx - sinRx * cosRz,
-        cosRx * cosRy,
+        combined[0][2],
+        combined[1][2],
+        combined[2][2],
       ).normalise();
+
+      console.log(this.rx, this.ry, this.rz, normal);
 
       // Direction towards the light sources
       const light1 = new Vec3(1, 0, 1).normalise();

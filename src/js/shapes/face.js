@@ -16,6 +16,7 @@ export default class Face {
     this.element.className = `face ${className ?? 'rect'}`;
     this.element.style.width = `${w}px`;
     this.element.style.height = `${h}px`;
+    this.element.innerHTML = 'FACE';
     this.update();
   }
 

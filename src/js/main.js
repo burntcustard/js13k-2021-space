@@ -20,8 +20,8 @@ const box = new Box({
   w: 60,
   h: 60,
   z: 100,
-  rx: 0,
-  ry: 0,
+  // rx: -PI_2,
+  // rz: -PI_2,
 });
 
 // const box2 = new Box({
@@ -40,9 +40,9 @@ function main(timestamp) {
 
   doKeyboardInput();
 
-  box.rx += 0.02;
+  box.rx += 0.01;
   // box.ry += 0.01;
-  // box.rz += 0.01;
+  box.rz += 0.01;
   box.update();
 
   // box2.rz -= 0.01;
