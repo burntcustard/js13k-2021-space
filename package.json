@@ -6,7 +6,7 @@
   "scripts": {
     "build": "node build.js",
     "watch": "node build.js --watch",
-    "debug": "node build.js --watch --debug --visual-debug"
+    "debug": "node build.js --watch --debug"
   },
   "repository": {
     "type": "git",

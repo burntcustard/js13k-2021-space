@@ -15,6 +15,7 @@ const JSZip = require('jszip');
 
 // Enabled/Disables browserSync live reloading rather than just building once
 const DEVMODE = process.argv.slice(2).includes('--watch');
+const DEBUG = process.argv.slice(2).includes('--debug');
 
 /**
  * Formats a duration number (ms) into a nice looking string with ansi-colors
@@ -76,7 +77,7 @@ async function minifyJs(compiledJs) {
       // unsafe_proto: true,
       // booleans_as_integers: true
     },
-    mangle: false,
+    mangle: !DEBUG,
     module: true,
     sourceMap: DEVMODE ? {
       content: compiledJs.map,
