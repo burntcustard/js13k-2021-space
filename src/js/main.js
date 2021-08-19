@@ -11,6 +11,9 @@ import Block from './objects/structures/block';
 import Solar from './objects/structures/solar';
 
 const perfDebug = $('.debug .perf');
+const matsBar = $('.mats .fill');
+const matsDot = $('.mats .dot');
+const matsCap = $('.mats .cap');
 const powerBar = $('.power .fill');
 const powerDot = $('.power .dot');
 const powerGen = $('.power .gen');
@@ -78,6 +81,11 @@ function main(timestamp) {
 
   previousTimestamp = timestamp;
   perfDebug.innerText = `Elapsed: ${elapsed.toFixed(2)} FPS: ${(1000 / elapsed).toFixed()}`;
+
+  matsBar.style.width = `${(100 / resources.mats.capacity) * resources.mats.current}%`;
+  matsDot.classList.toggle('empty', resources.mats.current < 1);
+  matsCap.innerText = `${Math.floor(resources.mats.current)} /  ${resources.mats.capacity}`;
+
   powerBar.style.width = `${(100 / resources.power.capacity) * resources.power.current}%`;
   powerDot.classList.toggle('empty', resources.power.current < 1);
   powerGen.innerText = resources.power.gen;

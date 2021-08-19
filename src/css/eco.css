@@ -11,11 +11,11 @@
   font-size: 20px;
   font-weight: 600;
   line-height: 28px;
+  text-align: center;
   transition: all 0.2s;
 }
 
-/* TODO: Change to :not(.empty) */
-.eco.mats .dot {
+.eco.mats .dot:not(.empty) {
   border-right: 1px solid #0a9;
   border-bottom: 2px solid #0aa;
   background: #0fd;
@@ -57,6 +57,13 @@
   height: 4px;
 }
 
+.eco.mats .bar .fill {
+  border-bottom: 1px solid #0aa;
+  background: #0fd;
+  box-shadow: 0 0 6px #0fd, 0 0 0 1px #333;
+  margin-left: auto;
+}
+
 .eco.power .bar .fill {
   border-bottom: 1px solid #ca0;
   background: #ff0;
@@ -67,6 +74,9 @@
   color: #000;
   font-size: 11px;
   line-height: 16px;
+}
+
+.eco.power .bar .cap {
   text-align: right;
 }
 
