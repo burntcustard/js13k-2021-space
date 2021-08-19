@@ -2,7 +2,7 @@ import camera from './camera';
 import resources from './resources';
 import initMouse from './mouse';
 import { initKeyboard, doKeyboardInput } from './keyboard';
-import { $, halfPi, toRad } from './util';
+import { $, toRad, PI_2, PI_4 } from './util';
 import Pyramid from './shapes/pyramid';
 import Box from './shapes/box';
 import Sphere from './shapes/sphere';
@@ -19,15 +19,18 @@ let previousTimestamp;
 const box = new Box({
   w: 60,
   h: 60,
-  z: 80,
+  z: 100,
+  rx: 0,
+  ry: 0,
 });
 
-const box2 = new Box({
-  w: 80,
-  h: 60,
-  x: 100,
-  y: -100,
-});
+// const box2 = new Box({
+//   w: 80,
+//   h: 60,
+//   x: 100,
+//   y: -100,
+//   z: 200,
+// });
 
 function main(timestamp) {
   window.requestAnimationFrame(main);
@@ -38,11 +41,12 @@ function main(timestamp) {
   doKeyboardInput();
 
   box.rx += 0.02;
-  box.rz += 0.01;
+  // box.ry += 0.01;
+  // box.rz += 0.01;
   box.update();
 
-  box2.rz -= 0.01;
-  box2.update();
+  // box2.rz -= 0.01;
+  // box2.update();
 
   camera.update(elapsed);
   // resources.update(elapsed);

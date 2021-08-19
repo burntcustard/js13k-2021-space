@@ -1,4 +1,4 @@
-import { halfPi } from '../util';
+import { PI_2 } from '../util';
 import Face from './face';
 import Shape from './shape';
 
@@ -12,7 +12,7 @@ export default class Plane extends Shape {
         h: this.h,
         x: this.w * -0.5,
         y: this.h * -0.5,
-        rx: -halfPi,
+        rx: -PI_2,
       }),
     ];
 

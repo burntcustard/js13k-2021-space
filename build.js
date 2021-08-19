@@ -76,12 +76,7 @@ async function minifyJs(compiledJs) {
       // unsafe_proto: true,
       // booleans_as_integers: true
     },
-    mangle: {
-      properties: {
-        keep_quoted: true,
-        reserved: ['game'],
-      },
-    },
+    mangle: false,
     module: true,
     sourceMap: DEVMODE ? {
       content: compiledJs.map,

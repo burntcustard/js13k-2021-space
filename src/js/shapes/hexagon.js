@@ -1,6 +1,6 @@
 import Shape from './shape';
 import Face from './face';
-import { halfPi, thirdPi } from '../util';
+import { PI_2, PI_3 } from '../util';
 
 export default class Hexagon extends Shape {
   constructor(props) {
@@ -26,47 +26,47 @@ export default class Hexagon extends Shape {
         h: this.h,
         x: 0.5 * faceWidth,
         y: 2 * props.radius - this.h,
-        rx: -halfPi,
+        rx: -PI_2,
       }),
       new Face({
         w: faceWidth,
         h: this.h,
         x: 0.866 * props.radius + 0.5 * faceWidth,
         y: 1.5 * props.radius - this.h,
-        rx: -halfPi,
-        rz: -thirdPi,
+        rx: -PI_2,
+        rz: -PI_3,
       }),
       new Face({
         w: faceWidth,
         h: this.h,
         x: 0.866 * props.radius + 0.5 * faceWidth,
         y: 0.5 * props.radius - this.h,
-        rx: -halfPi,
-        rz: -2 * thirdPi,
+        rx: -PI_2,
+        rz: -2 * PI_3,
       }),
       new Face({
         w: faceWidth,
         h: this.h,
         x: 0.5 * faceWidth,
         y: -this.h,
-        rx: -halfPi,
-        rz: -3 * thirdPi,
+        rx: -PI_2,
+        rz: -3 * PI_3,
       }),
       new Face({
         w: faceWidth,
         h: this.h,
         x: -0.866 * props.radius + 0.5 * faceWidth,
         y: 0.5 * props.radius - this.h,
-        rx: -halfPi,
-        rz: -4 * thirdPi,
+        rx: -PI_2,
+        rz: -4 * PI_3,
       }),
       new Face({
         w: faceWidth,
         h: this.h,
         x: -0.866 * props.radius + 0.5 * faceWidth,
         y: 1.5 * props.radius - this.h,
-        rx: -halfPi,
-        rz: -5 * thirdPi,
+        rx: -PI_2,
+        rz: -5 * PI_3,
       }),
     ];
 

@@ -13,17 +13,36 @@ export default class Shape {
     this.rz = rz ?? 0;
     this.element = document.createElement('div');
     this.element.className = `shape ${className}`;
-    this.element.style.width = `${w}px`;
-    this.element.style.height = `${d ?? w}px`;
     document.querySelector('.scene').append(this.element);
   }
 
   updateTransform() {
+    const sinRx = Math.sin(this.rx);
+    const sinRy = Math.sin(this.ry);
+    const sinRz = Math.sin(this.rz);
+    const cosRx = Math.cos(this.rx);
+    const cosRy = Math.cos(this.ry);
+    const cosRz = Math.cos(this.rz);
     this.element.style.transform = `
       translate3D(${this.x}px, ${this.y}px, ${this.z}px)
-      rotateZ(${this.rz}rad)
-      rotateY(${this.ry}rad)
-      rotateX(${this.rx}rad)
+      matrix3d(
+        ${cosRz * cosRy},
+        ${sinRz * cosRy},
+        ${-sinRy},
+        0,
+        ${cosRz * sinRy * sinRx - sinRz * cosRx},
+        ${sinRz * sinRy * sinRx + cosRz * cosRx},
+        ${cosRy * sinRx},
+        0,
+        ${cosRz * sinRy * cosRx + sinRz * sinRx},
+        ${sinRz * sinRy * cosRx - cosRz * sinRx},
+        ${cosRy * cosRx},
+        0,
+        0,
+        0,
+        0,
+        1
+      )
     `;
   }
 
@@ -58,7 +77,7 @@ export default class Shape {
 
       // Direction towards the light sources
       const light1 = new Vec3(1, 0, 1).normalise();
-      const light2 = new Vec3(-1, 1, 0).normalise();
+      // const light2 = new Vec3(-1, 1, 0).normalise();
 
       // Start with base level of ambient lighting
       let lightness = 0.2;
@@ -69,7 +88,7 @@ export default class Shape {
       // We only care about the cosine between 1 and 0
       // Multiplying by some factor so it doesn't blow out to just white
       lightness += Math.max(normal.dot(light1), 0) * 0.6;
-      lightness += Math.max(normal.dot(light2), 0) * 0.2;
+      // lightness += Math.max(normal.dot(light2), 0) * 0.2;
 
       side.setLightness(lightness);
       side.updateLighting();

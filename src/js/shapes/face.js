@@ -20,11 +20,32 @@ export default class Face {
   }
 
   update() {
+    const sinRx = Math.sin(this.rx);
+    const sinRy = Math.sin(this.ry);
+    const sinRz = Math.sin(this.rz);
+    const cosRx = Math.cos(this.rx);
+    const cosRy = Math.cos(this.ry);
+    const cosRz = Math.cos(this.rz);
     this.element.style.transform = `
       translate3D(${this.x}px, ${this.y}px, ${this.z}px)
-      rotateZ(${this.rz}rad)
-      rotateY(${this.ry}rad)
-      rotateX(${this.rx}rad)
+      matrix3d(
+        ${cosRz * cosRy},
+        ${sinRz * cosRy},
+        ${-sinRy},
+        0,
+        ${cosRz * sinRy * sinRx - sinRz * cosRx},
+        ${sinRz * sinRy * sinRx + cosRz * cosRx},
+        ${cosRy * sinRx},
+        0,
+        ${cosRz * sinRy * cosRx + sinRz * sinRx},
+        ${sinRz * sinRy * cosRx - cosRz * sinRx},
+        ${cosRy * cosRx},
+        0,
+        0,
+        0,
+        0,
+        1
+      )
     `;
   }
 
