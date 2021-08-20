@@ -51,17 +51,9 @@ export default class Shape {
    * @return {void}
    */
   updateLighting() {
-    // Do we need any shape-based, i.e. not face-based maths?
-    // e.g. vector stuff between light source and center of shape
-    // (which could be used instead of center of face?)
-
     this.sides.forEach((side) => {
-      // Rotation of face from shape space to world space (face + shape)
-      // const rx = this.rx + side.rx;
-      // const ry = this.ry + side.ry;
-      // const rz = this.rz + side.rz;
-
       // Figure out surface normal from rotations
+      // We have to do this for the shape rotation, then the face rotation
       // https://stackoverflow.com/a/27486532
       const sx = Math.sin(this.rx);
       const sy = Math.sin(this.ry);
@@ -80,44 +72,24 @@ export default class Shape {
       const fsy = Math.sin(side.ry);
       const fsz = Math.sin(side.rz);
       const fcx = Math.cos(side.rx);
-      const fxy = Math.cos(side.ry);
+      const fcy = Math.cos(side.ry);
       const fcz = Math.cos(side.rz);
 
       const mf = [
-        [fcz * fxy, fcz * fsy * fsx - fsz * fcx, fcz * fsy * fcx + fsz * fsx],
-        [fsz * fxy, fsz * fsy * fsx + fcz * fcx, fsz * fsy * fcx - fcz * fsx],
-        [-fsy, fxy * fsx, fxy * fcx],
-      ];
-
-      const combined = [
-        [
-          ms[0][0] * mf[0][0] + ms[0][1] * mf[1][0] + ms[0][2] * mf[2][0],
-          ms[0][0] * mf[0][1] + ms[0][1] * mf[1][1] + ms[0][2] * mf[2][1],
-          ms[0][0] * mf[0][2] + ms[0][1] * mf[1][2] + ms[0][2] * mf[2][2],
-        ],
-        [
-          ms[1][0] * mf[0][0] + ms[1][1] * mf[1][0] + ms[1][2] * mf[2][0],
-          ms[1][0] * mf[0][1] + ms[1][1] * mf[1][1] + ms[1][2] * mf[2][1],
-          ms[1][0] * mf[0][2] + ms[1][1] * mf[1][2] + ms[1][2] * mf[2][2],
-        ],
-        [
-          ms[2][0] * mf[0][0] + ms[2][1] * mf[1][0] + ms[2][2] * mf[2][0],
-          ms[2][0] * mf[0][1] + ms[2][1] * mf[1][1] + ms[2][2] * mf[2][1],
-          ms[2][0] * mf[0][2] + ms[2][1] * mf[1][2] + ms[2][2] * mf[2][2],
-        ],
+        fcx * fsy * fcz + fsx * fsz,
+        fcx * fsy * fsz - fsx * fcz,
+        fcx * fcy,
       ];
 
       const normal = new Vec3(
-        combined[0][2],
-        combined[1][2],
-        combined[2][2],
+        ms[0][0] * mf[0] + ms[0][1] * mf[1] + ms[0][2] * mf[2],
+        ms[1][0] * mf[0] + ms[1][1] * mf[1] + ms[1][2] * mf[2],
+        ms[2][0] * mf[0] + ms[2][1] * mf[1] + ms[2][2] * mf[2],
       ).normalise();
-
-      console.log(this.rx, this.ry, this.rz, normal);
 
       // Direction towards the light sources
       const light1 = new Vec3(1, 0, 1).normalise();
-      // const light2 = new Vec3(-1, 1, 0).normalise();
+      const light2 = new Vec3(-1, 1, 0).normalise();
 
       // Start with base level of ambient lighting
       let lightness = 0.2;
@@ -128,7 +100,7 @@ export default class Shape {
       // We only care about the cosine between 1 and 0
       // Multiplying by some factor so it doesn't blow out to just white
       lightness += Math.max(normal.dot(light1), 0) * 0.6;
-      // lightness += Math.max(normal.dot(light2), 0) * 0.2;
+      lightness += Math.max(normal.dot(light2), 0) * 0.2;
 
       side.setLightness(lightness);
       side.updateLighting();

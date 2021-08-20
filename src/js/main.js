@@ -2,14 +2,8 @@ import camera from './camera';
 import resources from './resources';
 import initMouse from './mouse';
 import { initKeyboard, doKeyboardInput } from './keyboard';
-import { $, toRad, PI_2, PI_4 } from './util';
-import Pyramid from './shapes/pyramid';
+import { $, PI_4 } from './util';
 import Box from './shapes/box';
-import Sphere from './shapes/sphere';
-import Hexagon from './shapes/hexagon';
-import Block from './objects/structures/block';
-import Solar from './objects/structures/solar';
-import Plane from './shapes/plane';
 
 const perfDebug = $('.debug .perf');
 const powerDebug = $('.debug .power');
@@ -20,17 +14,7 @@ const box = new Box({
   w: 60,
   h: 60,
   z: 100,
-  // rx: -PI_2,
-  // rz: -PI_2,
 });
-
-// const box2 = new Box({
-//   w: 80,
-//   h: 60,
-//   x: 100,
-//   y: -100,
-//   z: 200,
-// });
 
 function main(timestamp) {
   window.requestAnimationFrame(main);
@@ -45,9 +29,6 @@ function main(timestamp) {
   box.rz += 0.01;
   box.update();
 
-  // box2.rz -= 0.01;
-  // box2.update();
-
   camera.update(elapsed);
   // resources.update(elapsed);
 
@@ -60,8 +41,8 @@ initMouse();
 initKeyboard();
 
 $('#reset-rotation').addEventListener('click', () => {
-  camera.rx = toRad(45);
-  camera.rz = toRad(45);
+  camera.rx = PI_4;
+  camera.rz = PI_4;
   camera.setTransform();
 });
 

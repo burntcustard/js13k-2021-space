@@ -1,6 +1,6 @@
 import Shape from './shape';
 import Face from './face';
-import { PI_2, toRad } from '../util';
+import { PI_2 } from '../util';
 import Vec3 from '../vec3';
 
 export default class Box extends Shape {
