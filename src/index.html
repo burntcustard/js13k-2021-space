@@ -4,6 +4,14 @@
 
 <body>
   <div class="viewport" onContextMenu="return false">
+    <svg xmlns="http://www.w3.org/2000/svg" width=800% height=800% class="sky">
+        <filter id="f"><feTurbulence baseFrequency=".2"/><feColorMatrix values="0 0 0 9 -5
+                                0 0 0 9 -5
+                                0 0 0 9 -5
+                                0 0 0 0 1"/>
+        </filter>
+        <rect width="100%" height="100%" filter="url(#f)"/>
+    </svg>
     <div class="camera">
       <div class="scene">
         <div class="ground"></div>
