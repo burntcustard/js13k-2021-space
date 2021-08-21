@@ -5,6 +5,7 @@ import { initKeyboard, doKeyboardInput } from './keyboard';
 import { $, PI_4 } from './util';
 import Box from './shapes/box';
 import Hexagon from './shapes/hexagon';
+import Light from './objects/light';
 
 const perfDebug = $('.debug .perf');
 const matsBar = $('.mats .fill');
@@ -35,6 +36,21 @@ const hexagon = new Hexagon({
   z: 100,
 });
 
+const lights = [
+  new Light({
+    x: 1,
+    y: 0,
+    z: 1,
+    intensity: 0.6,
+  }),
+  new Light({
+    x: -1,
+    y: 1,
+    z: 0,
+    intensity: 0.2,
+  }),
+];
+
 function main(timestamp) {
   window.requestAnimationFrame(main);
 
@@ -45,10 +61,10 @@ function main(timestamp) {
 
   box.rx += 0.01;
   box.rz += 0.02;
-  box.update();
+  box.update(lights);
 
   hexagon.ry += 0.01;
-  hexagon.update();
+  hexagon.update(lights);
 
   camera.update(elapsed);
   stationBlock.update(elapsed);
