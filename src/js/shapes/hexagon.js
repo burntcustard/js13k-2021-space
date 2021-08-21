@@ -4,18 +4,7 @@ import { PI_2 } from '../util';
 
 export default class Hexagon extends Shape {
   constructor({ w, d, h, x, y, z, rx, ry, rz }) {
-    super({
-      w,
-      d,
-      h,
-      x,
-      y,
-      z,
-      rx,
-      ry,
-      rz,
-      className: 'hexagonandonandon',
-    });
+    super({ w, d, h, x, y, z, rx, ry, rz, className: 'hexagonandonandon' });
 
     this.sides = [
       new Face({

@@ -4,18 +4,7 @@ import { PI_2 } from '../util';
 
 export default class Pyramid extends Shape {
   constructor({ w, d, h, x, y, z, rx, ry, rz }) {
-    super({
-      w,
-      d,
-      h,
-      x,
-      y,
-      z,
-      rx,
-      ry,
-      rz,
-      className: 'pyramid',
-    });
+    super({ w, d, h, x, y, z, rx, ry, rz, className: 'pyramid' });
 
     const wHypot = Math.hypot(w * 0.5, h);
     const dHypot = Math.hypot(d * 0.5, h);

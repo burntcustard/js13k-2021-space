@@ -5,18 +5,7 @@ import Vec3 from '../vec3';
 
 export default class Box extends Shape {
   constructor({ w, d, h, x, y, z, rx, ry, rz }) {
-    super({
-      w,
-      d,
-      h,
-      x,
-      y,
-      z,
-      rx,
-      ry,
-      rz,
-      className: 'box',
-    });
+    super({ w, d, h, x, y, z, rx, ry, rz, className: 'box' });
 
     this.sides = [
       new Face({
