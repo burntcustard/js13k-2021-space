@@ -4,6 +4,7 @@ import initMouse from './mouse';
 import { initKeyboard, doKeyboardInput } from './keyboard';
 import { $, PI_4 } from './util';
 import Box from './shapes/box';
+import Hexagon from './shapes/hexagon';
 
 const perfDebug = $('.debug .perf');
 const powerDebug = $('.debug .power');
@@ -13,6 +14,16 @@ let previousTimestamp;
 const box = new Box({
   w: 60,
   h: 60,
+  x: -200,
+  z: 100,
+});
+
+const hexagon = new Hexagon({
+  w: 115,
+  d: 100,
+  h: 80,
+  x: 50,
+  y: -100,
   z: 100,
 });
 
@@ -25,9 +36,11 @@ function main(timestamp) {
   doKeyboardInput();
 
   box.rx += 0.01;
-  // box.ry += 0.01;
-  box.rz += 0.01;
+  box.rz += 0.02;
   box.update();
+
+  hexagon.ry += 0.01;
+  hexagon.update();
 
   camera.update(elapsed);
   // resources.update(elapsed);
