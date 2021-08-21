@@ -7,8 +7,6 @@
 }
 
 .face {
-  --lightness: 50%;
-
   transform-origin: bottom center;
 }
 
@@ -24,29 +22,29 @@
 /* Temporary (hopefully) debug face colors */
 
 .face:nth-child(1) {
-  background: hsl(0, 100%, var(--lightness, 50%), 0.6);
+  background: hsl(0, 100%, 50%, 0.6);
 }
 
 .face:nth-child(2) {
-  background: hsl(45, 100%, var(--lightness, 50%), 0.6);
+  background: hsl(45, 100%, 50%, 0.6);
 }
 
 .face:nth-child(3) {
-  background: hsl(90, 100%, var(--lightness, 50%), 0.6);
+  background: hsl(90, 100%, 50%, 0.6);
 }
 
 .face:nth-child(4) {
-  background: hsl(135, 100%, var(--lightness, 50%), 0.6);
+  background: hsl(135, 100%, 50%, 0.6);
 }
 
 .face:nth-child(5) {
-  background: hsl(180, 100%, var(--lightness, 50%), 0.6);
+  background: hsl(180, 100%, 50%, 0.6);
 }
 
 .face:nth-child(6) {
-  background: hsl(225, 100%, var(--lightness, 50%), 0.6);
+  background: hsl(225, 100%, 50%, 0.6);
 }
 
 .face:nth-child(7) {
-  background: hsl(270, 100%, var(--lightness, 50%), 0.6);
+  background: hsl(270, 100%, 50%, 0.6);
 }
