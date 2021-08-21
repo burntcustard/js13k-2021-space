@@ -1,0 +1,107 @@
+.eco {
+  display: flex;
+  gap: 6px;
+}
+
+.eco .dot {
+  width: 28px;
+  height: 28px;
+  box-sizing: border-box;
+  background: #333;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 28px;
+  text-align: center;
+  transition: all 0.2s;
+}
+
+.eco.mats .dot:not(.empty) {
+  border-right: 1px solid #0a9;
+  border-bottom: 2px solid #0aa;
+  background: #0fd;
+  box-shadow: 0 0 6px #0fd, 0 0 0 1px #333;
+}
+
+.eco.power .dot:not(.empty) {
+  border-right: 1px solid #cb0;
+  border-bottom: 2px solid #ca0;
+  background: #ff0;
+  box-shadow: 0 0 6px #fd0, 0 0 0 1px #333;
+}
+
+.eco .bar {
+  position: relative;
+  width: 102px;
+  height: 5px;
+  background: #333;
+  box-shadow: 0 1px inset #222, 0 1px #aaa;
+}
+
+.eco .bar::after {
+  position: absolute;
+  top: -12px;
+  right: 0;
+  left: 0;
+  height: 7px;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      #333,
+      3px,
+      #0000 0 9px
+    );
+  content: '';
+}
+
+.eco .bar .fill {
+  height: 4px;
+}
+
+.eco.mats .bar .fill {
+  border-bottom: 1px solid #0aa;
+  background: #0fd;
+  box-shadow: 0 0 6px #0fd, 0 0 0 1px #333;
+  margin-left: auto;
+}
+
+.eco.power .bar .fill {
+  border-bottom: 1px solid #ca0;
+  background: #ff0;
+  box-shadow: 0 0 6px #fd0, 0 0 0 1px #333;
+}
+
+.eco .bar .cap {
+  color: #000;
+  font-size: 11px;
+  line-height: 16px;
+}
+
+.eco.power .bar .cap {
+  text-align: right;
+}
+
+.eco .nums {
+  display: flex;
+  align-items: center;
+  padding: 0 4px;
+  margin-bottom: -2px;
+  background: #333;
+  box-shadow: 2px 2px inset #222;
+  font-size: 14px;
+}
+
+.eco .use {
+  margin-top: 5px;
+  color: #f20;
+}
+
+.eco .gen,
+.eco .nun.neg {
+  color: #0f9;
+}
+
+.eco .num {
+  margin-left: 4px;
+  color: #f20;
+  font-size: 18px;
+}

@@ -1,4 +1,8 @@
 function Resources() {
+  this.mats = {
+    capacity: 1000,
+    current: 100,
+  };
   this.power = {
     gen: 0,
     use: 0,
