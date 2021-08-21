@@ -2,13 +2,9 @@ import camera from './camera';
 import resources from './resources';
 import initMouse from './mouse';
 import { initKeyboard, doKeyboardInput } from './keyboard';
-import { $, toRad } from './util';
-import Pyramid from './shapes/pyramid';
+import { $, PI_4 } from './util';
 import Box from './shapes/box';
-import Sphere from './shapes/sphere';
 import Hexagon from './shapes/hexagon';
-import Block from './objects/structures/block';
-import Solar from './objects/structures/solar';
 
 const perfDebug = $('.debug .perf');
 const matsBar = $('.mats .fill');
@@ -23,45 +19,20 @@ const powerCap = $('.power .cap');
 
 let previousTimestamp;
 
-const stationBlock = new Block({
-  x: 0,
-  y: 0,
-  z: 40,
-});
-
-const stationSolar = new Solar({
-  x: 20,
-  y: 0,
-  z: 40,
-});
-
-const sphere = new Sphere({
-  radius: 40,
-  x: -300,
-  y: 300,
-  z: 20,
-});
-
-const pyramid = new Pyramid({
-  w: 150,
-  h: 200,
-  x: -300,
-  y: -300,
-});
-
 const box = new Box({
-  w: 100,
-  d: 60,
-  h: 140,
-  x: 200,
-  y: 160,
+  w: 60,
+  h: 60,
+  x: -200,
+  z: 100,
 });
 
 const hexagon = new Hexagon({
-  radius: 100,
-  h: 200,
-  x: 0,
-  y: 0,
+  w: 115,
+  d: 100,
+  h: 80,
+  x: 50,
+  y: -100,
+  z: 100,
 });
 
 function main(timestamp) {
@@ -71,10 +42,14 @@ function main(timestamp) {
   const elapsed = timestamp - previousTimestamp;
 
   doKeyboardInput();
-  box.rz += 0.01;
+
+  box.rx += 0.01;
+  box.rz += 0.02;
   box.update();
-  pyramid.rz -= 0.01;
-  pyramid.update();
+
+  hexagon.ry += 0.01;
+  hexagon.update();
+
   camera.update(elapsed);
   stationBlock.update(elapsed);
   stationSolar.update(elapsed);
@@ -100,8 +75,8 @@ initMouse();
 initKeyboard();
 
 $('#reset-rotation').addEventListener('click', () => {
-  camera.rx = toRad(45);
-  camera.rz = toRad(45);
+  camera.rx = PI_4;
+  camera.rz = PI_4;
   camera.setTransform();
 });
 

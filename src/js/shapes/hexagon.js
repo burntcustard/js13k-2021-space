@@ -1,72 +1,81 @@
 import Shape from './shape';
 import Face from './face';
-import { halfPi, thirdPi } from '../util';
+import { PI_2 } from '../util';
 
 export default class Hexagon extends Shape {
-  constructor(props) {
-    const faceWidth = 1.155 * props.radius;
+  constructor({ w, d, h, x, y, z, rx, ry, rz }) {
+    super({ w, d, h, x, y, z, rx, ry, rz, className: 'hexagonandonandon' });
 
-    super({
-      ...props,
-      w: 2 * faceWidth,
-      d: 2 * props.radius,
-      className: 'hexagonandonandon',
-    });
-
-    // TODO: Convert these magic numbers back into their trig equivalents
     this.sides = [
       new Face({
-        w: this.w,
-        h: this.d,
-        z: this.h,
+        w,
+        h: d,
+        x: w * -0.5,
+        y: d * -1.5,
+        z: h * -0.5,
+        rx: Math.PI,
         className: 'hex',
       }),
       new Face({
-        w: faceWidth,
-        h: this.h,
-        x: 0.5 * faceWidth,
-        y: 2 * props.radius - this.h,
-        rx: -halfPi,
+        w: w * 0.5,
+        h,
+        x: w * -0.25,
+        y: d * 0.5 - h,
+        z: h * -0.5,
+        rx: -PI_2,
       }),
       new Face({
-        w: faceWidth,
-        h: this.h,
-        x: 0.866 * props.radius + 0.5 * faceWidth,
-        y: 1.5 * props.radius - this.h,
-        rx: -halfPi,
-        rz: -thirdPi,
+        w: Math.hypot(w * 0.25, d * 0.5),
+        h,
+        x: w * 0.375 - Math.hypot(w * 0.25, d * 0.5) * 0.5,
+        y: d * 0.25 - h,
+        z: h * -0.5,
+        rx: -PI_2,
+        rz: -Math.atan((2 * d) / w),
       }),
       new Face({
-        w: faceWidth,
-        h: this.h,
-        x: 0.866 * props.radius + 0.5 * faceWidth,
-        y: 0.5 * props.radius - this.h,
-        rx: -halfPi,
-        rz: -2 * thirdPi,
+        w: Math.hypot(w * 0.25, d * 0.5),
+        h,
+        x: w * 0.375 - Math.hypot(w * 0.25, d * 0.5) * 0.5,
+        y: d * -0.25 - h,
+        z: h * -0.5,
+        rx: -PI_2,
+        rz: -Math.PI + Math.atan((2 * d) / w),
       }),
       new Face({
-        w: faceWidth,
-        h: this.h,
-        x: 0.5 * faceWidth,
-        y: -this.h,
-        rx: -halfPi,
-        rz: -3 * thirdPi,
+        w: w * 0.5,
+        h,
+        x: w * -0.25,
+        y: d * -0.5 - h,
+        z: h * -0.5,
+        rx: -PI_2,
+        rz: Math.PI,
       }),
       new Face({
-        w: faceWidth,
-        h: this.h,
-        x: -0.866 * props.radius + 0.5 * faceWidth,
-        y: 0.5 * props.radius - this.h,
-        rx: -halfPi,
-        rz: -4 * thirdPi,
+        w: Math.hypot(w * 0.25, d * 0.5),
+        h,
+        x: w * -0.375 - Math.hypot(w * 0.25, d * 0.5) * 0.5,
+        y: d * -0.25 - h,
+        z: h * -0.5,
+        rx: -PI_2,
+        rz: Math.PI - Math.atan((2 * d) / w),
       }),
       new Face({
-        w: faceWidth,
-        h: this.h,
-        x: -0.866 * props.radius + 0.5 * faceWidth,
-        y: 1.5 * props.radius - this.h,
-        rx: -halfPi,
-        rz: -5 * thirdPi,
+        w: Math.hypot(w * 0.25, d * 0.5),
+        h,
+        x: w * -0.375 - Math.hypot(w * 0.25, d * 0.5) * 0.5,
+        y: d * 0.25 - h,
+        z: h * -0.5,
+        rx: -PI_2,
+        rz: Math.atan((2 * d) / w),
+      }),
+      new Face({
+        w,
+        h: d,
+        x: w * -0.5,
+        y: d * -0.5,
+        z: h * 0.5,
+        className: 'hex',
       }),
     ];
 

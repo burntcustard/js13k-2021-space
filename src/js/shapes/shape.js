@@ -1,3 +1,5 @@
+import Vec3 from '../vec3';
+
 export default class Shape {
   constructor({ w, h, d, x, y, z, rx, ry, rz, className }) {
     this.w = w;
@@ -11,59 +13,97 @@ export default class Shape {
     this.rz = rz ?? 0;
     this.element = document.createElement('div');
     this.element.className = `shape ${className}`;
-    this.element.style.width = `${w}px`;
-    this.element.style.height = `${d ?? w}px`;
     document.querySelector('.scene').append(this.element);
   }
 
   updateTransform() {
+    const sinRx = Math.sin(this.rx);
+    const sinRy = Math.sin(this.ry);
+    const sinRz = Math.sin(this.rz);
+    const cosRx = Math.cos(this.rx);
+    const cosRy = Math.cos(this.ry);
+    const cosRz = Math.cos(this.rz);
     this.element.style.transform = `
       translate3D(${this.x}px, ${this.y}px, ${this.z}px)
-      rotateZ(${this.rz}rad)
-      rotateY(${this.ry}rad)
-      rotateX(${this.rx}rad)
+      matrix3d(
+        ${cosRz * cosRy},
+        ${sinRz * cosRy},
+        ${-sinRy},
+        0,
+        ${cosRz * sinRy * sinRx - sinRz * cosRx},
+        ${sinRz * sinRy * sinRx + cosRz * cosRx},
+        ${cosRy * sinRx},
+        0,
+        ${cosRz * sinRy * cosRx + sinRz * sinRx},
+        ${sinRz * sinRy * cosRx - cosRz * sinRx},
+        ${cosRy * cosRx},
+        0,
+        0,
+        0,
+        0,
+        1
+      )
     `;
   }
 
   /**
    * Update lighting CSS variable based on angle to light source.
-   * We can probably assume the light source is a sun at 0, 0, 0.
    * @return {void}
    */
   updateLighting() {
-    // Do we need any shape-based, i.e. not face-based maths?
-    // e.g. vector stuff between light source and center of shape
-    // (which could be used instead of center of face?)
-
     this.sides.forEach((side) => {
-      // Rotation of face from shape space to world space (face + shape)
-      //  - this is placeholder / probably very wrong:
-      const rx = this.rx + side.rx;
-      const ry = this.ry + side.ry;
-      const rz = this.rz + side.rz;
-
       // Figure out surface normal from rotations
-      //  - again, placeholder, probably wrong. This might help:
+      // We have to do this for the shape rotation, then the face rotation
       // https://stackoverflow.com/a/27486532
-      const sinRx = Math.sin(rx);
-      const sinRy = Math.sin(ry);
-      const sinRz = Math.sin(rz);
-      const cosRx = Math.sin(rx);
-      const cosRy = Math.sin(ry);
-      const cosRz = Math.sin(rz);
-      const nx = sinRy * cosRx * cosRz + sinRx * sinRz;
-      const ny = sinRy * sinRz * cosRx - sinRx * cosRz;
-      const nz = cosRx * cosRy;
+      const sx = Math.sin(this.rx);
+      const sy = Math.sin(this.ry);
+      const sz = Math.sin(this.rz);
+      const cx = Math.cos(this.rx);
+      const xy = Math.cos(this.ry);
+      const cz = Math.cos(this.rz);
 
-      // Figure out angle to 0,0,0
-      // NOPE this doesn't matter, we already have two vectors:
-      //  - the surface normal
-      //  - the x,y,z of the center of the shape (close enough to the face)
+      const ms = [
+        [cz * xy, cz * sy * sx - sz * cx, cz * sy * cx + sz * sx],
+        [sz * xy, sz * sy * sx + cz * cx, sz * sy * cx - cz * sx],
+        [-sy, xy * sx, xy * cx],
+      ];
 
-      // Figure out difference between surface normal and angle to 0,0,0
+      const fsx = Math.sin(side.rx);
+      const fsy = Math.sin(side.ry);
+      const fsz = Math.sin(side.rz);
+      const fcx = Math.cos(side.rx);
+      const fcy = Math.cos(side.ry);
+      const fcz = Math.cos(side.rz);
 
-      // Set lightness to 99% when facing directly to 0,0,0
-      // and some minimum 9%? when facing directly away from 0,0,0
+      const mf = [
+        fcx * fsy * fcz + fsx * fsz,
+        fcx * fsy * fsz - fsx * fcz,
+        fcx * fcy,
+      ];
+
+      const normal = new Vec3(
+        ms[0][0] * mf[0] + ms[0][1] * mf[1] + ms[0][2] * mf[2],
+        ms[1][0] * mf[0] + ms[1][1] * mf[1] + ms[1][2] * mf[2],
+        ms[2][0] * mf[0] + ms[2][1] * mf[1] + ms[2][2] * mf[2],
+      ).normalise();
+
+      // Direction towards the light sources
+      const light1 = new Vec3(1, 0, 1).normalise();
+      const light2 = new Vec3(-1, 1, 0).normalise();
+
+      // Start with base level of ambient lighting
+      let lightness = 0.2;
+
+      // https://cglearn.codelight.eu/pub/computer-graphics/shading-and-lighting#material-lambert-lighting-model-1
+      // When vectors are noralised the cosine between them is just a dot b
+      // The cosine is 1 at 0deg separation and 0 at 90deg
+      // We only care about the cosine between 1 and 0
+      // Multiplying by some factor so it doesn't blow out to just white
+      lightness += Math.max(normal.dot(light1), 0) * 0.6;
+      lightness += Math.max(normal.dot(light2), 0) * 0.2;
+
+      side.setLightness(lightness);
+      side.updateLighting();
     });
   }
 
