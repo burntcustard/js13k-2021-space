@@ -7,6 +7,8 @@ import Box from './shapes/box';
 import Hexagon from './shapes/hexagon';
 import StationBlock from './modules/block';
 import StationSolar from './modules/solar';
+import Pyramid from './shapes/pyramid';
+import Light from './objects/light';
 
 const perfDebug = $('.debug .perf');
 const matsBar = $('.mats .fill');
@@ -24,6 +26,7 @@ let previousTimestamp;
 const box = new Box({
   w: 60,
   h: 60,
+  d: 80,
   x: -200,
   z: 100,
 });
@@ -40,6 +43,31 @@ const hexagon = new Hexagon({
 const stationBlock = new StationBlock({});
 const stationSolar = new StationSolar({});
 
+const pyramid = new Pyramid({
+  w: 100,
+  d: 70,
+  h: 100,
+  y: 200,
+  z: 100,
+});
+
+const objects = [box, hexagon, pyramid, stationBlock, stationSolar];
+
+const lights = [
+  new Light({
+    x: 1,
+    y: 0,
+    z: 1,
+    intensity: 0.6,
+  }),
+  new Light({
+    x: -1,
+    y: 1,
+    z: 0,
+    intensity: 0.2,
+  }),
+];
+
 function main(timestamp) {
   window.requestAnimationFrame(main);
 
@@ -50,10 +78,14 @@ function main(timestamp) {
 
   box.rx += 0.01;
   box.rz += 0.02;
-  box.update();
 
   hexagon.ry += 0.01;
-  hexagon.update();
+
+  pyramid.ry += 0.01;
+
+  objects.forEach((object) => {
+    object.update(lights);
+  });
 
   camera.update(elapsed);
   stationBlock.update(elapsed);
