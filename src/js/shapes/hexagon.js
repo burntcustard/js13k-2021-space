@@ -2,8 +2,15 @@ import Shape from './shape';
 import Face from './face';
 import { PI_2 } from '../util';
 
+const ratio = Math.sqrt(3) / 2;
+
 export default class Hexagon extends Shape {
-  constructor({ w, d, h, x, y, z, rx, ry, rz }) {
+  /**
+   * Create a hexagon.
+   * Depth defaults to correct length to make the hexagon regular if ommitted.
+   * @param {*} properties
+   */
+  constructor({ w, d = w * ratio, h, x, y, z, rx, ry, rz }) {
     super({ w, d, h, x, y, z, rx, ry, rz, className: 'hexagonandonandon' });
 
     this.sides = [

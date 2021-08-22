@@ -7,6 +7,8 @@ import Box from './shapes/box';
 import Hexagon from './shapes/hexagon';
 import StationBlock from './modules/block';
 import StationSolar from './modules/solar';
+import Pyramid from './shapes/pyramid';
+import Light from './objects/light';
 
 const perfDebug = $('.debug .perf');
 const matsBar = $('.mats .fill');
@@ -29,8 +31,7 @@ const box = new Box({
 });
 
 const hexagon = new Hexagon({
-  w: 115,
-  d: 100,
+  w: 100,
   h: 80,
   x: 50,
   y: -100,
@@ -39,6 +40,30 @@ const hexagon = new Hexagon({
 
 const stationBlock = new StationBlock({});
 const stationSolar = new StationSolar({ x: 90, z: 10 });
+
+const pyramid = new Pyramid({
+  w: 100,
+  h: 100,
+  y: 200,
+  z: 100,
+});
+
+const objects = [box, hexagon, pyramid, stationBlock, stationSolar];
+
+const lights = [
+  new Light({
+    x: 1,
+    y: 0,
+    z: 1,
+    intensity: 0.6,
+  }),
+  new Light({
+    x: -1,
+    y: 1,
+    z: 0,
+    intensity: 0.2,
+  }),
+];
 
 function main(timestamp) {
   window.requestAnimationFrame(main);
@@ -50,14 +75,17 @@ function main(timestamp) {
 
   box.rx += 0.01;
   box.rz += 0.02;
-  box.update();
 
   hexagon.ry += 0.01;
-  hexagon.update();
+  stationSolar.model.rx += 0.01;
+
+  pyramid.ry += 0.01;
+
+  objects.forEach((object) => {
+    object.update(elapsed, lights);
+  });
 
   camera.update(elapsed);
-  stationBlock.update(elapsed);
-  stationSolar.update(elapsed);
 
   previousTimestamp = timestamp;
   perfDebug.innerText = `Elapsed: ${elapsed.toFixed(2)} FPS: ${(1000 / elapsed).toFixed()}`;

@@ -50,7 +50,7 @@ export default class Shape {
    * Update lighting CSS variable based on angle to light source.
    * @return {void}
    */
-  updateLighting() {
+  updateLighting(lights = []) {
     this.sides.forEach((side) => {
       // Figure out surface normal from rotations
       // We have to do this for the shape rotation, then the face rotation
@@ -87,10 +87,6 @@ export default class Shape {
         ms[2][0] * mf[0] + ms[2][1] * mf[1] + ms[2][2] * mf[2],
       ).normalise();
 
-      // Direction towards the light sources
-      const light1 = new Vec3(1, 0, 1).normalise();
-      const light2 = new Vec3(-1, 1, 0).normalise();
-
       // Start with base level of ambient lighting
       let lightness = 0.2;
 
@@ -99,16 +95,17 @@ export default class Shape {
       // The cosine is 1 at 0deg separation and 0 at 90deg
       // We only care about the cosine between 1 and 0
       // Multiplying by some factor so it doesn't blow out to just white
-      lightness += Math.max(normal.dot(light1), 0) * 0.6;
-      lightness += Math.max(normal.dot(light2), 0) * 0.2;
+      lights.forEach((light) => {
+        lightness += Math.max(normal.dot(light.direction), 0) * light.intensity;
+      });
 
       side.setLightness(lightness);
       side.updateLighting();
     });
   }
 
-  update() {
+  update(elapsed, lights) {
     this.updateTransform();
-    this.updateLighting(); // Maybe only do every few frames to save perf
+    this.updateLighting(lights); // Maybe only do every few frames to save perf
   }
 }

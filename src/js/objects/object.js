@@ -10,4 +10,8 @@ export default class Object {
     this.ry = ry ?? 0;
     this.rz = rz ?? 0;
   }
+
+  update(elapsed, lights) {
+    this.model.update(elapsed, lights);
+  }
 }

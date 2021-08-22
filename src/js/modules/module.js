@@ -31,7 +31,9 @@ export default class Structure extends Object {
     }
   }
 
-  update(elapsed) {
+  update(elapsed, lights) {
+    super.update(elapsed, lights);
+
     if (this.active) {
       this.doStuff(elapsed);
     }
