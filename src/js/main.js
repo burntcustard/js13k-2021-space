@@ -5,6 +5,7 @@ import { initKeyboard, doKeyboardInput } from './keyboard';
 import { $, PI_4 } from './util';
 import Box from './shapes/box';
 import Hexagon from './shapes/hexagon';
+import Pyramid from './shapes/pyramid';
 import Light from './objects/light';
 
 const perfDebug = $('.debug .perf');
@@ -36,6 +37,15 @@ const hexagon = new Hexagon({
   z: 100,
 });
 
+const pyramid = new Pyramid({
+  w: 150,
+  d: 100,
+  h: 100,
+  z: 100,
+});
+
+const objects = [box, hexagon, pyramid];
+
 const lights = [
   new Light({
     x: 1,
@@ -61,10 +71,14 @@ function main(timestamp) {
 
   box.rx += 0.01;
   box.rz += 0.02;
-  box.update(lights);
 
   hexagon.ry += 0.01;
-  hexagon.update(lights);
+
+  pyramid.ry += 0.01;
+
+  objects.forEach((object) => {
+    object.update(lights);
+  });
 
   camera.update(elapsed);
   stationBlock.update(elapsed);
