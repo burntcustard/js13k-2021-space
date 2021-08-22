@@ -6,5 +6,6 @@
 @import 'panel';
 @import 'scene';
 @import 'shapes';
-@import 'viewport';
+@import 'solar';
 @import 'ui';
+@import 'viewport';

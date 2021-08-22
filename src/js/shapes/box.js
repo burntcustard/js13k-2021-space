@@ -4,8 +4,8 @@ import { PI_2 } from '../util';
 import Vec3 from '../vec3';
 
 export default class Box extends Shape {
-  constructor({ w, d, h, x, y, z, rx, ry, rz }) {
-    super({ w, d, h, x, y, z, rx, ry, rz, className: 'box' });
+  constructor({ w, d, h, x, y, z, rx, ry, rz, classNames = [] }) {
+    super({ w, d, h, x, y, z, rx, ry, rz, className: classNames[0] });
 
     this.sides = [
       new Face({
@@ -16,6 +16,7 @@ export default class Box extends Shape {
         z: h * -0.5,
         rx: Math.PI,
         colour: new Vec3(1, 1, 1),
+        className: classNames[1],
       }),
       new Face({
         w,
@@ -25,6 +26,7 @@ export default class Box extends Shape {
         z: h * -0.5,
         rx: -PI_2,
         colour: new Vec3(1, 1, 1),
+        className: classNames[2],
       }),
       new Face({
         w: d,
@@ -35,6 +37,7 @@ export default class Box extends Shape {
         rx: -PI_2,
         rz: -PI_2,
         colour: new Vec3(1, 1, 1),
+        className: classNames[3],
       }),
       new Face({
         w,
@@ -45,6 +48,7 @@ export default class Box extends Shape {
         rx: -PI_2,
         rz: Math.PI,
         colour: new Vec3(1, 1, 1),
+        className: classNames[4],
       }),
       new Face({
         w: d,
@@ -55,6 +59,7 @@ export default class Box extends Shape {
         rx: -PI_2,
         rz: PI_2,
         colour: new Vec3(1, 1, 1),
+        className: classNames[5],
       }),
       new Face({
         w,
@@ -63,6 +68,7 @@ export default class Box extends Shape {
         y: d * -0.5,
         z: h * 0.5,
         colour: new Vec3(1, 1, 1),
+        className: classNames[6],
       }),
     ];
 

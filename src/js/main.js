@@ -38,7 +38,7 @@ const hexagon = new Hexagon({
 });
 
 const stationBlock = new StationBlock({});
-const stationSolar = new StationSolar({});
+const stationSolar = new StationSolar({ x: 90, z: 10 });
 
 function main(timestamp) {
   window.requestAnimationFrame(main);

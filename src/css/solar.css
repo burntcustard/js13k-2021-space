@@ -1,0 +1,24 @@
+.solar > .face {
+  background: #fff;
+}
+
+.solar .panel {
+  border: 2px solid #fff;
+  background:
+    repeating-linear-gradient(
+      to top,
+      #0000 0 9px,
+      #fff 0 10px
+    ),
+    repeating-linear-gradient(
+      to right,
+      #0000 0 4px,
+      #fff 0 5px
+    ),
+    /* Rotate this for lighting?... */
+    linear-gradient(
+      45deg,
+      #09f,
+      #0cf
+    );
+}
