@@ -3,15 +3,15 @@ import Face from './face';
 import Shape from './shape';
 
 export default class Plane extends Shape {
-  constructor(props) {
-    super(props);
+  constructor({ w, h, x, y, z, rx, ry, rz }) {
+    super({ w, h, x, y, z, rx, ry, rz, className: 'plane' });
 
     this.sides = [
       new Face({
-        w: this.w,
-        h: this.h,
-        x: this.w * -0.5,
-        y: this.h * -0.5,
+        w,
+        h,
+        x: w * -0.5,
+        y: h * -0.5,
         rx: -PI_2,
       }),
     ];

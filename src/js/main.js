@@ -26,14 +26,12 @@ let previousTimestamp;
 const box = new Box({
   w: 60,
   h: 60,
-  d: 80,
   x: -200,
   z: 100,
 });
 
 const hexagon = new Hexagon({
-  w: 115,
-  d: 100,
+  w: 100,
   h: 80,
   x: 50,
   y: -100,
@@ -45,7 +43,6 @@ const stationSolar = new StationSolar({});
 
 const pyramid = new Pyramid({
   w: 100,
-  d: 70,
   h: 100,
   y: 200,
   z: 100,
