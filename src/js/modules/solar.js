@@ -1,5 +1,5 @@
-import Structure from './structure';
-import Box from '../../shapes/box';
+import Structure from './module';
+import Box from '../shapes/box';
 
 export default class Solar extends Structure {
   constructor(props) {

@@ -1,5 +1,5 @@
-import Object from '../object';
-import resources from '../../resources';
+import Object from '../objects/object';
+import resources from '../resources';
 
 export default class Structure extends Object {
   constructor(props) {

@@ -5,6 +5,8 @@ import { initKeyboard, doKeyboardInput } from './keyboard';
 import { $, PI_4 } from './util';
 import Box from './shapes/box';
 import Hexagon from './shapes/hexagon';
+import StationBlock from './modules/block';
+import StationSolar from './modules/solar';
 
 const perfDebug = $('.debug .perf');
 const matsBar = $('.mats .fill');
@@ -34,6 +36,9 @@ const hexagon = new Hexagon({
   y: -100,
   z: 100,
 });
+
+const stationBlock = new StationBlock({});
+const stationSolar = new StationSolar({});
 
 function main(timestamp) {
   window.requestAnimationFrame(main);
