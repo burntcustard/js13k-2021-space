@@ -1,15 +1,10 @@
 import Structure from './module';
 import Box from '../shapes/box';
 
-export default class Block extends Structure {
-  constructor(props) {
-    const w = 20;
-    const h = 20;
-    const d = 20;
-
+class Block extends Structure {
+  constructor({ w, h, d }, props) {
     super({ w, h, d, ...props, powerUse: 20 });
 
-    // Create a new box shape
     this.model = new Box({
       w,
       h,
@@ -17,7 +12,27 @@ export default class Block extends Structure {
       x: props.x,
       y: props.y,
       z: props.z,
-      className: 'block',
     });
   }
+
+  update(elapsed, lights) {
+    super.update(elapsed, lights);
+
+    if (this.active) {
+      this.model.rx += 0.01;
+    }
+  }
 }
+
+const block = {
+  info: {
+    name: 'block',
+    cost: 1,
+    w: 60,
+    h: 60,
+    d: 60,
+  },
+  new: (props) => new Block(block.info, props),
+};
+
+export default block;

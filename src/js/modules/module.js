@@ -3,7 +3,7 @@ import resources from '../resources';
 
 export default class Structure extends Object {
   constructor(props) {
-    super(props);
+    super({ ...props });
     this.powerGen = props.powerGen ?? 0;
     this.powerUse = props.powerUse ?? 0;
     this.enable();
@@ -62,6 +62,6 @@ export default class Structure extends Object {
   // If you run out of power, shut down this structure
   shutdown() {
     this.disable();
-    this.restartTimer = 1000; // Reboot after 1s
+    this.restartTimer = 3000; // Reboot after 3s
   }
 }

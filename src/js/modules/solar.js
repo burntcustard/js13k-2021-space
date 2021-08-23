@@ -1,17 +1,13 @@
-import Structure from './module';
+import Module from './module';
 import Box from '../shapes/box';
 
-export default class Solar extends Structure {
-  constructor(props) {
-    const w = 108;
-    const h = 20;
-    const d = 53; // Structure needs depth for collisions, but model doesn't?
-
-    super({ w, h, d, ...props, powerGen: 10 });
+class Solar extends Module {
+  constructor({ w, h, d, powerGen }, props) {
+    super({ w, h, d, ...props, powerGen });
 
     this.model = new Box({
       w,
-      h: 2,
+      h,
       d,
       x: props.x,
       y: props.y,
@@ -28,3 +24,18 @@ export default class Solar extends Structure {
     });
   }
 }
+
+const solar = {
+  info: {
+    name: 'Solar Panel Basic',
+    desc: 'Generates power',
+    powerGen: 10,
+    cost: 9,
+    w: 108,
+    h: 2,
+    d: 53,
+  },
+  new: (props) => new Solar(solar.info, props),
+};
+
+export default solar;
