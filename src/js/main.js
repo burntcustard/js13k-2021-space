@@ -40,7 +40,9 @@ const hexagon = new Hexagon({
 });
 
 const stationBlock = block.new({ x: 0, z: 10 });
+stationBlock.enable();
 const stationSolar = solarAdv.new({ x: 90, z: 10 });
+stationSolar.enable();
 
 const pyramid = new Pyramid({
   w: 100,
@@ -72,24 +74,36 @@ currentBuildItem.model.element.classList.add('outline');
 
 stationBlock.model.sides.forEach((side) => {
   side.element.addEventListener('mouseover', () => {
-    side.element.classList.add('build-hover');
-    currentBuildItem.model.x = side.x;
-    currentBuildItem.model.y = side.y;
-    currentBuildItem.model.z = side.z;
-    currentBuildItem.update();
+    if (!side.hasConnectedModule) {
+      side.element.classList.add('build-hover');
+      currentBuildItem.model.x = side.x;
+      currentBuildItem.model.y = side.y;
+      currentBuildItem.model.z = side.z;
+      currentBuildItem.update();
+    }
   });
 
-  side.element.addEventListener('click', () => {
+  side.element.addEventListener('mouseup', () => {
     // currentBuildItem.build() // ?
     // Don't want to repeat long className str
     // .mode.element.classList is too many dots
-    currentBuildItem.model.element.classList.remove('outline');
-    objects.push(currentBuildItem);
-    currentBuildItem = solar.new({});
+    if (!side.hasConnectedModule) {
+      currentBuildItem.model.element.classList.remove('outline');
+      objects.push(currentBuildItem);
+      currentBuildItem.enable();
+      currentBuildItem = solar.new({});
+      currentBuildItem.model.element.classList.add('outline');
+      side.hasConnectedModule = true;
+    }
   });
 
   side.element.addEventListener('mouseleave', () => {
     side.element.classList.remove('build-hover');
+    // Place it in the sun or something (is actually what PA does lol)
+    currentBuildItem.model.x = 0;
+    currentBuildItem.model.y = 0;
+    currentBuildItem.model.z = 0;
+    currentBuildItem.update();
   });
 });
 

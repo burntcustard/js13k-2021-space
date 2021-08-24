@@ -6,7 +6,6 @@ export default class Structure extends Object {
     super({ ...props });
     this.powerGen = props.powerGen ?? 0;
     this.powerUse = props.powerUse ?? 0;
-    this.enable();
   }
 
   doStuff(elapsed) {

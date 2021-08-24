@@ -29,7 +29,7 @@ const solarAdv = {
   info: {
     name: 'Solar Panel Basic',
     desc: 'Generates more power',
-    powerGen: 20,
+    powerGen: 2,
     cost: 9,
     w: 168,
     h: 2,
