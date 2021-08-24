@@ -83,7 +83,7 @@
 .face.build-hover.obstructed::after {
   border-right-color: #f02b;
   border-left-color: #f02b;
-  animation-duration: 3s;
+  animation-duration: 5s;
   background-image: radial-gradient(#f02 50%, #0000 0);
 }
 

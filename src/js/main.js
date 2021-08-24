@@ -70,11 +70,13 @@ const lights = [
 
 let currentBuildItem = solar.new({});
 currentBuildItem.model.element.classList.add('outline');
+currentBuildItem.model.element.style.display = 'none';
 let canAffordCurrentBuildItem = resources.mats.current > currentBuildItem.cost;
 let currentHoverSide;
 
 stationBlock.model.sides.forEach((side) => {
   side.element.addEventListener('mouseover', () => {
+    currentBuildItem.model.element.style.display = '';
     side.element.classList.add('build-hover');
     side.element.classList.toggle('obstructed', side.hasConnectedModule ?? false);
     currentBuildItem.model.element.classList.toggle('obstructed', side.hasConnectedModule ?? false);
@@ -110,6 +112,7 @@ stationBlock.model.sides.forEach((side) => {
 
   side.element.addEventListener('mouseleave', () => {
     side.element.classList.remove('build-hover');
+    currentBuildItem.model.element.style.display = 'none';
     currentHoverSide = null;
     // Place it in the sun or something (is actually what PA does lol)
     currentBuildItem.model.x = 0;
