@@ -5,7 +5,6 @@ const cameraElement = $('.camera');
 const scene = $('.scene');
 const viewport = $('.viewport');
 const cameraDebug = $('.debug .view');
-const sky = $('.sky');
 
 function Camera() {
   this.x = 0;
@@ -28,7 +27,6 @@ function Camera() {
     // Clamp so the camera can't flip (values in radians)
     this.rx = Math.min(Math.max(this.rx, 0), 1.5);
     scene.style.transform = `rotateX(${this.rx}rad) rotateZ(${this.rz}rad) translateX(${this.x}px) translateY(${this.y}px)`;
-    sky.style.transform = `translate(${-50 + this.rz * 8}%, ${-50 + this.rx * 8}%)`;
   };
 
   this.setZoom = () => {
@@ -42,8 +40,6 @@ function Camera() {
   this.rotate = (x, y) => {
     this.rz += x * settings.camera.rotateSpeed;
     this.rx += y * settings.camera.rotateSpeed;
-    this.rz %= Math.PI * 2;
-    console.log(this.rz);
     this.followers.forEach((f) => f.update());
     this.setTransform();
   };

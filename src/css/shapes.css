@@ -48,3 +48,27 @@
 .face:nth-child(7) {
   background: hsl(270, 100%, 50%, 0.6);
 }
+
+.skybox .face:nth-child(1) {
+  background: url("/img/bottom.jpg");
+}
+
+.skybox .face:nth-child(2) {
+  background: url("/img/back.jpg");
+}
+
+.skybox .face:nth-child(3) {
+  background: url("/img/right.jpg");
+}
+
+.skybox .face:nth-child(4) {
+  background: url("/img/front.jpg");
+}
+
+.skybox .face:nth-child(5) {
+  background: url("/img/left.jpg");
+}
+
+.skybox .face:nth-child(6) {
+  background: url("/img/top.jpg");
+}
