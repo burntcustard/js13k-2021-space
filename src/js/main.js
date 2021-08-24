@@ -5,8 +5,8 @@ import { initKeyboard, doKeyboardInput } from './keyboard';
 import { $, PI_4 } from './util';
 import Box from './shapes/box';
 import Hexagon from './shapes/hexagon';
-import StationBlock from './modules/block';
-import StationSolar from './modules/solar';
+import block from './modules/block';
+import solarAdv from './modules/solar-adv';
 import Pyramid from './shapes/pyramid';
 import Light from './objects/light';
 
@@ -38,8 +38,8 @@ const hexagon = new Hexagon({
   z: 100,
 });
 
-const stationBlock = new StationBlock({});
-const stationSolar = new StationSolar({ x: 90, z: 10 });
+const stationBlock = block.new({ x: 0, z: 10 });
+const stationSolar = solarAdv.new({ x: 90, z: 10 });
 
 const pyramid = new Pyramid({
   w: 100,
@@ -77,7 +77,6 @@ function main(timestamp) {
   box.rz += 0.02;
 
   hexagon.ry += 0.01;
-  stationSolar.model.rx += 0.01;
 
   pyramid.ry += 0.01;
 

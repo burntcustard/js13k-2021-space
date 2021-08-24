@@ -1,7 +1,7 @@
 import Module from './module';
 import Box from '../shapes/box';
 
-class Solar extends Module {
+class SolarAdv extends Module {
   constructor({ w, h, d, powerGen }, props) {
     super({ w, h, d, ...props, powerGen });
 
@@ -25,17 +25,17 @@ class Solar extends Module {
   }
 }
 
-const solar = {
+const solarAdv = {
   info: {
     name: 'Solar Panel Basic',
-    desc: 'Generates power',
-    powerGen: 10,
+    desc: 'Generates more power',
+    powerGen: 20,
     cost: 9,
-    w: 108,
+    w: 168,
     h: 2,
     d: 53,
   },
-  new: (props) => new Solar(solar.info, props),
+  new: (props) => new SolarAdv(solarAdv.info, props),
 };
 
-export default solar;
+export default solarAdv;

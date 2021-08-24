@@ -2,7 +2,10 @@
  * Game object
  */
 export default class Object {
-  constructor({ x, y, z, rx, ry, rz }) {
+  constructor({ w, h, d, x, y, z, rx, ry, rz }) {
+    this.w = w;
+    this.h = h;
+    this.d = d;
     this.x = x;
     this.y = y;
     this.z = z ?? 0;
