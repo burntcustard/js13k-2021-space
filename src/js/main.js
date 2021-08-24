@@ -69,36 +69,48 @@ const lights = [
 ];
 
 let currentBuildItem = solar.new({});
-
 currentBuildItem.model.element.classList.add('outline');
+let canAffordCurrentBuildItem = resources.mats.current > currentBuildItem.cost;
+let currentHoverSide;
 
 stationBlock.model.sides.forEach((side) => {
   side.element.addEventListener('mouseover', () => {
-    if (!side.hasConnectedModule) {
-      side.element.classList.add('build-hover');
-      currentBuildItem.model.x = side.x;
-      currentBuildItem.model.y = side.y;
-      currentBuildItem.model.z = side.z;
-      currentBuildItem.update();
-    }
+    side.element.classList.add('build-hover');
+    side.element.classList.toggle('obstructed', side.hasConnectedModule ?? false);
+    currentBuildItem.model.element.classList.toggle('obstructed', side.hasConnectedModule ?? false);
+    currentHoverSide = side;
+    currentBuildItem.model.x = side.x;
+    currentBuildItem.model.y = side.y;
+    currentBuildItem.model.z = side.z;
+    currentBuildItem.update();
   });
 
   side.element.addEventListener('mouseup', () => {
     // currentBuildItem.build() // ?
     // Don't want to repeat long className str
     // .mode.element.classList is too many dots
-    if (!side.hasConnectedModule) {
+    if (!side.hasConnectedModule && canAffordCurrentBuildItem) {
       currentBuildItem.model.element.classList.remove('outline');
       objects.push(currentBuildItem);
       currentBuildItem.enable();
-      currentBuildItem = solar.new({});
-      currentBuildItem.model.element.classList.add('outline');
       side.hasConnectedModule = true;
+      side.element.classList.add('obstructed');
+      // Cost some resources - should this be on build bar click instead?
+      resources.mats.current -= currentBuildItem.cost;
+      currentBuildItem = solar.new({});
+      currentBuildItem.model.x = side.x;
+      currentBuildItem.model.y = side.y;
+      currentBuildItem.model.z = side.z;
+      currentBuildItem.update();
+      currentBuildItem.model.element.classList.add('outline');
+      // Assuming we can't build models on top of each other, new one is obstructed
+      currentBuildItem.model.element.classList.add('obstructed');
     }
   });
 
   side.element.addEventListener('mouseleave', () => {
     side.element.classList.remove('build-hover');
+    currentHoverSide = null;
     // Place it in the sun or something (is actually what PA does lol)
     currentBuildItem.model.x = 0;
     currentBuildItem.model.y = 0;
@@ -107,8 +119,16 @@ stationBlock.model.sides.forEach((side) => {
   });
 });
 
+
 function main(timestamp) {
   window.requestAnimationFrame(main);
+
+  // Check if we can afford the thing we're trying to build
+  canAffordCurrentBuildItem = resources.mats.current > currentBuildItem.cost;
+  currentBuildItem.model.element.classList.toggle('err-cost', !canAffordCurrentBuildItem);
+  if (currentHoverSide) {
+    currentHoverSide.element.classList.toggle('err-cost', !canAffordCurrentBuildItem);
+  }
 
   if (previousTimestamp === undefined) previousTimestamp = timestamp;
   const elapsed = timestamp - previousTimestamp;

@@ -2,8 +2,8 @@ import Module from './module';
 import Box from '../shapes/box';
 
 class SolarAdv extends Module {
-  constructor({ w, h, d, powerGen }, props) {
-    super({ w, h, d, ...props, powerGen });
+  constructor({ w, h, d, cost, powerGen }, props) {
+    super({ w, h, d, cost, ...props, powerGen });
 
     this.model = new Box({
       w,

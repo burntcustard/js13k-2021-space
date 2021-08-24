@@ -79,6 +79,14 @@
   -webkit-backface-visibility: hidden;
 }
 
+.face.build-hover.err-cost::after,
+.face.build-hover.obstructed::after {
+  border-right-color: #f02b;
+  border-left-color: #f02b;
+  animation-duration: 3s;
+  background-image: radial-gradient(#f02 50%, #0000 0);
+}
+
 @keyframes spin {
   0% { transform: rotate(0deg) translateZ(1px); }
   100% { transform: rotate(360deg) translateZ(1px); }
@@ -92,4 +100,10 @@
 .shape.outline .face {
   border: 1px solid #fffa;
   background: #fff2;
+}
+
+.shape.obstructed .face,
+.shape.err-cost .face {
+  border: 1px solid #f02b;
+  background: #f022;
 }

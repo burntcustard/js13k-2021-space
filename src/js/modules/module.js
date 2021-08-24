@@ -6,6 +6,7 @@ export default class Structure extends Object {
     super({ ...props });
     this.powerGen = props.powerGen ?? 0;
     this.powerUse = props.powerUse ?? 0;
+    this.cost = props.cost ?? 0; // Fallback is free(?!)
   }
 
   doStuff(elapsed) {

@@ -2,8 +2,8 @@ import Module from './module';
 import Box from '../shapes/box';
 
 class Solar extends Module {
-  constructor({ w, h, d, powerGen }, props) {
-    super({ w, h, d, ...props, powerGen });
+  constructor({ w, h, d, cost, powerGen }, props) {
+    super({ w, h, d, cost, ...props, powerGen });
 
     this.model = new Box({
       w,
@@ -30,7 +30,7 @@ const solar = {
     name: 'Solar Panel Basic',
     desc: 'Generates power',
     powerGen: 10,
-    cost: 9,
+    cost: 35,
     w: 108,
     h: 2,
     d: 53,
