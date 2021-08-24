@@ -6,7 +6,7 @@ import { $, PI_4 } from './util';
 import Box from './shapes/box';
 import Hexagon from './shapes/hexagon';
 import block from './modules/block';
-import solar from './modules/solar';
+import solarAdv from './modules/solar-adv';
 import Pyramid from './shapes/pyramid';
 import Light from './objects/light';
 
@@ -39,7 +39,7 @@ const hexagon = new Hexagon({
 });
 
 const stationBlock = block.new({ x: 0, z: 10 });
-const stationSolar = solar.new({ x: 90, z: 10 });
+const stationSolar = solarAdv.new({ x: 90, z: 10 });
 
 const pyramid = new Pyramid({
   w: 100,
