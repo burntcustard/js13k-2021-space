@@ -147,10 +147,10 @@
   border-left: 8px solid hsl(0, 0%, 75%);
 }
 
-.ui__hex .top .panel {
+.ui__hex .top .ui-panel {
   transform: rotateX(85deg) translateY(calc(3vmin + 16px));
 }
 
-.ui__hex .right .panel {
+.ui__hex .right .ui-panel {
   transform: rotateY(85deg) translateX(-40px);
 }

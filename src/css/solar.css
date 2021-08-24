@@ -1,8 +1,8 @@
-.solar > .face {
+.solar > .face::before {
   background: #fff;
 }
 
-.solar .panel {
+.solar .panel::before {
   border: 2px solid #fff;
   background:
     repeating-linear-gradient(

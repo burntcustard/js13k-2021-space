@@ -14,37 +14,58 @@
   border-radius: 50%;
 }
 
-/* Should be in "textures.css"? */
-.solar {
-  background: rgb(0, 0, 255);
+/* Face::befores are the base textures (walls, solar panels etc) */
+.face::before {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  box-sizing: border-box;
+  content: '';
+  filter: brightness(var(--l));
 }
 
 /* Temporary (hopefully) debug face colors */
 
-.face:nth-child(1) {
-  background: hsl(0, 100%, 50%, 0.6);
+.face:nth-child(1)::before {
+  background: hsl(0, 100%, 50%, 0.8);
 }
 
-.face:nth-child(2) {
-  background: hsl(45, 100%, 50%, 0.6);
+.face:nth-child(2)::before {
+  background: hsl(45, 100%, 50%, 0.8);
 }
 
-.face:nth-child(3) {
-  background: hsl(90, 100%, 50%, 0.6);
+.face:nth-child(3)::before {
+  background: hsl(90, 100%, 50%, 0.8);
 }
 
-.face:nth-child(4) {
-  background: hsl(135, 100%, 50%, 0.6);
+.face:nth-child(4)::before {
+  background: hsl(135, 100%, 50%, 0.8);
 }
 
-.face:nth-child(5) {
-  background: hsl(180, 100%, 50%, 0.6);
+.face:nth-child(5)::before {
+  background: hsl(180, 100%, 50%, 0.8);
 }
 
-.face:nth-child(6) {
-  background: hsl(225, 100%, 50%, 0.6);
+.face:nth-child(6)::before {
+  background: hsl(225, 100%, 50%, 0.8);
 }
 
-.face:nth-child(7) {
-  background: hsl(270, 100%, 50%, 0.6);
+.face:nth-child(7)::before {
+  background: hsl(270, 100%, 50%, 0.8);
+}
+
+.face.placeholder-hover {
+  border-radius: 3px;
+  outline: 3px solid #0ff;
+  outline-offset: 3px;
+}
+
+.shape.outline .face::before {
+  display: none;
+}
+
+.shape.outline .face {
+  border: 3px solid #fff;
 }
