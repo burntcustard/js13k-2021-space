@@ -52,10 +52,10 @@ export default class Face {
 
   updateLighting() {
     // const colour = this.colour.multiply(this.lightness * 255);
-    //this.element.style.filter = `brightness(${this.lightness})`;
+    // this.element.style.filter = `brightness(${this.lightness})`;
     this.element.style.setProperty('--l', this.lightness);
     // this.element.style.background = `rgb(${colour.x}, ${colour.y}, ${colour.z})`;
-    this.element.style.boxShadow = `0 0 9px rgba(255,255,255,${this.lightness - 0.5})`;
+    // this.element.style.boxShadow = `0 0 9px rgba(255,255,255,${this.lightness - 0.5})`;
   }
 
   setLightness(lightness) {

@@ -7,6 +7,7 @@ import Box from './shapes/box';
 import Hexagon from './shapes/hexagon';
 import block from './modules/block';
 import solarAdv from './modules/solar-adv';
+import solar from './modules/solar';
 import Pyramid from './shapes/pyramid';
 import Light from './objects/light';
 
@@ -64,6 +65,33 @@ const lights = [
     intensity: 0.2,
   }),
 ];
+
+let currentBuildItem = solar.new({});
+
+currentBuildItem.model.element.classList.add('outline');
+
+stationBlock.model.sides.forEach((side) => {
+  side.element.addEventListener('mouseover', () => {
+    side.element.classList.add('build-hover');
+    currentBuildItem.model.x = side.x;
+    currentBuildItem.model.y = side.y;
+    currentBuildItem.model.z = side.z;
+    currentBuildItem.update();
+  });
+
+  side.element.addEventListener('click', () => {
+    // currentBuildItem.build() // ?
+    // Don't want to repeat long className str
+    // .mode.element.classList is too many dots
+    currentBuildItem.model.element.classList.remove('outline');
+    objects.push(currentBuildItem);
+    currentBuildItem = solar.new({});
+  });
+
+  side.element.addEventListener('mouseleave', () => {
+    side.element.classList.remove('build-hover');
+  });
+});
 
 function main(timestamp) {
   window.requestAnimationFrame(main);

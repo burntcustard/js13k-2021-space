@@ -7,6 +7,9 @@
 }
 
 .face {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   transform-origin: bottom center;
 }
 
@@ -15,7 +18,7 @@
 }
 
 /* Face::befores are the base textures (walls, solar panels etc) */
-.face::before {
+.face::before, {
   position: absolute;
   top: 0;
   right: 0;
@@ -56,16 +59,37 @@
   background: hsl(270, 100%, 50%, 0.8);
 }
 
-.face.placeholder-hover {
-  border-radius: 3px;
-  outline: 3px solid #0ff;
-  outline-offset: 3px;
+/* ::after can be used for selection and box shadows? */
+.face.build-hover::after {
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  box-sizing: border-box;
+  border-top: 3px solid #0000;
+  border-right: 3px solid #0ff;
+  border-bottom: 3px solid #0000;
+  border-left: 3px solid #0ff;
+  animation: spin 1.5s linear infinite;
+  background: radial-gradient(#0ff 50%, #0000 0);
+  background-position: 50%;
+  background-repeat: no-repeat;
+  background-size: 20px 20px;
+  border-radius: 50%;
+  content: '';
+  -webkit-backface-visibility: hidden;
 }
 
+@keyframes spin {
+  0% { transform: rotate(0deg) translateZ(1px); }
+  100% { transform: rotate(360deg) translateZ(1px); }
+}
+
+/* When it's just an outline there's no texture */
 .shape.outline .face::before {
   display: none;
 }
 
 .shape.outline .face {
-  border: 3px solid #fff;
+  border: 1px solid #fffa;
+  background: #fff2;
 }

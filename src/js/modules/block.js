@@ -2,7 +2,6 @@ import Structure from './module';
 import Box from '../shapes/box';
 
 function handleMouseOver(event) {
-  console.log(event);
   event.target.classList.add('placeholder-hover');
 }
 
