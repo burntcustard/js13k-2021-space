@@ -4,12 +4,12 @@ import initMouse from './mouse';
 import { initKeyboard, doKeyboardInput } from './keyboard';
 import { $, PI_4 } from './util';
 import Box from './shapes/box';
-import Hexagon from './shapes/hexagon';
 import block from './modules/block';
 import solarAdv from './modules/solar-adv';
 import solar from './modules/solar';
 import Pyramid from './shapes/pyramid';
 import Light from './objects/light';
+import Cubemap from './shapes/cubemap';
 
 const perfDebug = $('.debug .perf');
 const matsBar = $('.mats .fill');
@@ -27,16 +27,10 @@ let previousTimestamp;
 const box = new Box({
   w: 60,
   h: 60,
-  x: -200,
-  z: 100,
 });
 
-const hexagon = new Hexagon({
-  w: 100,
-  h: 80,
-  x: 50,
-  y: -100,
-  z: 100,
+const skybox = new Cubemap({
+  w: 2048,
 });
 
 const stationBlock = block.new({ x: 0, z: 10 });
@@ -51,12 +45,12 @@ const pyramid = new Pyramid({
   z: 100,
 });
 
-const objects = [box, hexagon, pyramid, stationBlock, stationSolar];
+const objects = [box, pyramid, stationBlock, stationSolar];
 
 const lights = [
   new Light({
-    x: 1,
-    y: 0,
+    x: -1,
+    y: 1,
     z: 1,
     intensity: 0.6,
   }),
@@ -138,18 +132,12 @@ function main(timestamp) {
 
   doKeyboardInput();
 
-  box.rx += 0.01;
-  box.rz += 0.02;
-
-  hexagon.ry += 0.01;
-
-  pyramid.ry += 0.01;
-
   objects.forEach((object) => {
     object.update(elapsed, lights);
   });
 
   camera.update(elapsed);
+  skybox.update(camera);
 
   previousTimestamp = timestamp;
   perfDebug.innerText = `Elapsed: ${elapsed.toFixed(2)} FPS: ${(1000 / elapsed).toFixed()}`;

@@ -24,8 +24,8 @@ function Camera() {
   viewport.style.perspective = `${this.perspective}px`;
 
   this.setTransform = () => {
-    // Clamp so the camera can't flip (values in radians)
-    this.rx = Math.min(Math.max(this.rx, 0), 1.5);
+    // Clamp so the camera can't flip
+    this.rx = Math.min(Math.max(this.rx, 0), Math.PI);
     scene.style.transform = `rotateX(${this.rx}rad) rotateZ(${this.rz}rad) translateX(${this.x}px) translateY(${this.y}px)`;
   };
 

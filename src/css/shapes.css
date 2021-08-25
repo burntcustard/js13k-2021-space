@@ -107,3 +107,7 @@
   border: 1px solid #f02b;
   background: #f022;
 }
+
+.skybox .face {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='filter'%3E%3CfeTurbulence baseFrequency='0.2'/%3E%3CfeColorMatrix values='0 0 0 9 -5 0 0 0 9 -5 0 0 0 9 -5 0 0 0 0 1'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23filter)'/%3E%3C/svg%3E");
+}
