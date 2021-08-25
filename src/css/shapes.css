@@ -31,32 +31,36 @@
 
 /* Temporary (hopefully) debug face colors */
 
-.face:nth-child(1)::before {
+.shape:not(.skybox) .face:nth-child(1)::before {
   background: hsl(0, 100%, 50%, 0.8);
 }
 
-.face:nth-child(2)::before {
+.shape:not(.skybox) .face:nth-child(2)::before {
   background: hsl(45, 100%, 50%, 0.8);
 }
 
-.face:nth-child(3)::before {
+.shape:not(.skybox) .face:nth-child(3)::before {
   background: hsl(90, 100%, 50%, 0.8);
 }
 
-.face:nth-child(4)::before {
+.shape:not(.skybox) .face:nth-child(4)::before {
   background: hsl(135, 100%, 50%, 0.8);
 }
 
-.face:nth-child(5)::before {
+.shape:not(.skybox) .face:nth-child(5)::before {
   background: hsl(180, 100%, 50%, 0.8);
 }
 
-.face:nth-child(6)::before {
+.shape:not(.skybox) .face:nth-child(6)::before {
   background: hsl(225, 100%, 50%, 0.8);
 }
 
-.face:nth-child(7)::before {
+.shape:not(.skybox) .face:nth-child(7)::before {
   background: hsl(270, 100%, 50%, 0.8);
+}
+
+.skybox .face {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='filter'%3E%3CfeTurbulence baseFrequency='0.2'/%3E%3CfeColorMatrix values='0 0 0 9 -5 0 0 0 9 -5 0 0 0 9 -5 0 0 0 0 1'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23filter)'/%3E%3C/svg%3E");
 }
 
 /* ::after can be used for selection and box shadows? */
@@ -106,8 +110,4 @@
 .shape.err-cost .face {
   border: 1px solid #f02b;
   background: #f022;
-}
-
-.skybox .face {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='filter'%3E%3CfeTurbulence baseFrequency='0.2'/%3E%3CfeColorMatrix values='0 0 0 9 -5 0 0 0 9 -5 0 0 0 9 -5 0 0 0 0 1'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23filter)'/%3E%3C/svg%3E");
 }
