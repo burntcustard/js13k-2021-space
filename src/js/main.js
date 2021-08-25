@@ -42,7 +42,7 @@ const pyramid = new Pyramid({
   z: 100,
 });
 
-const objects = [box, skybox, pyramid, stationBlock, stationSolar];
+const objects = [box, pyramid, stationBlock, stationSolar];
 
 const lights = [
   new Light({
@@ -72,6 +72,7 @@ function main(timestamp) {
   });
 
   camera.update(elapsed);
+  skybox.update(camera);
 
   previousTimestamp = timestamp;
   perfDebug.innerText = `Elapsed: ${elapsed.toFixed(2)} FPS: ${(1000 / elapsed).toFixed()}`;
