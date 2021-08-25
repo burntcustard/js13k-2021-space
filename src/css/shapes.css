@@ -49,26 +49,6 @@
   background: hsl(270, 100%, 50%, 0.6);
 }
 
-.skybox .face:nth-child(1) {
-  background: url("/img/bottom.jpg");
-}
-
-.skybox .face:nth-child(2) {
-  background: url("/img/back.jpg");
-}
-
-.skybox .face:nth-child(3) {
-  background: url("/img/right.jpg");
-}
-
-.skybox .face:nth-child(4) {
-  background: url("/img/front.jpg");
-}
-
-.skybox .face:nth-child(5) {
-  background: url("/img/left.jpg");
-}
-
-.skybox .face:nth-child(6) {
-  background: url("/img/top.jpg");
+.skybox .face {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='filter'%3E%3CfeTurbulence baseFrequency='0.2'/%3E%3CfeColorMatrix values='0 0 0 9 -5 0 0 0 9 -5 0 0 0 9 -5 0 0 0 0 1'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23filter)'/%3E%3C/svg%3E");
 }

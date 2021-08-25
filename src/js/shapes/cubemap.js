@@ -70,6 +70,11 @@ export default class Cubemap extends Shape {
     this.x = -camera.x;
     this.y = -camera.y;
     this.z = -camera.z;
-    super.updateTransform();
+    this.element.style.transform = `
+      translate3D(${this.x}px, ${this.y}px, ${this.z}px)
+      rotateX(${this.rx})
+      rotateY(${this.ry})
+      rotateZ(${this.rz})
+      scale3d(100, 100, 100)`;
   }
 }
