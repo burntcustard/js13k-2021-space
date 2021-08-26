@@ -90,7 +90,6 @@ stationBlock.model.sides.forEach((side) => {
       objects.push(currentBuildItem);
       currentBuildItem.enable();
       side.hasConnectedModule = true;
-      side.setHasConnectdModule(true);
       side.element.classList.add('obstructed');
       // Cost some resources - should this be on build bar click instead?
       resources.mats.current -= currentBuildItem.cost;
