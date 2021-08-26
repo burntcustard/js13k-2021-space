@@ -6,6 +6,7 @@ import { $, PI_4 } from './util';
 import Box from './shapes/box';
 import block from './modules/block';
 import solarAdv from './modules/solar-adv';
+import solar from './modules/solar';
 import Pyramid from './shapes/pyramid';
 import Octagon from './shapes/octagon';
 import Light from './objects/light';
@@ -34,7 +35,9 @@ const skybox = new Cubemap({
 });
 
 const stationBlock = block.new({ x: 0, z: 10 });
+stationBlock.enable();
 const stationSolar = solarAdv.new({ x: 90, z: 10 });
+stationSolar.enable();
 
 const pyramid = new Pyramid({
   w: 100,
@@ -49,6 +52,7 @@ const octagon = new Octagon({
   x: 150,
   y: 200,
   z: -10,
+  rz: 0.4,
 });
 
 const objects = [box, pyramid, stationBlock, stationSolar];
@@ -68,8 +72,69 @@ const lights = [
   }),
 ];
 
+let currentBuildItem = solar.new({});
+currentBuildItem.model.element.classList.add('outline');
+currentBuildItem.model.element.style.display = 'none';
+let canAffordCurrentBuildItem = resources.mats.current > currentBuildItem.cost;
+let currentHoverSide;
+
+stationBlock.model.sides.forEach((side) => {
+  side.element.addEventListener('mouseover', () => {
+    currentBuildItem.model.element.style.display = '';
+    side.element.classList.add('build-hover');
+    side.element.classList.toggle('obstructed', side.hasConnectedModule ?? false);
+    currentBuildItem.model.element.classList.toggle('obstructed', side.hasConnectedModule ?? false);
+    currentHoverSide = side;
+    currentBuildItem.model.x = side.x;
+    currentBuildItem.model.y = side.y;
+    currentBuildItem.model.z = side.z;
+    currentBuildItem.update();
+  });
+
+  side.element.addEventListener('mouseup', () => {
+    // currentBuildItem.build() // ?
+    // Don't want to repeat long className str
+    // .mode.element.classList is too many dots
+    if (!side.hasConnectedModule && canAffordCurrentBuildItem) {
+      currentBuildItem.model.element.classList.remove('outline');
+      objects.push(currentBuildItem);
+      currentBuildItem.enable();
+      side.hasConnectedModule = true;
+      side.element.classList.add('obstructed');
+      // Cost some resources - should this be on build bar click instead?
+      resources.mats.current -= currentBuildItem.cost;
+      currentBuildItem = solar.new({});
+      currentBuildItem.model.x = side.x;
+      currentBuildItem.model.y = side.y;
+      currentBuildItem.model.z = side.z;
+      currentBuildItem.update();
+      currentBuildItem.model.element.classList.add('outline');
+      // Assuming we can't build models on top of each other, new one is obstructed
+      currentBuildItem.model.element.classList.add('obstructed');
+    }
+  });
+
+  side.element.addEventListener('mouseleave', () => {
+    side.element.classList.remove('build-hover');
+    currentBuildItem.model.element.style.display = 'none';
+    currentHoverSide = null;
+    // Place it in the sun or something (is actually what PA does lol)
+    currentBuildItem.model.x = 0;
+    currentBuildItem.model.y = 0;
+    currentBuildItem.model.z = 0;
+    currentBuildItem.update();
+  });
+});
+
 function main(timestamp) {
   window.requestAnimationFrame(main);
+
+  // Check if we can afford the thing we're trying to build
+  canAffordCurrentBuildItem = resources.mats.current > currentBuildItem.cost;
+  currentBuildItem.model.element.classList.toggle('err-cost', !canAffordCurrentBuildItem);
+  if (currentHoverSide) {
+    currentHoverSide.element.classList.toggle('err-cost', !canAffordCurrentBuildItem);
+  }
 
   if (previousTimestamp === undefined) previousTimestamp = timestamp;
   const elapsed = timestamp - previousTimestamp;

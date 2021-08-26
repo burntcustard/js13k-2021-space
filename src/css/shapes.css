@@ -11,6 +11,9 @@
 }
 
 .face {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   transform-origin: bottom center;
 }
 
@@ -18,49 +21,105 @@
   border-radius: 50%;
 }
 
-/* Should be in "textures.css"? */
-.solar {
-  background: rgb(0, 0, 255);
-}
-
-/* Temporary (hopefully) debug face colors */
-
-.face:nth-child(1n) {
-  background: hsl(0, 100%, 50%, 0.9);
-}
-
-.face:nth-child(2n) {
-  background: hsl(45, 100%, 50%, 0.9);
-}
-
-.face:nth-child(3n) {
-  background: hsl(90, 100%, 50%, 0.9);
-}
-
-.face:nth-child(4n) {
-  background: hsl(135, 100%, 50%, 0.9);
-}
-
-.face:nth-child(5n) {
-  background: hsl(180, 100%, 50%, 0.9);
-}
-
-.face:nth-child(6n) {
-  background: hsl(225, 100%, 50%, 0.9);
-}
-
-.face:nth-child(7n) {
-  background: hsl(270, 100%, 50%, 0.9);
-}
-
-.face:nth-child(8n) {
-  background: hsl(305, 100%, 50%, 0.9);
-}
-
-.face:nth-child(9n) {
-  background: hsl(340, 100%, 50%, 0.9);
+/* Face::befores are the base textures (walls, solar panels etc) */
+.face::before, {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  box-sizing: border-box;
+  content: '';
+  filter: brightness(var(--l));
 }
 
 .skybox .face {
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='filter'%3E%3CfeTurbulence baseFrequency='0.2'/%3E%3CfeColorMatrix values='0 0 0 9 -5 0 0 0 9 -5 0 0 0 9 -5 0 0 0 0 1'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23filter)'/%3E%3C/svg%3E");
+}
+
+/* When it's just an outline there's no texture */
+.shape.outline .face::before {
+  display: none;
+}
+
+.shape.outline .face {
+  border: 1px solid #fffa;
+  background: #fff2;
+}
+
+.shape.obstructed .face,
+.shape.err-cost .face {
+  border: 1px solid #f02b;
+  background: #f022;
+}
+
+/* Temporary (hopefully) debug face colors */
+
+.shape:not(.skybox) .face:nth-child(1n)::before {
+  background: hsl(0, 100%, 50%, 0.8);
+}
+
+.shape:not(.skybox) .face:nth-child(2n)::before {
+  background: hsl(45, 100%, 50%, 0.8);
+}
+
+.shape:not(.skybox) .face:nth-child(3n)::before {
+  background: hsl(90, 100%, 50%, 0.8);
+}
+
+.shape:not(.skybox) .face:nth-child(4n)::before {
+  background: hsl(135, 100%, 50%, 0.8);
+}
+
+.shape:not(.skybox) .face:nth-child(5n)::before {
+  background: hsl(180, 100%, 50%, 0.8);
+}
+
+.shape:not(.skybox) .face:nth-child(6n)::before {
+  background: hsl(225, 100%, 50%, 0.8);
+}
+
+.shape:not(.skybox) .face:nth-child(7n)::before {
+  background: hsl(270, 100%, 50%, 0.8);
+}
+
+.shape:not(.skybox) .face:nth-child(8n) {
+  background: hsl(305, 100%, 50%, 0.9);
+}
+
+.shape:not(.skybox) .face:nth-child(9n) {
+  background: hsl(340, 100%, 50%, 0.9);
+}
+
+/* ::after can be used for selection and box shadows? */
+.face.build-hover::after {
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  box-sizing: border-box;
+  border-top: 3px solid #0000;
+  border-right: 3px solid #0ff;
+  border-bottom: 3px solid #0000;
+  border-left: 3px solid #0ff;
+  animation: spin 1.5s linear infinite;
+  -webkit-backface-visibility: hidden;
+  background: radial-gradient(#0ff 50%, #0000 0);
+  background-position: 50%;
+  background-repeat: no-repeat;
+  background-size: 20px 20px;
+  border-radius: 50%;
+  content: '';
+}
+
+.face.build-hover.err-cost::after,
+.face.build-hover.obstructed::after {
+  border-right-color: #f02b;
+  border-left-color: #f02b;
+  animation-duration: 5s;
+  background-image: radial-gradient(#f02 50%, #0000 0);
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg) translateZ(1px); }
+  100% { transform: rotate(360deg) translateZ(1px); }
 }

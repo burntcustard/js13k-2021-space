@@ -1,6 +1,14 @@
 import Structure from './module';
 import Box from '../shapes/box';
 
+function handleMouseOver(event) {
+  event.target.classList.add('placeholder-hover');
+}
+
+function handleMouseLeave(event) {
+  event.target.classList.remove('placeholder-hover');
+}
+
 class Block extends Structure {
   constructor({ w, h, d }, props) {
     super({ w, h, d, ...props, powerUse: 20 });
@@ -13,14 +21,15 @@ class Block extends Structure {
       y: props.y,
       z: props.z,
     });
+
+    this.model.sides.forEach((side) => {
+      side.element.addEventListener('mouseover', handleMouseOver);
+      side.element.addEventListener('mouseleave', handleMouseLeave);
+    });
   }
 
   update(elapsed, lights) {
     super.update(elapsed, lights);
-
-    if (this.active) {
-      this.model.rx += 0.01;
-    }
   }
 }
 

@@ -1,8 +1,10 @@
-.solar > .face {
+/* TODO: Change specifity because hopefully all this is unnecessary */
+
+.shape.box.solar .face::before {
   background: #fff;
 }
 
-.solar .panel {
+.shape.box.solar .panel::before {
   border: 2px solid #fff;
   background:
     repeating-linear-gradient(
