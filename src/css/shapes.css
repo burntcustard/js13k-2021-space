@@ -6,6 +6,10 @@
   clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
 }
 
+.oct {
+  clip-path: polygon(29.34% 0%, 70.66% 0%, 100% 29.34%, 100% 70.66%, 70.66% 100%, 29.34% 100%, 0% 70.66%, 0% 29.34%);
+}
+
 .face {
   transform-origin: bottom center;
 }
@@ -21,32 +25,40 @@
 
 /* Temporary (hopefully) debug face colors */
 
-.face:nth-child(1) {
-  background: hsl(0, 100%, 50%, 0.6);
+.face:nth-child(1n) {
+  background: hsl(0, 100%, 50%, 0.9);
 }
 
-.face:nth-child(2) {
-  background: hsl(45, 100%, 50%, 0.6);
+.face:nth-child(2n) {
+  background: hsl(45, 100%, 50%, 0.9);
 }
 
-.face:nth-child(3) {
-  background: hsl(90, 100%, 50%, 0.6);
+.face:nth-child(3n) {
+  background: hsl(90, 100%, 50%, 0.9);
 }
 
-.face:nth-child(4) {
-  background: hsl(135, 100%, 50%, 0.6);
+.face:nth-child(4n) {
+  background: hsl(135, 100%, 50%, 0.9);
 }
 
-.face:nth-child(5) {
-  background: hsl(180, 100%, 50%, 0.6);
+.face:nth-child(5n) {
+  background: hsl(180, 100%, 50%, 0.9);
 }
 
-.face:nth-child(6) {
-  background: hsl(225, 100%, 50%, 0.6);
+.face:nth-child(6n) {
+  background: hsl(225, 100%, 50%, 0.9);
 }
 
-.face:nth-child(7) {
-  background: hsl(270, 100%, 50%, 0.6);
+.face:nth-child(7n) {
+  background: hsl(270, 100%, 50%, 0.9);
+}
+
+.face:nth-child(8n) {
+  background: hsl(305, 100%, 50%, 0.9);
+}
+
+.face:nth-child(9n) {
+  background: hsl(340, 100%, 50%, 0.9);
 }
 
 .skybox .face {

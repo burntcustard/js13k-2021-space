@@ -7,6 +7,7 @@ import Box from './shapes/box';
 import block from './modules/block';
 import solarAdv from './modules/solar-adv';
 import Pyramid from './shapes/pyramid';
+import Octagon from './shapes/octagon';
 import Light from './objects/light';
 import Cubemap from './shapes/cubemap';
 
@@ -42,6 +43,14 @@ const pyramid = new Pyramid({
   z: 100,
 });
 
+const octagon = new Octagon({
+  w: 100,
+  h: 70,
+  x: 150,
+  y: 200,
+  z: -10,
+});
+
 const objects = [box, pyramid, stationBlock, stationSolar];
 
 const lights = [
@@ -66,6 +75,10 @@ function main(timestamp) {
   const elapsed = timestamp - previousTimestamp;
 
   doKeyboardInput();
+
+  // octagon.rx += 0.005;
+  // octagon.ry += 0.005;
+  octagon.update(elapsed, lights);
 
   objects.forEach((object) => {
     object.update(elapsed, lights);
