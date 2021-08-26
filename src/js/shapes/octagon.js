@@ -1,6 +1,6 @@
 import Shape from './shape';
 import Face from './face';
-import { PI_2, PI_4 } from '../util';
+import { PI, PI_2, PI_4 } from '../util';
 
 export default class Hexagon extends Shape {
   /**
@@ -15,7 +15,7 @@ export default class Hexagon extends Shape {
     // /2 = 20.66
     // 2934
     // /2 = 14.67
-    const sideW = w * 0.4132;
+    const sideW = w * 0.4132; // /2 = 0.2066
 
     this.sides = [
       new Face({
@@ -30,7 +30,7 @@ export default class Hexagon extends Shape {
       new Face({
         w: sideW,
         h,
-        x: w * -0.25,
+        x: w * -0.2,
         y: d * 0.5 - h,
         z: h * -0.5,
         rx: -PI_2,
@@ -38,8 +38,8 @@ export default class Hexagon extends Shape {
       new Face({
         w: sideW,
         h,
-        x: w * 0.103,
-        y: d * 0.354 - h,
+        x: w * 0.15,
+        y: d * 0.35 - h,
         z: h * -0.5,
         rx: -PI_2,
         rz: -PI_4,
@@ -47,7 +47,7 @@ export default class Hexagon extends Shape {
       new Face({
         w: sideW,
         h,
-        x: w * 0.25,
+        x: w * 0.3,
         y: -h,
         z: h * -0.5,
         rx: -PI_2,
@@ -56,8 +56,8 @@ export default class Hexagon extends Shape {
       new Face({
         w: sideW,
         h,
-        x: w * 0.103,
-        y: d * -0.354 - h,
+        x: w * 0.15,
+        y: d * -0.35 - h,
         z: h * -0.5,
         rx: -PI_2,
         rz: -PI_2 - PI_4,
@@ -65,7 +65,7 @@ export default class Hexagon extends Shape {
       new Face({
         w: sideW,
         h,
-        x: w * -0.25,
+        x: w * -0.2,
         y: d * -0.5 - h,
         z: h * -0.5,
         rx: -PI_2,
@@ -74,8 +74,8 @@ export default class Hexagon extends Shape {
       new Face({
         w: sideW,
         h,
-        x: w * -0.603,
-        y: d * -0.354 - h,
+        x: w * -0.55,
+        y: d * -0.35 - h,
         z: h * -0.5,
         rx: -PI_2,
         rz: PI_2 + PI_4,
@@ -83,7 +83,7 @@ export default class Hexagon extends Shape {
       new Face({
         w: sideW,
         h,
-        x: w * -0.75,
+        x: w * -0.7,
         y: -h,
         z: h * -0.5,
         rx: -PI_2,
@@ -92,8 +92,8 @@ export default class Hexagon extends Shape {
       new Face({
         w: sideW,
         h,
-        x: w * -0.603,
-        y: d * 0.354 - h,
+        x: w * -0.55,
+        y: d * 0.35 - h,
         z: h * -0.5,
         rx: -PI_2,
         rz: PI_2 - PI_4,
