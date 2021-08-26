@@ -25,39 +25,39 @@
 
 /* Temporary (hopefully) debug face colors */
 
-.face:nth-child(1) {
+.face:nth-child(1n) {
   background: hsl(0, 100%, 50%, 0.9);
 }
 
-.face:nth-child(2) {
+.face:nth-child(2n) {
   background: hsl(45, 100%, 50%, 0.9);
 }
 
-.face:nth-child(3) {
+.face:nth-child(3n) {
   background: hsl(90, 100%, 50%, 0.9);
 }
 
-.face:nth-child(4) {
+.face:nth-child(4n) {
   background: hsl(135, 100%, 50%, 0.9);
 }
 
-.face:nth-child(5) {
+.face:nth-child(5n) {
   background: hsl(180, 100%, 50%, 0.9);
 }
 
-.face:nth-child(6) {
+.face:nth-child(6n) {
   background: hsl(225, 100%, 50%, 0.9);
 }
 
-.face:nth-child(7) {
+.face:nth-child(7n) {
   background: hsl(270, 100%, 50%, 0.9);
 }
 
-.face:nth-child(8) {
+.face:nth-child(8n) {
   background: hsl(305, 100%, 50%, 0.9);
 }
 
-.face:nth-child(9) {
+.face:nth-child(9n) {
   background: hsl(340, 100%, 50%, 0.9);
 }
 

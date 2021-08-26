@@ -74,11 +74,11 @@ export default class Hexagon extends Shape {
       new Face({
         w: sideW,
         h,
-        x: w * 0.103,
-        y: d * 0.354 - h,
+        x: w * -0.603,
+        y: d * -0.354 - h,
         z: h * -0.5,
         rx: -PI_2,
-        rz: -PI_2 + PI_4,
+        rz: PI_2 + PI_4,
       }),
       new Face({
         w: sideW,
@@ -92,20 +92,20 @@ export default class Hexagon extends Shape {
       new Face({
         w: sideW,
         h,
-        x: w * -0.103,
-        y: d * -0.354 - h,
+        x: w * -0.603,
+        y: d * 0.354 - h,
         z: h * -0.5,
         rx: -PI_2,
         rz: PI_2 - PI_4,
       }),
-      // new Face({
-      //   w,
-      //   h: d,
-      //   x: w * -0.5,
-      //   y: d * -0.5,
-      //   z: h * 0.5,
-      //   className: 'hex',
-      // }),
+      new Face({
+        w,
+        h: d,
+        x: w * -0.5,
+        y: d * -0.5,
+        z: h * 0.5,
+        className: 'oct',
+      }),
     ];
 
     this.element.append(...this.sides.map((side) => side.element));

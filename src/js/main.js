@@ -46,7 +46,7 @@ const pyramid = new Pyramid({
 const octagon = new Octagon({
   w: 100,
   h: 140,
-  x: 100,
+  x: 150,
   y: 200,
   z: -10,
 });
@@ -75,6 +75,10 @@ function main(timestamp) {
   const elapsed = timestamp - previousTimestamp;
 
   doKeyboardInput();
+
+  octagon.rx += 0.005;
+  octagon.ry += 0.005;
+  octagon.update(elapsed, lights);
 
   objects.forEach((object) => {
     object.update(elapsed, lights);
