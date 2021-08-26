@@ -11,11 +11,9 @@ export default class Hexagon extends Shape {
   constructor({ w, d = w, h, x, y, z, rx, ry, rz }) {
     super({ w, d, h, x, y, z, rx, ry, rz, className: 'octagon' });
 
-    // 4132
-    // /2 = 20.66
-    // 2934
-    // /2 = 14.67
-    const sideW = w * 0.4132; // /2 = 0.2066
+    // TODO: Calculation to make this more precise w/o more decimal places
+    // TODO: Also all the face x and y coords
+    const sideW = w * 0.4132;
 
     this.sides = [
       new Face({
@@ -24,7 +22,7 @@ export default class Hexagon extends Shape {
         x: w * -0.5,
         y: d * -1.5,
         z: h * -0.5,
-        rx: Math.PI,
+        rx: PI,
         className: 'oct',
       }),
       new Face({
