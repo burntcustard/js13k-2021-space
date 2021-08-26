@@ -7,6 +7,7 @@ import Box from './shapes/box';
 import block from './modules/block';
 import solarAdv from './modules/solar-adv';
 import Pyramid from './shapes/pyramid';
+import Octagon from './shapes/octagon';
 import Light from './objects/light';
 import Cubemap from './shapes/cubemap';
 
@@ -40,6 +41,14 @@ const pyramid = new Pyramid({
   h: 100,
   y: 200,
   z: 100,
+});
+
+const octagon = new Octagon({
+  w: 100,
+  h: 140,
+  x: 100,
+  y: 200,
+  z: -10,
 });
 
 const objects = [box, pyramid, stationBlock, stationSolar];
