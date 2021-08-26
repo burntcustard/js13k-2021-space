@@ -29,6 +29,26 @@
   filter: brightness(var(--l));
 }
 
+.skybox .face {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='filter'%3E%3CfeTurbulence baseFrequency='0.2'/%3E%3CfeColorMatrix values='0 0 0 9 -5 0 0 0 9 -5 0 0 0 9 -5 0 0 0 0 1'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23filter)'/%3E%3C/svg%3E");
+}
+
+/* When it's just an outline there's no texture */
+.shape.outline .face::before {
+  display: none;
+}
+
+.shape.outline .face {
+  border: 1px solid #fffa;
+  background: #fff2;
+}
+
+.shape.obstructed .face,
+.shape.err-cost .face {
+  border: 1px solid #f02b;
+  background: #f022;
+}
+
 /* Temporary (hopefully) debug face colors */
 
 .shape:not(.skybox) .face:nth-child(1)::before {
@@ -59,10 +79,6 @@
   background: hsl(270, 100%, 50%, 0.8);
 }
 
-.skybox .face {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='filter'%3E%3CfeTurbulence baseFrequency='0.2'/%3E%3CfeColorMatrix values='0 0 0 9 -5 0 0 0 9 -5 0 0 0 9 -5 0 0 0 0 1'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23filter)'/%3E%3C/svg%3E");
-}
-
 /* ::after can be used for selection and box shadows? */
 .face.build-hover::after {
   position: absolute;
@@ -74,13 +90,13 @@
   border-bottom: 3px solid #0000;
   border-left: 3px solid #0ff;
   animation: spin 1.5s linear infinite;
+  -webkit-backface-visibility: hidden;
   background: radial-gradient(#0ff 50%, #0000 0);
   background-position: 50%;
   background-repeat: no-repeat;
   background-size: 20px 20px;
   border-radius: 50%;
   content: '';
-  -webkit-backface-visibility: hidden;
 }
 
 .face.build-hover.err-cost::after,
@@ -94,20 +110,4 @@
 @keyframes spin {
   0% { transform: rotate(0deg) translateZ(1px); }
   100% { transform: rotate(360deg) translateZ(1px); }
-}
-
-/* When it's just an outline there's no texture */
-.shape.outline .face::before {
-  display: none;
-}
-
-.shape.outline .face {
-  border: 1px solid #fffa;
-  background: #fff2;
-}
-
-.shape.obstructed .face,
-.shape.err-cost .face {
-  border: 1px solid #f02b;
-  background: #f022;
 }
