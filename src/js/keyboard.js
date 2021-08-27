@@ -1,4 +1,4 @@
-import camera from './camera';
+import { camera } from './camera';
 
 const keys = new Set();
 

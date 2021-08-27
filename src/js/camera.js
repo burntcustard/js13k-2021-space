@@ -40,7 +40,7 @@ function Camera() {
   this.rotate = (x, y) => {
     this.rz += x * settings.camera.rotateSpeed;
     this.rx += y * settings.camera.rotateSpeed;
-    this.followers.forEach((f) => f.update());
+    this.followers.forEach((f) => f.updateTransform(this));
     this.setTransform();
   };
 
@@ -85,4 +85,13 @@ function Camera() {
   };
 }
 
-export default new Camera();
+export function followCameraUpdate(camera) {
+  this.element.style.transform = `
+    translate3D(${this.x}px, ${this.y}px, ${this.z}px)
+    rotateZ(${-camera.rz}rad)
+    rotateY(${-camera.ry}rad)
+    rotateX(${-camera.rx}rad)
+  `;
+}
+
+export const camera = new Camera();

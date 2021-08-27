@@ -1,4 +1,4 @@
-import camera from './camera';
+import { camera } from './camera';
 import resources from './resources';
 import initMouse from './mouse';
 import { initKeyboard, doKeyboardInput } from './keyboard';
@@ -11,6 +11,7 @@ import Pyramid from './shapes/pyramid';
 import Octagon from './shapes/octagon';
 import Light from './objects/light';
 import Cubemap from './shapes/cubemap';
+import Sun from './objects/sun';
 
 const perfDebug = $('.debug .perf');
 const matsBar = $('.mats .fill');
@@ -56,6 +57,8 @@ const octagon = new Octagon({
 });
 
 const objects = [box, pyramid, stationBlock, stationSolar];
+
+const sun = new Sun({ x: -500, y: -500, r: 200 });
 
 const lights = [
   new Light({

@@ -1,0 +1,6 @@
+.sun {
+  background: #f90;
+
+  /* TODO: Make everything else transform-origin center this remove next line */
+  transform-origin: center;
+}
