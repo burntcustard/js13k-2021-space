@@ -25,18 +25,18 @@ const powerCap = $('.power .cap');
 
 let previousTimestamp;
 
-const box = new Box({
-  w: 60,
-  h: 60,
-});
+// const box = new Box({
+//   w: 60,
+//   h: 60,
+// });
 
 const skybox = new Cubemap({
   w: 2048,
 });
 
-const stationBlock = block.new({ x: 0, z: 10 });
+const stationBlock = block.new({ x: 0, z: 0 });
 stationBlock.enable();
-const stationSolar = solarAdv.new({ x: 90, z: 10 });
+const stationSolar = solarAdv.new({ x: 90, z: 0 });
 stationSolar.enable();
 
 const pyramid = new Pyramid({
@@ -55,7 +55,7 @@ const octagon = new Octagon({
   rz: 0.4,
 });
 
-const objects = [box, pyramid, stationBlock, stationSolar];
+const objects = [pyramid, stationBlock, stationSolar];
 
 const lights = [
   new Light({
