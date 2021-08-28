@@ -13,8 +13,10 @@ module.exports = {
   },
   'rules': {
     'no-multi-assign': 'off',
+    'no-param-reassign': ['error', { 'props': false }],
     'no-plusplus': 'off',
     'object-curly-newline': 'off',
     'quote-props': ['error', 'consistent'],
+    'func-names': 'off',
   },
 };

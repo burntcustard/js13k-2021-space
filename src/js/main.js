@@ -4,9 +4,8 @@ import initMouse from './mouse';
 import { initKeyboard, doKeyboardInput } from './keyboard';
 import { $, PI_4 } from './util';
 import Box from './shapes/box';
-import block from './modules/block';
-import solarAdv from './modules/solar-adv';
-import solar from './modules/solar';
+import Block from './modules/block';
+import Solar from './modules/solar';
 import Pyramid from './shapes/pyramid';
 import Octagon from './shapes/octagon';
 import Light from './objects/light';
@@ -28,15 +27,21 @@ let previousTimestamp;
 const box = new Box({
   w: 60,
   h: 60,
+  x: 200,
 });
+box.spawn();
 
 const skybox = new Cubemap({
   w: 2048,
 });
 
-const stationBlock = block.new({ x: 0, z: 10 });
+// const stationBlock = block.new({ x: 0, z: 10 });
+const stationBlock = new Block({ x: 0 });
+stationBlock.spawn();
 stationBlock.enable();
-const stationSolar = solarAdv.new({ x: 90, z: 10 });
+// const stationSolar = solar.new({ x: 90, z: 10 });
+const stationSolar = new Solar({ x: 90 });
+stationSolar.spawn();
 stationSolar.enable();
 
 const pyramid = new Pyramid({
@@ -45,6 +50,7 @@ const pyramid = new Pyramid({
   y: 200,
   z: 100,
 });
+pyramid.spawn();
 
 const octagon = new Octagon({
   w: 100,
@@ -54,8 +60,9 @@ const octagon = new Octagon({
   z: -10,
   rz: 0.4,
 });
+octagon.spawn();
 
-const objects = [box, pyramid, stationBlock, stationSolar];
+const objects = [box, octagon, pyramid, stationBlock, stationSolar];
 
 const lights = [
   new Light({
@@ -72,8 +79,9 @@ const lights = [
   }),
 ];
 
-let currentBuildItem = solar.new({});
+let currentBuildItem = new Solar({});
 currentBuildItem.model.element.classList.add('outline');
+currentBuildItem.spawn();
 currentBuildItem.model.element.style.display = 'none';
 let canAffordCurrentBuildItem = resources.mats.current > currentBuildItem.cost;
 let currentHoverSide;
@@ -92,22 +100,16 @@ stationBlock.model.sides.forEach((side) => {
   });
 
   side.element.addEventListener('mouseup', () => {
-    // currentBuildItem.build() // ?
-    // Don't want to repeat long className str
-    // .mode.element.classList is too many dots
     if (!side.hasConnectedModule && canAffordCurrentBuildItem) {
       currentBuildItem.model.element.classList.remove('outline');
       objects.push(currentBuildItem);
       currentBuildItem.enable();
       side.hasConnectedModule = true;
-      side.element.classList.add('obstructed');
+      side.element.classList.add('obstructed'); // TODO: Refactor this er somehow
       // Cost some resources - should this be on build bar click instead?
       resources.mats.current -= currentBuildItem.cost;
-      currentBuildItem = solar.new({});
-      currentBuildItem.model.x = side.x;
-      currentBuildItem.model.y = side.y;
-      currentBuildItem.model.z = side.z;
-      currentBuildItem.update();
+      currentBuildItem = new Solar({});
+      currentBuildItem.spawn();
       currentBuildItem.model.element.classList.add('outline');
       // Assuming we can't build models on top of each other, new one is obstructed
       currentBuildItem.model.element.classList.add('obstructed');
@@ -141,16 +143,12 @@ function main(timestamp) {
 
   doKeyboardInput();
 
-  // octagon.rx += 0.005;
-  // octagon.ry += 0.005;
-  octagon.update(elapsed, lights);
-
   objects.forEach((object) => {
     object.update(elapsed, lights);
   });
 
   camera.update(elapsed);
-  skybox.update(camera);
+  skybox.update();
 
   previousTimestamp = timestamp;
   perfDebug.innerText = `Elapsed: ${elapsed.toFixed(2)} FPS: ${(1000 / elapsed).toFixed()}`;
@@ -161,8 +159,8 @@ function main(timestamp) {
 
   powerBar.style.width = `${(100 / resources.power.capacity) * resources.power.current}%`;
   powerDot.classList.toggle('empty', resources.power.current < 1);
-  powerGen.innerText = resources.power.gen;
-  powerUse.innerText = resources.power.use;
+  powerGen.innerText = `+${resources.power.gen}`;
+  powerUse.innerText = `-${resources.power.use}`;
   const num = resources.power.gen - resources.power.use;
   powerNum.innerText = (num <= 0 ? '' : '+') + num;
   powerNum.classList.toggle('neg', num > 0);
