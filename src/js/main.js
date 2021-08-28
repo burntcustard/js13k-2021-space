@@ -9,7 +9,7 @@ import Solar from './modules/solar';
 // import Pyramid from './shapes/pyramid';
 // import Octagon from './shapes/octagon';
 import Light from './objects/light';
-// import Cubemap from './shapes/cubemap';
+import Cubemap from './shapes/cubemap';
 
 const perfDebug = $('.debug .perf');
 const matsBar = $('.mats .fill');
@@ -29,9 +29,9 @@ let previousTimestamp;
 //   h: 60,
 // });
 
-// const skybox = new Cubemap({
-//   w: 2048,
-// });
+const skybox = new Cubemap({
+  w: 2048,
+});
 
 // const stationBlock = block.new({ x: 0, z: 10 });
 const stationBlock = new Block({ x: 0 });
@@ -145,7 +145,7 @@ function main(timestamp) {
   });
 
   camera.update(elapsed);
-  // skybox.update(camera);
+  skybox.update();
 
   previousTimestamp = timestamp;
   perfDebug.innerText = `Elapsed: ${elapsed.toFixed(2)} FPS: ${(1000 / elapsed).toFixed()}`;
