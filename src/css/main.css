@@ -3,9 +3,9 @@
 @import 'debug';
 @import 'eco';
 @import 'ground';
-@import 'panel';
 @import 'scene';
 @import 'shapes';
 @import 'solar';
+@import 'ui-panel';
 @import 'ui';
 @import 'viewport';

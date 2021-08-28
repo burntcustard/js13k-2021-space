@@ -19,3 +19,11 @@
   box-shadow: 0 1px 0 2px #222;
   gap: 8px;
 }
+
+.ui-panel--big {
+  position: absolute;
+  bottom: 6vh;
+  width: 600px;
+  height: 32px;
+  transform: rotateX(9deg);
+}
