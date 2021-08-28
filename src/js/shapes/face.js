@@ -93,5 +93,4 @@ Face.prototype.updateLighting = function (lights, ms) {
 
 Face.prototype.update = function () {
   this.updateTransform();
-  // this.updateLighting;
 };

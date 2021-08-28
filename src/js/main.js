@@ -3,11 +3,11 @@ import resources from './resources';
 import initMouse from './mouse';
 import { initKeyboard, doKeyboardInput } from './keyboard';
 import { $, PI_4 } from './util';
-// import Box from './shapes/box';
+import Box from './shapes/box';
 import Block from './modules/block';
 import Solar from './modules/solar';
-// import Pyramid from './shapes/pyramid';
-// import Octagon from './shapes/octagon';
+import Pyramid from './shapes/pyramid';
+import Octagon from './shapes/octagon';
 import Light from './objects/light';
 import Cubemap from './shapes/cubemap';
 
@@ -24,10 +24,12 @@ const powerCap = $('.power .cap');
 
 let previousTimestamp;
 
-// const box = new Box({
-//   w: 60,
-//   h: 60,
-// });
+const box = new Box({
+  w: 60,
+  h: 60,
+  x: 200,
+});
+box.spawn();
 
 const skybox = new Cubemap({
   w: 2048,
@@ -42,24 +44,25 @@ const stationSolar = new Solar({ x: 90 });
 stationSolar.spawn();
 stationSolar.enable();
 
-// const pyramid = new Pyramid({
-//   w: 100,
-//   h: 100,
-//   y: 200,
-//   z: 100,
-// });
-//
-// const octagon = new Octagon({
-//   w: 100,
-//   h: 70,
-//   x: 150,
-//   y: 200,
-//   z: -10,
-//   rz: 0.4,
-// });
+const pyramid = new Pyramid({
+  w: 100,
+  h: 100,
+  y: 200,
+  z: 100,
+});
+pyramid.spawn();
 
-// const objects = [box, pyramid, stationBlock, stationSolar];
-const objects = [stationBlock, stationSolar];
+const octagon = new Octagon({
+  w: 100,
+  h: 70,
+  x: 150,
+  y: 200,
+  z: -10,
+  rz: 0.4,
+});
+octagon.spawn();
+
+const objects = [box, octagon, pyramid, stationBlock, stationSolar];
 
 const lights = [
   new Light({

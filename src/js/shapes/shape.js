@@ -71,7 +71,7 @@ Shape.prototype.updateLighting = function (lights) {
   });
 };
 
-Shape.prototype.update = function (lights) {
+Shape.prototype.update = function (elapsed, lights) {
   this.updateTransform();
   if (lights && lights.length) {
     this.updateLighting(lights); // Maybe only do every few frames to save perf
