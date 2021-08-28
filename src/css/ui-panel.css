@@ -22,8 +22,17 @@
 
 .ui-panel--big {
   position: absolute;
-  bottom: 6vh;
+  bottom: 5vh;
   width: 600px;
   height: 32px;
   transform: rotateX(9deg);
+}
+
+.ui-panel__build-list {
+  display: flex;
+  align-items: center;
+  padding: 0 4px;
+  margin-bottom: -2px;
+  background: #333;
+  box-shadow: 2px 2px inset #222;
 }

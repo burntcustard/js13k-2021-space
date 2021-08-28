@@ -38,13 +38,14 @@
 }
 
 /* When it's just an outline there's no texture */
-.shape.outline .face::before {
+.shape.frame .face::before {
   display: none;
 }
 
-.shape.outline .face {
+.shape.frame .face {
   border: 1px solid #fffa;
   background: #fff2;
+  pointer-events: none;
 }
 
 .shape.obstructed .face,

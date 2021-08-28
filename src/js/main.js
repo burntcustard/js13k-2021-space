@@ -71,61 +71,59 @@ const lights = [
   }),
 ];
 
-let currentBuildItem = new Solar({});
-currentBuildItem.model.element.classList.add('outline');
-currentBuildItem.spawn();
-currentBuildItem.model.element.style.display = 'none';
-let canAffordCurrentBuildItem = resources.mats.current > currentBuildItem.cost;
+UI.setCurrentBuildItem(Solar);
+let canAffordCurrentBuildItem = resources.mats.current > UI.currentBuildItem.cost;
 let currentHoverSide;
 
 stationBlock.model.sides.forEach((side) => {
   side.element.addEventListener('mouseover', () => {
-    currentBuildItem.model.element.style.display = '';
+    UI.currentBuildItemInstance.model.element.style.display = '';
     side.element.classList.add('build-hover');
     side.element.classList.toggle('obstructed', side.hasConnectedModule ?? false);
-    currentBuildItem.model.element.classList.toggle('obstructed', side.hasConnectedModule ?? false);
+    UI.currentBuildItemInstance.model.element.classList.toggle('obstructed', side.hasConnectedModule ?? false);
     currentHoverSide = side;
-    currentBuildItem.model.x = side.x;
-    currentBuildItem.model.y = side.y;
-    currentBuildItem.model.z = side.z;
-    currentBuildItem.update();
+    UI.currentBuildItemInstance.model.x = side.x;
+    UI.currentBuildItemInstance.model.y = side.y;
+    UI.currentBuildItemInstance.model.z = side.z;
+    UI.currentBuildItemInstance.update();
   });
 
-  side.element.addEventListener('mouseup', () => {
+  side.element.addEventListener('click', () => {
     if (!side.hasConnectedModule && canAffordCurrentBuildItem) {
-      currentBuildItem.model.element.classList.remove('outline');
-      objects.push(currentBuildItem);
-      currentBuildItem.enable();
+      UI.currentBuildItemInstance.model.element.classList.remove('frame');
+      objects.push(UI.currentBuildItemInstance);
+      UI.currentBuildItemInstance.enable();
       side.hasConnectedModule = true;
       side.element.classList.add('obstructed'); // TODO: Refactor this er somehow
       // Cost some resources - should this be on build bar click instead?
-      resources.mats.current -= currentBuildItem.cost;
-      currentBuildItem = new Solar({});
-      currentBuildItem.spawn();
-      currentBuildItem.model.element.classList.add('outline');
+      resources.mats.current -= UI.currentBuildItem.cost;
+      UI.setCurrentBuildItem(UI.currentBuildItem);
       // Assuming we can't build models on top of each other, new one is obstructed
-      currentBuildItem.model.element.classList.add('obstructed');
+      UI.currentBuildItemInstance.model.element.classList.add('obstructed');
     }
   });
 
   side.element.addEventListener('mouseleave', () => {
     side.element.classList.remove('build-hover');
-    currentBuildItem.model.element.style.display = 'none';
+    UI.currentBuildItemInstance.model.element.style.display = 'none';
     currentHoverSide = null;
     // Place it in the sun or something (is actually what PA does lol)
-    currentBuildItem.model.x = 0;
-    currentBuildItem.model.y = 0;
-    currentBuildItem.model.z = 0;
-    currentBuildItem.update();
+    // TODO: Figure out if we need this now that we're hiding it
+    // UI.currentBuildItemInstance.model.x = 0;
+    // UI.currentBuildItemInstance.model.y = 0;
+    // UI.currentBuildItemInstance.model.z = 0;
+    // UI.currentBuildItemInstance.update();
   });
 });
+
+UI.populateBuildBar();
 
 function main(timestamp) {
   window.requestAnimationFrame(main);
 
   // Check if we can afford the thing we're trying to build
-  canAffordCurrentBuildItem = resources.mats.current > currentBuildItem.cost;
-  currentBuildItem.model.element.classList.toggle('err-cost', !canAffordCurrentBuildItem);
+  canAffordCurrentBuildItem = resources.mats.current > UI.currentBuildItem.cost;
+  UI.currentBuildItemInstance.model.element.classList.toggle('err-cost', !canAffordCurrentBuildItem);
   if (currentHoverSide) {
     currentHoverSide.element.classList.toggle('err-cost', !canAffordCurrentBuildItem);
   }

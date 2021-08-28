@@ -1,20 +1,23 @@
 import Module from './module';
 import Box from '../shapes/box';
 
+const info = {
+  moduleName: 'Solar Panel Basic',
+  desc: 'Generates power',
+  cost: 35,
+  power: 10,
+  w: 108,
+  h: 2,
+  d: 53,
+};
+
 export default function Solar({
   x, y, z, rx, ry, rz,
 }) {
-  this.name = 'Solar Panel Basic';
-  this.desc = 'Generates power';
-  this.power = 10;
-  this.cost = 35;
-  this.w = 108;
-  this.h = 2;
-  this.d = 53;
   this.model = new Box({
-    w: this.w,
-    h: this.h,
-    d: this.d,
+    w: info.w,
+    h: info.h,
+    d: info.d,
     x,
     y,
     z,
@@ -25,7 +28,10 @@ export default function Solar({
   });
   this.model.sides[0].element.className += ' panel';
   this.model.sides[this.model.sides.length - 1].element.className += ' panel';
+
+  Module.call(this, { x, y, z, rx, ry, rz, ...info });
 }
 
+Object.assign(Solar, info);
 Solar.prototype = Object.create(Module.prototype);
 Solar.prototype.constructor = Solar;

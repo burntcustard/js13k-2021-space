@@ -1,31 +1,35 @@
 import Module from './module';
 import Box from '../shapes/box';
 
+const info = {
+  moduleName: 'Block', // Can't use 'name' because is reserved
+  cost: 1,
+  power: -15,
+  w: 60,
+  d: 60,
+  h: 60,
+};
+
 export default function Block({
   x, y, z, rx, ry, rz,
 }) {
-  this.name = 'block';
-  this.cost = 1;
-  this.power = -15;
-  this.w = 60;
-  this.h = 60;
-  this.d = 60;
   this.model = new Box({
-    w: this.w,
-    h: this.h,
-    d: this.d,
+    w: info.w,
+    h: info.h,
+    d: info.d,
     x,
     y,
     z,
     rx,
     ry,
     rz,
-    className: this.name,
+    className: info.moduleName,
   });
-  // Modules don't do anything when you first make them?
-  // Module.call(this, { x, y, z, rx, ry, rz });
+
+  Module.call(this, { x, y, z, rx, ry, rz, ...info });
 }
 
+Object.assign(Block, info);
 Block.prototype = Object.create(Module.prototype);
 Block.prototype.constructor = Block;
 

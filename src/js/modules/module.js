@@ -3,6 +3,8 @@ import resources from '../resources';
 
 export default function Module(props) {
   GameObject.call(this, props);
+  this.moduleName = props.moduleName;
+  this.cost = props.cost;
   this.power = props.power ?? 0;
 }
 
