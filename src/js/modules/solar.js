@@ -21,10 +21,10 @@ export default function Solar({
     rx,
     ry,
     rz,
-    className: this.name,
+    className: 'solar',
   });
-  this.model.sides[0].element.className = 'panel';
-  this.model.sides[this.model.sides.length - 1].element.className = 'panel';
+  this.model.sides[0].element.className += ' panel';
+  this.model.sides[this.model.sides.length - 1].element.className += ' panel';
 }
 
 Solar.prototype = Object.create(Module.prototype);

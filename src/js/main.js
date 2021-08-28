@@ -78,6 +78,7 @@ const lights = [
 
 let currentBuildItem = new Solar({});
 currentBuildItem.model.element.classList.add('outline');
+currentBuildItem.spawn();
 currentBuildItem.model.element.style.display = 'none';
 let canAffordCurrentBuildItem = resources.mats.current > currentBuildItem.cost;
 let currentHoverSide;
@@ -96,22 +97,16 @@ stationBlock.model.sides.forEach((side) => {
   });
 
   side.element.addEventListener('mouseup', () => {
-    // currentBuildItem.build() // ?
-    // Don't want to repeat long className str
-    // .mode.element.classList is too many dots
     if (!side.hasConnectedModule && canAffordCurrentBuildItem) {
       currentBuildItem.model.element.classList.remove('outline');
       objects.push(currentBuildItem);
       currentBuildItem.enable();
       side.hasConnectedModule = true;
-      side.element.classList.add('obstructed');
+      side.element.classList.add('obstructed'); // TODO: Refactor this er somehow
       // Cost some resources - should this be on build bar click instead?
       resources.mats.current -= currentBuildItem.cost;
-      currentBuildItem = solar.new({});
-      currentBuildItem.model.x = side.x;
-      currentBuildItem.model.y = side.y;
-      currentBuildItem.model.z = side.z;
-      currentBuildItem.update();
+      currentBuildItem = new Solar({});
+      currentBuildItem.spawn();
       currentBuildItem.model.element.classList.add('outline');
       // Assuming we can't build models on top of each other, new one is obstructed
       currentBuildItem.model.element.classList.add('obstructed');
@@ -145,10 +140,6 @@ function main(timestamp) {
 
   doKeyboardInput();
 
-  // octagon.rx += 0.005;
-  // octagon.ry += 0.005;
-  // octagon.update(elapsed, lights);
-
   objects.forEach((object) => {
     object.update(elapsed, lights);
   });
@@ -165,8 +156,8 @@ function main(timestamp) {
 
   powerBar.style.width = `${(100 / resources.power.capacity) * resources.power.current}%`;
   powerDot.classList.toggle('empty', resources.power.current < 1);
-  powerGen.innerText = resources.power.gen;
-  powerUse.innerText = resources.power.use;
+  powerGen.innerText = `+${resources.power.gen}`;
+  powerUse.innerText = `-${resources.power.use}`;
   const num = resources.power.gen - resources.power.use;
   powerNum.innerText = (num <= 0 ? '' : '+') + num;
   powerNum.classList.toggle('neg', num > 0);

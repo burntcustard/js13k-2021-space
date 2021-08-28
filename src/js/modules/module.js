@@ -11,7 +11,7 @@ Module.prototype = Object.create(GameObject.prototype);
 // Set Module contructor
 Module.prototype.constructor = Module;
 
-Module.prototype.update = function(elapsed, lights) {
+Module.prototype.update = function (elapsed, lights) {
   GameObject.prototype.update.call(this, elapsed, lights);
 
   if (this.active) {
@@ -27,11 +27,11 @@ Module.prototype.update = function(elapsed, lights) {
   }
 };
 
-Module.prototype.updatePower = function(elapsed) {
+Module.prototype.updatePower = function (elapsed) {
   if (this.power < 0) {
     // Grab some power from the resources banks
     resources.power.current = Math.max(
-      resources.power.current - this.powerUse * (elapsed / 1000),
+      resources.power.current + this.power * (elapsed / 1000),
       0,
     );
 
@@ -44,30 +44,29 @@ Module.prototype.updatePower = function(elapsed) {
   if (this.power > 0) {
     // Add some power from the resources banks
     resources.power.current = Math.min(
-      resources.power.current + this.powerGen * (elapsed / 1000),
+      resources.power.current + this.power * (elapsed / 1000),
       resources.power.capacity,
     );
   }
 };
 
-Module.prototype.disable = function() {
+Module.prototype.disable = function () {
   this.active = false;
-  resources.power.use -= this.power > 0 ? this.power : 0;
-  resources.power.gen -= this.power < 0 ? this.power : 0;
+  resources.power.use += this.power < 0 ? this.power : 0;
+  resources.power.gen -= this.power > 0 ? this.power : 0;
 };
 
-Module.prototype.enable = function() {
-  console.log(this);
+Module.prototype.enable = function () {
   this.active = true;
-  resources.power.use += (this.power > 0 ? this.power : 0);
-  resources.power.gen += (this.power < 0 ? this.power : 0);
+  resources.power.use -= this.power < 0 ? this.power : 0;
+  resources.power.gen += this.power > 0 ? this.power : 0;
 };
 
 /**
  * Shutdown this module, but try to restart it automatically after 3s
  * @return {[type]} [description]
  */
-Module.prototype.shutdown = function() {
+Module.prototype.shutdown = function () {
   this.disable();
   this.restartTimer = 3000;
 };

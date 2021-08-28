@@ -11,7 +11,8 @@ import Vec3 from '../vec3';
 export default function Box({
   w, d = w, h, x, y, z, rx, ry, rz, className,
 }) {
-  Shape.call(this, w, d, h, x, y, z, rx, ry, rz, className);
+  this.className = `${className ?? ''} box`;
+  Shape.call(this, { w, d, h, x, y, z, rx, ry, rz, className: this.className });
   this.sides = [
     new Face({
       w,

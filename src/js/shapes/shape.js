@@ -14,11 +14,11 @@ export default function Shape({
   this.element.className = `shape ${className}`;
 }
 
-Shape.prototype.spawn = function() {
+Shape.prototype.spawn = function () {
   document.querySelector('.scene').append(this.element);
 };
 
-Shape.prototype.updateTransform = function() {
+Shape.prototype.updateTransform = function () {
   const sinRx = Math.sin(this.rx);
   const sinRy = Math.sin(this.ry);
   const sinRz = Math.sin(this.rz);
@@ -49,7 +49,7 @@ Shape.prototype.updateTransform = function() {
   `;
 };
 
-Shape.prototype.updateLighting = function(lights) {
+Shape.prototype.updateLighting = function (lights) {
   // Figure out surface normal from rotations
   // We have to do this for the shape rotation, then the face rotation
   // https://stackoverflow.com/a/27486532
@@ -71,7 +71,7 @@ Shape.prototype.updateLighting = function(lights) {
   });
 };
 
-Shape.prototype.update = function(lights) {
+Shape.prototype.update = function (lights) {
   this.updateTransform();
   if (lights && lights.length) {
     this.updateLighting(lights); // Maybe only do every few frames to save perf

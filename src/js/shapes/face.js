@@ -17,10 +17,11 @@ export default function Face({
   this.element.className = `face ${className ?? 'rect'}`;
   this.element.style.width = `${w}px`;
   this.element.style.height = `${h}px`;
+  this.update();
   // this.element.innerHTML = 'FACE';
 }
 
-Face.prototype.updateTransform = function() {
+Face.prototype.updateTransform = function () {
   const sinRx = Math.sin(this.rx);
   const sinRy = Math.sin(this.ry);
   const sinRz = Math.sin(this.rz);
@@ -51,10 +52,7 @@ Face.prototype.updateTransform = function() {
   `;
 };
 
-Face.prototype.updateLighting = function(lights, ms) {
-  console.log('no lights?');
-  return;
-
+Face.prototype.updateLighting = function (lights, ms) {
   const fsx = Math.sin(this.rx);
   const fsy = Math.sin(this.ry);
   const fsz = Math.sin(this.rz);
@@ -93,7 +91,7 @@ Face.prototype.updateLighting = function(lights, ms) {
   // this.element.style.boxShadow = `0 0 9px rgba(255,255,255,${this.lightness - 0.5})`;
 };
 
-Face.prototype.update = function() {
+Face.prototype.update = function () {
   this.updateTransform();
   // this.updateLighting;
 };

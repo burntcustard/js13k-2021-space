@@ -15,14 +15,14 @@ export default function GameObject(props) {
  * @param  {[type]} elapsed               [description]
  * @param  {[type]} lights                [description]
  */
-GameObject.prototype.update = function(elapsed, lights) {
+GameObject.prototype.update = function (elapsed, lights) {
   this.model.update(elapsed, lights);
 };
 
 /**
  * Add the shape to the gameworld by appending it's element to the DOM
  */
-GameObject.prototype.spawn = function() {
+GameObject.prototype.spawn = function () {
   this.model.spawn();
   this.update();
 };

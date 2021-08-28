@@ -6,6 +6,7 @@ export default function Block({
 }) {
   this.name = 'block';
   this.cost = 1;
+  this.power = -15;
   this.w = 60;
   this.h = 60;
   this.d = 60;
