@@ -118,18 +118,17 @@ stationBlock.model.sides.forEach((side) => {
 
 UI.populateBuildBar();
 
+let halfSecondCounter = 0;
+
 function main(timestamp) {
   window.requestAnimationFrame(main);
 
-  // Check if we can afford the thing we're trying to build
-  canAffordCurrentBuildItem = resources.mats.current > UI.currentBuildItem.cost;
-  UI.currentBuildItemInstance.model.element.classList.toggle('err-cost', !canAffordCurrentBuildItem);
-  if (currentHoverSide) {
-    currentHoverSide.element.classList.toggle('err-cost', !canAffordCurrentBuildItem);
-  }
-
   if (previousTimestamp === undefined) previousTimestamp = timestamp;
   const elapsed = timestamp - previousTimestamp;
+  halfSecondCounter += elapsed;
+  if (halfSecondCounter > 500) {
+    halfSecondCounter = 0;
+  }
 
   doKeyboardInput();
 
@@ -143,7 +142,17 @@ function main(timestamp) {
   previousTimestamp = timestamp;
   perfDebug.innerText = `Elapsed: ${elapsed.toFixed(2)} FPS: ${(1000 / elapsed).toFixed()}`;
 
-  UI.update();
+  // Do some stuff only every half a second
+  if (!halfSecondCounter) {
+    // Check if we can afford the thing we're trying to build
+    canAffordCurrentBuildItem = resources.mats.current > UI.currentBuildItem.cost;
+    UI.currentBuildItemInstance.model.element.classList.toggle('err-cost', !canAffordCurrentBuildItem);
+    if (currentHoverSide) {
+      currentHoverSide.element.classList.toggle('err-cost', !canAffordCurrentBuildItem);
+    }
+
+    UI.update();
+  }
 }
 
 initMouse();
