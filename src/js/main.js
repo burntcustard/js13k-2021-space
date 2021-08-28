@@ -3,14 +3,13 @@ import resources from './resources';
 import initMouse from './mouse';
 import { initKeyboard, doKeyboardInput } from './keyboard';
 import { $, PI_4 } from './util';
-import Box from './shapes/box';
-import block from './modules/block';
-import solarAdv from './modules/solar-adv';
-import solar from './modules/solar';
-import Pyramid from './shapes/pyramid';
-import Octagon from './shapes/octagon';
+// import Box from './shapes/box';
+import Block from './modules/block';
+import Solar from './modules/solar';
+// import Pyramid from './shapes/pyramid';
+// import Octagon from './shapes/octagon';
 import Light from './objects/light';
-import Cubemap from './shapes/cubemap';
+// import Cubemap from './shapes/cubemap';
 
 const perfDebug = $('.debug .perf');
 const matsBar = $('.mats .fill');
@@ -25,37 +24,42 @@ const powerCap = $('.power .cap');
 
 let previousTimestamp;
 
-const box = new Box({
-  w: 60,
-  h: 60,
-});
+// const box = new Box({
+//   w: 60,
+//   h: 60,
+// });
 
-const skybox = new Cubemap({
-  w: 2048,
-});
+// const skybox = new Cubemap({
+//   w: 2048,
+// });
 
-const stationBlock = block.new({ x: 0, z: 10 });
+// const stationBlock = block.new({ x: 0, z: 10 });
+const stationBlock = new Block({ x: 0 });
+stationBlock.spawn();
 stationBlock.enable();
-const stationSolar = solarAdv.new({ x: 90, z: 10 });
+// const stationSolar = solar.new({ x: 90, z: 10 });
+const stationSolar = new Solar({ x: 90 });
+stationSolar.spawn();
 stationSolar.enable();
 
-const pyramid = new Pyramid({
-  w: 100,
-  h: 100,
-  y: 200,
-  z: 100,
-});
+// const pyramid = new Pyramid({
+//   w: 100,
+//   h: 100,
+//   y: 200,
+//   z: 100,
+// });
+//
+// const octagon = new Octagon({
+//   w: 100,
+//   h: 70,
+//   x: 150,
+//   y: 200,
+//   z: -10,
+//   rz: 0.4,
+// });
 
-const octagon = new Octagon({
-  w: 100,
-  h: 70,
-  x: 150,
-  y: 200,
-  z: -10,
-  rz: 0.4,
-});
-
-const objects = [box, pyramid, stationBlock, stationSolar];
+// const objects = [box, pyramid, stationBlock, stationSolar];
+const objects = [stationBlock, stationSolar];
 
 const lights = [
   new Light({
@@ -72,7 +76,7 @@ const lights = [
   }),
 ];
 
-let currentBuildItem = solar.new({});
+let currentBuildItem = new Solar({});
 currentBuildItem.model.element.classList.add('outline');
 currentBuildItem.model.element.style.display = 'none';
 let canAffordCurrentBuildItem = resources.mats.current > currentBuildItem.cost;
@@ -143,14 +147,14 @@ function main(timestamp) {
 
   // octagon.rx += 0.005;
   // octagon.ry += 0.005;
-  octagon.update(elapsed, lights);
+  // octagon.update(elapsed, lights);
 
   objects.forEach((object) => {
     object.update(elapsed, lights);
   });
 
   camera.update(elapsed);
-  skybox.update(camera);
+  // skybox.update(camera);
 
   previousTimestamp = timestamp;
   perfDebug.innerText = `Elapsed: ${elapsed.toFixed(2)} FPS: ${(1000 / elapsed).toFixed()}`;

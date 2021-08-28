@@ -1,41 +1,31 @@
 import Module from './module';
 import Box from '../shapes/box';
 
-class Solar extends Module {
-  constructor({ w, h, d, cost, powerGen }, props) {
-    super({ w, h, d, cost, ...props, powerGen });
-
-    this.model = new Box({
-      w,
-      h,
-      d,
-      x: props.x,
-      y: props.y,
-      z: props.z,
-      classNames: [
-        'solar',
-        'panel',
-        '',
-        '',
-        '',
-        '',
-        'panel',
-      ],
-    });
-  }
+export default function Solar({
+  x, y, z, rx, ry, rz,
+}) {
+  this.name = 'Solar Panel Basic';
+  this.desc = 'Generates power';
+  this.power = 10;
+  this.cost = 35;
+  this.w = 108;
+  this.h = 2;
+  this.d = 53;
+  this.model = new Box({
+    w: this.w,
+    h: this.h,
+    d: this.d,
+    x,
+    y,
+    z,
+    rx,
+    ry,
+    rz,
+    className: this.name,
+  });
+  this.model.sides[0].element.className = 'panel';
+  this.model.sides[this.model.sides.length - 1].element.className = 'panel';
 }
 
-const solar = {
-  info: {
-    name: 'Solar Panel Basic',
-    desc: 'Generates power',
-    powerGen: 10,
-    cost: 35,
-    w: 108,
-    h: 2,
-    d: 53,
-  },
-  new: (props) => new Solar(solar.info, props),
-};
-
-export default solar;
+Solar.prototype = Object.create(Module.prototype);
+Solar.prototype.constructor = Solar;

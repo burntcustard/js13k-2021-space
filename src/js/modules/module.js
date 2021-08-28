@@ -1,67 +1,73 @@
-import Object from '../objects/object';
+import GameObject from '../objects/object';
 import resources from '../resources';
 
-export default class Structure extends Object {
-  constructor(props) {
-    super({ ...props });
-    this.powerGen = props.powerGen ?? 0;
-    this.powerUse = props.powerUse ?? 0;
-    this.cost = props.cost ?? 0; // Fallback is free(?!)
-  }
-
-  doStuff(elapsed) {
-    // Grab some power from the resources banks
-    if (this.powerUse) {
-      resources.power.current = Math.max(
-        resources.power.current - this.powerUse * (elapsed / 1000),
-        0,
-      );
-
-      // You used all the power and now this thing is shutting down!
-      if (resources.power.current === 0) {
-        this.shutdown();
-      }
-    }
-
-    if (this.powerGen) {
-      resources.power.current = Math.min(
-        resources.power.current + this.powerGen * (elapsed / 1000),
-        resources.power.capacity,
-      );
-    }
-  }
-
-  update(elapsed, lights) {
-    super.update(elapsed, lights);
-
-    if (this.active) {
-      this.doStuff(elapsed);
-    }
-
-    if (this.restartTimer) {
-      this.restartTimer = Math.max(this.restartTimer - elapsed, 0);
-
-      if (this.restartTimer === 0) {
-        this.enable();
-      }
-    }
-  }
-
-  disable() {
-    this.active = false;
-    resources.power.use -= this.powerUse;
-    resources.power.gen -= this.powerGen;
-  }
-
-  enable() {
-    this.active = true;
-    resources.power.use += this.powerUse;
-    resources.power.gen += this.powerGen;
-  }
-
-  // If you run out of power, shut down this structure
-  shutdown() {
-    this.disable();
-    this.restartTimer = 3000; // Reboot after 3s
-  }
+export default function Module(props) {
+  GameObject.call(this, props);
+  this.power = props.power ?? 0;
 }
+
+// Set Module prototype to an instance of a GameObject
+Module.prototype = Object.create(GameObject.prototype);
+// Set Module contructor
+Module.prototype.constructor = Module;
+
+Module.prototype.update = function(elapsed, lights) {
+  GameObject.prototype.update.call(this, elapsed, lights);
+
+  if (this.active) {
+    this.updatePower(elapsed);
+  }
+
+  if (this.restartTimer) {
+    this.restartTimer = Math.max(this.restartTimer - elapsed, 0);
+
+    if (this.restartTimer === 0) {
+      this.enable();
+    }
+  }
+};
+
+Module.prototype.updatePower = function(elapsed) {
+  if (this.power < 0) {
+    // Grab some power from the resources banks
+    resources.power.current = Math.max(
+      resources.power.current - this.powerUse * (elapsed / 1000),
+      0,
+    );
+
+    // You used all the power and now this module is shutting down!
+    if (resources.power.current === 0) {
+      this.shutdown();
+    }
+  }
+
+  if (this.power > 0) {
+    // Add some power from the resources banks
+    resources.power.current = Math.min(
+      resources.power.current + this.powerGen * (elapsed / 1000),
+      resources.power.capacity,
+    );
+  }
+};
+
+Module.prototype.disable = function() {
+  this.active = false;
+  resources.power.use -= this.power > 0 ? this.power : 0;
+  resources.power.gen -= this.power < 0 ? this.power : 0;
+};
+
+Module.prototype.enable = function() {
+  console.log(this);
+  this.active = true;
+  resources.power.use += (this.power > 0 ? this.power : 0);
+  resources.power.gen += (this.power < 0 ? this.power : 0);
+};
+
+/**
+ * Shutdown this module, but try to restart it automatically after 3s
+ * @return {[type]} [description]
+ */
+Module.prototype.shutdown = function() {
+  this.disable();
+  this.restartTimer = 3000;
+};
