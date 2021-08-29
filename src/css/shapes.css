@@ -44,6 +44,7 @@
 
 .shape.frame .face {
   border: 1px solid #fffa;
+  -webkit-backface-visibility: visible;
   background: #fff2;
   pointer-events: none;
 }
