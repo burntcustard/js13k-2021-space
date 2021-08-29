@@ -15,21 +15,47 @@ const powerUse = $('.power .use');
 const powerNum = $('.power .num');
 const powerCap = $('.power .cap');
 const buildListElement = $('.ui-panel__build-list');
+const buildInfoElement = $('.ui-panel__build-info');
 
 const UI = {};
 
-UI.populateBuildBar = () => {
-  [Block, Solar].forEach((Item) => {
-    const buildButton = document.createElement('button');
-    buildButton.className = 'placeholder';
-    buildButton.onclick = () => {
-      Build.setCurrentItem(Item);
-    };
+/* eslint-disable no-nested-ternary */
+UI.createBuildBarHTML = (Item) => `
+  <b>${Item.moduleName}</b>
+  <div>M:${Item.cost}${Item.power < 0 ? ` | Use ϟ${-Item.power}` : Item.power > 0 ? ` | Gen ϟ${Item.power}` : ''}</div>
+`;
 
+UI.buildBarList = [];
+
+UI.populateBuildBar = () => {
+  UI.buildBarList = [Block, Solar].map((Item) => {
+    const buildBarItem = { };
+    buildBarItem.element = document.createElement('button');
+    buildBarItem.element.className = 'build-bar';
+    buildBarItem.element.addEventListener('click', () => {
+      Build.setCurrentItem(Item);
+      UI.buildBarList.forEach((other) => {
+        if (buildBarItem === other) {
+          other.element.setAttribute('aria-pressed', true);
+        } else {
+          other.element.setAttribute('aria-pressed', false);
+        }
+      });
+    });
+    buildBarItem.element.addEventListener('mouseover', () => {
+      buildInfoElement.innerHTML = UI.createBuildBarHTML(Item);
+    });
+    buildBarItem.element.addEventListener('mouseleave', () => {
+      buildInfoElement.innerHTML = Build.currentItem
+        ? UI.createBuildBarHTML(Build.currentItem)
+        : '';
+    });
     // TODO: Some proper build bar icon somehow
     /* eslint-disable-next-line prefer-destructuring */
-    buildButton.innerHTML = Item.moduleName[0];
-    buildListElement.append(buildButton);
+    buildBarItem.element.innerHTML = Item.moduleName[0];
+    buildListElement.append(buildBarItem.element);
+
+    return buildBarItem;
   });
 };
 

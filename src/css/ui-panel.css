@@ -23,16 +23,61 @@
 .ui-panel--big {
   position: absolute;
   bottom: 5vh;
+  display: flex;
   width: 600px;
-  height: 32px;
+  height: 46px;
+  gap: 20px;
   transform: rotateX(9deg);
 }
 
 .ui-panel__build-list {
   display: flex;
+  flex: 1;
   align-items: center;
   padding: 0 4px;
   margin-bottom: -2px;
   background: #333;
   box-shadow: 2px 2px inset #222;
+}
+
+button.build-bar {
+  height: 100%;
+  border: 0;
+  border-right: 2px solid #999;
+  border-bottom: 3px solid #777;
+  aspect-ratio: 1;
+  background: #ccc;
+  box-shadow: 0 0 6px #fff0, 0 0 0 1px #333;
+}
+
+button.build-bar:hover {
+  background: #ddd;
+}
+
+button.build-bar[aria-pressed='true'] {
+  background: #eee;
+}
+
+.ui-panel__build-info {
+  flex: 1;
+  padding: 5px 6px 4px 6px;
+  border: 3px solid #aaa;
+  margin-bottom: -1px;
+  background: #b40;
+  background-image:
+    repeating-linear-gradient(
+      to top,
+      #0000 0 6px,
+      #a30 0 8px
+    ),
+    repeating-linear-gradient(
+      to right,
+      #0000 0 6px,
+      #a30 0 8px
+    );
+  background-position: 6px 3px;
+  box-shadow: 4px 4px 0 inset #0005, -3px -2px 0 inset #0005, 0 1px 3px #000;
+  color: #fff;
+  font-size: 14px;
+  text-shadow: 0 0 2px #000;
 }
