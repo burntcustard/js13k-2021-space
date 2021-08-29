@@ -72,10 +72,6 @@ const lights = [
   }),
 ];
 
-stationBlock.model.sides.forEach((side) => {
-  Build.addEventListenersTo(side);
-});
-
 UI.populateBuildBar();
 
 let halfSecondCounter = 0;
