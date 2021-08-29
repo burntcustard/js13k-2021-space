@@ -1,4 +1,5 @@
 import resources from './resources';
+import Build from './build';
 import { $ } from './util';
 
 import Block from './modules/block';
@@ -17,20 +18,12 @@ const buildListElement = $('.ui-panel__build-list');
 
 const UI = {};
 
-UI.setCurrentBuildItem = (Item) => {
-  UI.currentBuildItem = Item;
-  UI.currentBuildItemInstance = new Item({});
-  UI.currentBuildItemInstance.model.element.classList.add('frame');
-  UI.currentBuildItemInstance.spawn();
-  UI.currentBuildItemInstance.model.element.style.display = 'none';
-};
-
 UI.populateBuildBar = () => {
   [Block, Solar].forEach((Item) => {
     const buildButton = document.createElement('button');
     buildButton.className = 'placeholder';
     buildButton.onclick = () => {
-      UI.setCurrentBuildItem(Item);
+      Build.setCurrentItem(Item);
     };
 
     // TODO: Some proper build bar icon somehow

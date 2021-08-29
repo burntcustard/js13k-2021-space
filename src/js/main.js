@@ -1,8 +1,9 @@
 import camera from './camera';
-import resources from './resources';
 import initMouse from './mouse';
 import { initKeyboard, doKeyboardInput } from './keyboard';
+import Build from './build';
 import UI from './ui';
+import gameObjectList from './game-object-list';
 import { $, PI_4 } from './util';
 import Box from './shapes/box';
 import Block from './modules/block';
@@ -54,7 +55,7 @@ const octagon = new Octagon({
 });
 octagon.spawn();
 
-const objects = [box, octagon, pyramid, stationBlock, stationSolar];
+gameObjectList.push(box, octagon, pyramid, stationBlock, stationSolar);
 
 const lights = [
   new Light({
@@ -71,49 +72,8 @@ const lights = [
   }),
 ];
 
-UI.setCurrentBuildItem(Solar);
-let canAffordCurrentBuildItem = resources.mats.current > UI.currentBuildItem.cost;
-let currentHoverSide;
-
 stationBlock.model.sides.forEach((side) => {
-  side.element.addEventListener('mouseover', () => {
-    UI.currentBuildItemInstance.model.element.style.display = '';
-    side.element.classList.add('build-hover');
-    side.element.classList.toggle('obstructed', side.hasConnectedModule ?? false);
-    UI.currentBuildItemInstance.model.element.classList.toggle('obstructed', side.hasConnectedModule ?? false);
-    currentHoverSide = side;
-    UI.currentBuildItemInstance.model.x = side.x;
-    UI.currentBuildItemInstance.model.y = side.y;
-    UI.currentBuildItemInstance.model.z = side.z;
-    UI.currentBuildItemInstance.update();
-  });
-
-  side.element.addEventListener('click', () => {
-    if (!side.hasConnectedModule && canAffordCurrentBuildItem) {
-      UI.currentBuildItemInstance.model.element.classList.remove('frame');
-      objects.push(UI.currentBuildItemInstance);
-      UI.currentBuildItemInstance.enable();
-      side.hasConnectedModule = true;
-      side.element.classList.add('obstructed'); // TODO: Refactor this er somehow
-      // Cost some resources - should this be on build bar click instead?
-      resources.mats.current -= UI.currentBuildItem.cost;
-      UI.setCurrentBuildItem(UI.currentBuildItem);
-      // Assuming we can't build models on top of each other, new one is obstructed
-      UI.currentBuildItemInstance.model.element.classList.add('obstructed');
-    }
-  });
-
-  side.element.addEventListener('mouseleave', () => {
-    side.element.classList.remove('build-hover');
-    UI.currentBuildItemInstance.model.element.style.display = 'none';
-    currentHoverSide = null;
-    // Place it in the sun or something (is actually what PA does lol)
-    // TODO: Figure out if we need this now that we're hiding it
-    // UI.currentBuildItemInstance.model.x = 0;
-    // UI.currentBuildItemInstance.model.y = 0;
-    // UI.currentBuildItemInstance.model.z = 0;
-    // UI.currentBuildItemInstance.update();
-  });
+  Build.addEventListenersTo(side);
 });
 
 UI.populateBuildBar();
@@ -132,7 +92,7 @@ function main(timestamp) {
 
   doKeyboardInput();
 
-  objects.forEach((object) => {
+  gameObjectList.forEach((object) => {
     object.update(elapsed, lights);
   });
 
@@ -144,12 +104,8 @@ function main(timestamp) {
 
   // Do some stuff only every half a second
   if (!halfSecondCounter) {
-    // Check if we can afford the thing we're trying to build
-    canAffordCurrentBuildItem = resources.mats.current > UI.currentBuildItem.cost;
-    UI.currentBuildItemInstance.model.element.classList.toggle('err-cost', !canAffordCurrentBuildItem);
-    if (currentHoverSide) {
-      currentHoverSide.element.classList.toggle('err-cost', !canAffordCurrentBuildItem);
-    }
+    // TODO: Only update build if actually building something
+    Build.update();
 
     UI.update();
   }
