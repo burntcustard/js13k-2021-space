@@ -6,6 +6,9 @@ export default function Module(props) {
   this.moduleName = props.moduleName;
   this.cost = props.cost;
   this.power = props.power ?? 0;
+
+  // TODO: Add event listener for clicking to interact with module
+  // TODO: Add even listener for hovering about to build thing on faces(?)
 }
 
 // Set Module prototype to an instance of a GameObject

@@ -26,6 +26,8 @@ export default function Block({
     className: info.moduleName,
   });
 
+  this.model.sides.forEach((side) => { side.attachable = true; });
+
   Module.call(this, { x, y, z, rx, ry, rz, ...info });
 }
 
