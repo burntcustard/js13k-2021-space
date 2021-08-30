@@ -1,6 +1,6 @@
 import Shape from './shape';
 import Face from './face';
-import { PI_2 } from '../util';
+import { PI, PI_2 } from '../util';
 
 /**
  * Create a box.
@@ -22,7 +22,7 @@ export default function Box({ w, d = w, h, x, y, z, rx, ry, rz, className }) {
       x: -W_2,
       y: -D_2,
       z: -H_2,
-      rx: Math.PI,
+      rx: PI,
     }),
     new Face({
       w,
@@ -45,7 +45,7 @@ export default function Box({ w, d = w, h, x, y, z, rx, ry, rz, className }) {
       x: -W_2,
       y: -D_2 - H_2,
       rx: -PI_2,
-      rz: Math.PI,
+      rz: PI,
     }),
     new Face({
       w: d,
