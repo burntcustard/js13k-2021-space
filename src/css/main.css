@@ -5,6 +5,7 @@
 @import 'debug';
 @import 'eco';
 @import 'ground';
+@import 'object';
 @import 'reset';
 @import 'scene';
 @import 'shapes';

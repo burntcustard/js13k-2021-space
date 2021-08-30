@@ -79,6 +79,11 @@ Module.prototype.spawnFrame = function () {
   this.spawn();
 };
 
+Module.prototype.spawn = function () {
+  GameObject.prototype.spawn.call(this);
+  GameObject.prototype.addSelectEventListeners.call(this);
+};
+
 /**
  * Build the module "for real", assuming it was previously a "build frame".
  * @return {[type]} [description]
@@ -86,7 +91,8 @@ Module.prototype.spawnFrame = function () {
 Module.prototype.build = function () {
   resources.mats.current -= this.cost;
   this.model.element.classList.remove('frame');
-  this.model.element.style.display = '';
+  this.model.element.style.display = ''; // Remove 'display: none'
+  GameObject.prototype.addSelectEventListeners.call(this);
   this.enable();
 };
 

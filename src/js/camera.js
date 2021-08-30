@@ -20,6 +20,7 @@ function Camera() {
   this.moveY = 0;
   this.moveX = 0;
   this.followers = [];
+  this.followers = [];
   this.perspective = settings.camera.perspective;
   viewport.style.perspective = `${this.perspective}px`;
 
@@ -40,7 +41,7 @@ function Camera() {
   this.rotate = (x, y) => {
     this.rz += x * settings.camera.rotateSpeed;
     this.rx += y * settings.camera.rotateSpeed;
-    this.followers.forEach((f) => f.update());
+    this.followers.forEach((f) => f.updateTransform());
     this.setTransform();
   };
 

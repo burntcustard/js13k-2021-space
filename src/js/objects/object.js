@@ -1,3 +1,5 @@
+import camera from '../camera';
+
 export default function GameObject(props) {
   this.w = props.w ?? 1;
   this.h = props.h ?? 1;
@@ -25,4 +27,38 @@ GameObject.prototype.update = function (elapsed, lights) {
 GameObject.prototype.spawn = function () {
   this.model.spawn();
   this.update();
+};
+
+/**
+ * Make this game object the selected one
+ * @return {[type]} [description]
+ */
+GameObject.prototype.select = function () {
+  this.selected = true;
+  const element = document.createElement('div');
+  element.className = 'selected';
+  element.style.width = element.style.height = `${Math.max(this.w, this.h, this.d)}px`;
+  this.selectObject = { element };
+  this.selectObject.updateTransform = () => {
+    this.selectObject.element.style.transform = `
+      translate3D(${this.x}px, ${this.y}, ${this.z}px)
+      translate(-50%, -50%)
+      rotateZ(${-camera.rz}rad)
+      rotateY(${-camera.ry}rad)
+      rotateX(${-camera.rx}rad)
+    `;
+  };
+  document.querySelector('.scene').append(element);
+  // this.model.element.append(this.selectElement);
+  camera.followers.push(this.selectObject);
+};
+
+// Assuming all game objects should have event listeners for clicking on them?
+GameObject.prototype.addSelectEventListeners = function () {
+  // Assumes every side of the shape should be used for selection
+  this.model.sides.forEach((side) => {
+    side.element.addEventListener('click', () => {
+      if (!this.selected) this.select();
+    });
+  });
 };
