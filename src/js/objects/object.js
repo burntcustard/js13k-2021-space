@@ -1,5 +1,3 @@
-import camera from '../camera';
-
 export default function GameObject(props) {
   this.w = props.w ?? 1;
   this.h = props.h ?? 1;
@@ -33,32 +31,36 @@ GameObject.prototype.spawn = function () {
  * Make this game object the selected one
  * @return {[type]} [description]
  */
-GameObject.prototype.select = function () {
-  this.selected = true;
-  const element = document.createElement('div');
-  element.className = 'selected';
-  element.style.width = element.style.height = `${Math.max(this.w, this.h, this.d)}px`;
-  this.selectObject = { element };
-  this.selectObject.updateTransform = () => {
-    this.selectObject.element.style.transform = `
-      translate3D(${this.x}px, ${this.y}, ${this.z}px)
-      translate(-50%, -50%)
-      rotateZ(${-camera.rz}rad)
-      rotateY(${-camera.ry}rad)
-      rotateX(${-camera.rx}rad)
-    `;
-  };
-  document.querySelector('.scene').append(element);
-  // this.model.element.append(this.selectElement);
-  camera.followers.push(this.selectObject);
+GameObject.prototype.select = function (select) {
+  this.selected = select;
+  this.model.element.classList.toggle('select', select);
 };
 
-// Assuming all game objects should have event listeners for clicking on them?
+/**
+ * Make this game object the selected one
+ * @return {[type]} [description]
+ */
+GameObject.prototype.hover = function (hover) {
+  this.hovered = hover;
+  this.model.element.classList.toggle('hover', hover);
+};
+
+/**
+ * Add select and hover event listeners the GameObject
+ * Assuming all game objects should have event listeners for clicking on them?
+ * @return {[type]} [description]
+ */
 GameObject.prototype.addSelectEventListeners = function () {
   // Assumes every side of the shape should be used for selection
   this.model.sides.forEach((side) => {
     side.element.addEventListener('click', () => {
-      if (!this.selected) this.select();
+      this.select(!this.selected);
+    });
+    side.element.addEventListener('mouseover', () => {
+      this.hover(true);
+    });
+    side.element.addEventListener('mouseleave', () => {
+      this.hover(false);
     });
   });
 };
