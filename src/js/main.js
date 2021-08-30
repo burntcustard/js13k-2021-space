@@ -1,7 +1,9 @@
 import camera from './camera';
-import resources from './resources';
 import initMouse from './mouse';
 import { initKeyboard, doKeyboardInput } from './keyboard';
+import Build from './build';
+import UI from './ui';
+import gameObjectList from './game-object-list';
 import { $, PI_4 } from './util';
 import Box from './shapes/box';
 import Block from './modules/block';
@@ -12,15 +14,6 @@ import Light from './objects/light';
 import Cubemap from './shapes/cubemap';
 
 const perfDebug = $('.debug .perf');
-const matsBar = $('.mats .fill');
-const matsDot = $('.mats .dot');
-const matsCap = $('.mats .cap');
-const powerBar = $('.power .fill');
-const powerDot = $('.power .dot');
-const powerGen = $('.power .gen');
-const powerUse = $('.power .use');
-const powerNum = $('.power .num');
-const powerCap = $('.power .cap');
 
 let previousTimestamp;
 
@@ -62,7 +55,7 @@ const octagon = new Octagon({
 });
 octagon.spawn();
 
-const objects = [box, octagon, pyramid, stationBlock, stationSolar];
+gameObjectList.push(box, octagon, pyramid, stationBlock, stationSolar);
 
 const lights = [
   new Light({
@@ -79,71 +72,23 @@ const lights = [
   }),
 ];
 
-let currentBuildItem = new Solar({});
-currentBuildItem.model.element.classList.add('outline');
-currentBuildItem.spawn();
-currentBuildItem.model.element.style.display = 'none';
-let canAffordCurrentBuildItem = resources.mats.current > currentBuildItem.cost;
-let currentHoverSide;
+UI.populateBuildBar();
 
-stationBlock.model.sides.forEach((side) => {
-  side.element.addEventListener('mouseover', () => {
-    currentBuildItem.model.element.style.display = '';
-    side.element.classList.add('build-hover');
-    side.element.classList.toggle('obstructed', side.hasConnectedModule ?? false);
-    currentBuildItem.model.element.classList.toggle('obstructed', side.hasConnectedModule ?? false);
-    currentHoverSide = side;
-    currentBuildItem.model.x = side.x;
-    currentBuildItem.model.y = side.y;
-    currentBuildItem.model.z = side.z;
-    currentBuildItem.update();
-  });
-
-  side.element.addEventListener('mouseup', () => {
-    if (!side.hasConnectedModule && canAffordCurrentBuildItem) {
-      currentBuildItem.model.element.classList.remove('outline');
-      objects.push(currentBuildItem);
-      currentBuildItem.enable();
-      side.hasConnectedModule = true;
-      side.element.classList.add('obstructed'); // TODO: Refactor this er somehow
-      // Cost some resources - should this be on build bar click instead?
-      resources.mats.current -= currentBuildItem.cost;
-      currentBuildItem = new Solar({});
-      currentBuildItem.spawn();
-      currentBuildItem.model.element.classList.add('outline');
-      // Assuming we can't build models on top of each other, new one is obstructed
-      currentBuildItem.model.element.classList.add('obstructed');
-    }
-  });
-
-  side.element.addEventListener('mouseleave', () => {
-    side.element.classList.remove('build-hover');
-    currentBuildItem.model.element.style.display = 'none';
-    currentHoverSide = null;
-    // Place it in the sun or something (is actually what PA does lol)
-    currentBuildItem.model.x = 0;
-    currentBuildItem.model.y = 0;
-    currentBuildItem.model.z = 0;
-    currentBuildItem.update();
-  });
-});
+let halfSecondCounter = 0;
 
 function main(timestamp) {
   window.requestAnimationFrame(main);
 
-  // Check if we can afford the thing we're trying to build
-  canAffordCurrentBuildItem = resources.mats.current > currentBuildItem.cost;
-  currentBuildItem.model.element.classList.toggle('err-cost', !canAffordCurrentBuildItem);
-  if (currentHoverSide) {
-    currentHoverSide.element.classList.toggle('err-cost', !canAffordCurrentBuildItem);
-  }
-
   if (previousTimestamp === undefined) previousTimestamp = timestamp;
   const elapsed = timestamp - previousTimestamp;
+  halfSecondCounter += elapsed;
+  if (halfSecondCounter > 500) {
+    halfSecondCounter = 0;
+  }
 
   doKeyboardInput();
 
-  objects.forEach((object) => {
+  gameObjectList.forEach((object) => {
     object.update(elapsed, lights);
   });
 
@@ -153,18 +98,13 @@ function main(timestamp) {
   previousTimestamp = timestamp;
   perfDebug.innerText = `Elapsed: ${elapsed.toFixed(2)} FPS: ${(1000 / elapsed).toFixed()}`;
 
-  matsBar.style.width = `${(100 / resources.mats.capacity) * resources.mats.current}%`;
-  matsDot.classList.toggle('empty', resources.mats.current < 1);
-  matsCap.innerText = `${Math.floor(resources.mats.current)} /  ${resources.mats.capacity}`;
+  // Do some stuff only every half a second
+  if (!halfSecondCounter) {
+    // TODO: Only update build if actually building something
+    Build.update();
 
-  powerBar.style.width = `${(100 / resources.power.capacity) * resources.power.current}%`;
-  powerDot.classList.toggle('empty', resources.power.current < 1);
-  powerGen.innerText = `+${resources.power.gen}`;
-  powerUse.innerText = `-${resources.power.use}`;
-  const num = resources.power.gen - resources.power.use;
-  powerNum.innerText = (num <= 0 ? '' : '+') + num;
-  powerNum.classList.toggle('neg', num > 0);
-  powerCap.innerText = `${Math.floor(resources.power.current)} /  ${resources.power.capacity}`;
+    UI.update();
+  }
 }
 
 initMouse();

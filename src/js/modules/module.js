@@ -3,7 +3,13 @@ import resources from '../resources';
 
 export default function Module(props) {
   GameObject.call(this, props);
+  this.tag = props.tag;
+  this.desc = props.desc ?? '';
+  this.cost = props.cost;
   this.power = props.power ?? 0;
+
+  // TODO: Add event listener for clicking to interact with module
+  // TODO: Add even listener for hovering about to build thing on faces(?)
 }
 
 // Set Module prototype to an instance of a GameObject
@@ -60,6 +66,28 @@ Module.prototype.enable = function () {
   this.active = true;
   resources.power.use -= this.power < 0 ? this.power : 0;
   resources.power.gen += this.power > 0 ? this.power : 0;
+};
+
+/**
+ * Spawn the module into the gameworld. Modules spawn initially hidden,
+ * and as "build frames" so that they can be positioned and built later.
+ * @return {[type]} [description]
+ */
+Module.prototype.spawnFrame = function () {
+  this.model.element.classList.add('frame');
+  this.model.element.style.display = 'none';
+  this.spawn();
+};
+
+/**
+ * Build the module "for real", assuming it was previously a "build frame".
+ * @return {[type]} [description]
+ */
+Module.prototype.build = function () {
+  resources.mats.current -= this.cost;
+  this.model.element.classList.remove('frame');
+  this.model.element.style.display = '';
+  this.enable();
 };
 
 /**
