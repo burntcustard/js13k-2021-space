@@ -1,3 +1,5 @@
+import Build from '../build';
+
 export default function GameObject(props) {
   this.w = props.w ?? 1;
   this.h = props.h ?? 1;
@@ -32,8 +34,10 @@ GameObject.prototype.spawn = function () {
  * @return {[type]} [description]
  */
 GameObject.prototype.select = function (select) {
-  this.selected = select;
-  this.model.element.classList.toggle('select', select);
+  if (!Build.currentItem) {
+    this.selected = select;
+    this.model.element.classList.toggle('select', select);
+  }
 };
 
 /**
@@ -41,8 +45,10 @@ GameObject.prototype.select = function (select) {
  * @return {[type]} [description]
  */
 GameObject.prototype.hover = function (hover) {
-  this.hovered = hover;
-  this.model.element.classList.toggle('hover', hover);
+  if (!Build.currentItem) {
+    this.hovered = hover;
+    this.model.element.classList.toggle('hover', hover);
+  }
 };
 
 /**
