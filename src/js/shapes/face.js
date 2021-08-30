@@ -15,11 +15,15 @@ export default function Face({
   this.colour = colour ?? new Vec3(1, 0, 0);
   this.element = document.createElement('div');
   this.element.className = `face ${className ?? 'rect'}`;
-  this.element.style.width = `${w}px`;
-  this.element.style.height = `${h}px`;
+  this.setSize();
   this.update();
   // this.element.innerHTML = 'FACE';
 }
+
+Face.prototype.setSize = function () {
+  this.element.style.width = `${this.w}px`;
+  this.element.style.height = `${this.h}px`;
+};
 
 Face.prototype.updateTransform = function () {
   const sinRx = Math.sin(this.rx);

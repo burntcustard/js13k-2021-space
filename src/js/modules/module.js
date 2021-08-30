@@ -69,6 +69,28 @@ Module.prototype.enable = function () {
 };
 
 /**
+ * Spawn the module into the gameworld. Modules spawn initially hidden,
+ * and as "build frames" so that they can be positioned and built later.
+ * @return {[type]} [description]
+ */
+Module.prototype.spawnFrame = function () {
+  this.model.element.classList.add('frame');
+  this.model.element.style.display = 'none';
+  this.spawn();
+};
+
+/**
+ * Build the module "for real", assuming it was previously a "build frame".
+ * @return {[type]} [description]
+ */
+Module.prototype.build = function () {
+  resources.mats.current -= this.cost;
+  this.model.element.classList.remove('frame');
+  this.model.element.style.display = '';
+  this.enable();
+};
+
+/**
  * Shutdown this module, but try to restart it automatically after 3s
  * @return {[type]} [description]
  */

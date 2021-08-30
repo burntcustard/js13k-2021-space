@@ -43,3 +43,8 @@ export default function Block({
 Object.assign(Block, info);
 Block.prototype = Object.create(Module.prototype);
 Block.prototype.constructor = Block;
+
+Block.prototype.build = function () {
+  // TODO: Block build animation
+  Module.prototype.build.call(this);
+};

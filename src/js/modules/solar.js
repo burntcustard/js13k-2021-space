@@ -36,3 +36,8 @@ export default function Solar({
 Object.assign(Solar, info);
 Solar.prototype = Object.create(Module.prototype);
 Solar.prototype.constructor = Solar;
+
+Solar.prototype.build = function () {
+  // TODO: Solar panel build animation
+  Module.prototype.build.call(this);
+};

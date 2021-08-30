@@ -11,9 +11,7 @@ const Build = {
 Build.setCurrentItem = (Item) => {
   Build.currentItem = Item;
   Build.currentItemInstance = new Item({});
-  Build.currentItemInstance.model.element.classList.add('frame');
-  Build.currentItemInstance.spawn();
-  Build.currentItemInstance.model.element.style.display = 'none';
+  Build.currentItemInstance.spawnFrame();
 };
 
 Build.updateCantAffordCurrentItem = () => {
@@ -67,13 +65,11 @@ Build.addEventListenersTo = (side) => {
     if (!Build.currentItem || side.hasConnectedModule || Build.cantAffordCurrentItem) {
       return;
     }
-
-    Build.currentItemInstance.model.element.classList.remove('frame');
+    Build.currentItemInstance.build();
     gameObjectList.push(Build.currentItemInstance);
-    Build.currentItemInstance.enable();
     side.hasConnectedModule = true;
     side.element.classList.add('obstructed'); // TODO: Refactor this er somehow
-    resources.mats.current -= Build.currentItem.cost;
+
     Build.setCurrentItem(Build.currentItem);
     // Assuming we can't build models on top of each other, new one is obstructed
     Build.currentItemInstance.model.element.classList.add('obstructed');
