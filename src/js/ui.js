@@ -32,6 +32,12 @@ UI.createBuildBarHTML = (Item) => `
 
 UI.buildBarList = [];
 
+UI.deselectAllBuildBarItems = () => {
+  UI.buildBarList.forEach((buildBarItem) => {
+    buildBarItem.element.setAttribute('aria-pressed', false);
+  });
+};
+
 UI.populateBuildBar = () => {
   UI.buildBarList = [Block, Solar].map((Item) => {
     const buildBarItem = { };

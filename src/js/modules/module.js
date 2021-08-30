@@ -76,7 +76,7 @@ Module.prototype.enable = function () {
 Module.prototype.spawnFrame = function () {
   this.model.element.classList.add('frame');
   this.model.element.style.display = 'none';
-  this.spawn();
+  GameObject.prototype.spawn.call(this);
 };
 
 Module.prototype.spawn = function () {

@@ -1,4 +1,5 @@
 import Build from '../build';
+import gameObjectList from '../game-object-list';
 
 export default function GameObject(props) {
   this.w = props.w ?? 1;
@@ -60,6 +61,12 @@ GameObject.prototype.addSelectEventListeners = function () {
   // Assumes every side of the shape should be used for selection
   this.model.sides.forEach((side) => {
     side.element.addEventListener('click', () => {
+      gameObjectList.forEach((item) => {
+        if (this !== item && item.select) {
+          item.select(false);
+        }
+      });
+
       this.select(!this.selected);
     });
     side.element.addEventListener('mouseover', () => {
