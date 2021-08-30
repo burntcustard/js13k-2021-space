@@ -60,6 +60,14 @@ GameObject.prototype.hover = function (hover) {
 GameObject.prototype.addSelectEventListeners = function () {
   // Assumes every side of the shape should be used for selection
   this.model.sides.forEach((side) => {
+    side.element.addEventListener('mouseover', () => {
+      this.hover(true);
+    });
+
+    side.element.addEventListener('mouseleave', () => {
+      this.hover(false);
+    });
+
     side.element.addEventListener('click', () => {
       gameObjectList.forEach((item) => {
         if (this !== item && item.select) {
@@ -69,11 +77,13 @@ GameObject.prototype.addSelectEventListeners = function () {
 
       this.select(!this.selected);
     });
-    side.element.addEventListener('mouseover', () => {
-      this.hover(true);
-    });
-    side.element.addEventListener('mouseleave', () => {
-      this.hover(false);
+
+    side.element.addEventListener('dblclick', () => {
+      gameObjectList.forEach((item) => {
+        if (this.tag === item.tag && item.select) {
+          item.select(true);
+        }
+      });
     });
   });
 };
