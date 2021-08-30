@@ -1,6 +1,7 @@
 import resources from './resources';
 import Build from './build';
 import { $ } from './util';
+import gameObjectList from './game-object-list';
 
 import Block from './modules/block';
 import Solar from './modules/solar';
@@ -45,6 +46,13 @@ UI.populateBuildBar = () => {
     buildBarItem.element.className = `build-bar ${Item.className}`;
     buildBarItem.element.addEventListener('click', () => {
       Build.setCurrentItem(Item);
+
+      gameObjectList.forEach((gameObject) => {
+        if (gameObject.selected) {
+          gameObject.select(false);
+        }
+      });
+
       UI.buildBarList.forEach((other) => {
         if (buildBarItem === other) {
           other.element.setAttribute('aria-pressed', true);

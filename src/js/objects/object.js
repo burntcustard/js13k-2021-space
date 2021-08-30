@@ -35,7 +35,7 @@ GameObject.prototype.spawn = function () {
  * @return {[type]} [description]
  */
 GameObject.prototype.select = function (select) {
-  if (!Build.currentItem) {
+  if (!Build.currentItem || !select) {
     this.selected = select;
     this.model.element.classList.toggle('select', select);
   }
@@ -75,7 +75,7 @@ GameObject.prototype.addSelectEventListeners = function () {
         }
       });
 
-      this.select(!this.selected);
+      if (!this.selected) this.select(true);
     });
 
     side.element.addEventListener('dblclick', () => {
