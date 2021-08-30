@@ -2,8 +2,9 @@ import Module from './module';
 import Box from '../shapes/box';
 
 const info = {
-  moduleName: 'Solar Panel Basic',
+  tag: 'Solar Panel Basic',
   desc: 'Generates power',
+  className: 'solar',
   cost: 35,
   power: 10,
   w: 108,
@@ -24,7 +25,7 @@ export default function Solar({
     rx,
     ry,
     rz,
-    className: 'solar',
+    className: info.className,
   });
   this.model.sides[0].element.className += ' panel';
   this.model.sides[this.model.sides.length - 1].element.className += ' panel';

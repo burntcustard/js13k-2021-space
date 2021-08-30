@@ -21,8 +21,13 @@ const UI = {};
 
 /* eslint-disable no-nested-ternary */
 UI.createBuildBarHTML = (Item) => `
-  <b>${Item.moduleName}</b>
-  <div>M:${Item.cost}${Item.power < 0 ? ` | Use ϟ${-Item.power}` : Item.power > 0 ? ` | Gen ϟ${Item.power}` : ''}</div>
+  <div>
+    <b>${Item.tag}</b>
+    <div>M:${Item.cost}${Item.power < 0 ? ` | Use ϟ${-Item.power}` : Item.power > 0 ? ` | Gen ϟ${Item.power}` : ''}</div>
+  </div>
+  <div>
+    ${Item.desc}
+  </div>
 `;
 
 UI.buildBarList = [];
@@ -31,7 +36,7 @@ UI.populateBuildBar = () => {
   UI.buildBarList = [Block, Solar].map((Item) => {
     const buildBarItem = { };
     buildBarItem.element = document.createElement('button');
-    buildBarItem.element.className = 'build-bar';
+    buildBarItem.element.className = `build-bar ${Item.className}`;
     buildBarItem.element.addEventListener('click', () => {
       Build.setCurrentItem(Item);
       UI.buildBarList.forEach((other) => {
@@ -50,9 +55,6 @@ UI.populateBuildBar = () => {
         ? UI.createBuildBarHTML(Build.currentItem)
         : '';
     });
-    // TODO: Some proper build bar icon somehow
-    /* eslint-disable-next-line prefer-destructuring */
-    buildBarItem.element.innerHTML = Item.moduleName[0];
     buildListElement.append(buildBarItem.element);
 
     return buildBarItem;

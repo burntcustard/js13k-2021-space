@@ -3,7 +3,9 @@ import Box from '../shapes/box';
 import Build from '../build';
 
 const info = {
-  moduleName: 'Block', // Can't use 'name' because is reserved
+  tag: 'Block', // Can't use 'name' because is reserved
+  desc: 'Basic building block',
+  className: 'block',
   cost: 1,
   power: -15,
   w: 60,
@@ -24,7 +26,7 @@ export default function Block({
     rx,
     ry,
     rz,
-    className: info.moduleName,
+    className: info.className,
   });
 
   Module.call(this, { x, y, z, rx, ry, rz, ...info });
