@@ -24,6 +24,7 @@ export default function Box({ w, d = w, h, x, y, z, rx, ry, rz, className }) {
       z: -H_2,
       rx: PI,
       attachment: { x: 0, y: 0, z: -H_2 },
+      parent: this,
     }),
     new Face({
       w,
@@ -32,6 +33,7 @@ export default function Box({ w, d = w, h, x, y, z, rx, ry, rz, className }) {
       y: D_2 - H_2,
       rx: -PI_2,
       attachment: { x: 0, y: D_2, z: 0 },
+      parent: this,
     }),
     new Face({
       w: d,
@@ -41,6 +43,7 @@ export default function Box({ w, d = w, h, x, y, z, rx, ry, rz, className }) {
       rx: -PI_2,
       rz: -PI_2,
       attachment: { x: W_2, y: 0, z: 0 },
+      parent: this,
     }),
     new Face({
       w,
@@ -50,6 +53,7 @@ export default function Box({ w, d = w, h, x, y, z, rx, ry, rz, className }) {
       rx: -PI_2,
       rz: PI,
       attachment: { x: 0, y: -D_2, z: 0 },
+      parent: this,
     }),
     new Face({
       w: d,
@@ -59,6 +63,7 @@ export default function Box({ w, d = w, h, x, y, z, rx, ry, rz, className }) {
       rx: -PI_2,
       rz: PI_2,
       attachment: { x: -W_2, y: 0, z: 0 },
+      parent: this,
     }),
     new Face({
       w,
@@ -67,6 +72,7 @@ export default function Box({ w, d = w, h, x, y, z, rx, ry, rz, className }) {
       y: -D_2,
       z: H_2,
       attachment: { x: 0, y: 0, z: H_2 },
+      parent: this,
     }),
   ];
   this.element.append(...this.sides.map((side) => side.element));

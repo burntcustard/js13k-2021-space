@@ -48,15 +48,16 @@ Build.addEventListenersTo = (side) => {
 
     // eslint-disable-next-line prefer-destructuring
     const model = Build.currentItemInstance.model;
+    const shape = side.parent;
 
     model.element.style.display = '';
     side.element.classList.add('build-hover');
     side.element.classList.toggle('obstructed', side.hasConnectedModule ?? false);
     model.element.classList.toggle('obstructed', side.hasConnectedModule ?? false);
     Build.currentHoverSide = side;
-    model.x = side.attachment.x + Math.sign(side.attachment.x) * model.w * 0.5;
-    model.y = side.attachment.y + Math.sign(side.attachment.y) * model.d * 0.5;
-    model.z = side.attachment.z + Math.sign(side.attachment.z) * model.h * 0.5;
+    model.x = side.attachment.x + Math.sign(side.attachment.x) * model.w * 0.5 + shape.x;
+    model.y = side.attachment.y + Math.sign(side.attachment.y) * model.d * 0.5 + shape.y;
+    model.z = side.attachment.z + Math.sign(side.attachment.z) * model.h * 0.5 + shape.z;
     Build.currentItemInstance.update();
   };
 
