@@ -51,9 +51,9 @@ Build.addEventListenersTo = (side) => {
     side.element.classList.toggle('obstructed', side.hasConnectedModule ?? false);
     Build.currentItemInstance.model.element.classList.toggle('obstructed', side.hasConnectedModule ?? false);
     Build.currentHoverSide = side;
-    Build.currentItemInstance.model.x = side.x;
-    Build.currentItemInstance.model.y = side.y;
-    Build.currentItemInstance.model.z = side.z;
+    Build.currentItemInstance.model.x = side.attachment.x;
+    Build.currentItemInstance.model.y = side.attachment.y;
+    Build.currentItemInstance.model.z = side.attachment.z;
     Build.currentItemInstance.update();
   };
 
