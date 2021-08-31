@@ -1,5 +1,6 @@
 import resources from './resources';
 import gameObjectList from './game-object-list';
+import { PI_2 } from './util';
 
 const Build = {
   currentItem: false,
@@ -10,6 +11,12 @@ const Build = {
 
 Build.setCurrentItem = (Item) => {
   if (!Item) {
+    if (Build.currentHoverSide) {
+      Build.currentHoverSide.element.classList.remove('build-hover');
+    }
+    if (Build.currentItemInstance) {
+      Build.currentItemInstance.model.element.style.display = 'none';
+    }
     Build.currentItem = false;
     Build.currentItemInstance = false;
     return;
