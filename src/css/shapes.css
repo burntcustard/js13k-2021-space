@@ -14,7 +14,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  transform-origin: bottom center;
+  /* transform-origin: bottom center; */
 }
 
 .circle {

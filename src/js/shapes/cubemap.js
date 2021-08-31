@@ -7,61 +7,56 @@ import camera from '../camera';
 import gameObjectList from '../game-object-list';
 
 /**
- * Create a skybox.
+ * Create a cubemap (just an inside-out cube).
  * @param {*} properties
  */
-export default function Cubemap({
-  w, x, y, z, rx, ry, rz,
-}) {
+export default function Cubemap({ w, x, y, z, rx, ry, rz }) {
   Shape.call(this, { w, d: w, h: w, x, y, z, rx, ry, rz, className: 'skybox' });
+
+  const W_2 = w * 0.5;
+
   this.sides = [
     new Face({
       w,
       h: w,
-      x: w * -0.5,
-      y: w * -0.5,
-      z: w * -0.5,
+      x: -W_2,
+      y: -W_2,
+      z: -W_2,
     }),
     new Face({
       w,
       h: w,
-      x: w * -0.5,
-      y: w * -0.5,
-      z: w * -0.5,
-      rx: -PI_2,
-      rz: Math.PI,
+      x: -W_2,
+      rx: PI_2,
     }),
     new Face({
       w,
       h: w,
-      y: -w,
-      z: w * -0.5,
+      y: -W_2,
       rx: -PI_2,
       rz: PI_2,
     }),
     new Face({
       w,
       h: w,
-      x: w * -0.5,
-      y: w * -1.5,
-      z: w * -0.5,
+      x: -W_2,
+      y: -w,
       rx: -PI_2,
     }),
     new Face({
       w,
       h: w,
       x: -w,
-      y: -w,
-      z: w * -0.5,
+      y: -W_2,
       rx: -PI_2,
       rz: -PI_2,
     }),
     new Face({
       w,
       h: w,
-      x: w * -0.5,
-      y: w * -1.5,
-      z: w * 0.5,
+      x: -W_2,
+      y: -W_2,
+      z: W_2,
       rx: Math.PI,
     }),
   ];

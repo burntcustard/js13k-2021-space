@@ -1,107 +1,103 @@
+/* eslint-disable camelcase */
+
 import Shape from './shape';
 import Face from './face';
-import { PI, PI_2, PI_4 } from '../util';
+import { PI, PI3_4, PI_2, PI_4, PI_8 } from '../util';
 
 /**
- * Create a box.
- * Depth default to width if ommitted.
+ * Create a regular octagon.
  * @param {*} properties
  */
-export default function Octagon({
-  w, d = w, h, x, y, z, rx, ry, rz, className,
-}) {
+export default function Octagon({ w, h, x, y, z, rx, ry, rz, className }) {
   this.className = `${className ?? ''} octagon`;
-  Shape.call(this, { w, d, h, x, y, z, rx, ry, rz, className: this.className });
+  Shape.call(this, { w, d: w, h, x, y, z, rx, ry, rz, className: this.className });
 
-  const sideW = ((w / 2) / Math.tan((3 * Math.PI) / 8)) * 2;
+  const W_2 = w * 0.5;
+  const H_2 = h * 0.5;
+
+  const sideW = w * Math.tan(PI_8);
+  const sideW_2 = sideW * 0.5;
+  const sideOffset = W_2 * Math.sin(PI_4);
 
   this.sides = [
     new Face({
       w,
-      h: d,
-      x: w * -0.5,
-      y: d * -1.5,
-      z: h * -0.5,
+      h: w,
+      x: -W_2,
+      y: -W_2,
+      z: -H_2,
       rx: PI,
       className: 'oct',
     }),
     new Face({
       w: sideW,
       h,
-      x: w * -0.2,
-      y: d * 0.5 - h,
-      z: h * -0.5,
+      x: -sideW_2,
+      y: W_2 - H_2,
       rx: -PI_2,
     }),
     new Face({
       w: sideW,
       h,
-      x: w * 0.15,
-      y: d * 0.35 - h,
-      z: h * -0.5,
+      x: sideOffset - sideW_2,
+      y: sideOffset - H_2,
       rx: -PI_2,
       rz: -PI_4,
     }),
     new Face({
       w: sideW,
       h,
-      x: w * 0.3,
-      y: -h,
-      z: h * -0.5,
+      x: W_2 - sideW_2,
+      y: -H_2,
       rx: -PI_2,
       rz: -PI_2,
     }),
     new Face({
       w: sideW,
       h,
-      x: w * 0.15,
-      y: d * -0.35 - h,
-      z: h * -0.5,
+      x: sideOffset - sideW_2,
+      y: -sideOffset - H_2,
       rx: -PI_2,
-      rz: -PI_2 - PI_4,
+      rz: -PI3_4,
     }),
     new Face({
       w: sideW,
       h,
-      x: w * -0.2,
-      y: d * -0.5 - h,
-      z: h * -0.5,
+      x: -sideW_2,
+      y: -W_2 - H_2,
       rx: -PI_2,
-      rz: -Math.PI,
+      rz: -PI,
     }),
     new Face({
       w: sideW,
       h,
-      x: w * -0.55,
-      y: d * -0.35 - h,
-      z: h * -0.5,
+      x: -sideOffset - sideW_2,
+      y: -sideOffset - H_2,
       rx: -PI_2,
-      rz: PI_2 + PI_4,
+      rz: PI3_4,
     }),
     new Face({
       w: sideW,
       h,
-      x: w * -0.7,
-      y: -h,
-      z: h * -0.5,
+      x: -W_2 - sideW_2,
+      y: -H_2,
       rx: -PI_2,
       rz: PI_2,
     }),
     new Face({
       w: sideW,
       h,
-      x: w * -0.55,
-      y: d * 0.35 - h,
-      z: h * -0.5,
+      x: -sideOffset - sideW_2,
+      y: sideOffset - H_2,
       rx: -PI_2,
-      rz: PI_2 - PI_4,
+      rz: PI_4,
     }),
     new Face({
       w,
-      h: d,
-      x: w * -0.5,
-      y: d * -0.5,
-      z: h * 0.5,
+      h: w,
+      x: -W_2,
+      y: -W_2,
+      z: H_2,
       className: 'oct',
     }),
   ];

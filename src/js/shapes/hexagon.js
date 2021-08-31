@@ -1,6 +1,8 @@
+/* eslint-disable camelcase */
+
 import Shape from './shape';
 import Face from './face';
-import { PI_2 } from '../util';
+import { PI, PI_2 } from '../util';
 
 const ratio = Math.sqrt(3) / 2;
 
@@ -13,75 +15,80 @@ export default class Hexagon extends Shape {
   constructor({ w, d = w * ratio, h, x, y, z, rx, ry, rz }) {
     super({ w, d, h, x, y, z, rx, ry, rz, className: 'hexagonandonandon' });
 
+    const W_2 = w * 0.5;
+    const W_4 = w * 0.25;
+    const W_8 = w * 0.125;
+    const D_2 = d * 0.5;
+    const D_4 = d * 0.25;
+    const H_2 = h * 0.5;
+
+    const sideW = Math.hypot(w * 0.25, d * 0.5);
+    const sideW_2 = sideW * 0.5;
+    const sideRotation = Math.atan((2 * d) / w);
+
     this.sides = [
       new Face({
         w,
         h: d,
-        x: w * -0.5,
-        y: d * -1.5,
-        z: h * -0.5,
-        rx: Math.PI,
+        x: -W_2,
+        y: -D_2,
+        z: -H_2,
+        rx: PI,
         className: 'hex',
       }),
       new Face({
-        w: w * 0.5,
+        w: W_2,
         h,
-        x: w * -0.25,
-        y: d * 0.5 - h,
-        z: h * -0.5,
+        x: -W_4,
+        y: D_2 - H_2,
         rx: -PI_2,
       }),
       new Face({
-        w: Math.hypot(w * 0.25, d * 0.5),
+        w: sideW,
         h,
-        x: w * 0.375 - Math.hypot(w * 0.25, d * 0.5) * 0.5,
-        y: d * 0.25 - h,
-        z: h * -0.5,
+        x: W_4 + W_8 - sideW_2,
+        y: D_4 - H_2,
         rx: -PI_2,
-        rz: -Math.atan((2 * d) / w),
+        rz: -sideRotation,
       }),
       new Face({
-        w: Math.hypot(w * 0.25, d * 0.5),
+        w: sideW,
         h,
-        x: w * 0.375 - Math.hypot(w * 0.25, d * 0.5) * 0.5,
-        y: d * -0.25 - h,
-        z: h * -0.5,
+        x: W_4 + W_8 - sideW_2,
+        y: -D_4 - H_2,
         rx: -PI_2,
-        rz: -Math.PI + Math.atan((2 * d) / w),
+        rz: Math.PI + sideRotation,
       }),
       new Face({
-        w: w * 0.5,
+        w: W_2,
         h,
-        x: w * -0.25,
-        y: d * -0.5 - h,
-        z: h * -0.5,
+        x: -W_4,
+        y: -D_2 - H_2,
         rx: -PI_2,
         rz: Math.PI,
       }),
       new Face({
-        w: Math.hypot(w * 0.25, d * 0.5),
+        w: sideW,
         h,
-        x: w * -0.375 - Math.hypot(w * 0.25, d * 0.5) * 0.5,
-        y: d * -0.25 - h,
-        z: h * -0.5,
+        x: -W_4 - W_8 - sideW_2,
+        y: -D_4 - H_2,
         rx: -PI_2,
-        rz: Math.PI - Math.atan((2 * d) / w),
+        rz: Math.PI - sideRotation,
       }),
       new Face({
-        w: Math.hypot(w * 0.25, d * 0.5),
+        w: sideW,
         h,
-        x: w * -0.375 - Math.hypot(w * 0.25, d * 0.5) * 0.5,
-        y: d * 0.25 - h,
-        z: h * -0.5,
+        x: -W_4 - W_8 - sideW_2,
+        y: D_4 - H_2,
         rx: -PI_2,
-        rz: Math.atan((2 * d) / w),
+        rz: sideRotation,
       }),
       new Face({
         w,
         h: d,
-        x: w * -0.5,
-        y: d * -0.5,
-        z: h * 0.5,
+        x: -W_2,
+        y: -D_2,
+        z: H_2,
         className: 'hex',
       }),
     ];
