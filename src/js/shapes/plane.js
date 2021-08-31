@@ -1,4 +1,3 @@
-import { PI_2 } from '../util';
 import Face from './face';
 import Shape from './shape';
 
@@ -12,7 +11,6 @@ export default class Plane extends Shape {
         h,
         x: w * -0.5,
         y: h * -0.5,
-        rx: -PI_2,
       }),
     ];
 
