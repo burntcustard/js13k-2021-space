@@ -19,8 +19,6 @@ export default function Box({ w, d = w, h, x, y, z, rx, ry, rz, className }) {
     new Face({
       w,
       h: d,
-      x: -W_2,
-      y: -D_2,
       z: -H_2,
       rx: PI,
       attachment: { x: 0, y: 0, z: -H_2 },
@@ -29,8 +27,7 @@ export default function Box({ w, d = w, h, x, y, z, rx, ry, rz, className }) {
     new Face({
       w,
       h,
-      x: -W_2,
-      y: D_2 - H_2,
+      y: D_2,
       rx: -PI_2,
       attachment: { x: 0, y: D_2, z: 0 },
       parent: this,
@@ -38,8 +35,7 @@ export default function Box({ w, d = w, h, x, y, z, rx, ry, rz, className }) {
     new Face({
       w: d,
       h,
-      x: W_2 - D_2,
-      y: -H_2,
+      x: W_2,
       rx: -PI_2,
       rz: -PI_2,
       attachment: { x: W_2, y: 0, z: 0 },
@@ -48,8 +44,7 @@ export default function Box({ w, d = w, h, x, y, z, rx, ry, rz, className }) {
     new Face({
       w,
       h,
-      x: -W_2,
-      y: -D_2 - H_2,
+      y: -D_2,
       rx: -PI_2,
       rz: PI,
       attachment: { x: 0, y: -D_2, z: 0 },
@@ -58,8 +53,7 @@ export default function Box({ w, d = w, h, x, y, z, rx, ry, rz, className }) {
     new Face({
       w: d,
       h,
-      x: -W_2 - D_2,
-      y: -H_2,
+      x: -W_2,
       rx: -PI_2,
       rz: PI_2,
       attachment: { x: -W_2, y: 0, z: 0 },
@@ -68,8 +62,6 @@ export default function Box({ w, d = w, h, x, y, z, rx, ry, rz, className }) {
     new Face({
       w,
       h: d,
-      x: -W_2,
-      y: -D_2,
       z: H_2,
       attachment: { x: 0, y: 0, z: H_2 },
       parent: this,
