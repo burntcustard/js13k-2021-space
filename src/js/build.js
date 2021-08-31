@@ -46,14 +46,17 @@ Build.addEventListenersTo = (side) => {
       return;
     }
 
-    Build.currentItemInstance.model.element.style.display = '';
+    // eslint-disable-next-line prefer-destructuring
+    const model = Build.currentItemInstance.model;
+
+    model.element.style.display = '';
     side.element.classList.add('build-hover');
     side.element.classList.toggle('obstructed', side.hasConnectedModule ?? false);
-    Build.currentItemInstance.model.element.classList.toggle('obstructed', side.hasConnectedModule ?? false);
+    model.element.classList.toggle('obstructed', side.hasConnectedModule ?? false);
     Build.currentHoverSide = side;
-    Build.currentItemInstance.model.x = side.attachment.x;
-    Build.currentItemInstance.model.y = side.attachment.y;
-    Build.currentItemInstance.model.z = side.attachment.z;
+    model.x = side.attachment.x + Math.sign(side.attachment.x) * model.w * 0.5;
+    model.y = side.attachment.y + Math.sign(side.attachment.y) * model.d * 0.5;
+    model.z = side.attachment.z + Math.sign(side.attachment.z) * model.h * 0.5;
     Build.currentItemInstance.update();
   };
 
