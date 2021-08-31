@@ -76,7 +76,12 @@ Module.prototype.enable = function () {
 Module.prototype.spawnFrame = function () {
   this.model.element.classList.add('frame');
   this.model.element.style.display = 'none';
-  this.spawn();
+  GameObject.prototype.spawn.call(this);
+};
+
+Module.prototype.spawn = function () {
+  GameObject.prototype.spawn.call(this);
+  GameObject.prototype.addSelectEventListeners.call(this);
 };
 
 /**
@@ -86,7 +91,8 @@ Module.prototype.spawnFrame = function () {
 Module.prototype.build = function () {
   resources.mats.current -= this.cost;
   this.model.element.classList.remove('frame');
-  this.model.element.style.display = '';
+  this.model.element.style.display = ''; // Remove 'display: none'
+  GameObject.prototype.addSelectEventListeners.call(this);
   this.enable();
 };
 

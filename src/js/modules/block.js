@@ -36,7 +36,6 @@ export default function Block({
     // TODO: Don't add buildableness to the side touching the existing shape side
     Build.addEventListenersTo(side);
   });
-
   // TODO: Add hover selecty (not building) even listeners? Or just use :hover?
 }
 

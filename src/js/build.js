@@ -9,6 +9,12 @@ const Build = {
 };
 
 Build.setCurrentItem = (Item) => {
+  if (!Item) {
+    Build.currentItem = false;
+    Build.currentItemInstance = false;
+    return;
+  }
+
   Build.currentItem = Item;
   Build.currentItemInstance = new Item({});
   Build.currentItemInstance.spawnFrame();

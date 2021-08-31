@@ -1,7 +1,10 @@
+import Build from '../build';
 import Shape from './shape';
 import Face from './face';
 import { PI_2 } from '../util';
+import UI from '../ui';
 import camera from '../camera';
+import gameObjectList from '../game-object-list';
 
 /**
  * Create a skybox.
@@ -64,6 +67,23 @@ export default function Cubemap({
   ];
   this.element.append(...this.sides.map((side) => side.element));
   this.spawn();
+
+  this.sides.forEach((side) => {
+    side.element.addEventListener('mousedown', () => { side.dragged = false; });
+    side.element.addEventListener('mousemove', () => { side.dragged = true; });
+    side.element.addEventListener('mouseup', () => {
+      if (side.dragged) return;
+
+      // Deslect any selected game objects
+      gameObjectList.forEach((gameObject) => {
+        if (gameObject.selected) gameObject.select(false);
+      });
+
+      // Cancel building whatever is the current build item
+      UI.deselectAllBuildBarItems();
+      Build.setCurrentItem(false);
+    });
+  });
 }
 
 Cubemap.prototype = Object.create(Shape.prototype);
