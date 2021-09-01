@@ -100,7 +100,7 @@
 
 .ui__hex .right {
   left: 100%;
-  align-items: start;
+  align-items: center;
   transform: rotateY(-90deg);
   transform-origin: left;
 }
@@ -152,7 +152,7 @@
 }
 
 .ui__hex .right .ui-panel {
-  padding: 8px 6px;
+  padding: 8px 4px;
   transform: rotateY(85deg) translateX(-40px);
 }
 
@@ -160,7 +160,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4px;
+  padding: 4px;
+  gap: 6px;
   transform: rotateY(5deg) translateX(-2px) translateZ(2px);
 }
 
