@@ -7,6 +7,7 @@ export default function Module(props) {
   this.desc = props.desc ?? '';
   this.cost = props.cost;
   this.power = props.power ?? 0;
+  this.population = props.population ?? 0;
 
   // TODO: Add event listener for clicking to interact with module
   // TODO: Add even listener for hovering about to build thing on faces(?)
@@ -93,6 +94,10 @@ Module.prototype.build = function () {
   this.model.element.classList.remove('frame');
   this.model.element.style.display = ''; // Remove 'display: none'
   GameObject.prototype.addSelectEventListeners.call(this);
+
+  // You can't lose population capacity once it's been added?
+  resources.population.capacity += this.population;
+
   this.enable();
 };
 

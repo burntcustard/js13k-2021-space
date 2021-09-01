@@ -106,3 +106,13 @@
   color: #f20;
   font-size: 18px;
 }
+
+.eco.pop > * {
+  flex-direction: column;
+  gap: 0;
+}
+
+.eco.pop > * > * {
+  display: flex;
+  gap: 4px;
+}
