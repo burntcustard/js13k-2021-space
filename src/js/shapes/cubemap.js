@@ -3,7 +3,7 @@ import Shape from './shape';
 import Face from './face';
 import { PI_2 } from '../util';
 import UI from '../ui';
-import camera from '../camera';
+import { camera } from '../camera';
 import gameObjectList from '../game-object-list';
 
 /**
