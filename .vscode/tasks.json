@@ -8,6 +8,14 @@
 			"problemMatcher": [],
 			"label": "npm: watch",
 			"detail": "node build.js --watch"
+		},
+		{
+			"type": "npm",
+			"script": "debug",
+			"group": "build",
+			"problemMatcher": [],
+			"label": "npm: debug",
+			"detail": "node build.js --watch --debug"
 		}
 	]
 }
