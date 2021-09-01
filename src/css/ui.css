@@ -242,3 +242,11 @@ button.off[aria-pressed='true']::after {
 button.off[aria-pressed='true']:hover {
   box-shadow: 0 0 6px #fff7, 0 0 0 1px #333;
 }
+
+button.cancel::after {
+  position: absolute;
+  color: #e00;
+  content: '×';
+  font-size: 30px;
+  font-weight: normal;
+}
