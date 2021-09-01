@@ -104,3 +104,8 @@ Module.prototype.shutdown = function () {
   this.disable();
   this.restartTimer = 3000;
 };
+
+Module.prototype.kill = function () {
+  this.disable();
+  GameObject.prototype.kill.call(this);
+};
