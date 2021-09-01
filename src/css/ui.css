@@ -100,7 +100,7 @@
 
 .ui__hex .right {
   left: 100%;
-  align-items: start;
+  align-items: center;
   transform: rotateY(-90deg);
   transform-origin: left;
 }
@@ -152,5 +152,102 @@
 }
 
 .ui__hex .right .ui-panel {
+  padding: 8px 4px;
   transform: rotateY(85deg) translateX(-40px);
+}
+
+.ui__hex .right .ui-panel__btns {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 4px;
+  gap: 6px;
+  transform: rotateY(5deg) translateX(-2px) translateZ(2px);
+}
+
+.ui-panel__btns button {
+  display: flex;
+  width: 28px;
+  height: 28px;
+  align-items: center;
+  justify-content: center;
+  padding-top: 2px;
+  border-top: 0 solid #5317;
+  border-right: 2px solid #5315;
+  border-bottom: 3px solid #5317;
+  border-left: 0 solid #5315;
+  box-shadow: 0 0 0 1px #3339;
+  font-weight: bold;
+  text-shadow: 0 0 1px #000;
+  transition: all 0.2s;
+}
+
+.ui-panel__btns button:active {
+  border-top-width: 1px;
+  border-right-width: 1px;
+  border-bottom-width: 2px;
+  border-left-width: 1px;
+}
+
+.ui-panel__btns button[aria-pressed='true'] {
+  background: #fffa;
+}
+
+.del-wrap {
+  background:
+    repeating-linear-gradient(
+      -45deg,
+      #000,
+      #ff0 2px 4px,
+      #000 0 6px
+    );
+  box-shadow: 0 0 0 1px #3339;
+}
+
+button.del {
+  width: 26px;
+  height: 26px;
+  margin: 3px;
+  background: #e00;
+  color: #fff;
+  font-size: 12px;
+}
+
+button.del:hover {
+  box-shadow: 0 0 0 1px #3339, 0 0 6px #e00;
+}
+
+button.del:hover::before {
+  box-shadow: 0 0 6px #f33, 0 0 0 1px #333;
+}
+
+button.off {
+  background: #ff0;
+  color: #000;
+  font-size: 20px;
+}
+
+button.off:hover {
+  box-shadow: 0 0 6px #fc3, 0 0 0 1px #333;
+}
+
+button.off[aria-pressed='true']::after {
+  position: absolute;
+  right: 2px;
+  bottom: 0;
+  color: #e00;
+  content: '×';
+  font-size: 16px;
+}
+
+button.off[aria-pressed='true']:hover {
+  box-shadow: 0 0 6px #fff7, 0 0 0 1px #333;
+}
+
+button.cancel::after {
+  position: absolute;
+  color: #e00;
+  content: '×';
+  font-size: 30px;
+  font-weight: normal;
 }

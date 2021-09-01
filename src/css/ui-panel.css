@@ -20,6 +20,13 @@
   gap: 8px;
 }
 
+.ui-panel--top {
+  position: absolute;
+  z-index: 1;
+  top: 5vh;
+  font-weight: bold;
+}
+
 .ui-panel--big {
   position: absolute;
   bottom: 5vh;

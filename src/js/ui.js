@@ -5,10 +5,13 @@ import gameObjectList from './game-object-list';
 
 import Block from './modules/block';
 import Solar from './modules/solar';
+import HabSm from './modules/hab-sm';
 
 const matsBar = $('.mats .fill');
 const matsDot = $('.mats .dot');
 const matsCap = $('.mats .cap');
+const popCur = $('.pop .cur');
+const popCap = $('.pop .cap');
 const powerBar = $('.power .fill');
 const powerDot = $('.power .dot');
 const powerGen = $('.power .gen');
@@ -17,6 +20,8 @@ const powerNum = $('.power .num');
 const powerCap = $('.power .cap');
 const buildListElement = $('.ui-panel__build-list');
 const buildInfoElement = $('.ui-panel__build-info');
+const deleteButton = $('.del');
+const offButton = $('.off');
 
 const UI = {};
 
@@ -24,7 +29,7 @@ const UI = {};
 UI.createBuildBarHTML = (Item) => `
   <div>
     <b>${Item.tag}</b>
-    <div>M:${Item.cost}${Item.power < 0 ? ` | Use ϟ${-Item.power}` : Item.power > 0 ? ` | Gen ϟ${Item.power}` : ''}</div>
+    <div>M:${Item.cost}${Item.population ? ` | Pop:${Item.population}` : ''}${Item.power < 0 ? ` | Use ϟ${-Item.power}` : Item.power > 0 ? ` | Gen ϟ${Item.power}` : ''}</div>
   </div>
   <div>
     ${Item.desc}
@@ -40,7 +45,7 @@ UI.deselectAllBuildBarItems = () => {
 };
 
 UI.populateBuildBar = () => {
-  UI.buildBarList = [Block, Solar].map((Item) => {
+  UI.buildBarList = [Block, Solar, HabSm].map((Item) => {
     const buildBarItem = { };
     buildBarItem.element = document.createElement('button');
     buildBarItem.element.className = `build-bar ${Item.className}`;
@@ -80,6 +85,9 @@ UI.update = () => {
   matsDot.classList.toggle('empty', resources.mats.current < 1);
   matsCap.innerText = `${Math.floor(resources.mats.current)} /  ${resources.mats.capacity}`;
 
+  popCur.innerText = resources.population.current;
+  popCap.innerText = resources.population.capacity;
+
   powerBar.style.width = `${(100 / resources.power.capacity) * resources.power.current}%`;
   powerDot.classList.toggle('empty', resources.power.current < 1);
   powerGen.innerText = `+${resources.power.gen}`;
@@ -89,5 +97,19 @@ UI.update = () => {
   powerNum.classList.toggle('neg', num > 0);
   powerCap.innerText = `${Math.floor(resources.power.current)} /  ${resources.power.capacity}`;
 };
+
+deleteButton.addEventListener('click', () => {
+  for (let i = gameObjectList.length - 1; i > 0; i--) {
+    if (gameObjectList[i].selected) {
+      gameObjectList[i].kill();
+    }
+  }
+});
+
+offButton.addEventListener('click', () => {
+  // TODO: Make this actually enable and disable modules
+  const isDisabled = offButton.getAttribute('aria-pressed') !== 'true';
+  offButton.setAttribute('aria-pressed', isDisabled);
+});
 
 export default UI;

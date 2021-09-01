@@ -87,3 +87,9 @@ GameObject.prototype.addSelectEventListeners = function () {
     });
   });
 };
+
+GameObject.prototype.kill = function () {
+  this.model.element?.remove();
+  gameObjectList.remove(this);
+  // TODO (if space) remove mouse & click event listeners to prevent memory leak
+};
