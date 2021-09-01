@@ -7,14 +7,14 @@
 }
 
 .oct {
-  clip-path: polygon(29.34% 0%, 70.66% 0%, 100% 29.34%, 100% 70.66%, 70.66% 100%, 29.34% 100%, 0% 70.66%, 0% 29.34%);
+  clip-path: polygon(29.34% 0, 70.66% 0, 100% 29.34%, 100% 70.66%, 70.66% 100%, 29.34% 100%, 0 70.66%, 0 29.34%);
 }
 
 .face {
   display: flex;
   align-items: center;
   justify-content: center;
-  transform-origin: bottom center;
+  /* transform-origin: bottom center; */
 }
 
 .circle {
@@ -38,13 +38,15 @@
 }
 
 /* When it's just an outline there's no texture */
-.shape.outline .face::before {
+.shape.frame .face::before {
   display: none;
 }
 
-.shape.outline .face {
+.shape.frame .face {
   border: 1px solid #fffa;
+  -webkit-backface-visibility: visible;
   background: #fff2;
+  pointer-events: none;
 }
 
 .shape.obstructed .face,

@@ -1,41 +1,43 @@
 import Module from './module';
 import Box from '../shapes/box';
 
-class Solar extends Module {
-  constructor({ w, h, d, cost, powerGen }, props) {
-    super({ w, h, d, cost, ...props, powerGen });
-
-    this.model = new Box({
-      w,
-      h,
-      d,
-      x: props.x,
-      y: props.y,
-      z: props.z,
-      classNames: [
-        'solar',
-        'panel',
-        '',
-        '',
-        '',
-        '',
-        'panel',
-      ],
-    });
-  }
-}
-
-const solar = {
-  info: {
-    name: 'Solar Panel Basic',
-    desc: 'Generates power',
-    powerGen: 10,
-    cost: 35,
-    w: 108,
-    h: 2,
-    d: 53,
-  },
-  new: (props) => new Solar(solar.info, props),
+const info = {
+  tag: 'Solar Panel Basic',
+  desc: 'Generates power',
+  className: 'solar',
+  cost: 35,
+  power: 10,
+  w: 108,
+  h: 2,
+  d: 53,
 };
 
-export default solar;
+export default function Solar({
+  x, y, z, rx, ry, rz,
+}) {
+  this.model = new Box({
+    w: info.w,
+    h: info.h,
+    d: info.d,
+    x,
+    y,
+    z,
+    rx,
+    ry,
+    rz,
+    className: info.className,
+  });
+  this.model.sides[0].element.className += ' panel';
+  this.model.sides[this.model.sides.length - 1].element.className += ' panel';
+
+  Module.call(this, { x, y, z, rx, ry, rz, ...info });
+}
+
+Object.assign(Solar, info);
+Solar.prototype = Object.create(Module.prototype);
+Solar.prototype.constructor = Solar;
+
+Solar.prototype.build = function () {
+  // TODO: Solar panel build animation
+  Module.prototype.build.call(this);
+};

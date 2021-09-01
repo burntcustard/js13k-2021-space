@@ -1,0 +1,66 @@
+button.build-bar {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  padding-top: 4px;
+  aspect-ratio: 1;
+  background: #222;
+}
+
+button.build-bar::after {
+  content: '';
+  filter: brightness(0.6);
+}
+
+button.build-bar:hover::after {
+  filter: brightness(0.9);
+}
+
+button.build-bar[aria-pressed='true']::after {
+  filter: brightness(1);
+}
+
+button.build-bar.block::after {
+  width: 26px;
+  height: 26px;
+  background:
+    conic-gradient(
+      #fff 65deg,
+      #ccc 0 180deg,
+      #999 0 295deg,
+      #fff 0
+    );
+  clip-path:
+    polygon(
+      50% 0,
+      100% 25%,
+      100% 75%,
+      50% 100%,
+      0 75%,
+      0 25%
+    );
+}
+
+button.build-bar.solar::after {
+  width: 20px;
+  height: 24px;
+  border: 2px solid #fff;
+  background:
+    repeating-linear-gradient(
+      to top,
+      #0000 0 4px,
+      #fff9 0 5px
+    ),
+    repeating-linear-gradient(
+      to right,
+      #0000 0 9px,
+      #fff6 0 10px
+    ),
+    /* Rotate this for lighting?... */
+    linear-gradient(
+      45deg,
+      #059,
+      #08a
+    );
+}

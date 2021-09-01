@@ -55,13 +55,14 @@
 
 .eco .bar .fill {
   height: 4px;
+  transition: width 0.5s linear;
 }
 
 .eco.mats .bar .fill {
   border-bottom: 1px solid #0aa;
+  margin-left: auto;
   background: #0fd;
   box-shadow: 0 0 6px #0fd, 0 0 0 1px #333;
-  margin-left: auto;
 }
 
 .eco.power .bar .fill {
@@ -104,4 +105,27 @@
   margin-left: 4px;
   color: #f20;
   font-size: 18px;
+}
+
+.eco.pop .icon {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  box-shadow: inset 0 -2px 0 6px #333; /* Outer circle + head */
+}
+
+/* Body of the person in the icon */
+.eco.pop .icon::before {
+  position: absolute;
+  bottom: -2px;
+  left: 6px;
+  width: 8px;
+  height: 9px;
+  background: #777;
+  border-radius: 3px;
+  content: '';
+}
+
+.eco.pop .icon ~ * {
+  margin-top: 1px;
 }

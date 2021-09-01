@@ -2,11 +2,13 @@ import { camera } from './camera';
 import resources from './resources';
 import initMouse from './mouse';
 import { initKeyboard, doKeyboardInput } from './keyboard';
+import Build from './build';
+import UI from './ui';
+import gameObjectList from './game-object-list';
 import { $, PI_4 } from './util';
 import Box from './shapes/box';
-import block from './modules/block';
-import solarAdv from './modules/solar-adv';
-import solar from './modules/solar';
+import Block from './modules/block';
+import Solar from './modules/solar';
 import Pyramid from './shapes/pyramid';
 import Octagon from './shapes/octagon';
 import Light from './objects/light';
@@ -14,30 +16,27 @@ import Cubemap from './shapes/cubemap';
 import Sun from './objects/sun';
 
 const perfDebug = $('.debug .perf');
-const matsBar = $('.mats .fill');
-const matsDot = $('.mats .dot');
-const matsCap = $('.mats .cap');
-const powerBar = $('.power .fill');
-const powerDot = $('.power .dot');
-const powerGen = $('.power .gen');
-const powerUse = $('.power .use');
-const powerNum = $('.power .num');
-const powerCap = $('.power .cap');
 
 let previousTimestamp;
 
 const box = new Box({
   w: 60,
   h: 60,
+  x: 200,
 });
+box.spawn();
 
 const skybox = new Cubemap({
   w: 2048,
 });
 
-const stationBlock = block.new({ x: 0, z: 10 });
+// const stationBlock = block.new({ x: 0, z: 10 });
+const stationBlock = new Block({ x: 0 });
+stationBlock.spawn();
 stationBlock.enable();
-const stationSolar = solarAdv.new({ x: 90, z: 10 });
+// const stationSolar = solar.new({ x: 90, z: 10 });
+const stationSolar = new Solar({ x: 90 });
+stationSolar.spawn();
 stationSolar.enable();
 
 const pyramid = new Pyramid({
@@ -46,6 +45,7 @@ const pyramid = new Pyramid({
   y: 200,
   z: 100,
 });
+pyramid.spawn();
 
 const octagon = new Octagon({
   w: 100,
@@ -55,8 +55,9 @@ const octagon = new Octagon({
   z: -10,
   rz: 0.4,
 });
+octagon.spawn();
 
-const objects = [box, pyramid, stationBlock, stationSolar];
+gameObjectList.push(box, octagon, pyramid, stationBlock, stationSolar);
 
 const sun = new Sun({ x: -500, y: -500, r: 200 });
 
@@ -98,101 +99,46 @@ const lights = [
   }),
 ];
 
-let currentBuildItem = solar.new({});
-currentBuildItem.model.element.classList.add('outline');
-currentBuildItem.model.element.style.display = 'none';
-let canAffordCurrentBuildItem = resources.mats.current > currentBuildItem.cost;
-let currentHoverSide;
+UI.populateBuildBar();
 
-stationBlock.model.sides.forEach((side) => {
-  side.element.addEventListener('mouseover', () => {
-    currentBuildItem.model.element.style.display = '';
-    side.element.classList.add('build-hover');
-    side.element.classList.toggle('obstructed', side.hasConnectedModule ?? false);
-    currentBuildItem.model.element.classList.toggle('obstructed', side.hasConnectedModule ?? false);
-    currentHoverSide = side;
-    currentBuildItem.model.x = side.x;
-    currentBuildItem.model.y = side.y;
-    currentBuildItem.model.z = side.z;
-    currentBuildItem.update();
-  });
-
-  side.element.addEventListener('mouseup', () => {
-    // currentBuildItem.build() // ?
-    // Don't want to repeat long className str
-    // .mode.element.classList is too many dots
-    if (!side.hasConnectedModule && canAffordCurrentBuildItem) {
-      currentBuildItem.model.element.classList.remove('outline');
-      objects.push(currentBuildItem);
-      currentBuildItem.enable();
-      side.hasConnectedModule = true;
-      side.element.classList.add('obstructed');
-      // Cost some resources - should this be on build bar click instead?
-      resources.mats.current -= currentBuildItem.cost;
-      currentBuildItem = solar.new({});
-      currentBuildItem.model.x = side.x;
-      currentBuildItem.model.y = side.y;
-      currentBuildItem.model.z = side.z;
-      currentBuildItem.update();
-      currentBuildItem.model.element.classList.add('outline');
-      // Assuming we can't build models on top of each other, new one is obstructed
-      currentBuildItem.model.element.classList.add('obstructed');
-    }
-  });
-
-  side.element.addEventListener('mouseleave', () => {
-    side.element.classList.remove('build-hover');
-    currentBuildItem.model.element.style.display = 'none';
-    currentHoverSide = null;
-    // Place it in the sun or something (is actually what PA does lol)
-    currentBuildItem.model.x = 0;
-    currentBuildItem.model.y = 0;
-    currentBuildItem.model.z = 0;
-    currentBuildItem.update();
-  });
-});
+let halfSecondCounter = 0;
 
 function main(timestamp) {
   window.requestAnimationFrame(main);
 
-  // Check if we can afford the thing we're trying to build
-  canAffordCurrentBuildItem = resources.mats.current > currentBuildItem.cost;
-  currentBuildItem.model.element.classList.toggle('err-cost', !canAffordCurrentBuildItem);
-  if (currentHoverSide) {
-    currentHoverSide.element.classList.toggle('err-cost', !canAffordCurrentBuildItem);
-  }
-
   if (previousTimestamp === undefined) previousTimestamp = timestamp;
   const elapsed = timestamp - previousTimestamp;
+  halfSecondCounter += elapsed;
+  if (halfSecondCounter > 500) {
+    halfSecondCounter = 0;
+  }
 
   doKeyboardInput();
 
-  // octagon.rx += 0.005;
-  // octagon.ry += 0.005;
-  octagon.update(elapsed, lights);
-
-  objects.forEach((object) => {
+  gameObjectList.forEach((object) => {
     object.update(elapsed, lights);
   });
 
   camera.update(elapsed);
-  skybox.update(camera);
+  skybox.update();
 
   previousTimestamp = timestamp;
   perfDebug.innerText = `Elapsed: ${elapsed.toFixed(2)} FPS: ${(1000 / elapsed).toFixed()}`;
 
-  matsBar.style.width = `${(100 / resources.mats.capacity) * resources.mats.current}%`;
-  matsDot.classList.toggle('empty', resources.mats.current < 1);
-  matsCap.innerText = `${Math.floor(resources.mats.current)} /  ${resources.mats.capacity}`;
+  // Do some stuff only every half a second
+  if (!halfSecondCounter) {
+    // TODO: Only update build if actually building something
+    Build.update();
 
-  powerBar.style.width = `${(100 / resources.power.capacity) * resources.power.current}%`;
-  powerDot.classList.toggle('empty', resources.power.current < 1);
-  powerGen.innerText = resources.power.gen;
-  powerUse.innerText = resources.power.use;
-  const num = resources.power.gen - resources.power.use;
-  powerNum.innerText = (num <= 0 ? '' : '+') + num;
-  powerNum.classList.toggle('neg', num > 0);
-  powerCap.innerText = `${Math.floor(resources.power.current)} /  ${resources.power.capacity}`;
+    if (resources.population.current < resources.population.capacity
+      && Math.floor(Math.random() * 1.02)) {
+      // TODO: Display a '+1' or some indicator that the population has gone up
+      // TODO: Show a 'population capacity reached' indicator
+      resources.population.current++;
+    }
+
+    UI.update();
+  }
 }
 
 initMouse();

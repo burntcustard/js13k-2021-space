@@ -1,12 +1,16 @@
 @import 'body';
+/* @import 'block'; */
+@import 'build-bar';
 @import 'camera';
 @import 'debug';
 @import 'eco';
 @import 'ground';
-@import 'panel';
+@import 'object';
+@import 'reset';
 @import 'scene';
 @import 'shapes';
 @import 'solar';
 @import 'sun';
+@import 'ui-panel';
 @import 'ui';
 @import 'viewport';

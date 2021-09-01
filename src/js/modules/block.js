@@ -1,47 +1,49 @@
-import Structure from './module';
+import Module from './module';
 import Box from '../shapes/box';
+import Build from '../build';
 
-function handleMouseOver(event) {
-  event.target.classList.add('placeholder-hover');
-}
-
-function handleMouseLeave(event) {
-  event.target.classList.remove('placeholder-hover');
-}
-
-class Block extends Structure {
-  constructor({ w, h, d }, props) {
-    super({ w, h, d, ...props, powerUse: 20 });
-
-    this.model = new Box({
-      w,
-      h,
-      d,
-      x: props.x,
-      y: props.y,
-      z: props.z,
-    });
-
-    this.model.sides.forEach((side) => {
-      side.element.addEventListener('mouseover', handleMouseOver);
-      side.element.addEventListener('mouseleave', handleMouseLeave);
-    });
-  }
-
-  update(elapsed, lights) {
-    super.update(elapsed, lights);
-  }
-}
-
-const block = {
-  info: {
-    name: 'block',
-    cost: 1,
-    w: 60,
-    h: 60,
-    d: 60,
-  },
-  new: (props) => new Block(block.info, props),
+const info = {
+  tag: 'Block', // Can't use 'name' because is reserved
+  desc: 'Basic building block',
+  className: 'block',
+  cost: 1,
+  power: -15,
+  w: 60,
+  d: 60,
+  h: 60,
 };
 
-export default block;
+export default function Block({
+  x, y, z, rx, ry, rz,
+}) {
+  this.model = new Box({
+    w: info.w,
+    h: info.h,
+    d: info.d,
+    x,
+    y,
+    z,
+    rx,
+    ry,
+    rz,
+    className: info.className,
+  });
+
+  Module.call(this, { x, y, z, rx, ry, rz, ...info });
+
+  // Add buildableness to all the sides of the cube
+  this.model.sides.forEach((side) => {
+    // TODO: Don't add buildableness to the side touching the existing shape side
+    Build.addEventListenersTo(side);
+  });
+  // TODO: Add hover selecty (not building) even listeners? Or just use :hover?
+}
+
+Object.assign(Block, info);
+Block.prototype = Object.create(Module.prototype);
+Block.prototype.constructor = Block;
+
+Block.prototype.build = function () {
+  // TODO: Block build animation
+  Module.prototype.build.call(this);
+};

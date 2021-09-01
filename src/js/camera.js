@@ -20,6 +20,7 @@ function Camera() {
   this.moveY = 0;
   this.moveX = 0;
   this.followers = [];
+  this.followers = [];
   this.perspective = settings.camera.perspective;
   viewport.style.perspective = `${this.perspective}px`;
 
