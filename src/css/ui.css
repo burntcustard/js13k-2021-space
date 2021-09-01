@@ -192,6 +192,17 @@
   background: #fffa;
 }
 
+.del-wrap {
+  background:
+    repeating-linear-gradient(
+      -45deg,
+      #000,
+      #ff0 2px 4px,
+      #000 0 6px
+    );
+  box-shadow: 0 0 0 1px #3339;
+}
+
 button.del {
   width: 26px;
   height: 26px;
@@ -201,18 +212,11 @@ button.del {
   font-size: 12px;
 }
 
-.del-wrap {
-  background:
-    repeating-linear-gradient(
-      -45deg,
-      #000,
-      #ff0 2px 4px,
-      #000 0 6px
-    );
-  box-shadow: 0 0 0 #f33, 0 0 0 1px #333;
+button.del:hover {
+  box-shadow: 0 0 0 1px #3339, 0 0 6px #e00;
 }
 
-.del:hover::before {
+button.del:hover::before {
   box-shadow: 0 0 6px #f33, 0 0 0 1px #333;
 }
 
@@ -222,6 +226,10 @@ button.off {
   font-size: 20px;
 }
 
+button.off:hover {
+  box-shadow: 0 0 6px #fc3, 0 0 0 1px #333;
+}
+
 button.off[aria-pressed='true']::after {
   position: absolute;
   right: 2px;
@@ -229,4 +237,8 @@ button.off[aria-pressed='true']::after {
   color: #e00;
   content: '×';
   font-size: 16px;
+}
+
+button.off[aria-pressed='true']:hover {
+  box-shadow: 0 0 6px #fff7, 0 0 0 1px #333;
 }
