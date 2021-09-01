@@ -20,6 +20,8 @@ const powerNum = $('.power .num');
 const powerCap = $('.power .cap');
 const buildListElement = $('.ui-panel__build-list');
 const buildInfoElement = $('.ui-panel__build-info');
+const deleteButton = $('.del');
+const offButton = $('.off');
 
 const UI = {};
 
@@ -95,5 +97,19 @@ UI.update = () => {
   powerNum.classList.toggle('neg', num > 0);
   powerCap.innerText = `${Math.floor(resources.power.current)} /  ${resources.power.capacity}`;
 };
+
+deleteButton.addEventListener('click', () => {
+  for (let i = gameObjectList.length - 1; i > 0; i--) {
+    if (gameObjectList[i].selected) {
+      gameObjectList[i].kill();
+    }
+  }
+});
+
+offButton.addEventListener('click', () => {
+  // TODO: Make this actually enable and disable modules
+  const isDisabled = offButton.getAttribute('aria-pressed') !== 'true';
+  offButton.setAttribute('aria-pressed', isDisabled);
+});
 
 export default UI;
