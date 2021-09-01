@@ -4,6 +4,7 @@ import { initKeyboard, doKeyboardInput } from './keyboard';
 import Build from './build';
 import UI from './ui';
 import gameObjectList from './game-object-list';
+import resources from './resources';
 import { $, PI_4 } from './util';
 import Box from './shapes/box';
 import Block from './modules/block';
@@ -102,6 +103,13 @@ function main(timestamp) {
   if (!halfSecondCounter) {
     // TODO: Only update build if actually building something
     Build.update();
+
+    if (resources.population.current < resources.population.capacity
+      && Math.floor(Math.random() * 1.02)) {
+      // TODO: Display a '+1' or some indicator that the population has gone up
+      // TODO: Show a 'population capacity reached' indicator
+      resources.population.current++;
+    }
 
     UI.update();
   }
