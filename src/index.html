@@ -4,6 +4,23 @@
 
 <body>
   <canvas class="canvas" style="position: absolute"></canvas>
+  <svg style="position: absolute">
+    <filter id='noise'>
+      <feTurbulence id="color-noise" baseFrequency="0.1"/>
+      <feGaussianBlur stdDeviation="3"/>
+      <feColorMatrix values="0 0 0 1 1
+                             0 0 0 1 .1
+                             0 0 0 0 0
+                             0 0 0 0 1" result="base"/>
+      <feTurbulence id="wave-noise" baseFrequency="0.1" result="ripples" />
+      <feDisplacementMap in="base" in2="ripples" scale="30" result="texture"/>
+      <animate xlink:href="#wave-noise" attributeName="baseFrequency" dur="30s" keyTimes="0;0.5;1" values="0.1 0.06;0.06 0.1;0.1 0.06" repeatCount="indefinite"/>
+      <animate xlink:href="#color-noise" attributeName="baseFrequency" dur="30s" keyTimes="0;0.5;1" values="0.08 0.1;0.1 0.08;0.08 0.1" repeatCount="indefinite"/>
+      <feImage id="fe-image-sphere-distort" xlink:href="" result="barrel"/>
+      <feDisplacementMap in2="barrel" in="texture" xChannelSelector="R" yChannelSelector="G" scale="0" result="final"></feDisplacementMap>
+      <feComposite operator="in" in="final" in2="SourceGraphic"/>
+    </filter>
+  </svg>
   <div class="viewport" onContextMenu="return false">
     <div class="camera">
       <div class="scene"></div>

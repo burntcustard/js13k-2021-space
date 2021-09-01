@@ -59,7 +59,7 @@ octagon.spawn();
 
 gameObjectList.push(box, octagon, pyramid, stationBlock, stationSolar);
 
-const sun = new Sun({ x: -500, y: -500, r: 200 });
+const sun = new Sun({ x: -5000, y: -5000, r: 200 });
 
 // TODO: Put this somewhere else
 const canvas = document.getElementsByTagName('canvas')[0];
