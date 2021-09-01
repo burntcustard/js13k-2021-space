@@ -1,3 +1,4 @@
+import Build from './build';
 import camera from './camera';
 import gameObjectList from './game-object-list';
 
@@ -5,11 +6,11 @@ const keys = new Set();
 
 export function initKeyboard() {
   document.addEventListener('keydown', (event) => {
-    keys.add(event.key);
+    keys.add(event.key.toLowerCase());
   });
 
   document.addEventListener('keyup', (event) => {
-    keys.delete(event.key);
+    keys.delete(event.key.toLowerCase());
   });
 }
 

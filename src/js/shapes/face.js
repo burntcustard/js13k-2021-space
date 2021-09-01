@@ -1,8 +1,6 @@
 import Vec3 from '../vec3';
 
-export default function Face({
-  w, h, x, y, z, rx, ry, rz, colour, className,
-}) {
+export default function Face({ w, h, x, y, z, rx, ry, rz, colour, className, parent }) {
   this.w = w;
   this.h = h;
   this.x = x ?? 0;
@@ -15,6 +13,7 @@ export default function Face({
   this.colour = colour ?? new Vec3(1, 0, 0);
   this.element = document.createElement('div');
   this.element.className = `face ${className ?? 'rect'}`;
+  this.parent = parent;
   this.setSize();
   this.update();
   // this.element.innerHTML = 'FACE';
