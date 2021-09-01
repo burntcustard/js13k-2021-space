@@ -1,6 +1,5 @@
 import resources from './resources';
 import gameObjectList from './game-object-list';
-import { PI_2 } from './util';
 
 const Build = {
   currentItem: false,
@@ -62,9 +61,9 @@ Build.addEventListenersTo = (side) => {
     side.element.classList.toggle('obstructed', side.hasConnectedModule ?? false);
     model.element.classList.toggle('obstructed', side.hasConnectedModule ?? false);
     Build.currentHoverSide = side;
-    model.x = side.attachment.x + Math.sign(side.attachment.x) * model.w * 0.5 + shape.x;
-    model.y = side.attachment.y + Math.sign(side.attachment.y) * model.d * 0.5 + shape.y;
-    model.z = side.attachment.z + Math.sign(side.attachment.z) * model.h * 0.5 + shape.z;
+    model.x = side.x + Math.sign(side.x) * model.w * 0.5 + shape.x;
+    model.y = side.y + Math.sign(side.y) * model.d * 0.5 + shape.y;
+    model.z = side.z + Math.sign(side.z) * model.h * 0.5 + shape.z;
     Build.currentItemInstance.update();
   };
 
