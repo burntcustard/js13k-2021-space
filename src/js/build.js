@@ -1,5 +1,6 @@
 import resources from './resources';
 import gameObjectList from './game-object-list';
+import Vec3 from './vec3';
 
 const Build = {
   currentItem: false,
@@ -55,15 +56,17 @@ Build.addEventListenersTo = (side) => {
     // eslint-disable-next-line prefer-destructuring
     const model = Build.currentItemInstance.model;
     const shape = side.parent;
+    const sideRotated = new Vec3(side.x, side.y, side.z).rotateZ(shape.rz);
 
     model.element.style.display = '';
     side.element.classList.add('build-hover');
     side.element.classList.toggle('obstructed', side.hasConnectedModule ?? false);
     model.element.classList.toggle('obstructed', side.hasConnectedModule ?? false);
     Build.currentHoverSide = side;
-    model.x = side.x + Math.sign(side.x) * model.w * 0.5 + shape.x;
-    model.y = side.y + Math.sign(side.y) * model.d * 0.5 + shape.y;
-    model.z = side.z + Math.sign(side.z) * model.h * 0.5 + shape.z;
+    model.x = shape.x + sideRotated.x + Math.sign(Math.round(sideRotated.x)) * model.w * 0.5;
+    model.y = shape.y + sideRotated.y + Math.sign(Math.round(sideRotated.y)) * model.w * 0.5;
+    model.z = shape.z + sideRotated.z + Math.sign(Math.round(sideRotated.z)) * model.h * 0.5;
+    model.rz = Math.atan2(sideRotated.y, sideRotated.x);
     Build.currentItemInstance.update();
   };
 
