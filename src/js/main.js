@@ -19,16 +19,18 @@ const perfDebug = $('.debug .perf');
 
 let previousTimestamp;
 
+const skybox = new Cubemap({
+  w: 2048,
+});
+
+const sun = new Sun({ x: -40000, y: -40000, r: 200 });
+
 const box = new Box({
   w: 60,
   h: 60,
   x: 200,
 });
 box.spawn();
-
-const skybox = new Cubemap({
-  w: 2048,
-});
 
 // const stationBlock = block.new({ x: 0, z: 10 });
 const stationBlock = new Block({ x: 0 });
@@ -58,8 +60,6 @@ const octagon = new Octagon({
 octagon.spawn();
 
 gameObjectList.push(box, octagon, pyramid, stationBlock, stationSolar);
-
-const sun = new Sun({ x: -5000, y: -5000, r: 200 });
 
 // TODO: Put this somewhere else
 const canvas = document.getElementsByTagName('canvas')[0];
