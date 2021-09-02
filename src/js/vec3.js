@@ -21,6 +21,10 @@ export default class Vec3 {
     return Math.hypot(this.x, this.y, this.z);
   }
 
+  resize(length) {
+    return this.multiply(length / this.length());
+  }
+
   angleTo(other) {
     return Math.acos(this.dot(other) / (this.length() * other.length()));
   }
@@ -31,6 +35,40 @@ export default class Vec3 {
   }
 
   multiply(multiplier) {
-    return new Vec3(this.x * multiplier, this.y * multiplier, this.z * multiplier);
+    return new Vec3(
+      this.x * multiplier,
+      this.y * multiplier,
+      this.z * multiplier,
+    );
+  }
+
+  rotateX(angle) {
+    const cos = Math.cos(angle);
+    const sin = Math.sin(angle);
+    return new Vec3(
+      this.x,
+      this.y * cos - this.z * sin,
+      this.y * sin + this.z * cos,
+    );
+  }
+
+  rotateY(angle) {
+    const cos = Math.cos(angle);
+    const sin = Math.sin(angle);
+    return new Vec3(
+      this.x * cos + this.z * sin,
+      this.y,
+      -this.x * sin + this.z * cos,
+    );
+  }
+
+  rotateZ(angle) {
+    const cos = Math.cos(angle);
+    const sin = Math.sin(angle);
+    return new Vec3(
+      this.x * cos - this.y * sin,
+      this.x * sin + this.y * cos,
+      this.z,
+    );
   }
 }

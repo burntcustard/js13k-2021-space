@@ -1,5 +1,3 @@
-/* eslint-disable camelcase */
-
 import Shape from './shape';
 import Face from './face';
 import { PI, PI_2 } from '../util';
@@ -23,15 +21,12 @@ export default class Hexagon extends Shape {
     const H_2 = h * 0.5;
 
     const sideW = Math.hypot(w * 0.25, d * 0.5);
-    const sideW_2 = sideW * 0.5;
     const sideRotation = Math.atan((2 * d) / w);
 
     this.sides = [
       new Face({
         w,
         h: d,
-        x: -W_2,
-        y: -D_2,
         z: -H_2,
         rx: PI,
         className: 'hex',
@@ -39,59 +34,59 @@ export default class Hexagon extends Shape {
       new Face({
         w: W_2,
         h,
-        x: -W_4,
-        y: D_2 - H_2,
+        y: D_2,
         rx: -PI_2,
       }),
       new Face({
         w: sideW,
         h,
-        x: W_4 + W_8 - sideW_2,
-        y: D_4 - H_2,
+        x: W_4 + W_8,
+        y: D_4,
         rx: -PI_2,
         rz: -sideRotation,
       }),
       new Face({
         w: sideW,
         h,
-        x: W_4 + W_8 - sideW_2,
-        y: -D_4 - H_2,
+        x: W_4 + W_8,
+        y: -D_4,
         rx: -PI_2,
         rz: Math.PI + sideRotation,
       }),
       new Face({
         w: W_2,
         h,
-        x: -W_4,
-        y: -D_2 - H_2,
+        y: -D_2,
         rx: -PI_2,
         rz: Math.PI,
       }),
       new Face({
         w: sideW,
         h,
-        x: -W_4 - W_8 - sideW_2,
-        y: -D_4 - H_2,
+        x: -W_4 - W_8,
+        y: -D_4,
         rx: -PI_2,
         rz: Math.PI - sideRotation,
       }),
       new Face({
         w: sideW,
         h,
-        x: -W_4 - W_8 - sideW_2,
-        y: D_4 - H_2,
+        x: -W_4 - W_8,
+        y: D_4,
         rx: -PI_2,
         rz: sideRotation,
       }),
       new Face({
         w,
         h: d,
-        x: -W_2,
-        y: -D_2,
         z: H_2,
         className: 'hex',
       }),
     ];
+
+    this.sides.forEach((side) => {
+      side.parent = this;
+    });
 
     this.element.append(...this.sides.map((side) => side.element));
     super.update();

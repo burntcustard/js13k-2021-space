@@ -10,11 +10,11 @@
   clip-path: polygon(29.34% 0, 70.66% 0, 100% 29.34%, 100% 70.66%, 70.66% 100%, 29.34% 100%, 0 70.66%, 0 29.34%);
 }
 
+.shape,
 .face {
   display: flex;
   align-items: center;
   justify-content: center;
-  /* transform-origin: bottom center; */
 }
 
 .circle {
