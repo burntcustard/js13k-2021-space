@@ -21,6 +21,10 @@ export default class Vec3 {
     return Math.hypot(this.x, this.y, this.z);
   }
 
+  resize(length) {
+    return this.multiply(length / this.length());
+  }
+
   angleTo(other) {
     return Math.acos(this.dot(other) / (this.length() * other.length()));
   }
@@ -31,7 +35,11 @@ export default class Vec3 {
   }
 
   multiply(multiplier) {
-    return new Vec3(this.x * multiplier, this.y * multiplier, this.z * multiplier);
+    return new Vec3(
+      this.x * multiplier,
+      this.y * multiplier,
+      this.z * multiplier,
+    );
   }
 
   rotateX(angle) {
