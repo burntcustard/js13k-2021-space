@@ -11,6 +11,7 @@ import Block from './modules/block';
 import Solar from './modules/solar';
 import Pyramid from './shapes/pyramid';
 import Octagon from './shapes/octagon';
+import Octabox from './shapes/octabox';
 import Light from './objects/light';
 import Cubemap from './shapes/cubemap';
 
@@ -18,12 +19,12 @@ const perfDebug = $('.debug .perf');
 
 let previousTimestamp;
 
-const box = new Box({
+const octabox = new Octabox({
   w: 60,
   h: 60,
   x: 200,
 });
-box.spawn();
+octabox.spawn();
 
 const skybox = new Cubemap({
   w: 2048,
@@ -56,7 +57,7 @@ const octagon = new Octagon({
 });
 octagon.spawn();
 
-gameObjectList.push(box, octagon, pyramid, stationBlock, stationSolar);
+gameObjectList.push(octabox, octagon, pyramid, stationBlock, stationSolar);
 
 const lights = [
   new Light({
