@@ -7,6 +7,7 @@ const Build = {
   currentItemInstance: false,
   currentHoverSide: false,
   cantAffordCurrentItem: false,
+  rotation: 0,
 };
 
 Build.setCurrentItem = (Item) => {
@@ -47,6 +48,11 @@ Build.update = () => {
   }
 };
 
+Build.updateRotation = () => {
+  Build.currentItemInstance.model.rx = Build.rotation;
+  Build.currentItemInstance.update();
+};
+
 Build.addEventListenersTo = (side) => {
   side.mouseoverListener = () => {
     if (!Build.currentItem) {
@@ -56,16 +62,26 @@ Build.addEventListenersTo = (side) => {
     // eslint-disable-next-line prefer-destructuring
     const model = Build.currentItemInstance.model;
     const shape = side.parent;
-    const sideRotated = new Vec3(side.x, side.y, side.z).rotateZ(shape.rz);
+
+    // Side rotated with shape's rotation
+    const sideRotated = new Vec3(side.x, side.y, side.z)
+      .rotateX(shape.rx)
+      .rotateY(shape.ry)
+      .rotateZ(shape.rz);
+
+    // Half model width in direction of side
+    const sideResized = sideRotated.resize(model.w * 0.5);
 
     model.element.style.display = '';
     side.element.classList.add('build-hover');
     side.element.classList.toggle('obstructed', side.hasConnectedModule ?? false);
     model.element.classList.toggle('obstructed', side.hasConnectedModule ?? false);
     Build.currentHoverSide = side;
-    model.x = shape.x + sideRotated.x + Math.sign(Math.round(sideRotated.x)) * model.w * 0.5;
-    model.y = shape.y + sideRotated.y + Math.sign(Math.round(sideRotated.y)) * model.w * 0.5;
-    model.z = shape.z + sideRotated.z + Math.sign(Math.round(sideRotated.z)) * model.h * 0.5;
+    model.x = shape.x + sideRotated.x + sideResized.x;
+    model.y = shape.y + sideRotated.y + sideResized.y;
+    model.z = shape.z + sideRotated.z + sideResized.z;
+    model.rx = Build.rotation;
+    model.ry = Math.atan2(sideRotated.z, sideRotated.x);
     model.rz = Math.atan2(sideRotated.y, sideRotated.x);
     Build.currentItemInstance.update();
   };
