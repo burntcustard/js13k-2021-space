@@ -9,8 +9,8 @@ const info = {
   cost: 10,
   power: -10,
   population: 5,
-  w: 80,
-  d: 80,
+  w: 85,
+  d: 85,
   h: 60,
 };
 

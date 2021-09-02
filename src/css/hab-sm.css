@@ -21,18 +21,18 @@
   background:
     linear-gradient(
       90deg,
-      #0000 0 calc(50% + var(--window-h) - 1px),
+      #0000 calc(50% + var(--window-h) - 1px),
       #f60 0 calc(50% + var(--window-h) + 6px),
       #0000 0
     ),
     linear-gradient(
-      #fff 0 calc(50% - var(--window-w)),
+      #fff calc(50% - var(--window-w)),
       #0000 0 calc(50% + var(--window-w)),
       #fff 0
     ),
     linear-gradient(
       90deg,
-      #fff 0 calc(50% - var(--window-h)),
+      #fff calc(50% - var(--window-h)),
       #0000 0 calc(50% + var(--window-h)),
       #fff 0
     );
