@@ -14,6 +14,7 @@ import Octagon from './shapes/octagon';
 import Light from './objects/light';
 import Cubemap from './shapes/cubemap';
 import Sun from './objects/sun';
+import Planet from './objects/planet';
 
 const perfDebug = $('.debug .perf');
 
@@ -23,7 +24,9 @@ const skybox = new Cubemap({
   w: 2048,
 });
 
-const sun = new Sun({ x: -40000, y: -40000, r: 200 });
+const sun = new Sun({ x: 40000, y: 40000, r: 200 });
+
+const planet = new Planet({ x: 1000, y: -10000, r: 100 });
 
 const box = new Box({
   w: 60,
