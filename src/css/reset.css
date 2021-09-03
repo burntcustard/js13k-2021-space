@@ -4,3 +4,8 @@ button {
   font-family: monospace;
   pointer-events: all;
 }
+
+/* TODO: Make this accessible. There's an issue to work around, where Chrome will incorrectly-assign focus-visible to the build-bar buttons when just 'r' is pressed, that can't be preventDefault()ed away. See: https://github.com/burntcustard/js13k-2021-space/issues/35 */
+*:focus-visible {
+  outline: 0;
+}
