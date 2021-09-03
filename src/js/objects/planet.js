@@ -15,12 +15,23 @@ export default function Planet({ x, y, z, r }) {
   document.querySelector('.scene').append(this.element);
   camera.followers.push(this);
   this.updateTransform = () => {
+    const clientRect = this.element.getBoundingClientRect();
+    const xOffset = clientRect.left + clientRect.right - window.innerWidth;
+    const yOffset = clientRect.top + clientRect.bottom - window.innerWidth;
+
+    // TODO: Include camera distance in the translate so that far away
+    // planets get x/y offsetted MORE so that they don't eat nearby objects(?)
+    const xDist = Math.abs(this.x - camera.x);
+    const yDist = Math.abs(this.y - camera.y);
+
     this.element.style.transform = `
       translate3D(${this.x}px, ${this.y}px, ${this.z}px)
       rotateZ(${-camera.rz}rad)
       rotateY(${-camera.ry}rad)
       rotateX(${-camera.rx}rad)
-      scale(99)
+      translate(${xOffset}px, ${yOffset}px)
+      scale(32)
+      rotate(90deg)
     `;
   };
   this.updateTransform();

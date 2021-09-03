@@ -24,9 +24,9 @@ const skybox = new Cubemap({
   w: 2048,
 });
 
-const sun = new Sun({ x: 40000, y: 40000, r: 200 });
+const sun = new Sun({ x: 40000, y: 40000, z: 10000, r: 200 });
 
-const planet = new Planet({ x: 1000, y: -10000, r: 100 });
+const planet = new Planet({ x: 800, y: -8000, r: 300 });
 
 const box = new Box({
   w: 60,
