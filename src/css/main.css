@@ -6,6 +6,7 @@
 @import 'eco';
 @import 'ground';
 @import 'object';
+@import 'planet';
 @import 'reset';
 @import 'scene';
 @import 'shapes';

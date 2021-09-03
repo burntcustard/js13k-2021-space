@@ -15,23 +15,3 @@
   width: 100%;
   height: 100%;
 }
-
-.planet {
-  box-shadow:
-    -30px -30px 60px #000e inset,
-    9px 9px 20px #eef3 inset,
-    1px 1px 3px #fff7 inset;
-}
-
-.planet-wrap {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.ring {
-  position: absolute;
-  -webkit-backface-visibility: visible;
-  border-radius: 50%;
-  box-shadow: 0 0 4px 40px #ff0;
-}
