@@ -1,3 +1,13 @@
+.planet {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.planet * {
+  position: absolute;
+}
+
 .planet .body {
   background: linear-gradient(red, blue);
   box-shadow:
@@ -7,8 +17,7 @@
 }
 
 .planet .ring {
-  position: absolute;
   -webkit-backface-visibility: visible;
   border-radius: 50%;
-  box-shadow: 0 0 4px 40px #ff0;
+  box-shadow: 0 0 1px 4px #ff0;
 }

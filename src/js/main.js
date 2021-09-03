@@ -26,7 +26,7 @@ const skybox = new Cubemap({
 
 const sun = new Sun({ x: 40000, y: 40000, z: 10000, r: 200 });
 
-const planet = new Planet({ x: 800, y: -8000, r: 300 });
+const planet = new Planet({ x: 900, y: -9000, r: 300 });
 
 const box = new Box({
   w: 60,
@@ -65,27 +65,27 @@ octagon.spawn();
 gameObjectList.push(box, octagon, pyramid, stationBlock, stationSolar);
 
 // TODO: Put this somewhere else
-const canvas = document.getElementsByTagName('canvas')[0];
-const feImageSphereDistort = document.getElementById('fe-image-sphere-distort');
-const ctx = canvas.getContext('2d');
-
-for (let y = 0; y < canvas.height; y++) {
-  for (let x = 0; x < canvas.width; x++) {
-    const dx = x - 32;
-    const dy = y - 32;
-    const l = Math.sqrt(dx * dx + dy * dy);
-    const a = l < 32 ? Math.asin(l / 32) : 0;
-    const z = l < 32 ? 64 - Math.cos(a) * 64 : 0;
-    const r = l < 32 ? 32 + (dx / 32) * (z / 64) * 32 : 0;
-    const g = l < 32 ? 32 + (dy / 32) * (z / 64) * 32 : 0;
-    const o = l > 30 ? Math.max(0, 1 - (l - 31) / 4) : 1;
-
-    ctx.fillStyle = `rgba(${Math.floor(r) * 4},${Math.floor(g) * 4},0,${o})`;
-    ctx.fillRect(x, y, 1, 1);
-  }
-}
-
-feImageSphereDistort.setAttribute('xlink:href', canvas.toDataURL());
+// const canvas = document.getElementsByTagName('canvas')[0];
+// const feImageSphereDistort = document.getElementById('fe-image-sphere-distort');
+// const ctx = canvas.getContext('2d');
+//
+// for (let y = 0; y < canvas.height; y++) {
+//   for (let x = 0; x < canvas.width; x++) {
+//     const dx = x - 32;
+//     const dy = y - 32;
+//     const l = Math.sqrt(dx * dx + dy * dy);
+//     const a = l < 32 ? Math.asin(l / 32) : 0;
+//     const z = l < 32 ? 64 - Math.cos(a) * 64 : 0;
+//     const r = l < 32 ? 32 + (dx / 32) * (z / 64) * 32 : 0;
+//     const g = l < 32 ? 32 + (dy / 32) * (z / 64) * 32 : 0;
+//     const o = l > 30 ? Math.max(0, 1 - (l - 31) / 4) : 1;
+//
+//     ctx.fillStyle = `rgba(${Math.floor(r) * 4},${Math.floor(g) * 4},0,${o})`;
+//     ctx.fillRect(x, y, 1, 1);
+//   }
+// }
+//
+// feImageSphereDistort.setAttribute('xlink:href', canvas.toDataURL());
 
 const lights = [
   new Light({
