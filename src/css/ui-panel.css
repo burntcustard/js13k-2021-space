@@ -7,7 +7,16 @@
       #333 50%,
       #444 0
     );
-  box-shadow: 1px 2px 8px #0009;
+  box-shadow: 1px 1px 9px #000;
+  transition: width 0.2s, transform 0.4s 0.2s;
+}
+
+.ui-panel[aria-hidden='true'] {
+  transition: width 0.4s 0.2s, transform 0.4s;
+}
+
+.ui-panel > * {
+  -webkit-backface-visibility: hidden;
 }
 
 .ui-panel__inner {
@@ -17,18 +26,25 @@
   background: #777;
   box-shadow: 0 1px 0 2px #222;
   gap: 8px;
+  transition: 0.3s all;
+}
+
+.ui-panel--top,
+.ui-panel__big {
+  padding: 6px 8px;
 }
 
 .ui-panel--top {
   position: absolute;
   z-index: 1;
-  top: 5vh;
+  top: 3vh;
   font-weight: bold;
+  transform: rotateX(-9deg);
 }
 
 .ui-panel--big {
   position: absolute;
-  bottom: 5vh;
+  bottom: 3vh;
   display: flex;
   width: 600px;
   height: 46px;

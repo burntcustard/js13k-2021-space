@@ -10,6 +10,7 @@
 @import 'scene';
 @import 'shapes';
 @import 'solar';
+@import 'ui-btns';
 @import 'ui-panel';
 @import 'ui';
 @import 'viewport';
