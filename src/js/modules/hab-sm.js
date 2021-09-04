@@ -1,5 +1,5 @@
 import Module from './module';
-import Octabox from '../shapes/octabox';
+import SideOctabox from '../shapes/side-octabox';
 import Build from '../build';
 
 const info = {
@@ -9,15 +9,15 @@ const info = {
   cost: 10,
   power: -10,
   population: 5,
-  w: 85,
-  d: 85,
-  h: 60,
+  w: 60,
+  d: 84,
+  h: 84,
 };
 
 export default function Hab({
   x, y, z, rx, ry, rz,
 }) {
-  this.model = new Octabox({
+  this.model = new SideOctabox({
     w: info.w,
     h: info.h,
     d: info.d,
@@ -35,7 +35,7 @@ export default function Hab({
   // Add build listeners to the larger sides, and the top (or is it bottom?)
   // We may need to add to the other top/bottom/whatever-the-end-is as well
   this.model.sides.forEach((side, i) => {
-    if (i % 2) {
+    if (i === 0 || i % 2 || i === this.model.sides.length - 1) {
       Build.addEventListenersTo(side);
     }
   });
