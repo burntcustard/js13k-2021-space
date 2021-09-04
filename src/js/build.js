@@ -70,6 +70,8 @@ Build.addEventListenersTo = (side) => {
       .rotateY(shape.ry)
       .rotateZ(shape.rz);
 
+    const sideNormalised = sideRotated.normalise();
+
     // Half model width in direction of side
     const sideResized = sideRotated.resize(model.w * 0.5);
 
@@ -82,7 +84,7 @@ Build.addEventListenersTo = (side) => {
     model.y = shape.y + sideRotated.y + sideResized.y;
     model.z = shape.z + sideRotated.z + sideResized.z;
     model.rx = Build.rotation;
-    model.ry = Math.atan2(sideRotated.z, sideRotated.x);
+    model.ry = -Math.asin(sideNormalised.z);
     model.rz = Math.atan2(sideRotated.y, sideRotated.x);
     Build.currentItemInstance.update();
   };
