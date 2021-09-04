@@ -8,15 +8,7 @@
       #444 0
     );
   box-shadow: 1px 1px 9px #000;
-  transition: width 0.2s, transform 0.4s 0.2s;
-}
-
-.ui-panel[aria-hidden='true'] {
-  transition: width 0.4s 0.2s, transform 0.4s;
-}
-
-.ui-panel > * {
-  -webkit-backface-visibility: hidden;
+  transition: 0.3s all;
 }
 
 .ui-panel__inner {
@@ -26,7 +18,6 @@
   background: #777;
   box-shadow: 0 1px 0 2px #222;
   gap: 8px;
-  transition: 0.3s all;
 }
 
 .ui-panel--top,

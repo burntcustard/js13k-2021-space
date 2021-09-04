@@ -1,15 +1,35 @@
+.ui-right {
+  width: 0;
+  direction: rtl; /* Overflow left instead of right */
+  transform: translateX(0.5vw);
+}
+
+.ui-right .ui-panel {
+  width: 44px;
+  direction: ltr;
+}
+
+.ui-right .ui-panel__inner {
+  display: flex;
+  flex-direction: column;
+}
+
 .ui-panel.ui-panel--btns {
+  overflow: hidden;
   width: 54px;
   padding: 8px 0;
 }
 
+.ui-panel.ui-panel--btns[aria-hidden='true'] {
+  width: 0;
+}
+
 .ui-panel--btns .ui-panel__inner {
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  width: 30px;
   padding: 4px;
-  gap: 6px;
   margin: 0 8px;
+  gap: 6px;
 }
 
 .ui-panel--btns button {
