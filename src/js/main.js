@@ -5,10 +5,11 @@ import Build from './build';
 import UI from './ui';
 import gameObjectList from './game-object-list';
 import resources from './resources';
-import { $, PI_2, PI_4 } from './util';
+import { $, PI_2, PI_4, PI_8 } from './util';
 import Block from './modules/block';
 import Solar from './modules/solar';
 import HabSm from './modules/hab-sm';
+import Hexagon from './shapes/hexagon';
 import Light from './objects/light';
 import Cubemap from './shapes/cubemap';
 
@@ -37,21 +38,23 @@ const lights = [
 
 UI.populateBuildBar();
 
-new Block({}).spawn();
-new Block({ y: 60 }).spawn();
-new Block({ y: 120 }).spawn();
-new Block({ y: 180 }).spawn();
-new Solar({ x: 85, y: 120 }).spawn();
-new Solar({ x: 85, y: 180 }).spawn();
-new Solar({ x: -85, y: 120 }).spawn();
-new Solar({ x: -85, y: 180 }).spawn();
-new HabSm({ x: -60, ry: PI_2 }).spawn();
-new HabSm({ x: -120, ry: PI_2 }).spawn();
-new HabSm({ x: 60, ry: PI_2 }).spawn();
-new HabSm({ x: 120, ry: PI_2 }).spawn();
-new HabSm({ x: 180, ry: PI_2 }).spawn();
-new HabSm({ y: -60, ry: PI_2, rx: PI_2 }).spawn();
-new HabSm({ y: -120, ry: PI_2, rx: PI_2 }).spawn();
+new Hexagon({ w: 120, h: 60, rx: PI_2 }).spawn();
+new Solar({ x: 95, z: 55, ry: -Math.PI / 6, rx: PI_2 }).spawn();
+new Solar({ x: -95, z: 55, ry: Math.PI / 6, rx: PI_2 }).spawn();
+new Solar({ z: -110, rx: PI_2, ry: PI_2 }).spawn();
+new Hexagon({ y: 50, w: 80, h: 40, rx: PI_2 }).spawn();
+new HabSm({ y: 100, rx: PI_2, ry: PI_2 }).spawn();
+new HabSm({ y: 160, x: -60, rx: PI_2, ry: PI_2, rz: PI_2 }).spawn();
+new HabSm({ y: 160, x: -120, rx: PI_2, ry: PI_2, rz: PI_2 }).spawn();
+new Block({ y: 160, rx: PI_2, ry: PI_2 }).spawn();
+new HabSm({ y: 220, rx: PI_2, ry: PI_2 }).spawn();
+new HabSm({ y: 160, x: 60, rx: PI_2, ry: PI_2, rz: PI_2 }).spawn();
+new HabSm({ y: 160, x: 120, rx: PI_2, ry: PI_2, rz: PI_2 }).spawn();
+new Hexagon({ y: 270, w: 80, h: 40, rx: PI_2 }).spawn();
+new Hexagon({ y: 320, w: 120, h: 60, rx: PI_2 }).spawn();
+new Solar({ y: 320, x: 95, z: 55, ry: -Math.PI / 6, rx: PI_2 }).spawn();
+new Solar({ y: 320, x: -95, z: 55, ry: Math.PI / 6, rx: PI_2 }).spawn();
+new Solar({ y: 320, z: -110, rx: PI_2, ry: PI_2 }).spawn();
 
 let halfSecondCounter = 0;
 
