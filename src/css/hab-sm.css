@@ -20,21 +20,20 @@
 
   background:
     linear-gradient(
-      90deg,
       #0000 calc(50% + var(--window-h) - 1px),
       #f60 0 calc(50% + var(--window-h) + 6px),
       #0000 0
     ),
     linear-gradient(
-      #fff calc(50% - var(--window-w)),
+      90deg,
+      #eee calc(50% - var(--window-w)),
       #0000 0 calc(50% + var(--window-w)),
-      #fff 0
+      #eee 0
     ),
     linear-gradient(
-      90deg,
-      #fff calc(50% - var(--window-h)),
+      #eee calc(50% - var(--window-h)),
       #0000 0 calc(50% + var(--window-h)),
-      #fff 0
+      #eee 0
     );
   color: #f60;
 }

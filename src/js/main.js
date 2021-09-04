@@ -6,58 +6,19 @@ import UI from './ui';
 import gameObjectList from './game-object-list';
 import resources from './resources';
 import { $, PI_4 } from './util';
-import Box from './shapes/box';
-import Block from './modules/block';
-import Solar from './modules/solar';
-import Pyramid from './shapes/pyramid';
-import Octagon from './shapes/octagon';
 import Octabox from './shapes/octabox';
+import SideOctabox from './shapes/side-octabox';
 import Light from './objects/light';
 import Cubemap from './shapes/cubemap';
+import HexBlock from './modules/hex-block';
 
 const perfDebug = $('.debug .perf');
 
 let previousTimestamp;
 
-const octabox = new Octabox({
-  w: 60,
-  h: 60,
-  x: 200,
-});
-octabox.spawn();
-
 const skybox = new Cubemap({
   w: 2048,
 });
-
-// const stationBlock = block.new({ x: 0, z: 10 });
-const stationBlock = new Block({ x: 0 });
-stationBlock.spawn();
-stationBlock.enable();
-// const stationSolar = solar.new({ x: 90, z: 10 });
-const stationSolar = new Solar({ x: 90 });
-stationSolar.spawn();
-stationSolar.enable();
-
-const pyramid = new Pyramid({
-  w: 100,
-  h: 100,
-  y: 200,
-  z: 100,
-});
-pyramid.spawn();
-
-const octagon = new Octagon({
-  w: 100,
-  h: 70,
-  x: 150,
-  y: 200,
-  z: -10,
-  rz: 0.4,
-});
-octagon.spawn();
-
-gameObjectList.push(octabox, octagon, pyramid, stationBlock, stationSolar);
 
 const lights = [
   new Light({
@@ -73,6 +34,28 @@ const lights = [
     intensity: 0.2,
   }),
 ];
+
+const octabox = new Octabox({
+  w: 80,
+  h: 60,
+  y: -150,
+});
+octabox.update();
+octabox.spawn();
+
+const sideOctabox = new SideOctabox({
+  w: 60,
+  h: 60,
+  x: 100,
+});
+sideOctabox.update();
+sideOctabox.spawn();
+
+const hexBlock = new HexBlock({});
+hexBlock.spawn();
+hexBlock.enable();
+
+gameObjectList.push(hexBlock);
 
 UI.populateBuildBar();
 
