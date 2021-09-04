@@ -5,13 +5,10 @@ import Build from './build';
 import UI from './ui';
 import gameObjectList from './game-object-list';
 import resources from './resources';
-import { $, PI_4 } from './util';
-import Box from './shapes/box';
+import { $, PI_2, PI_4 } from './util';
 import Block from './modules/block';
 import Solar from './modules/solar';
-import Pyramid from './shapes/pyramid';
-import Octagon from './shapes/octagon';
-import Octabox from './shapes/octabox';
+import HabSm from './modules/hab-sm';
 import Light from './objects/light';
 import Cubemap from './shapes/cubemap';
 
@@ -19,45 +16,9 @@ const perfDebug = $('.debug .perf');
 
 let previousTimestamp;
 
-const octabox = new Octabox({
-  w: 60,
-  h: 60,
-  x: 200,
-});
-octabox.spawn();
-
 const skybox = new Cubemap({
   w: 2048,
 });
-
-// const stationBlock = block.new({ x: 0, z: 10 });
-const stationBlock = new Block({ x: 0 });
-stationBlock.spawn();
-stationBlock.enable();
-// const stationSolar = solar.new({ x: 90, z: 10 });
-const stationSolar = new Solar({ x: 90 });
-stationSolar.spawn();
-stationSolar.enable();
-
-const pyramid = new Pyramid({
-  w: 100,
-  h: 100,
-  y: 200,
-  z: 100,
-});
-pyramid.spawn();
-
-const octagon = new Octagon({
-  w: 100,
-  h: 70,
-  x: 150,
-  y: 200,
-  z: -10,
-  rz: 0.4,
-});
-octagon.spawn();
-
-gameObjectList.push(octabox, octagon, pyramid, stationBlock, stationSolar);
 
 const lights = [
   new Light({
@@ -75,6 +36,22 @@ const lights = [
 ];
 
 UI.populateBuildBar();
+
+new Block({}).spawn();
+new Block({ y: 60 }).spawn();
+new Block({ y: 120 }).spawn();
+new Block({ y: 180 }).spawn();
+new Solar({ x: 85, y: 120 }).spawn();
+new Solar({ x: 85, y: 180 }).spawn();
+new Solar({ x: -85, y: 120 }).spawn();
+new Solar({ x: -85, y: 180 }).spawn();
+new HabSm({ x: -60, ry: PI_2 }).spawn();
+new HabSm({ x: -120, ry: PI_2 }).spawn();
+new HabSm({ x: 60, ry: PI_2 }).spawn();
+new HabSm({ x: 120, ry: PI_2 }).spawn();
+new HabSm({ x: 180, ry: PI_2 }).spawn();
+new HabSm({ y: -60, ry: PI_2, rx: PI_2 }).spawn();
+new HabSm({ y: -120, ry: PI_2, rx: PI_2 }).spawn();
 
 let halfSecondCounter = 0;
 

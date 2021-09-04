@@ -14,7 +14,7 @@
 /* TODO: One of these has to be flipped - it'd be easier in the JS? */
 
 /* Two big sides opposite each other */
-.shape.hab-sm .face.rect:nth-child(4n)::before {
+.shape.hab-sm .face.rect:nth-child(4n-2)::before {
   --window-h: 8px;
   --window-w: 20px;
 
