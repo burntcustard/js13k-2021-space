@@ -1,3 +1,26 @@
+.shape,
+.face {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.face {
+  -webkit-backface-visibility: hidden;
+}
+
+/* Face::befores are the base textures (walls, solar panels etc) */
+.face::before, {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  box-sizing: border-box;
+  content: '';
+  filter: brightness(var(--l));
+}
+
 .tri {
   clip-path: polygon(0 100%, 50% 0, 100% 100%);
 }
@@ -14,27 +37,8 @@
   clip-path: polygon(15% 0, 85% 0, 100% 15%, 100% 85%, 85% 100%, 15% 100%, 0 85%, 0 15%);
 }
 
-.shape,
-.face {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
 .circle {
   border-radius: 50%;
-}
-
-/* Face::befores are the base textures (walls, solar panels etc) */
-.face::before, {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  box-sizing: border-box;
-  content: '';
-  filter: brightness(var(--l));
 }
 
 .skybox .face {
