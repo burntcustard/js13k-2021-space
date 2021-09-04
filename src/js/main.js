@@ -15,18 +15,9 @@ const perfDebug = $('.debug .perf');
 
 let previousTimestamp;
 
-const octabox = new Octabox({
-  w: 60,
-  h: 60,
-  x: 200,
+const skybox = new Cubemap({
+  w: 2048,
 });
-octabox.spawn();
-
-const hexBlock = new HexBlock({});
-hexBlock.spawn();
-hexBlock.enable();
-
-gameObjectList.push(octabox, hexBlock);
 
 const lights = [
   new Light({
@@ -43,9 +34,18 @@ const lights = [
   }),
 ];
 
-const skybox = new Cubemap({
-  w: 2048,
+const octabox = new Octabox({
+  w: 60,
+  h: 60,
+  x: 200,
 });
+octabox.spawn();
+
+const hexBlock = new HexBlock({});
+hexBlock.spawn();
+hexBlock.enable();
+
+gameObjectList.push(octabox, hexBlock);
 
 UI.populateBuildBar();
 
