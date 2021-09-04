@@ -37,7 +37,7 @@
 .ui-panel--top {
   position: absolute;
   z-index: 1;
-  top: 3vh;
+  top: calc(3vh - 2px);
   font-weight: bold;
   transform: rotateX(-9deg);
 }
