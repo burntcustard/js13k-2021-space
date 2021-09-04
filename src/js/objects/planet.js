@@ -5,27 +5,29 @@ export default function Planet({ x, y, z, r }) {
   this.y = y ?? 0;
   this.z = z ?? 0;
   this.r = r ?? 0;
-  this.ring = {};
+
   this.element = document.createElement('div');
   this.element.className = 'planet';
   this.element.style.transform = `
-  translate3D(${this.x}px, ${this.y}px, ${this.z}px)
+    translate3D(${this.x}px, ${this.y}px, ${this.z}px)
   `;
-  this.element.body = document.createElement('div');
-  this.element.body.style.background = '#139';
-  this.element.body.style.width = `${r * 2}px`;
-  this.element.body.style.height = `${r * 2}px`;
-  this.element.body.className = 'face circle body';
-  this.element.ring = document.createElement('div');
-  this.element.ring.className = 'ring';
-  this.element.ring.style.width = `${r * 8}px`;
-  this.element.ring.style.height = `${r * 8}px`;
-  this.element.append(this.element.body, this.element.ring);
-  // TODO: A new filter for whatever type of planet this is
-  // this.element.style.filter = 'url(#noise)';
-  this.element.ring.style.transform = `
+
+  this.bodyElement = document.createElement('div');
+  this.bodyElement.style.width = `${r * 2}px`;
+  this.bodyElement.style.height = `${r * 2}px`;
+  this.bodyElement.className = 'circle body';
+
+  this.ringElement = document.createElement('div');
+  this.ringElement.style.width = `${r * 8}px`;
+  this.ringElement.style.height = `${r * 8}px`;
+  this.ringElement.className = 'ring';
+  this.ringElement.style.transform = `
     scale3D(8, 8, 8)
   `;
+
+  this.element.append(this.bodyElement, this.ringElement);
+  // TODO: A new filter for whatever type of planet this is
+  // this.element.style.filter = 'url(#noise)';
   document.querySelector('.scene').append(this.element);
 
   // When the camera moves, this will updateTransform();
@@ -46,11 +48,10 @@ export default function Planet({ x, y, z, r }) {
 
     // Make the circle face the camera so it looks like a sphere.
     // the rotate90 is just temporary to make the lighting line up
-    this.element.body.style.transform = `
+    this.bodyElement.style.transform = `
       rotateZ(${-camera.rz}rad)
       rotateX(${-camera.rx}rad)
       scale(32)
-      rotate(90deg)
     `;
     // rotateY(${-camera.ry}rad) // We don't actually need Y rotation?
   };
