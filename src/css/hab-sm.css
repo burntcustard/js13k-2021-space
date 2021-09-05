@@ -7,11 +7,13 @@
   background: #eee;
 }
 
+/* End faces */
 .shape.hab-sm .face.octish::before {
   background: #aaa;
 }
 
 /* TODO: One of these has to be flipped - it'd be easier in the JS? */
+/* TODO: Save a few bytes by not using CSS vars? */
 
 /* Two big sides opposite each other */
 .shape.hab-sm .face.rect:nth-child(4n)::before {

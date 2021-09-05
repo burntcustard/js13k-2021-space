@@ -1,11 +1,3 @@
-.block {
-  //
+.shape.block .face.rect::before {
+  background: #aaa;
 }
-
-/* .block:not(:frame) {
-  animation: 1s build forwards;
-}
-
-@keyframes build {
-  0% {  }
-} */

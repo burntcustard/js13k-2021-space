@@ -5,7 +5,7 @@ import Build from '../build';
 const info = {
   tag: 'Hab Sm', // Can't use 'name' because is reserved
   desc: 'Small habitation module',
-  className: 'hab-sm',
+  className: 'hab-sm module',
   cost: 10,
   power: -10,
   population: 5,
