@@ -105,6 +105,35 @@
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='filter'%3E%3CfeTurbulence baseFrequency='0.2'/%3E%3CfeColorMatrix values='0 0 0 9 -5 0 0 0 9 -5 0 0 0 9 -5 0 0 0 0 1'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23filter)'/%3E%3C/svg%3E");
 }
 
+.face.shadow-outer {
+  -webkit-backface-visibility: visible !important;
+}
+
+.face::after {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  content: '';
+}
+
+.face.shadow-outer::after {
+  box-shadow: 0 0 7px 3px #0006;
+
+  /* Make sure the shadow doesn't go the wrong side of the other shape face */
+  transform: translateZ(-0.5px);
+}
+
+.shape:not(.select):not(.hover) .face:not(.build-hover).shadow-inner::after {
+  box-sizing: border-box;
+  border: 2px solid #0000;
+  border-top-color: var(--shadow-t, #0000);
+  border-right-color: var(--shadow-r, #0000);
+  border-bottom-color: var(--shadow-b, #0000);
+  border-left-color: var(--shadow-l, #0000);
+  filter: blur(4px);
+}
+
 /* ::after can be used for selection and box shadows? */
 .face.build-hover::after {
   position: absolute;
@@ -136,37 +165,4 @@
 @keyframes spin {
   0% { transform: rotate(0deg) translateZ(1px); }
   100% { transform: rotate(360deg) translateZ(1px); }
-}
-
-.face.shadow-outer {
-  -webkit-backface-visibility: visible !important;
-}
-
-.face::after {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  content: '';
-}
-
-.face.shadow-outer::after {
-  box-shadow: 0 0 7px 3px #0005;
-
-  /* Make sure the shadow doesn't go the wrong side of the other shape face */
-  transform: translateZ(-0.5px);
-}
-
-.face:not(.build-hover).shadow-inner::after {
-  box-sizing: border-box;
-  border: 2px solid #0000;
-  border-top-color: var(--shadow-t, #0000);
-  border-right-color: var(--shadow-r, #0000);
-  border-bottom-color: var(--shadow-b, #0000);
-  border-left-color: var(--shadow-l, #0000);
-  filter: blur(4px);
-  /* background:
-    linear-gradient(  0deg, var(--shadow-t, #00000008), #0000 4px),
-    linear-gradient( 90deg, var(--shadow-r, #00000008), #0000 4px),
-    linear-gradient(180deg, var(--shadow-b, #00000008), #0000 4px),
-    linear-gradient(-90deg, var(--shadow-l, #00000008), #0000 4px); */
 }
