@@ -110,6 +110,45 @@ Build.addEventListenersTo = (side) => {
     Build.currentItemInstance.connectedTo = side;
     side.element.classList.add('obstructed'); // TODO: Refactor this er somehow
 
+    if (Build.currentItemInstance.model.sides[0].w > side.w
+      && side.parent.parent.tag === 'Block') {
+      side.element.classList.add('shadow-outer');
+
+      const attachedToIndex = side.parent.sides.indexOf(side);
+
+      console.log(attachedToIndex);
+
+      for (let i = 0; i < side.parent.sides.length - 1; i++) {
+        side.parent.sides[i].element.classList.add('shadow-inner');
+        if (attachedToIndex === 3) {
+          side.parent.sides[i].element.style.setProperty('--shadow-t', '#000');
+        }
+        if (attachedToIndex === 5) {
+          side.parent.sides[i].element.style.setProperty('--shadow-r', '#000');
+        }
+        if (attachedToIndex === 2 || attachedToIndex === 4) {
+          side.parent.sides[i].element.style.setProperty('--shadow-b', '#000');
+        }
+        // if (attachedToIndex === 3) {
+        //   side.parent.sides[i].element.style.setProperty('--shadow-l', '#000');
+        // }
+      }
+    }
+
+    if (Build.currentItemInstance.model.sides[0].w < side.w
+      && Build.currentItemInstance.tag === 'Block') {
+      Build.currentItemInstance.model.sides[0].element.classList.add('shadow-outer');
+
+      for (let i = 1; i < Build.currentItemInstance.model.sides.length - 1; i++) {
+        // if (Build.currentItemInstance.model.sides[i].element.classList.contains('shadow-inner-rtl')) {
+        //   Build.currentItemInstance.model.sides[i].element.classList.add('shadow-inner-both');
+        //   Build.currentItemInstance.model.sides[i].element.classList.remove('shadow-inner-rtl');
+        // }
+        //
+        // Build.currentItemInstance.model.sides[i].element.classList.add('shadow-inner-rtl');
+      }
+    }
+
     Build.setCurrentItem(Build.currentItem);
     // Assuming we can't build models on top of each other, new one is obstructed
     Build.currentItemInstance.model.element.classList.add('obstructed');

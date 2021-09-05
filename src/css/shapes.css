@@ -41,10 +41,6 @@
   border-radius: 50%;
 }
 
-.skybox .face {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='filter'%3E%3CfeTurbulence baseFrequency='0.2'/%3E%3CfeColorMatrix values='0 0 0 9 -5 0 0 0 9 -5 0 0 0 9 -5 0 0 0 0 1'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23filter)'/%3E%3C/svg%3E");
-}
-
 .frame {
   transition: transform 0.3s;
 }
@@ -69,40 +65,44 @@
 
 /* Temporary (hopefully) debug face colors */
 
-.shape:not(.skybox) .face:nth-child(1n)::before {
+.face:nth-child(1n)::before {
   background: hsl(0, 100%, 50%, 0.8);
 }
 
-.shape:not(.skybox) .face:nth-child(2n)::before {
+.face:nth-child(2n)::before {
   background: hsl(45, 100%, 50%, 0.8);
 }
 
-.shape:not(.skybox) .face:nth-child(3n)::before {
+.face:nth-child(3n)::before {
   background: hsl(90, 100%, 50%, 0.8);
 }
 
-.shape:not(.skybox) .face:nth-child(4n)::before {
+.face:nth-child(4n)::before {
   background: hsl(135, 100%, 50%, 0.8);
 }
 
-.shape:not(.skybox) .face:nth-child(5n)::before {
+.face:nth-child(5n)::before {
   background: hsl(180, 100%, 50%, 0.8);
 }
 
-.shape:not(.skybox) .face:nth-child(6n)::before {
+.face:nth-child(6n)::before {
   background: hsl(225, 100%, 50%, 0.8);
 }
 
-.shape:not(.skybox) .face:nth-child(7n)::before {
+.face:nth-child(7n)::before {
   background: hsl(270, 100%, 50%, 0.8);
 }
 
-.shape:not(.skybox) .face:nth-child(8n) {
+.face:nth-child(8n)::before {
   background: hsl(305, 100%, 50%, 0.9);
 }
 
-.shape:not(.skybox) .face:nth-child(9n) {
+.face:nth-child(9n)::before {
   background: hsl(340, 100%, 50%, 0.9);
+}
+
+.skybox .face::before {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='filter'%3E%3CfeTurbulence baseFrequency='0.2'/%3E%3CfeColorMatrix values='0 0 0 9 -5 0 0 0 9 -5 0 0 0 9 -5 0 0 0 0 1'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23filter)'/%3E%3C/svg%3E");
 }
 
 /* ::after can be used for selection and box shadows? */
@@ -136,4 +136,37 @@
 @keyframes spin {
   0% { transform: rotate(0deg) translateZ(1px); }
   100% { transform: rotate(360deg) translateZ(1px); }
+}
+
+.face.shadow-outer {
+  -webkit-backface-visibility: visible !important;
+}
+
+.face::after {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  content: '';
+}
+
+.face.shadow-outer::after {
+  box-shadow: 0 0 7px 3px #0005;
+
+  /* Make sure the shadow doesn't go the wrong side of the other shape face */
+  transform: translateZ(-0.5px);
+}
+
+.face:not(.build-hover).shadow-inner::after {
+  box-sizing: border-box;
+  border: 2px solid #0000;
+  border-top-color: var(--shadow-t, #0000);
+  border-right-color: var(--shadow-r, #0000);
+  border-bottom-color: var(--shadow-b, #0000);
+  border-left-color: var(--shadow-l, #0000);
+  filter: blur(4px);
+  /* background:
+    linear-gradient(  0deg, var(--shadow-t, #00000008), #0000 4px),
+    linear-gradient( 90deg, var(--shadow-r, #00000008), #0000 4px),
+    linear-gradient(180deg, var(--shadow-b, #00000008), #0000 4px),
+    linear-gradient(-90deg, var(--shadow-l, #00000008), #0000 4px); */
 }
