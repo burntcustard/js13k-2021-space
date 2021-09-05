@@ -81,11 +81,11 @@ Hangar.prototype.update = function (elapsed, lights) {
         }
         break;
       case 'return':
-        // When ship returns add metal to count
+        // When ship returns add metal to count and start charging
         resources.mats.current = Math.min(resources.mats.current + 50, resources.mats.capacity);
         ship.status = 'charging';
-        // TODO: This should update the power consumption
         this.power -= SHIP_CHARGE_PER_S;
+        resources.power.use += SHIP_CHARGE_PER_S;
         break;
       case 'charging':
         if (this.active) {
@@ -97,12 +97,13 @@ Hangar.prototype.update = function (elapsed, lights) {
           if (ship.power === SHIP_POWER_CAPACITY) {
             ship.status = 'ready';
             this.power += SHIP_CHARGE_PER_S;
+            resources.power.use -= SHIP_CHARGE_PER_S;
           }
         }
         break;
       default:
       // Unknown status, do nothing
     }
-    console.log(ship);
+    // console.log(ship);
   });
 };
