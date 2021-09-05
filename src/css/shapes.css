@@ -45,12 +45,16 @@
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='filter'%3E%3CfeTurbulence baseFrequency='0.2'/%3E%3CfeColorMatrix values='0 0 0 9 -5 0 0 0 9 -5 0 0 0 9 -5 0 0 0 0 1'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23filter)'/%3E%3C/svg%3E");
 }
 
+.frame {
+  transition: transform 0.3s;
+}
+
 /* When it's just an outline there's no texture */
-.shape.frame .face::before {
+.frame .face::before {
   display: none;
 }
 
-.shape.frame .face {
+.frame .face {
   border: 1px solid #fffa;
   -webkit-backface-visibility: visible;
   background: #fff2;
