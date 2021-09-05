@@ -17,18 +17,34 @@ export default function Box({ w, d = w, h, x, y, z, rx, ry, rz, className }) {
 
   this.sides = [
     new Face({
+      w: d,
+      h,
+      x: -W_2,
+      rx: -PI_2,
+      rz: PI_2,
+    }),
+    new Face({
       w,
       h: d,
       z: -H_2,
       rx: PI,
-      parent: this,
     }),
     new Face({
       w,
       h,
       y: D_2,
       rx: -PI_2,
-      parent: this,
+    }),
+    new Face({
+      w,
+      h,
+      y: -D_2,
+      rx: PI_2,
+    }),
+    new Face({
+      w,
+      h: d,
+      z: H_2,
     }),
     new Face({
       w: d,
@@ -36,31 +52,14 @@ export default function Box({ w, d = w, h, x, y, z, rx, ry, rz, className }) {
       x: W_2,
       rx: -PI_2,
       rz: -PI_2,
-      parent: this,
     }),
-    new Face({
-      w,
-      h,
-      y: -D_2,
-      rx: -PI_2,
-      rz: PI,
-      parent: this,
-    }),
-    new Face({
-      w: d,
-      h,
-      x: -W_2,
-      rx: -PI_2,
-      rz: PI_2,
-      parent: this,
-    }),
-    new Face({
-      w,
-      h: d,
-      z: H_2,
-      parent: this,
-    }),
+
   ];
+
+  this.sides.forEach((side) => {
+    side.parent = this;
+  });
+
   this.element.append(...this.sides.map((side) => side.element));
 }
 

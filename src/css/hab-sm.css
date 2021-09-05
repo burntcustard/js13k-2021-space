@@ -2,14 +2,8 @@
   background: #013a;
 }
 
-/* Every side except ends (as they're not rects) */
-.shape.hab-sm .face.rect::before {
+.shape.hab-sm .face::before {
   background: #eee;
-}
-
-/* End faces */
-.shape.hab-sm .face.octish::before {
-  background: #aaa;
 }
 
 /* TODO: One of these has to be flipped - it'd be easier in the JS? */

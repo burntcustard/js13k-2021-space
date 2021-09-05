@@ -8,7 +8,7 @@ export default function Module(props) {
   this.cost = props.cost;
   this.power = props.power ?? 0;
   this.population = props.population ?? 0;
-
+  this.model.parent = this;
   // TODO: Add event listener for clicking to interact with module
   // TODO: Add even listener for hovering about to build thing on faces(?)
 }

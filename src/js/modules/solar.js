@@ -27,8 +27,8 @@ export default function Solar({
     rz,
     className: info.className,
   });
-  this.model.sides[0].element.className += ' panel';
-  this.model.sides[this.model.sides.length - 1].element.className += ' panel';
+  this.model.sides[1].element.className += ' panel';
+  this.model.sides[4].element.className += ' panel';
 
   Module.call(this, { x, y, z, rx, ry, rz, ...info });
 }
