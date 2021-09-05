@@ -1,8 +1,11 @@
 import Module from './module';
 import Box from '../shapes/box';
 import resources from '../resources';
-import { lerp } from '../util';
+import { $, lerp } from '../util';
 
+const debug = $('.debug .hangar');
+
+const NUMBER_OF_SHIPS = 2;
 const MIN_MINING_TIME = 10000;
 const MAX_MINING_TIME = 30000;
 const SHIP_POWER_PER_S = 1;
@@ -37,7 +40,7 @@ export default function Hangar({ x, y, z, rx, ry, rz }) {
   this.model.sides[2].element.className += ' door';
 
   this.ships = [];
-  for (let i = 0; i < 1; i++) {
+  for (let i = 0; i < NUMBER_OF_SHIPS; i++) {
     this.ships.push({
       id: i,
       status: 'ready',
@@ -85,7 +88,7 @@ Hangar.prototype.update = function (elapsed, lights) {
         resources.mats.current = Math.min(resources.mats.current + 50, resources.mats.capacity);
         ship.status = 'charging';
         this.power -= SHIP_CHARGE_PER_S;
-        resources.power.use += SHIP_CHARGE_PER_S;
+        if (this.active) resources.power.use += SHIP_CHARGE_PER_S;
         break;
       case 'charging':
         if (this.active) {
@@ -104,6 +107,12 @@ Hangar.prototype.update = function (elapsed, lights) {
       default:
       // Unknown status, do nothing
     }
-    // console.log(ship);
   });
+
+  const shipStatus = this.ships.map((ship) => `Ship ${ship.id}, `
+    + `status: ${ship.status}, `
+    + `timer: ${Math.floor(ship.timer)}, `
+    + `power: ${Math.floor(ship.power)}`)
+    .join('\n');
+  debug.innerText = shipStatus;
 };
