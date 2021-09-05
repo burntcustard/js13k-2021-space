@@ -1,9 +1,9 @@
 .shape.box.hangar .face::before {
-  background: rgb(43, 43, 43);
+  background: rgb(180, 180, 180);
 }
 
 .shape.box.hangar .door::before {
-  border: 10px solid rgb(43, 43, 43);
+  border: 10px solid rgb(180, 180, 180);
   background-color: #197f9e;
   background-image:
     linear-gradient(
