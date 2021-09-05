@@ -1,5 +1,5 @@
 import Module from './module';
-import Box from '../shapes/box';
+import BoxVisibleInner from '../shapes/box-visible-inner';
 import resources from '../resources';
 import { $, lerp } from '../util';
 
@@ -13,16 +13,16 @@ const SHIP_POWER_CAPACITY = (MAX_MINING_TIME / 1000) * SHIP_POWER_PER_S;
 const info = {
   tag: 'Hangar',
   desc: 'Spawns ships which gather metal',
-  className: 'hangar',
+  className: 'hangar module',
   cost: 35,
   power: -10,
-  w: 60,
-  h: 60,
-  d: 60,
+  w: 90,
+  h: 84,
+  d: 120,
 };
 
 export default function Hangar({ x, y, z, rx, ry, rz }) {
-  this.model = new Box({
+  this.model = new BoxVisibleInner({
     w: info.w,
     h: info.h,
     d: info.d,
@@ -33,9 +33,13 @@ export default function Hangar({ x, y, z, rx, ry, rz }) {
     ry,
     rz,
     className: info.className,
+    wallThickness: 4,
+    middleWallOffset: 8,
   });
 
-  this.model.sides[5].element.className += ' door';
+  this.model.sides[2].element.className += ' door';
+  // this.model.sides[5].x -= 30;
+  this.model.update();
 
   this.ships = [];
   for (let i = 0; i < NUMBER_OF_SHIPS; i++) {

@@ -9,6 +9,8 @@ import { $, PI_4 } from './util';
 import Block from './modules/block';
 import Light from './objects/light';
 import Cubemap from './shapes/cubemap';
+import BoxVisibleInner from './shapes/box-visible-inner';
+import Hangar from './modules/hangar';
 
 const perfDebug = $('.debug .perf');
 
@@ -37,7 +39,15 @@ const stationBlock = new Block({});
 stationBlock.spawn();
 stationBlock.enable();
 
-gameObjectList.push(stationBlock);
+// const boxVisibleInner = new BoxVisibleInner({ w: 100, h: 100, d: 100, x: 90 });
+// boxVisibleInner.spawn();
+// boxVisibleInner.update();
+
+const hangar = new Hangar({ x: 90 });
+hangar.spawn();
+hangar.enable();
+
+gameObjectList.push(stationBlock, hangar);
 
 UI.populateBuildBar();
 

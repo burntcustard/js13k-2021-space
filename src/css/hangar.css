@@ -1,29 +1,47 @@
 .shape.box.hangar .face::before {
-  background: rgb(180, 180, 180);
+  background: #aaa;
+}
+
+.shape.box.hangar .door {
+  overflow: hidden;
 }
 
 .shape.box.hangar .door::before {
-  border: 10px solid rgb(180, 180, 180);
-  background-color: #197f9e;
-  background-image:
-    linear-gradient(
-      to bottom,
-      rgb(255, 255, 255, 0.6) 0,
-      rgba(255, 255, 255, 0) 25%
-    ),
-    linear-gradient(
-      to left,
-      rgb(255, 255, 255, 0.6) 0,
-      rgba(255, 255, 255, 0) 25%
-    ),
-    linear-gradient(
-      to top,
-      rgb(255, 255, 255, 0.6) 0,
-      rgba(255, 255, 255, 0) 25%
-    ),
-    linear-gradient(
-      to right,
-      rgb(255, 255, 255, 0.6) 0,
-      rgba(255, 255, 255, 0) 25%
+  right: -50%;
+  left: -50%;
+  animation: slide 16s linear forwards infinite;
+  background:
+    repeating-linear-gradient(
+      -75deg,
+      #0cf3 0 2px,
+      #0cf8 3px,
+      #eff8 4px,
+      #0cf8 5px,
+      #0cf3 6px 8px
     );
+  filter: none;
+}
+
+@keyframes slide {
+  0% { transform: translateX(25%); }
+  100% { transform: translateX(-25%); }
+}
+
+.shape.box.hangar .door::after {
+  box-shadow: inset 0 0 2px 2px #def, inset 0 0 8px 2px #0af;
+}
+
+.shape.box.hangar .face:nth-child(2)::before {
+  background: #333;
+  filter: none;
+}
+
+.shape.box.hangar .face:nth-child(9)::after,
+.shape.box.hangar .face:nth-child(11)::after,
+.shape.box.hangar .face:nth-child(13)::after,
+.shape.box.hangar .face:nth-child(15)::after, {
+  background:
+    linear-gradient(90deg, #000a, #0008 82px, #0000 0),
+    linear-gradient(90deg, #0000 82px, #fff 0, #0000 84px),
+    linear-gradient(90deg, #0000 82px, #0af 0, #0000);
 }
