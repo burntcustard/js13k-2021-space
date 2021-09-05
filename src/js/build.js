@@ -77,8 +77,8 @@ Build.addEventListenersTo = (side) => {
 
     model.element.style.display = '';
     side.element.classList.add('build-hover');
-    side.element.classList.toggle('obstructed', side.hasConnectedModule ?? false);
-    model.element.classList.toggle('obstructed', side.hasConnectedModule ?? false);
+    side.element.classList.toggle('obstructed', side.connectedTo ?? false);
+    model.element.classList.toggle('obstructed', side.connectedTo ?? false);
     Build.currentHoverSide = side;
     model.x = shape.x + sideRotated.x + sideResized.x;
     model.y = shape.y + sideRotated.y + sideResized.y;
@@ -100,12 +100,14 @@ Build.addEventListenersTo = (side) => {
   };
 
   side.clickListener = () => {
-    if (!Build.currentItem || side.hasConnectedModule || Build.cantAffordCurrentItem) {
+    if (!Build.currentItem || side.connectedTo || Build.cantAffordCurrentItem) {
       return;
     }
+
     Build.currentItemInstance.build();
     gameObjectList.push(Build.currentItemInstance);
-    side.hasConnectedModule = true;
+    side.connectedTo = Build.currentItemInstance;
+    Build.currentItemInstance.connectedTo = side;
     side.element.classList.add('obstructed'); // TODO: Refactor this er somehow
 
     Build.setCurrentItem(Build.currentItem);

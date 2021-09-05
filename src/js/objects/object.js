@@ -92,6 +92,11 @@ GameObject.prototype.addSelectEventListeners = function () {
 
 GameObject.prototype.kill = function () {
   this.model.element?.remove();
+
+  if (this.connectedTo) {
+    this.connectedTo.connectedTo = undefined;
+  }
+
   gameObjectList.remove(this);
   // TODO (if space) remove mouse & click event listeners to prevent memory leak
 };
