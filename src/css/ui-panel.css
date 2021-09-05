@@ -27,10 +27,9 @@
 
 .ui-panel--top {
   position: absolute;
-  z-index: 1;
-  top: calc(3vh - 2px);
+  top: 2vmin;
   font-weight: bold;
-  transform: rotateX(-9deg);
+  transform: rotateX(-9deg) translateZ(12px);
 }
 
 .ui-panel--big {
