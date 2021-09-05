@@ -16,6 +16,7 @@ gameObjectList.killSelected = function () {
   }
 
   $('.ui-panel--btns').setAttribute('aria-hidden', true);
+  $('.ui-panel--info').setAttribute('aria-hidden', true);
 };
 
 export default gameObjectList;

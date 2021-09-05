@@ -3,8 +3,6 @@ import Box from '../shapes/box';
 import resources from '../resources';
 import { $, lerp } from '../util';
 
-const debug = $('.debug .hangar');
-
 const NUMBER_OF_SHIPS = 2;
 const MIN_MINING_TIME = 10000;
 const MAX_MINING_TIME = 30000;
@@ -109,10 +107,20 @@ Hangar.prototype.update = function (elapsed, lights) {
     }
   });
 
-  const shipStatus = this.ships.map((ship) => `Ship ${ship.id}, `
-    + `status: ${ship.status}, `
-    + `timer: ${Math.floor(ship.timer)}, `
-    + `power: ${Math.floor(ship.power)}`)
-    .join('\n');
-  debug.innerText = shipStatus;
+  if (this.selected) {
+    const shipStatus = this.ships.map((ship) => `${ship.id}: `
+      + `${ship.status}${ship.status === 'mining' ? `(${Math.floor(ship.timer / 1000)})` : ''} `
+      + `↯${Math.floor(ship.power)}`)
+      .join('\n');
+    $('.ui-panel--info .name').innerText = 'Hangar';
+    $('.ui-panel--info .info').innerText = shipStatus;
+  }
+};
+
+Hangar.prototype.select = function (select) {
+  Module.prototype.select.call(this, select);
+
+  if (this.selected) {
+    $('.ui-panel--info').setAttribute('aria-hidden', false);
+  }
 };
