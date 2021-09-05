@@ -5,7 +5,7 @@ import Build from '../build';
 const info = {
   tag: 'Block', // Can't use 'name' because is reserved
   desc: 'Basic building block',
-  className: 'block',
+  className: 'block module',
   cost: 1,
   power: -15,
   w: 60,

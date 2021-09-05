@@ -1,5 +1,6 @@
 import Build from '../build';
 import gameObjectList from '../game-object-list';
+import { $ } from '../util';
 
 export default function GameObject(props) {
   this.w = props.w ?? 1;
@@ -38,6 +39,7 @@ GameObject.prototype.select = function (select) {
   if (!Build.currentItem || !select) {
     this.selected = select;
     this.model.element.classList.toggle('select', select);
+    $('.ui-panel--btns').setAttribute('aria-hidden', false);
   }
 };
 
@@ -90,6 +92,11 @@ GameObject.prototype.addSelectEventListeners = function () {
 
 GameObject.prototype.kill = function () {
   this.model.element?.remove();
+
+  if (this.connectedTo) {
+    this.connectedTo.connectedTo = undefined;
+  }
+
   gameObjectList.remove(this);
   // TODO (if space) remove mouse & click event listeners to prevent memory leak
 };

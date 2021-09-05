@@ -23,4 +23,15 @@
       #059,
       #08a
     );
+  background-repeat: no-repeat;
+}
+
+.shape.solar:not(.frame) .panel::before {
+  animation: 1s build forwards, 2s extend forwards;
+}
+
+@keyframes extend {
+  0% { background-size: 0 100%; }
+  30% { background-size: 0 100%; }
+  100% { background-size: 100% 100%; }
 }

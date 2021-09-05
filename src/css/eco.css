@@ -107,7 +107,7 @@
   font-size: 18px;
 }
 
-.eco.pop .icon {
+.pop .icon {
   width: 20px;
   height: 20px;
   border-radius: 50%;
@@ -115,7 +115,7 @@
 }
 
 /* Body of the person in the icon */
-.eco.pop .icon::before {
+.pop .icon::before {
   position: absolute;
   bottom: -2px;
   left: 6px;
@@ -126,6 +126,14 @@
   content: '';
 }
 
-.eco.pop .icon ~ * {
+.pop .icon ~ * {
   margin-top: 1px;
+}
+
+/* stylelint-disable no-descending-specificity */
+.pop .cur,
+.pop .cap {
+  display: flex;
+  min-width: 16px;
+  justify-content: center;
 }

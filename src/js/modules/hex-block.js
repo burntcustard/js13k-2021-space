@@ -5,7 +5,7 @@ import Module from './module';
 const info = {
   tag: 'Hex Block',
   desc: 'Hexagonal building block',
-  className: 'hex-block',
+  className: 'hex-block module',
   cost: 1,
   power: -10,
   w: 60,

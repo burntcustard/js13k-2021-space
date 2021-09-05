@@ -1,7 +1,7 @@
 import Build from '../build';
 import Shape from './shape';
 import Face from './face';
-import { PI_2 } from '../util';
+import { $, PI_2 } from '../util';
 import UI from '../ui';
 import camera from '../camera';
 import gameObjectList from '../game-object-list';
@@ -67,6 +67,7 @@ export default function Cubemap({ w, x, y, z, rx, ry, rz }) {
       gameObjectList.forEach((gameObject) => {
         if (gameObject.selected) gameObject.select(false);
       });
+      $('.ui-panel--btns').setAttribute('aria-hidden', true);
 
       // Cancel building whatever is the current build item
       UI.deselectAllBuildBarItems();

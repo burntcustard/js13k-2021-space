@@ -4,7 +4,7 @@ import Box from '../shapes/box';
 const info = {
   tag: 'Solar Panel Basic',
   desc: 'Generates power',
-  className: 'solar',
+  className: 'solar module',
   cost: 35,
   power: 10,
   w: 108,
