@@ -77,7 +77,7 @@ async function minifyJs(compiledJs) {
       // unsafe_proto: true,
       // booleans_as_integers: true
     },
-    mangle: !DEBUG,
+    mangle: !DEBUG ? { properties: 'true' } : false,
     module: true,
     sourceMap: DEVMODE ? {
       content: compiledJs.map,
