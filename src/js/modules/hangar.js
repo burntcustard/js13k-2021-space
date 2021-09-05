@@ -38,7 +38,6 @@ export default function Hangar({ x, y, z, rx, ry, rz }) {
   });
 
   this.model.sides[2].element.className += ' door';
-  // this.model.sides[5].x -= 30;
   this.model.update();
 
   this.ships = [];
