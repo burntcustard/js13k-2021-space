@@ -6,6 +6,7 @@
 @import 'camera';
 @import 'debug';
 @import 'eco';
+@import 'frame';
 @import 'object';
 @import 'reset';
 @import 'scene';

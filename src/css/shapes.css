@@ -62,22 +62,6 @@
   border-radius: 50%;
 }
 
-.frame {
-  transition: transform 0.3s;
-}
-
-/* When it's just an outline there's no texture */
-.frame .face::before {
-  display: none;
-}
-
-.frame .face {
-  border: 1px solid #fffa;
-  -webkit-backface-visibility: visible;
-  background: #fff2;
-  pointer-events: none;
-}
-
 .shape.obstructed .face,
 .shape.err-cost .face {
   border: 1px solid #f02b;
