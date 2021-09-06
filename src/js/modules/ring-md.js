@@ -33,9 +33,8 @@ export default function RingMd({ x, y, z, rx, ry, rz }) {
 
   this.vrx = 0; // Velocity rotation x axis
 
-  this.model.sides.forEach((side) => {
-    Build.addEventListenersTo(side);
-  });
+  Build.addEventListenersTo(this.model.sides[0]);
+  Build.addEventListenersTo(this.model.sides[7]);
 }
 
 Object.assign(RingMd, info);
