@@ -36,9 +36,9 @@ const lights = [
 
 const hexRing = new HexRing({
   baseW: 60,
-  baseD: 120,
+  baseD: 50,
   w: 60,
-  d: 480, // BIG
+  d: 540, // BIG
   x: -60,
 });
 hexRing.update();
