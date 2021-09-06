@@ -6,11 +6,10 @@ import UI from './ui';
 import gameObjectList from './game-object-list';
 import resources from './resources';
 import { $, PI_4 } from './util';
-import Octabox from './shapes/octabox';
-import SideOctabox from './shapes/side-octabox';
 import Light from './objects/light';
 import Cubemap from './shapes/cubemap';
 import HexBlock from './modules/hex-block';
+import HexRing from './shapes/hex-ring';
 
 const perfDebug = $('.debug .perf');
 
@@ -35,21 +34,15 @@ const lights = [
   }),
 ];
 
-const octabox = new Octabox({
-  w: 80,
-  h: 60,
-  y: -150,
-});
-octabox.update();
-octabox.spawn();
-
-const sideOctabox = new SideOctabox({
+const hexRing = new HexRing({
+  baseW: 60,
+  baseD: 120,
   w: 60,
-  h: 60,
-  x: 100,
+  d: 480, // BIG
+  x: -60,
 });
-sideOctabox.update();
-sideOctabox.spawn();
+hexRing.update();
+hexRing.spawn();
 
 const hexBlock = new HexBlock({});
 hexBlock.spawn();
