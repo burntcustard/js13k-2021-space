@@ -66,6 +66,9 @@ function main(timestamp) {
 
   doKeyboardInput();
 
+  hexRing.rx += 0.002;
+  hexRing.update(elapsed, lights);
+
   gameObjectList.forEach((object) => {
     object.update(elapsed, lights);
   });
