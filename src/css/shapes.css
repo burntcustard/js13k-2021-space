@@ -29,6 +29,27 @@
   clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
 }
 
+.hex-cut {
+  clip-path:
+    polygon(
+      25% 0%,
+      75% 0%,
+      100% 50%,
+      75% 100%,
+      25% 100%,
+      0% 50%,
+      25% 0%,
+      /* Inner */
+      calc(25% + var(--tx) / 2) var(--t),
+      var(--tx) 50%,
+      calc(25% + var(--tx) / 2) calc(100% - var(--t)),
+      calc(75% - var(--tx) / 2) calc(100% - var(--t)),
+      calc(100% - var(--tx)) 50%,
+      calc(75% - var(--tx) / 2) var(--t),
+      calc(25% + var(--tx) / 2) var(--t)
+    );
+}
+
 .oct {
   clip-path: polygon(29.34% 0, 70.66% 0, 100% 29.34%, 100% 70.66%, 70.66% 100%, 29.34% 100%, 0 70.66%, 0 29.34%);
 }
@@ -39,22 +60,6 @@
 
 .circle {
   border-radius: 50%;
-}
-
-.frame {
-  transition: transform 0.3s;
-}
-
-/* When it's just an outline there's no texture */
-.frame .face::before {
-  display: none;
-}
-
-.frame .face {
-  border: 1px solid #fffa;
-  -webkit-backface-visibility: visible;
-  background: #fff2;
-  pointer-events: none;
 }
 
 .shape.obstructed .face,
