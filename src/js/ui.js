@@ -7,6 +7,7 @@ import Block from './modules/block';
 import Solar from './modules/solar';
 import HabSm from './modules/hab-sm';
 import HexBlock from './modules/hex-block';
+import RingMd from './modules/ring-md';
 
 const matsBar = $('.mats .fill');
 const matsDot = $('.mats .dot');
@@ -46,7 +47,7 @@ UI.deselectAllBuildBarItems = () => {
 };
 
 UI.populateBuildBar = () => {
-  UI.buildBarList = [Block, Solar, HabSm, HexBlock].map((Item) => {
+  UI.buildBarList = [Block, Solar, HabSm, HexBlock, RingMd].map((Item) => {
     const buildBarItem = { };
     buildBarItem.element = document.createElement('button');
     buildBarItem.element.className = `build-bar ${Item.className}`;

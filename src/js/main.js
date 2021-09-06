@@ -6,11 +6,10 @@ import UI from './ui';
 import gameObjectList from './game-object-list';
 import resources from './resources';
 import { $, PI_4 } from './util';
-import Octabox from './shapes/octabox';
-import SideOctabox from './shapes/side-octabox';
 import Light from './objects/light';
 import Cubemap from './shapes/cubemap';
 import HexBlock from './modules/hex-block';
+import RingMd from './modules/ring-md';
 
 const perfDebug = $('.debug .perf');
 
@@ -35,27 +34,15 @@ const lights = [
   }),
 ];
 
-const octabox = new Octabox({
-  w: 80,
-  h: 60,
-  y: -150,
-});
-octabox.update();
-octabox.spawn();
-
-const sideOctabox = new SideOctabox({
-  w: 60,
-  h: 60,
-  x: 100,
-});
-sideOctabox.update();
-sideOctabox.spawn();
+const ring = new RingMd({ x: -60 });
+ring.spawn();
+ring.enable();
 
 const hexBlock = new HexBlock({});
 hexBlock.spawn();
 hexBlock.enable();
 
-gameObjectList.push(hexBlock);
+gameObjectList.push(hexBlock, ring);
 
 UI.populateBuildBar();
 
