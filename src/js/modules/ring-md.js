@@ -1,5 +1,5 @@
 import Build from '../build';
-import HexRing from '../shapes/side-hexagon';
+import HexRing from '../shapes/hex-ring';
 import Module from './module';
 
 const info = {
@@ -31,6 +31,8 @@ export default function RingMd({ x, y, z, rx, ry, rz }) {
 
   Module.call(this, { x, y, z, rx, ry, rz, ...info });
 
+  this.vrx = 0; // Velocity rotation x axis
+
   this.model.sides.forEach((side) => {
     Build.addEventListenersTo(side);
   });
@@ -42,4 +44,19 @@ RingMd.prototype.constructor = RingMd;
 
 RingMd.prototype.build = function () {
   Module.prototype.build.call(this);
+};
+
+RingMd.prototype.update = function (elapsed = 0, lights) {
+  Module.prototype.update.call(this, elapsed, lights);
+
+  if (this.active) {
+    // Speed rotation velocity up a bit, to a maximum
+    this.vrx = Math.min(this.vrx + 0.0001 * elapsed, 2);
+  } else {
+    // Slow rotation velocity down a bit, to a minumum of 0
+    this.vrx = Math.max(this.vrx - 0.0001 * elapsed, 0);
+  }
+
+  // Do the rotation
+  this.model.rx += (this.vrx * elapsed) / 10000;
 };

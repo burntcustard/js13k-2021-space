@@ -9,7 +9,7 @@ import { $, PI_4 } from './util';
 import Light from './objects/light';
 import Cubemap from './shapes/cubemap';
 import HexBlock from './modules/hex-block';
-import HexRing from './shapes/hex-ring';
+import RingMd from './modules/ring-md';
 
 const perfDebug = $('.debug .perf');
 
@@ -34,21 +34,15 @@ const lights = [
   }),
 ];
 
-const hexRing = new HexRing({
-  baseW: 60,
-  baseD: 50,
-  w: 60,
-  d: 540, // BIG
-  x: -60,
-});
-hexRing.update();
-hexRing.spawn();
+const ring = new RingMd({ x: -60 });
+ring.spawn();
+ring.enable();
 
 const hexBlock = new HexBlock({});
 hexBlock.spawn();
 hexBlock.enable();
 
-gameObjectList.push(hexBlock);
+gameObjectList.push(hexBlock, ring);
 
 UI.populateBuildBar();
 
@@ -65,9 +59,6 @@ function main(timestamp) {
   }
 
   doKeyboardInput();
-
-  hexRing.rx += 0.002;
-  hexRing.update(elapsed, lights);
 
   gameObjectList.forEach((object) => {
     object.update(elapsed, lights);
