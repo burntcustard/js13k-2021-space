@@ -1,10 +1,10 @@
 /* TODO: Change specifity because hopefully all this is unnecessary */
 
-.shape.box.solar {
+.shape.box.solar:not(.frame) {
   transition: all 1s;
 }
 
-.shape.box.solar .face {
+.shape.box.solar:not(.frame) .face {
   transition: all 1s;
 }
 

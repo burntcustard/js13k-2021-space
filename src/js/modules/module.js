@@ -49,7 +49,7 @@ Module.prototype.updatePower = function (elapsed) {
   }
 
   if (this.power > 0) {
-    // Add some power from the resources banks
+    // Add some power to the resources banks
     resources.power.current = Math.min(
       resources.power.current + this.power * (elapsed / 1000),
       resources.power.capacity,

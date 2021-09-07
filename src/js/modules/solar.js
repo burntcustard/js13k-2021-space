@@ -31,6 +31,7 @@ export default function Solar({
   this.model.sides[1].element.className += ' panel';
   this.model.sides[4].element.className += ' panel';
   this.level = 1;
+  this.maxLevel = 3;
 
   Module.call(this, { x, y, z, rx, ry, rz, ...info });
 }
@@ -42,8 +43,12 @@ Solar.prototype.constructor = Solar;
 Solar.prototype.instancesBuilt = 0;
 
 Solar.prototype.upgrade = function () {
+  // Disable the re-enable to update resource bar numbers
+  this.disable();
   this.level++;
-
+  this.power = info.power * this.level;
+  // TODO: Do we want to add some time while upgrading before re-enabling?
+  this.enable();
   this.model.changeSize({ w: info.w * this.level });
 
   const shape = this.connectedTo.parent;
@@ -54,17 +59,12 @@ Solar.prototype.upgrade = function () {
     .rotateY(shape.ry)
     .rotateZ(shape.rz);
 
-  // const sideNormalised = sideRotated.normalise();
-
   // Half model width in direction of side
   const sideResized = sideRotated.resize(this.model.w * 0.5);
 
   this.model.x = shape.x + sideRotated.x + sideResized.x;
   this.model.y = shape.y + sideRotated.y + sideResized.y;
   this.model.z = shape.z + sideRotated.z + sideResized.z;
-  // this.model.rx = Build.rotation;
-  // this.model.ry = -Math.asin(sideNormalised.z);
-  // this.model.rz = Math.atan2(sideRotated.y, sideRotated.x);
 };
 
 Solar.prototype.build = function () {

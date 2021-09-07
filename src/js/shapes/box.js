@@ -73,8 +73,6 @@ Box.prototype.changeSize = function ({ w, d, h, x, y, z }) {
   this.d = d = d ?? this.d;
   this.h = h = h ?? this.h;
 
-  console.log(this.w);
-
   const W_2 = w * 0.5;
   const D_2 = d * 0.5;
   const H_2 = h * 0.5;
