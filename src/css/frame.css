@@ -15,8 +15,18 @@
   pointer-events: none;
 }
 
+.frame.hab-sm .face {
+  background: none !important;
+}
+
 .frame .face::after {
   border: 2px solid #fffa;
   background: #fff2;
   transform: translateZ(-0.1px);
+}
+
+.frame.obstructed .face::after,
+.frame.err-cost .face::after {
+  border: 2px solid #f02b;
+  background: #f022;
 }

@@ -3,25 +3,42 @@ button.build-bar {
   height: 100%;
   align-items: center;
   justify-content: center;
-  padding-top: 4px;
+  padding: 2px 6px 1px 6px;
   aspect-ratio: 1;
   background: #222;
+  box-shadow:
+    inset 0 0 0 24px #222,
+    inset 0 0 0 2px #c400,
+    inset 0 0 0 24px #b400;
+  transition: box-shadow 0.2s;
 }
 
-button.build-bar::after {
+button.build-bar:hover {
+  box-shadow:
+    inset 0 0 0 0 #222,
+    inset 0 0 0 2px #c404,
+    inset 0 0 0 26px #b404;
+}
+
+button.build-bar[aria-pressed='true'] {
+  box-shadow:
+    inset 0 0 0 0 #222,
+    inset 0 0 0 2px #c40f,
+    inset 0 0 0 24px #b403;
+}
+
+button.build-bar[aria-pressed='true']:hover {
+  box-shadow:
+    inset 0 0 0 0 #222,
+    inset 0 0 0 2px #c40f,
+    inset 0 0 0 24px #b404;
+}
+
+button.build-bar::before {
   content: '';
-  filter: brightness(0.6);
 }
 
-button.build-bar:hover::after {
-  filter: brightness(0.9);
-}
-
-button.build-bar[aria-pressed='true']::after {
-  filter: brightness(1);
-}
-
-button.build-bar.block::after {
+button.build-bar.block::before {
   width: 26px;
   height: 26px;
   background:
@@ -42,7 +59,29 @@ button.build-bar.block::after {
     );
 }
 
-button.build-bar.solar::after {
+button.build-bar.hex-block::before {
+  width: 28px;
+  height: 36px;
+  margin-top: 8px;
+  background:
+    conic-gradient(
+      #fff 65deg,
+      #ccc 0 180deg,
+      #999 0 295deg,
+      #fff 0
+    );
+  clip-path:
+    polygon(
+      50% 0,
+      100% 15%,
+      100% 60%,
+      50% 80%,
+      0 60%,
+      0 15%
+    );
+}
+
+button.build-bar.solar::before {
   width: 20px;
   height: 24px;
   border: 2px solid #fff;
@@ -63,4 +102,62 @@ button.build-bar.solar::after {
       #059,
       #08a
     );
+}
+
+button.build-bar.hab-sm::before {
+  width: 26px;
+  height: 26px;
+  background:
+    linear-gradient(
+      #ccc 4px,
+      #fff 0 10px,
+      #0000 0 16px,
+      var(--color-accent) 0 18px,
+      #fff 0 22px,
+      #999 0
+    ),
+    linear-gradient(
+      90deg,
+      #fff 0 5px,
+      #0000 0 21px,
+      #fff 0
+    );
+}
+
+button.build-bar.ring::before {
+  --tx: 4px;
+  --t: 3.5px;
+
+  width: 28px;
+  height: 24px;
+  background: #fff;
+
+  /* This must be the exact same as the .hex-cut clip-path for compression */
+  clip-path:
+    polygon(
+      25% 0%,
+      75% 0%,
+      100% 50%,
+      75% 100%,
+      25% 100%,
+      0% 50%,
+      25% 0%,
+      /* Inner */
+      calc(25% + var(--tx) / 2) var(--t),
+      var(--tx) 50%,
+      calc(25% + var(--tx) / 2) calc(100% - var(--t)),
+      calc(75% - var(--tx) / 2) calc(100% - var(--t)),
+      calc(100% - var(--tx)) 50%,
+      calc(75% - var(--tx) / 2) var(--t),
+      calc(25% + var(--tx) / 2) var(--t)
+    );
+}
+
+button.build-bar.ring:hover::before,
+button.build-bar.ring[aria-pressed='true']::before {
+  animation: 9s rotate linear infinite;
+}
+
+@keyframes rotate {
+  100% { transform: rotate(360deg); }
 }

@@ -1,4 +1,8 @@
 body {
+  --color-primary: #fff;
+  --color-secondary: #aaa;
+  --color-accent: #f60;
+
   height: 100vh;
   margin: 0;
   background: #111;
