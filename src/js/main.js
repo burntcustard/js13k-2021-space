@@ -9,6 +9,7 @@ import { $, PI_4 } from './util';
 import Block from './modules/block';
 import Light from './objects/light';
 import Cubemap from './shapes/cubemap';
+import ShipController from './ship-controller';
 
 const perfDebug = $('.debug .perf');
 
@@ -54,6 +55,8 @@ function main(timestamp) {
   }
 
   doKeyboardInput();
+
+  ShipController.update(elapsed);
 
   gameObjectList.forEach((object) => {
     object.update(elapsed, lights);
