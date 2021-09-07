@@ -68,6 +68,9 @@ export default function Cubemap({ w, x, y, z, rx, ry, rz }) {
         if (gameObject.selected) gameObject.select(false);
       });
       $('.ui-panel--btns').setAttribute('aria-hidden', true);
+      $('.ui-panel__build-info').classList.remove('ui-panel__build-info--select');
+      $('.ui-panel__build-info').classList.remove('ui-panel__build-info--build');
+      $('.ui-panel__build-info').innerHTML = '';
 
       // Cancel building whatever is the current build item
       UI.deselectAllBuildBarItems();

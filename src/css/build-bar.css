@@ -1,11 +1,7 @@
 button.build-bar {
   display: flex;
-  height: 100%;
   align-items: center;
   justify-content: center;
-  padding: 2px 6px 1px 6px;
-  aspect-ratio: 1;
-  background: #222;
   box-shadow:
     inset 0 0 0 24px #222,
     inset 0 0 0 2px #c400,
@@ -34,130 +30,69 @@ button.build-bar[aria-pressed='true']:hover {
     inset 0 0 0 24px #b404;
 }
 
-button.build-bar::before {
-  content: '';
+.ui-panel__build-list {
+  display: flex;
+  padding: 1px;
+  margin-top: -1px;
+  margin-bottom: -2px;
+  background: #333;
+  box-shadow: 2px 2px inset #111, -2px -2px inset #222, inset 0 0 8px 8px #222;
+  grid-template-columns: repeat(auto-fill, minmax(44px, 1fr));
+  pointer-events: all;
 }
 
-button.build-bar.block::before {
-  width: 26px;
-  height: 26px;
-  background:
-    conic-gradient(
-      #fff 65deg,
-      #ccc 0 180deg,
-      #999 0 295deg,
-      #fff 0
-    );
-  clip-path:
-    polygon(
-      50% 0,
-      100% 25%,
-      100% 75%,
-      50% 100%,
-      0 75%,
-      0 25%
-    );
+.ui-panel__build-list > * {
+  overflow: hidden;
+  width: 52px;
+  box-sizing: border-box;
+  margin: 1px;
 }
 
-button.build-bar.hex-block::before {
-  width: 28px;
-  height: 36px;
-  margin-top: 8px;
-  background:
-    conic-gradient(
-      #fff 65deg,
-      #ccc 0 180deg,
-      #999 0 295deg,
-      #fff 0
-    );
-  clip-path:
-    polygon(
-      50% 0,
-      100% 15%,
-      100% 60%,
-      50% 80%,
-      0 60%,
-      0 15%
-    );
-}
-
-button.build-bar.solar::before {
-  width: 20px;
-  height: 24px;
-  border: 2px solid #fff;
-  background:
+.ui-panel__build-info {
+  width: 300px;
+  padding: 5px 6px 4px 6px;
+  border: 3px solid #aaa;
+  background: #b40;
+  background-image:
     repeating-linear-gradient(
       to top,
-      #0000 0 4px,
-      #fff9 0 5px
+      #0000 0 6px,
+      #a30 0 8px
     ),
     repeating-linear-gradient(
       to right,
-      #0000 0 9px,
-      #fff6 0 10px
-    ),
-    /* Rotate this for lighting?... */
-    linear-gradient(
+      #0000 0 6px,
+      #a30 0 8px
+    );
+  background-position: 6px 3px;
+  box-shadow: 4px 4px 0 inset #0005, -3px -2px 0 inset #0005, 0 1px 3px #000;
+  color: #fff;
+  font-size: 14px;
+  pointer-events: all;
+  text-shadow: 0 0 2px #000;
+}
+
+.ui-panel__build-info--select {
+  background: #077;
+
+  /* This gradient is actually 40B so is a bit big. '1px' is required(?!) */
+  background-image:
+    repeating-linear-gradient(
       45deg,
-      #059,
-      #08a
-    );
-}
-
-button.build-bar.hab-sm::before {
-  width: 26px;
-  height: 26px;
-  background:
-    linear-gradient(
-      #ccc 4px,
-      #fff 0 10px,
-      #0000 0 16px,
-      var(--color-accent) 0 18px,
-      #fff 0 22px,
-      #999 0
+      #0000 1px 4px,
+      #088 0 6px
     ),
-    linear-gradient(
-      90deg,
-      #fff 0 5px,
-      #0000 0 21px,
-      #fff 0
+    repeating-linear-gradient(
+      135deg,
+      #0000 1px 4px,
+      #088 0 6px
     );
+  background-position: top left, bottom left;
+  background-repeat: no-repeat;
+  background-size: 100% 50%;
 }
 
-button.build-bar.ring::before {
-  --tx: 4px;
-  --t: 3.5px;
-
-  width: 28px;
-  height: 24px;
-  background: #fff;
-
-  /* This must be the exact same as the .hex-cut clip-path for compression */
-  clip-path:
-    polygon(
-      25% 0%,
-      75% 0%,
-      100% 50%,
-      75% 100%,
-      25% 100%,
-      0% 50%,
-      25% 0%,
-      /* Inner */
-      calc(25% + var(--tx) / 2) var(--t),
-      var(--tx) 50%,
-      calc(25% + var(--tx) / 2) calc(100% - var(--t)),
-      calc(75% - var(--tx) / 2) calc(100% - var(--t)),
-      calc(100% - var(--tx)) 50%,
-      calc(75% - var(--tx) / 2) var(--t),
-      calc(25% + var(--tx) / 2) var(--t)
-    );
-}
-
-button.build-bar.ring:hover::before,
-button.build-bar.ring[aria-pressed='true']::before {
-  animation: 9s rotate linear infinite;
-}
-
-@keyframes rotate {
-  100% { transform: rotate(360deg); }
+.ui-panel__build-info > div {
+  display: flex;
+  justify-content: space-between;
 }
