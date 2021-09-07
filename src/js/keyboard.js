@@ -10,6 +10,7 @@ export function initKeyboard() {
     keyDown.add(key);
     if (key === 'r') Build.rotate();
     if (key === 'delete') gameObjectList.killSelected();
+    if (key === 'u') gameObjectList.upgradeSelected();
   });
 
   document.addEventListener('keyup', (event) => {

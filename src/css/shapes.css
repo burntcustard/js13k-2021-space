@@ -62,12 +62,6 @@
   border-radius: 50%;
 }
 
-.shape.obstructed .face,
-.shape.err-cost .face {
-  border: 1px solid #f02b;
-  background: #f022;
-}
-
 /* Temporary (hopefully) debug face colors */
 
 .face:nth-child(1n)::before {

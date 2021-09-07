@@ -6,7 +6,6 @@
 @import 'camera';
 @import 'debug';
 @import 'eco';
-@import 'frame';
 @import 'object';
 @import 'reset';
 @import 'scene';
@@ -18,3 +17,4 @@
 @import 'hab-sm';
 @import 'hangar';
 @import 'ui-info';
+@import 'frame';
