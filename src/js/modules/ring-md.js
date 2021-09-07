@@ -5,7 +5,7 @@ import Module from './module';
 const info = {
   tag: 'Ring Medium',
   desc: 'Rotating hexagon ring',
-  className: '',
+  className: 'ring',
   cost: 100,
   power: -20,
   baseW: 60,

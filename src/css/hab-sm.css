@@ -18,7 +18,7 @@
   background:
     linear-gradient(
       #0000 calc(50% + var(--window-h) - 1px),
-      #f60 0 calc(50% + var(--window-h) + 6px),
+      var(--color-accent) 0 calc(50% + var(--window-h) + 6px),
       #0000 0
     ),
     linear-gradient(
@@ -32,5 +32,4 @@
       #0000 0 calc(50% + var(--window-h)),
       #eee 0
     );
-  color: #f60;
 }
