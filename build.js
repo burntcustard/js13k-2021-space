@@ -137,7 +137,7 @@ async function bundleIntoHtml(css, js) {
   // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/replace#specifying_a_string_as_a_parameter
   inlined = inlined.replace(
     /<script[^>]*><\/script>/,
-    `<script>${js.replace(/\$/g, '$$$')}</script>`,
+    `<script>${js.toString().replace(/\$/g, '$$$')}</script>`,
   );
 
   // Extra HTML hacks to reduce filesize
