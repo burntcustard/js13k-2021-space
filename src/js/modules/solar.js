@@ -10,7 +10,7 @@ const info = {
   power: 10,
   w: 108,
   h: 2,
-  d: 54,
+  d: 52,
 };
 
 export default function Solar({

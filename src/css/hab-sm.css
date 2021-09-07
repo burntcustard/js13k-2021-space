@@ -1,4 +1,5 @@
 .shape.hab-sm .face.rect {
+  backface-visibility: visible;
   background: #013a;
 }
 
