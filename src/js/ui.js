@@ -2,12 +2,7 @@ import resources from './resources';
 import Build from './build';
 import { $ } from './util';
 import gameObjectList from './game-object-list';
-
-import Block from './modules/block';
-import Solar from './modules/solar';
-import HabSm from './modules/hab-sm';
-import HexBlock from './modules/hex-block';
-import RingMd from './modules/ring-md';
+import moduleList from './modules/module-list';
 
 const matsBar = $('.mats .fill');
 const matsDot = $('.mats .dot');
@@ -47,7 +42,7 @@ UI.deselectAllBuildBarItems = () => {
 };
 
 UI.populateBuildBar = () => {
-  UI.buildBarList = [Block, Solar, HabSm, HexBlock, RingMd].map((Item) => {
+  UI.buildBarList = moduleList.map((Item) => {
     const buildBarItem = { };
     buildBarItem.element = document.createElement('button');
     buildBarItem.element.className = `build-bar ${Item.className}`;
