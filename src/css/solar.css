@@ -1,5 +1,13 @@
 /* TODO: Change specifity because hopefully all this is unnecessary */
 
+.shape.box.solar {
+  transition: all 1s;
+}
+
+.shape.box.solar .face {
+  transition: all 1s;
+}
+
 .shape.box.solar .face::before {
   background: #fff;
 }
