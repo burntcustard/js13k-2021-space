@@ -36,8 +36,8 @@ GameObject.prototype.spawn = function () {
 GameObject.prototype.createSelectedObjectHTML = function () {
   return `
     <div>
-      <b>${this.tag}</b>
-      <div>M:${this.cost}${this.population ? ` | Pop:${this.population}` : ''}${this.power < 0 ? ` | Use ϟ${-this.power}` : this.power > 0 ? ` | Gen ϟ${this.power}` : ''}</div>
+      <b>${this.tag + '+'.repeat(this.level ?? 0)}</b>
+      <div>${this.power < 0 ? ` | Use ϟ${-this.power}` : this.power > 0 ? ` | Gen ϟ${this.power}` : ''}</div>
     </div>
     <div>
       ${this.desc}
@@ -50,14 +50,14 @@ GameObject.prototype.createSelectedObjectHTML = function () {
  * @return {[type]} [description]
  */
 GameObject.prototype.select = function (select) {
-  if (!select) {
-    this.selected = select;
-    this.model.element.classList.toggle('select', select);
-    $('.ui-panel--btns').setAttribute('aria-hidden', false);
-    $('.ui-panel__build-info').classList.add('ui-panel__build-info--select');
-    $('.ui-panel__build-info').innerHTML = this.createSelectedObjectHTML();
-    $('.ui-panel__build-list').innerHTML = '<div></div>';
-  }
+  this.selected = select;
+  this.model.element.classList.toggle('select', select);
+  $('.ui-panel--btns').setAttribute('aria-hidden', false);
+  $('.ui-panel__build-info').classList.add('ui-panel__build-info--select');
+  $('.ui-panel__build-info').innerHTML = this.createSelectedObjectHTML();
+
+  // If no upgrades or things this thing can build:
+  $('.ui-panel__build-list').style.display = 'none';
 };
 
 /**
