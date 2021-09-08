@@ -34,6 +34,7 @@ export default function Solar({
   this.model.sides[4].element.className += ' panel';
   this.level = 0;
   this.maxLevel = 2;
+  this.upgradeCost = 10;
 
   Module.call(this, { x, y, z, rx, ry, rz, ...info });
 }
@@ -45,9 +46,18 @@ Solar.prototype.constructor = Solar;
 Solar.prototype.instancesBuilt = 0;
 
 Solar.prototype.upgrade = function () {
+  this.setLevel(this.level + 1);
+};
+
+Solar.prototype.setLevel = function (level) {
   // Disable the re-enable to update resource bar numbers
   this.disable();
-  this.level++;
+
+  // TODO: Maybe save space by not changling className
+  this.model.element.classList.remove(`lvl-${this.level}`);
+  this.level = level;
+  this.model.element.classList.add(`lvl-${this.level}`);
+
   this.power = info.power * (this.level + 1);
   // TODO: Do we want to add some time while upgrading before re-enabling?
   this.enable();

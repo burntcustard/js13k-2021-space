@@ -70,9 +70,9 @@ export default function Cubemap({ w, x, y, z, rx, ry, rz }) {
       $('.ui-panel--btns').setAttribute('aria-hidden', true);
       $('.ui-panel__build-info').classList.remove('ui-panel__build-info--select');
       $('.ui-panel__build-info').innerHTML = ''; // Remove infos
-      // UI.populateBuildBar();
+      $('.ui-panel__build-list').innerHTML = ''; // Remvoe object buttons
       $('.ui-panel__build-list').style.display = '';
-      // $('.ui-panel__build-list').append(...UI.buildBarList.map((b => b.element)));
+      $('.ui-panel__build-list').append(...UI.buildBarList.map((b) => b.element));
 
       // Cancel building whatever is the current build item
       UI.deselectAllBuildBarItems();

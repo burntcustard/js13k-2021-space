@@ -1,0 +1,129 @@
+/* Build bar icons are the ::before of the build-bar buttons */
+
+button.build-bar::before {
+  content: '';
+}
+
+button.build-bar.block::before {
+  width: 26px;
+  height: 26px;
+  background:
+    conic-gradient(
+      #fff 65deg,
+      #ccc 0 180deg,
+      #999 0 295deg,
+      #fff 0
+    );
+  clip-path:
+    polygon(
+      50% 0,
+      100% 25%,
+      100% 75%,
+      50% 100%,
+      0 75%,
+      0 25%
+    );
+}
+
+button.build-bar.hex-block::before {
+  width: 28px;
+  height: 36px;
+  margin-top: 8px;
+  background:
+    conic-gradient(
+      #fff 65deg,
+      #ccc 0 180deg,
+      #999 0 295deg,
+      #fff 0
+    );
+  clip-path:
+    polygon(
+      50% 0,
+      100% 15%,
+      100% 60%,
+      50% 80%,
+      0 60%,
+      0 15%
+    );
+}
+
+button.build-bar.solar::before {
+  width: 20px;
+  height: 24px;
+  border: 2px solid #fff;
+  background:
+    repeating-linear-gradient(
+      to top,
+      #0000 0 4px,
+      #fff9 0 5px
+    ),
+    repeating-linear-gradient(
+      to right,
+      #0000 0 9px,
+      #fff6 0 10px
+    ),
+    /* Rotate this for lighting?... */
+    linear-gradient(
+      45deg,
+      #059,
+      #08a
+    );
+}
+
+button.build-bar.hab-sm::before {
+  width: 26px;
+  height: 26px;
+  background:
+    linear-gradient(
+      #ccc 4px,
+      #fff 0 10px,
+      #0000 0 16px,
+      var(--color-accent) 0 18px,
+      #fff 0 22px,
+      #999 0
+    ),
+    linear-gradient(
+      90deg,
+      #fff 0 5px,
+      #0000 0 21px,
+      #fff 0
+    );
+}
+
+button.build-bar.ring::before {
+  --tx: 4px;
+  --t: 3.5px;
+
+  width: 28px;
+  height: 24px;
+  background: #fff;
+
+  /* This must be the exact same as the .hex-cut clip-path for compression */
+  clip-path:
+    polygon(
+      25% 0%,
+      75% 0%,
+      100% 50%,
+      75% 100%,
+      25% 100%,
+      0% 50%,
+      25% 0%,
+      /* Inner */
+      calc(25% + var(--tx) / 2) var(--t),
+      var(--tx) 50%,
+      calc(25% + var(--tx) / 2) calc(100% - var(--t)),
+      calc(75% - var(--tx) / 2) calc(100% - var(--t)),
+      calc(100% - var(--tx)) 50%,
+      calc(75% - var(--tx) / 2) var(--t),
+      calc(25% + var(--tx) / 2) var(--t)
+    );
+}
+
+button.build-bar.ring:hover::before,
+button.build-bar.ring[aria-pressed='true']::before {
+  animation: 9s rotate linear infinite;
+}
+
+@keyframes rotate {
+  100% { transform: rotate(360deg); }
+}
