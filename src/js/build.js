@@ -1,3 +1,4 @@
+/* eslint-disable prefer-destructuring */
 import resources from './resources';
 import gameObjectList from './game-object-list';
 import Vec3 from './vec3';
@@ -50,7 +51,7 @@ Build.update = () => {
 };
 
 Build.updateRotation = () => {
-  Build.currentItemInstance.model.rx = Build.rotation;
+  Build.currentItemInstance.rx = Build.rotation;
   Build.currentItemInstance.update();
 };
 
@@ -131,8 +132,8 @@ Build.addEventListenersTo = (side) => {
       return;
     }
 
-    // eslint-disable-next-line prefer-destructuring
-    const model = Build.currentItemInstance.model;
+    const item = Build.currentItemInstance;
+    const model = item.model;
     const shape = side.parent;
 
     // Side rotated with shape's rotation
@@ -151,13 +152,13 @@ Build.addEventListenersTo = (side) => {
     side.element.classList.toggle('obstructed', side.connectedTo ?? false);
     model.element.classList.toggle('obstructed', side.connectedTo ?? false);
     Build.currentHoverSide = side;
-    model.x = shape.x + sideRotated.x + sideResized.x;
-    model.y = shape.y + sideRotated.y + sideResized.y;
-    model.z = shape.z + sideRotated.z + sideResized.z;
-    model.rx = Build.rotation;
-    model.ry = -Math.asin(sideNormalised.z);
-    model.rz = Math.atan2(sideRotated.y, sideRotated.x);
-    Build.currentItemInstance.update();
+    item.x = shape.x + sideRotated.x + sideResized.x;
+    item.y = shape.y + sideRotated.y + sideResized.y;
+    item.z = shape.z + sideRotated.z + sideResized.z;
+    item.rx = Build.rotation;
+    item.ry = -Math.asin(sideNormalised.z);
+    item.rz = Math.atan2(sideRotated.y, sideRotated.x);
+    item.update();
   };
 
   side.mouseleaveListener = () => {

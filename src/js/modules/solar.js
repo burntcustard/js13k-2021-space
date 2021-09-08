@@ -74,9 +74,9 @@ Solar.prototype.setLevel = function (level) {
   // Half model width in direction of side
   const sideResized = sideRotated.resize(this.model.w * 0.5);
 
-  this.model.x = shape.x + sideRotated.x + sideResized.x;
-  this.model.y = shape.y + sideRotated.y + sideResized.y;
-  this.model.z = shape.z + sideRotated.z + sideResized.z;
+  this.x = shape.x + sideRotated.x + sideResized.x;
+  this.y = shape.y + sideRotated.y + sideResized.y;
+  this.z = shape.z + sideRotated.z + sideResized.z;
 
   if (this.selected) {
     $('.ui-panel__build-info').innerHTML = GameObject.prototype.createSelectedObjectHTML.call(this);

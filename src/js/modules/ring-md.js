@@ -57,5 +57,5 @@ RingMd.prototype.update = function (elapsed = 0, lights) {
   }
 
   // Do the rotation
-  this.model.rx += (this.vrx * elapsed) / 10000;
+  this.rx += (this.vrx * elapsed) / 10000;
 };

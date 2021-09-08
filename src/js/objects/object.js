@@ -24,6 +24,12 @@ export default function GameObject(props) {
  * @param  {[type]} lights                [description]
  */
 GameObject.prototype.update = function (elapsed, lights) {
+  this.model.x = this.x;
+  this.model.y = this.y;
+  this.model.z = this.z;
+  this.model.rx = this.rx;
+  this.model.ry = this.ry;
+  this.model.rz = this.rz;
   this.model.update(elapsed, lights);
 };
 
