@@ -1,6 +1,8 @@
 import Build from './build';
 import camera from './camera';
 import gameObjectList from './game-object-list';
+import UI from './ui';
+import { $ } from './util';
 
 const keyDown = new Set();
 
@@ -10,7 +12,21 @@ export function initKeyboard() {
     keyDown.add(key);
     if (key === 'r') Build.rotate();
     if (key === 'delete') gameObjectList.killSelected();
-    if (key === 'u') gameObjectList.upgradeSelected();
+    if (key === 'u') gameObjectList.upgradeSelected(); // TODO: Remove?
+    if (key === 'escape') {
+      gameObjectList.deselectAll();
+
+      $('.ui-panel--btns').setAttribute('aria-hidden', true);
+      $('.ui-panel__build-info').classList.remove('ui-panel__build-info--select');
+      $('.ui-panel__build-info').innerHTML = ''; // Remove infos
+      $('.ui-panel__build-list').innerHTML = ''; // Remove object buttons
+      $('.ui-panel__build-list').style.display = '';
+      $('.ui-panel__build-list').append(...UI.buildBarList.map((b) => b.element));
+
+      // Cancel building whatever is the current build item
+      UI.deselectAllBuildBarItems();
+      Build.setCurrentItem(false);
+    }
   });
 
   document.addEventListener('keyup', (event) => {

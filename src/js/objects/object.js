@@ -1,5 +1,6 @@
 import Build from '../build';
 import gameObjectList from '../game-object-list';
+import resources from '../resources';
 import { $ } from '../util';
 
 export default function GameObject(props) {
@@ -31,15 +32,73 @@ GameObject.prototype.spawn = function () {
   this.update();
 };
 
+/* eslint-disable no-nested-ternary */
+// TODO: Move ui.createBuildBarHTML to here, or move this to there, or somewhere else?
+GameObject.prototype.createSelectedObjectHTML = function () {
+  return `
+    <div>
+      <b>${this.tag + '+'.repeat(this.level ?? 0)}</b>
+      <div>${!this.active ? '<s>' : ''}${this.power < 0 ? `Use ϟ${-this.power}` : this.power > 0 ? `Gen ϟ${this.power}` : ''}${!this.active ? '</s>' : ''}</div>
+    </div>
+    <div>
+      ${this.desc}
+    </div>
+  `;
+};
+
+GameObject.prototype.populateBuildBar = function () {
+  if (this.upgrade) {
+    const buildBarItemElement = document.createElement('button');
+    buildBarItemElement.className = 'build-bar upgrade';
+    if (this.level === this.maxLevel) {
+      buildBarItemElement.innerHTML = 'UPGRADE<br>[max]';
+      buildBarItemElement.disabled = true;
+    } else if (resources.mats.current < (this.upgradeCost * (this.level + 1))) {
+      buildBarItemElement.innerHTML = `UPGRADE<br>[M:${this.upgradeCost * (this.level + 1)}]`;
+      buildBarItemElement.disabled = true;
+    } else {
+      buildBarItemElement.innerHTML = `UPGRADE<br>[M:${this.upgradeCost * (this.level + 1)}]`;
+    }
+
+    buildBarItemElement.addEventListener('click', () => {
+      resources.mats.current -= this.upgradeCost * (this.level + 1);
+      this.upgrade();
+      this.populateBuildBar();
+    });
+
+    $('.ui-panel__build-list').innerHTML = '';
+    $('.ui-panel__build-list').append(buildBarItemElement);
+  }
+};
+
+GameObject.prototype.updateBuildBarUI = function () {
+  $('.ui-panel__build-info').classList.add('ui-panel__build-info--select');
+  $('.ui-panel__build-info').innerHTML = this.createSelectedObjectHTML();
+
+  // If no upgrades or things this thing can build:
+  if (this.upgrade || this.hasBuildListThisIsTempHmmm) {
+    if (gameObjectList.getSelectedList().length === 1) {
+      $('.ui-panel__build-list').style.display = '';
+      this.populateBuildBar();
+    }
+  } else {
+    $('.ui-panel__build-list').style.display = 'none';
+  }
+};
+
 /**
  * Make this game object the selected one
  * @return {[type]} [description]
  */
 GameObject.prototype.select = function (select) {
-  if (!Build.currentItem || !select) {
-    this.selected = select;
-    this.model.element.classList.toggle('select', select);
+  this.selected = select;
+
+  if (select) {
     $('.ui-panel--btns').setAttribute('aria-hidden', false);
+    this.model.element.classList.add('select');
+    this.updateBuildBarUI();
+  } else {
+    this.model.element.classList.remove('select');
   }
 };
 
@@ -71,13 +130,18 @@ GameObject.prototype.addSelectEventListeners = function () {
     });
 
     side.element.addEventListener('click', () => {
+      // You're building something not selecting, do nothing
+      if (Build.currentItem) return;
+
+      // Deselect every other GameObject in the list
       gameObjectList.forEach((item) => {
         if (this !== item && item.select) {
           item.select(false);
         }
       });
 
-      if (!this.selected) this.select(true);
+      // Select this object if it's not already selected
+      this.select(true);
     });
 
     side.element.addEventListener('dblclick', () => {
@@ -86,6 +150,10 @@ GameObject.prototype.addSelectEventListeners = function () {
           item.select(true);
         }
       });
+
+      // Hide upgrades and building stuff
+      // TODO: Enable building from or upgrading multiple selected gameObjects
+      $('.ui-panel__build-list').style.display = 'none';
     });
   });
 };

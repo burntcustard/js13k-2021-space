@@ -1,7 +1,7 @@
 const resources = {
   mats: {
     capacity: 1000,
-    current: 1000,
+    current: 150,
   },
   population: {
     capacity: 1,

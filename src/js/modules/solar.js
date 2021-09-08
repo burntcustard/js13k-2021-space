@@ -1,6 +1,8 @@
 import Module from './module';
+import GameObject from '../objects/object';
 import Box from '../shapes/box';
 import Vec3 from '../vec3';
+import { $ } from '../util';
 
 const info = {
   tag: 'Solar Panel Basic',
@@ -30,8 +32,9 @@ export default function Solar({
   });
   this.model.sides[1].element.className += ' panel';
   this.model.sides[4].element.className += ' panel';
-  this.level = 1;
-  this.maxLevel = 3;
+  this.level = 0;
+  this.maxLevel = 2;
+  this.upgradeCost = 10;
 
   Module.call(this, { x, y, z, rx, ry, rz, ...info });
 }
@@ -43,13 +46,22 @@ Solar.prototype.constructor = Solar;
 Solar.prototype.instancesBuilt = 0;
 
 Solar.prototype.upgrade = function () {
+  this.setLevel(this.level + 1);
+};
+
+Solar.prototype.setLevel = function (level) {
   // Disable the re-enable to update resource bar numbers
   this.disable();
-  this.level++;
-  this.power = info.power * this.level;
+
+  // TODO: Maybe save space by not changling className
+  this.model.element.classList.remove(`lvl-${this.level}`);
+  this.level = level;
+  this.model.element.classList.add(`lvl-${this.level}`);
+
+  this.power = info.power * (this.level + 1);
   // TODO: Do we want to add some time while upgrading before re-enabling?
   this.enable();
-  this.model.changeSize({ w: info.w * this.level });
+  this.model.changeSize({ w: info.w * (this.level + 1) });
 
   const shape = this.connectedTo.parent;
 
@@ -65,6 +77,10 @@ Solar.prototype.upgrade = function () {
   this.model.x = shape.x + sideRotated.x + sideResized.x;
   this.model.y = shape.y + sideRotated.y + sideResized.y;
   this.model.z = shape.z + sideRotated.z + sideResized.z;
+
+  if (this.selected) {
+    $('.ui-panel__build-info').innerHTML = GameObject.prototype.createSelectedObjectHTML.call(this);
+  }
 };
 
 Solar.prototype.build = function () {
