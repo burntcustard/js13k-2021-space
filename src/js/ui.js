@@ -101,12 +101,30 @@ deleteButton.addEventListener('click', () => {
       gameObjectList[i].kill();
     }
   }
+
+  $('.ui-panel--btns').setAttribute('aria-hidden', true);
+  $('.ui-panel__build-info').classList.remove('ui-panel__build-info--select');
+  $('.ui-panel__build-info').innerHTML = ''; // Remove infos
+  $('.ui-panel__build-list').innerHTML = ''; // Remove object buttons
+  $('.ui-panel__build-list').style.display = '';
+  $('.ui-panel__build-list').append(...UI.buildBarList.map((b) => b.element));
+
+  // Cancel building whatever is the current build item
+  UI.deselectAllBuildBarItems();
+  Build.setCurrentItem(false);
 });
 
 offButton.addEventListener('click', () => {
   // TODO: Make this actually enable and disable modules
-  const isDisabled = offButton.getAttribute('aria-pressed') !== 'true';
-  offButton.setAttribute('aria-pressed', isDisabled);
+  const isEnabled = offButton.getAttribute('aria-pressed') !== 'true';
+  offButton.setAttribute('aria-pressed', isEnabled);
+
+  for (let i = gameObjectList.length - 1; i > 0; i--) {
+    if (gameObjectList[i].selected) {
+      if (!isEnabled && gameObjectList[i].enable) gameObjectList[i].enable();
+      if (isEnabled && gameObjectList[i].disable) gameObjectList[i].disable();
+    }
+  }
 });
 
 export default UI;

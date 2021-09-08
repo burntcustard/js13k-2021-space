@@ -38,7 +38,7 @@ GameObject.prototype.createSelectedObjectHTML = function () {
   return `
     <div>
       <b>${this.tag + '+'.repeat(this.level ?? 0)}</b>
-      <div>${this.power < 0 ? `Use ϟ${-this.power}` : this.power > 0 ? `Gen ϟ${this.power}` : ''}</div>
+      <div>${!this.active ? '<s>' : ''}${this.power < 0 ? `Use ϟ${-this.power}` : this.power > 0 ? `Gen ϟ${this.power}` : ''}${!this.active ? '</s>' : ''}</div>
     </div>
     <div>
       ${this.desc}
@@ -71,6 +71,21 @@ GameObject.prototype.populateBuildBar = function () {
   }
 };
 
+GameObject.prototype.updateBuildBarUI = function () {
+  $('.ui-panel__build-info').classList.add('ui-panel__build-info--select');
+  $('.ui-panel__build-info').innerHTML = this.createSelectedObjectHTML();
+
+  // If no upgrades or things this thing can build:
+  if (this.upgrade || this.hasBuildListThisIsTempHmmm) {
+    if (gameObjectList.getSelectedList().length === 1) {
+      $('.ui-panel__build-list').style.display = '';
+      this.populateBuildBar();
+    }
+  } else {
+    $('.ui-panel__build-list').style.display = 'none';
+  }
+};
+
 /**
  * Make this game object the selected one
  * @return {[type]} [description]
@@ -81,17 +96,7 @@ GameObject.prototype.select = function (select) {
   if (select) {
     $('.ui-panel--btns').setAttribute('aria-hidden', false);
     this.model.element.classList.add('select');
-
-    $('.ui-panel__build-info').classList.add('ui-panel__build-info--select');
-    $('.ui-panel__build-info').innerHTML = this.createSelectedObjectHTML();
-
-    // If no upgrades or things this thing can build:
-    if (this.upgrade || this.objectBuildListThisVarNameIsTemporary) {
-      $('.ui-panel__build-list').style.display = '';
-      this.populateBuildBar();
-    } else {
-      $('.ui-panel__build-list').style.display = 'none';
-    }
+    this.updateBuildBarUI();
   } else {
     this.model.element.classList.remove('select');
   }
