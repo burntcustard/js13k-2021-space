@@ -1,5 +1,3 @@
-import { $ } from './util';
-
 const gameObjectList = [];
 
 // TODO: Other game object list related functions, like getAllAlive()
@@ -18,8 +16,6 @@ gameObjectList.killSelected = function () {
       this[i].kill();
     }
   }
-
-  $('.ui-panel--btns').setAttribute('aria-hidden', true);
 };
 
 // TODO: Remove because the upgrade UI doesn't let you upgrade >1 thing at once?
