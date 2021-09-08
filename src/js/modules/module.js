@@ -61,12 +61,14 @@ Module.prototype.disable = function () {
   this.active = false;
   resources.power.use += this.power < 0 ? this.power : 0;
   resources.power.gen -= this.power > 0 ? this.power : 0;
+  if (this.selected) GameObject.prototype.updateBuildBarUI.call(this);
 };
 
 Module.prototype.enable = function () {
   this.active = true;
   resources.power.use -= this.power < 0 ? this.power : 0;
   resources.power.gen += this.power > 0 ? this.power : 0;
+  if (this.selected) GameObject.prototype.updateBuildBarUI.call(this);
 };
 
 /**

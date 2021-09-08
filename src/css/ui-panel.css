@@ -36,49 +36,7 @@
   position: absolute;
   bottom: 3vh;
   display: flex;
-  width: 600px;
   height: 46px;
-  gap: 20px;
+  gap: 18px;
   transform: rotateX(9deg);
-}
-
-.ui-panel__build-list {
-  display: flex;
-  flex: 1;
-  align-items: center;
-  padding: 2px;
-  margin-top: -1px;
-  margin-bottom: -2px;
-  background: #333;
-  box-shadow: 2px 2px inset #111, -2px -2px inset #222;
-  gap: 3px;
-}
-
-.ui-panel__build-info {
-  flex: 1;
-  padding: 5px 6px 4px 6px;
-  border: 3px solid #aaa;
-  margin-bottom: -1px;
-  background: #b40;
-  background-image:
-    repeating-linear-gradient(
-      to top,
-      #0000 0 6px,
-      #a30 0 8px
-    ),
-    repeating-linear-gradient(
-      to right,
-      #0000 0 6px,
-      #a30 0 8px
-    );
-  background-position: 6px 3px;
-  box-shadow: 4px 4px 0 inset #0005, -3px -2px 0 inset #0005, 0 1px 3px #000;
-  color: #fff;
-  font-size: 14px;
-  text-shadow: 0 0 2px #000;
-}
-
-.ui-panel__build-info > div {
-  display: flex;
-  justify-content: space-between;
 }
