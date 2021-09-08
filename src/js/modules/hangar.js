@@ -44,6 +44,7 @@ export default function Hangar({ x, y, z, rx, ry, rz }) {
   this.model.update();
 
   this.bays = [];
+  this.buildList = [MiningShip];
 
   Module.call(this, { x, y, z, rx, ry, rz, ...info });
 }
