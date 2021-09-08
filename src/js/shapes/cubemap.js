@@ -63,14 +63,12 @@ export default function Cubemap({ w, x, y, z, rx, ry, rz }) {
     side.element.addEventListener('mouseup', () => {
       if (side.dragged) return;
 
-      // Deslect any selected game objects
-      gameObjectList.forEach((gameObject) => {
-        if (gameObject.selected) gameObject.select(false);
-      });
+      gameObjectList.deselectAll();
+
       $('.ui-panel--btns').setAttribute('aria-hidden', true);
       $('.ui-panel__build-info').classList.remove('ui-panel__build-info--select');
       $('.ui-panel__build-info').innerHTML = ''; // Remove infos
-      $('.ui-panel__build-list').innerHTML = ''; // Remvoe object buttons
+      $('.ui-panel__build-list').innerHTML = ''; // Remove object buttons
       $('.ui-panel__build-list').style.display = '';
       $('.ui-panel__build-list').append(...UI.buildBarList.map((b) => b.element));
 

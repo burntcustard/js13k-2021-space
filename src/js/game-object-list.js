@@ -31,4 +31,11 @@ gameObjectList.upgradeSelected = function () {
   }
 };
 
+// Deslect any selected game objects
+gameObjectList.deselectAll = function () {
+  gameObjectList.forEach((gameObject) => {
+    if (gameObject.selected) gameObject.select(false);
+  });
+};
+
 export default gameObjectList;
