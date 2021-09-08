@@ -35,27 +35,13 @@ export default function Planet({ x, y, z, r }) {
   camera.followers.push(this);
 
   this.updateTransform = () => {
-    // This was an attempt to take into account the position of the circle
-    // on the screen to adjust it slightly to stop the hula hooping, but is meh
-    // const clientRect = this.element.getBoundingClientRect();
-    // const xOffset = clientRect.left + clientRect.right - window.innerWidth;
-    // const yOffset = clientRect.top + clientRect.bottom - window.innerWidth;
-    // const xDist = Math.abs(this.x - camera.x);
-    // const yDist = Math.abs(this.y - camera.y);
-    // translate(${xOffset}px, ${yOffset}px)
-
-    // Position the celestial body - this shouldn't change much so maybe don't do
-    // every update?
-
-    // Make the circle face the camera so it looks like a sphere.
-    // the rotate90 is just temporary to make the lighting line up
-    const perspective = camera.zoom;
-    const numerator = perspective * Math.cos(camera.rz) + this.y + camera.y;
-    const demoninator = perspective * Math.sin(camera.rz) + this.x + camera.x;
-    const angle = Math.atan2(demoninator, numerator);
+    const angleZ = Math.atan2(
+      camera.zoom * Math.cos(camera.rz) - this.y - camera.y,
+      camera.zoom * Math.sin(camera.rz) - this.x - camera.x,
+    );
 
     this.bodyElement.style.transform = `
-      rotateZ(${angle - PI_2}rad)
+      rotateZ(${angleZ - PI_2}rad)
       rotateX(${-camera.rx}rad)
       scale(32)
     `;

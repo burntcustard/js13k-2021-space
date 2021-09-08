@@ -26,7 +26,7 @@ const skybox = new Cubemap({
 
 const sun = new Sun({ x: 40000, y: 40000, z: 10000, r: 200 });
 
-const planet = new Planet({ x: 0, y: 0, r: 10 });
+const planet = new Planet({ x: 900, y: -9000, r: 300 });
 
 const box = new Box({
   w: 60,
@@ -117,8 +117,6 @@ function main(timestamp) {
   }
 
   doKeyboardInput();
-
-  // octagon.x += 0.5;
 
   gameObjectList.forEach((object) => {
     object.update(elapsed, lights);
