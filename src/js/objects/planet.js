@@ -1,4 +1,5 @@
 import { camera } from '../camera';
+import { PI_2 } from '../util';
 
 export default function Planet({ x, y, z, r }) {
   this.x = x ?? 0;
@@ -48,8 +49,13 @@ export default function Planet({ x, y, z, r }) {
 
     // Make the circle face the camera so it looks like a sphere.
     // the rotate90 is just temporary to make the lighting line up
+    const perspective = camera.zoom;
+    const numerator = perspective * Math.cos(camera.rz) + this.y + camera.y;
+    const demoninator = perspective * Math.sin(camera.rz) + this.x + camera.x;
+    const angle = Math.atan2(demoninator, numerator);
+
     this.bodyElement.style.transform = `
-      rotateZ(${-camera.rz}rad)
+      rotateZ(${angle - PI_2}rad)
       rotateX(${-camera.rx}rad)
       scale(32)
     `;

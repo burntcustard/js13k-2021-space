@@ -47,6 +47,7 @@ function Camera() {
 
   this.changeZoom = (value) => {
     this.zoom += (value * this.zoom * settings.camera.zoomSpeed) / 500;
+    this.followers.forEach((f) => f.updateTransform(this));
     this.setZoom();
   };
 
@@ -75,6 +76,7 @@ function Camera() {
       this.dx = 0;
       this.dy = 0;
       this.setTransform();
+      this.followers.forEach((f) => f.updateTransform(this));
     }
 
     if (this.dZoom) {
