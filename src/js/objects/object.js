@@ -2,6 +2,9 @@ import Build from '../build';
 import gameObjectList from '../game-object-list';
 import resources from '../resources';
 import { $ } from '../util';
+import createBuildScreenHTML from '../build-screen-html';
+
+const buildInfoElement = $('.ui-panel__build-info');
 
 export default function GameObject(props) {
   this.w = props.w ?? 1;
@@ -69,6 +72,28 @@ GameObject.prototype.populateBuildBar = function () {
     $('.ui-panel__build-list').innerHTML = '';
     $('.ui-panel__build-list').append(buildBarItemElement);
   }
+
+  if (this.buildList) {
+    this.buildList.forEach((Item) => {
+      const buildBarItemElement = document.createElement('button');
+      buildBarItemElement.className = `build-bar ${Item.className}`;
+
+      buildBarItemElement.addEventListener('click', () => {
+        // TODO: Build a ship!
+      });
+
+      buildBarItemElement.addEventListener('mouseover', () => {
+        buildInfoElement.innerHTML = createBuildScreenHTML(Item);
+      });
+
+      buildBarItemElement.addEventListener('mouseleave', () => {
+        buildInfoElement.innerHTML = this.createSelectedObjectHTML();
+      });
+
+      $('.ui-panel__build-list').innerHTML = '';
+      $('.ui-panel__build-list').append(buildBarItemElement);
+    });
+  }
 };
 
 GameObject.prototype.updateBuildBarUI = function () {
@@ -76,7 +101,7 @@ GameObject.prototype.updateBuildBarUI = function () {
   $('.ui-panel__build-info').innerHTML = this.createSelectedObjectHTML();
 
   // If no upgrades or things this thing can build:
-  if (this.upgrade || this.hasBuildListThisIsTempHmmm) {
+  if (this.upgrade || this.buildList) {
     if (gameObjectList.getSelectedList().length === 1) {
       $('.ui-panel__build-list').style.display = '';
       this.populateBuildBar();

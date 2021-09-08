@@ -6,10 +6,10 @@ import UI from './ui';
 import gameObjectList from './game-object-list';
 import resources from './resources';
 import { $, PI_4 } from './util';
+import Block from './modules/block';
 import Light from './objects/light';
 import Cubemap from './shapes/cubemap';
-import HexBlock from './modules/hex-block';
-import RingMd from './modules/ring-md';
+import ShipController from './ship-controller';
 
 const perfDebug = $('.debug .perf');
 
@@ -34,15 +34,11 @@ const lights = [
   }),
 ];
 
-const ring = new RingMd({ x: -60 });
-ring.spawn();
-ring.enable();
+const stationBlock = new Block({});
+stationBlock.spawn();
+stationBlock.enable();
 
-const hexBlock = new HexBlock({});
-hexBlock.spawn();
-hexBlock.enable();
-
-gameObjectList.push(hexBlock, ring);
+gameObjectList.push(stationBlock);
 
 UI.populateBuildBar();
 
@@ -59,6 +55,8 @@ function main(timestamp) {
   }
 
   doKeyboardInput();
+
+  ShipController.update(elapsed);
 
   gameObjectList.forEach((object) => {
     object.update(elapsed, lights);

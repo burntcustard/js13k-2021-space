@@ -70,6 +70,34 @@ button.build-bar.solar::before {
     );
 }
 
+button.build-bar.hangar::before {
+  width: 24px;
+  height: 24px;
+  border: 2px solid rgb(255, 255, 255);
+  background-color: #197f9e;
+  background-image:
+    linear-gradient(
+      to bottom,
+      rgb(255, 255, 255, 0.6) 0,
+      rgba(255, 255, 255, 0) 25%
+    ),
+    linear-gradient(
+      to left,
+      rgb(255, 255, 255, 0.6) 0,
+      rgba(255, 255, 255, 0) 25%
+    ),
+    linear-gradient(
+      to top,
+      rgb(255, 255, 255, 0.6) 0,
+      rgba(255, 255, 255, 0) 25%
+    ),
+    linear-gradient(
+      to right,
+      rgb(255, 255, 255, 0.6) 0,
+      rgba(255, 255, 255, 0) 25%
+    );
+}
+
 button.build-bar.hab-sm::before {
   width: 26px;
   height: 26px;
