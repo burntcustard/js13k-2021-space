@@ -66,8 +66,7 @@ Hangar.prototype.build = function () {
       x: this.x,
       y: this.y,
       z: this.z,
-      id: i, // TODO: This ID should be unique, just use UUID?
-      bay,
+      parent: this,
     }));
   }
 

@@ -8,7 +8,7 @@ const info = {
   cost: 1,
 };
 
-export default function MiningShip({ x, y, z, id, bay }) {
+export default function MiningShip({ x, y, z, parent }) {
   this.model = new Box({
     w: 40,
     d: 30,
@@ -19,7 +19,8 @@ export default function MiningShip({ x, y, z, id, bay }) {
     className: info.className,
   });
 
-  Ship.call(this, { x, y, z, id, bay, ...info });
+  // TODO: Spawn only in empty bays? Not bay 0?
+  Ship.call(this, { x, y, z, bay: parent.bays[0], ...info });
 }
 
 Object.assign(MiningShip, info);
