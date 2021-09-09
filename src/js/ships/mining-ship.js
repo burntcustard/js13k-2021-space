@@ -20,7 +20,7 @@ export default function MiningShip({ x, y, z, parent }) {
   });
 
   // TODO: Spawn only in empty bays? Not bay 0?
-  Ship.call(this, { x, y, z, bay: parent.bays[0], ...info });
+  Ship.call(this, { x, y, z, parent, ...info });
 }
 
 Object.assign(MiningShip, info);
