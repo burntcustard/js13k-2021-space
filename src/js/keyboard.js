@@ -1,5 +1,5 @@
 import Build from './build';
-import camera from './camera';
+import { camera } from './camera';
 import gameObjectList from './game-object-list';
 import UI from './ui';
 import { $ } from './util';

@@ -1,0 +1,17 @@
+.sun {
+  /* TODO: Not overflow hidden, maybe just have the sun be a circle SVG */
+  overflow: hidden;
+
+  /* Actual sun stuff */
+  background: #f90;
+  box-shadow: 0 0 26px #f60, 0 0 99px #ffcb;
+
+  /* TODO: Make everything else transform-origin center this remove next line */
+  transform-origin: center;
+}
+
+.sun svg {
+  /* TODO: Do we really need all this? Maybe set closer to the SVG? */
+  width: 100%;
+  height: 100%;
+}
