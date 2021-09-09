@@ -8,6 +8,8 @@ export default function Ship({ x, y, z, parent }) {
   this.timer = 0;
   this.power = 30;
   this.bay = null;
+  this.speed = 0;
+  this.acceleration = 0.01;
 
   // Docking got moved to the constructor and just puts the ship in bay 0 for now.
   // It was done/is by the shipcontroller before, so... I might have broken things.
@@ -25,6 +27,7 @@ Ship.prototype.count = 0;
 Ship.prototype.spawn = function () {
   GameObject.prototype.spawn.call(this);
 
+  // As soon as the ship spawns, undock it
   if (this.bay) {
     this.undock();
   }
@@ -42,9 +45,9 @@ Ship.prototype.moveForwards = function () {
 
 Ship.prototype.moveToDestination = function () {
   const alreadyAtDestination = (
-    this.destination.x !== this.x
-    && this.destination.y !== this.y
-    && this.destination.z !== this.z
+    this.destination.x === this.x
+    && this.destination.y === this.y
+    && this.destination.z === this.z
   );
 
   if (alreadyAtDestination) {
@@ -109,6 +112,7 @@ Ship.prototype.dock = function (bay) {
 
 Ship.prototype.undock = function () {
   // Take off and fly forwards a bit
+  // TODO: Set destination a set distance from bay, taking into account rotation
   this.destination = {
     x: this.bay.x + 20,
     y: this.bay.y,

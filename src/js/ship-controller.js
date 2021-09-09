@@ -23,8 +23,11 @@ const ShipController = {
     }
 
     this.ships.forEach((ship) => {
+      ship.update(elapsed); // TODO: Does a ship need updaing if it's not flying?
+
       switch (ship.status) {
         case 'ready':
+          if (!ship.bay) break; // Sometimes ready ships don't have a bay?
           if (ship.bay.hangar.active && resources.mats.current < resources.mats.capacity) {
             ship.undock();
             ship.status = 'mining';

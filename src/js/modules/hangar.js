@@ -60,14 +60,17 @@ Hangar.prototype.build = function () {
     const bay = {
       hangar: this,
       ship: null,
-    };
-    this.bays.push(bay);
-    ShipController.ships.push(new MiningShip({
-      x: this.x,
+      x: this.x, // Bay is in the center of the module, for now
       y: this.y,
       z: this.z,
-      parent: this,
-    }));
+    };
+    this.bays.push(bay);
+    // ShipController.ships.push(new MiningShip({
+    //   x: this.x,
+    //   y: this.y,
+    //   z: this.z,
+    //   parent: this,
+    // }));
   }
 
   ShipController.hangars.push(this);
