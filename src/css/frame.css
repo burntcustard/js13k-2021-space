@@ -1,0 +1,32 @@
+/* The placeholder-bulid frame */
+
+.frame {
+  transition: transform 0.2s;
+}
+
+/* When it's just an outline the texture has basically no opacity */
+.frame .face::before {
+  backface-visibility: hidden;
+  opacity: 0.1;
+}
+
+.frame .face {
+  backface-visibility: visible;
+  pointer-events: none;
+}
+
+.frame.hab-sm .face {
+  background: none !important;
+}
+
+.frame .face::after {
+  border: 2px solid #fffa;
+  background: #fff2;
+  transform: translateZ(-0.1px);
+}
+
+.frame.obstructed .face::after,
+.frame.err-cost .face::after {
+  border: 2px solid #f02b;
+  background: #f022;
+}

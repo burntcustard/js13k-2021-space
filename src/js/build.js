@@ -1,3 +1,4 @@
+/* eslint-disable prefer-destructuring */
 import resources from './resources';
 import gameObjectList from './game-object-list';
 import Vec3 from './vec3';
@@ -50,8 +51,79 @@ Build.update = () => {
 };
 
 Build.updateRotation = () => {
-  Build.currentItemInstance.model.rx = Build.rotation;
+  Build.currentItemInstance.rx = Build.rotation;
   Build.currentItemInstance.update();
+};
+
+Build.addInnerShadows = (side) => {
+  const attachedToIndex = side.parent.sides.indexOf(side);
+
+  if (attachedToIndex === 0) {
+    for (let i = 1; i < side.parent.sides.length - 1; i++) {
+      side.parent.sides[i].element.style.setProperty('--shadow-l', '#000');
+      side.parent.sides[i].element.classList.add('shadow-inner');
+    }
+  }
+
+  if (attachedToIndex === 1) {
+    side.parent.sides[0].element.classList.add('shadow-inner');
+    side.parent.sides[0].element.style.setProperty('--shadow-b', '#000');
+    // side.parent.sides[1].element.style.setProperty('--shadow-b', '#ff0');
+    side.parent.sides[2].element.classList.add('shadow-inner');
+    side.parent.sides[2].element.style.setProperty('--shadow-b', '#000');
+    side.parent.sides[3].element.classList.add('shadow-inner');
+    side.parent.sides[3].element.style.setProperty('--shadow-t', '#000');
+    // side.parent.sides[4].element.style.setProperty('--shadow-t', '#00f');
+    side.parent.sides[5].element.classList.add('shadow-inner');
+    side.parent.sides[5].element.style.setProperty('--shadow-b', '#000');
+  }
+
+  if (attachedToIndex === 2) {
+    side.parent.sides[0].element.classList.add('shadow-inner');
+    side.parent.sides[0].element.style.setProperty('--shadow-r', '#000');
+    side.parent.sides[1].element.classList.add('shadow-inner');
+    side.parent.sides[1].element.style.setProperty('--shadow-t', '#000');
+    // side.parent.sides[2].element.style.setProperty('--shadow-r', '#000');
+    // side.parent.sides[3].element.style.setProperty('--shadow-l', '#000');
+    side.parent.sides[4].element.classList.add('shadow-inner');
+    side.parent.sides[4].element.style.setProperty('--shadow-b', '#000');
+    side.parent.sides[5].element.classList.add('shadow-inner');
+    side.parent.sides[5].element.style.setProperty('--shadow-l', '#000');
+  }
+
+  if (attachedToIndex === 3) {
+    side.parent.sides[0].element.classList.add('shadow-inner');
+    side.parent.sides[0].element.style.setProperty('--shadow-l', '#000');
+    side.parent.sides[1].element.classList.add('shadow-inner');
+    side.parent.sides[1].element.style.setProperty('--shadow-b', '#000');
+    // side.parent.sides[2].element.style.setProperty('--shadow-r', '#000');
+    // side.parent.sides[3].element.style.setProperty('--shadow-l', '#000');
+    side.parent.sides[4].element.classList.add('shadow-inner');
+    side.parent.sides[4].element.style.setProperty('--shadow-t', '#000');
+    side.parent.sides[5].element.classList.add('shadow-inner');
+    side.parent.sides[5].element.style.setProperty('--shadow-r', '#000');
+  }
+
+  if (attachedToIndex === 4) {
+    side.parent.sides[0].element.classList.add('shadow-inner');
+    side.parent.sides[0].element.style.setProperty('--shadow-t', '#000');
+    // side.parent.sides[1].element.style.setProperty('--shadow-b', '#ff0');
+    side.parent.sides[2].element.classList.add('shadow-inner');
+    side.parent.sides[2].element.style.setProperty('--shadow-t', '#000');
+    side.parent.sides[3].element.classList.add('shadow-inner');
+    side.parent.sides[3].element.style.setProperty('--shadow-b', '#000');
+    // side.parent.sides[4].element.style.setProperty('--shadow-t', '#000');
+    side.parent.sides[5].element.classList.add('shadow-inner');
+    side.parent.sides[5].element.style.setProperty('--shadow-t', '#000');
+  }
+
+  // Far side
+  if (attachedToIndex === 5) {
+    for (let i = 0; i < side.parent.sides.length - 1; i++) {
+      side.parent.sides[i].element.classList.add('shadow-inner');
+      side.parent.sides[i].element.style.setProperty('--shadow-r', '#000');
+    }
+  }
 };
 
 Build.addEventListenersTo = (side) => {
@@ -60,8 +132,8 @@ Build.addEventListenersTo = (side) => {
       return;
     }
 
-    // eslint-disable-next-line prefer-destructuring
-    const model = Build.currentItemInstance.model;
+    const item = Build.currentItemInstance;
+    const model = item.model;
     const shape = side.parent;
 
     // Side rotated with shape's rotation
@@ -70,21 +142,23 @@ Build.addEventListenersTo = (side) => {
       .rotateY(shape.ry)
       .rotateZ(shape.rz);
 
+    const sideNormalised = sideRotated.normalise();
+
     // Half model width in direction of side
     const sideResized = sideRotated.resize(model.w * 0.5);
 
     model.element.style.display = '';
     side.element.classList.add('build-hover');
-    side.element.classList.toggle('obstructed', side.hasConnectedModule ?? false);
-    model.element.classList.toggle('obstructed', side.hasConnectedModule ?? false);
+    side.element.classList.toggle('obstructed', side.connectedTo ?? false);
+    model.element.classList.toggle('obstructed', side.connectedTo ?? false);
     Build.currentHoverSide = side;
-    model.x = shape.x + sideRotated.x + sideResized.x;
-    model.y = shape.y + sideRotated.y + sideResized.y;
-    model.z = shape.z + sideRotated.z + sideResized.z;
-    model.rx = Build.rotation;
-    model.ry = Math.atan2(sideRotated.z, sideRotated.x);
-    model.rz = Math.atan2(sideRotated.y, sideRotated.x);
-    Build.currentItemInstance.update();
+    item.x = shape.x + sideRotated.x + sideResized.x;
+    item.y = shape.y + sideRotated.y + sideResized.y;
+    item.z = shape.z + sideRotated.z + sideResized.z;
+    item.rx = Build.rotation;
+    item.ry = -Math.asin(sideNormalised.z);
+    item.rz = Math.atan2(sideRotated.y, sideRotated.x);
+    item.update();
   };
 
   side.mouseleaveListener = () => {
@@ -98,13 +172,29 @@ Build.addEventListenersTo = (side) => {
   };
 
   side.clickListener = () => {
-    if (!Build.currentItem || side.hasConnectedModule || Build.cantAffordCurrentItem) {
+    if (!Build.currentItem || side.connectedTo || Build.cantAffordCurrentItem) {
       return;
     }
+
     Build.currentItemInstance.build();
     gameObjectList.push(Build.currentItemInstance);
-    side.hasConnectedModule = true;
+    side.connectedTo = Build.currentItemInstance;
+    Build.currentItemInstance.connectedTo = side;
     side.element.classList.add('obstructed'); // TODO: Refactor this er somehow
+
+    if (Build.currentItemInstance.model.sides[0].w > side.w
+      && side.parent.parent.tag === 'Block') {
+      side.element.classList.add('shadow-outer');
+
+      Build.addInnerShadows(side);
+    }
+
+    if (Build.currentItemInstance.model.sides[0].w < side.w
+      && Build.currentItemInstance.tag === 'Block') {
+      Build.currentItemInstance.model.sides[0].element.classList.add('shadow-outer');
+
+      Build.addInnerShadows(Build.currentItemInstance.model.sides[0]);
+    }
 
     Build.setCurrentItem(Build.currentItem);
     // Assuming we can't build models on top of each other, new one is obstructed

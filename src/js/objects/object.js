@@ -1,5 +1,10 @@
 import Build from '../build';
 import gameObjectList from '../game-object-list';
+import resources from '../resources';
+import { $ } from '../util';
+import createBuildScreenHTML from '../build-screen-html';
+
+const buildInfoElement = $('.ui-panel__build-info');
 
 export default function GameObject(props) {
   this.w = props.w ?? 1;
@@ -19,6 +24,12 @@ export default function GameObject(props) {
  * @param  {[type]} lights                [description]
  */
 GameObject.prototype.update = function (elapsed, lights) {
+  this.model.x = this.x;
+  this.model.y = this.y;
+  this.model.z = this.z;
+  this.model.rx = this.rx;
+  this.model.ry = this.ry;
+  this.model.rz = this.rz;
   this.model.update(elapsed, lights);
 };
 
@@ -30,14 +41,101 @@ GameObject.prototype.spawn = function () {
   this.update();
 };
 
+/* eslint-disable no-nested-ternary */
+// TODO: Move ui.createBuildBarHTML to here, or move this to there, or somewhere else?
+GameObject.prototype.createSelectedObjectHTML = function () {
+  return `
+    <div>
+      <b>${this.tag + '+'.repeat(this.level ?? 0)}</b>
+      <div>${!this.active ? '<s>' : ''}${this.power < 0 ? `Use ϟ${-this.power}` : this.power > 0 ? `Gen ϟ${this.power}` : ''}${!this.active ? '</s>' : ''}</div>
+    </div>
+    <div>
+      ${this.desc}
+    </div>
+  `;
+};
+
+GameObject.prototype.populateBuildBar = function () {
+  if (this.upgrade) {
+    const buildBarItemElement = document.createElement('button');
+    buildBarItemElement.className = 'build-bar upgrade';
+    if (this.level === this.maxLevel) {
+      buildBarItemElement.innerHTML = 'UPGRADE<br>[max]';
+      buildBarItemElement.disabled = true;
+    } else if (resources.mats.current < (this.upgradeCost * (this.level + 1))) {
+      buildBarItemElement.innerHTML = `UPGRADE<br>[M:${this.upgradeCost * (this.level + 1)}]`;
+      buildBarItemElement.disabled = true;
+    } else {
+      buildBarItemElement.innerHTML = `UPGRADE<br>[M:${this.upgradeCost * (this.level + 1)}]`;
+    }
+
+    buildBarItemElement.addEventListener('click', () => {
+      resources.mats.current -= this.upgradeCost * (this.level + 1);
+      this.upgrade();
+      this.populateBuildBar();
+    });
+
+    $('.ui-panel__build-list').innerHTML = '';
+    $('.ui-panel__build-list').append(buildBarItemElement);
+  }
+
+  if (this.buildList) {
+    this.buildList.forEach((Item) => {
+      const buildBarItemElement = document.createElement('button');
+      buildBarItemElement.className = `build-bar ${Item.className}`;
+
+      buildBarItemElement.addEventListener('click', () => {
+        const newItem = new Item({
+          x: this.x,
+          y: this.y,
+          z: this.z,
+          parent: this,
+        });
+        newItem.spawn();
+      });
+
+      buildBarItemElement.addEventListener('mouseover', () => {
+        buildInfoElement.innerHTML = createBuildScreenHTML(Item);
+      });
+
+      buildBarItemElement.addEventListener('mouseleave', () => {
+        buildInfoElement.innerHTML = this.createSelectedObjectHTML();
+      });
+
+      $('.ui-panel__build-list').innerHTML = '';
+      $('.ui-panel__build-list').append(buildBarItemElement);
+    });
+  }
+};
+
+GameObject.prototype.updateBuildBarUI = function () {
+  $('.ui-panel__build-info').classList.add('ui-panel__build-info--select');
+  $('.ui-panel__build-info').innerHTML = this.createSelectedObjectHTML();
+
+  // If no upgrades or things this thing can build:
+  if (this.upgrade || this.buildList) {
+    if (gameObjectList.getSelectedList().length === 1) {
+      $('.ui-panel__build-list').style.display = '';
+      this.populateBuildBar();
+    }
+  } else {
+    $('.ui-panel__build-list').style.display = 'none';
+  }
+};
+
 /**
  * Make this game object the selected one
  * @return {[type]} [description]
  */
 GameObject.prototype.select = function (select) {
-  if (!Build.currentItem || !select) {
-    this.selected = select;
-    this.model.element.classList.toggle('select', select);
+  this.selected = select;
+
+  if (select) {
+    $('.ui-panel--btns').setAttribute('aria-hidden', false);
+    this.model.element.classList.add('select');
+    this.updateBuildBarUI();
+  } else {
+    this.model.element.classList.remove('select');
   }
 };
 
@@ -69,13 +167,18 @@ GameObject.prototype.addSelectEventListeners = function () {
     });
 
     side.element.addEventListener('click', () => {
+      // You're building something not selecting, do nothing
+      if (Build.currentItem) return;
+
+      // Deselect every other GameObject in the list
       gameObjectList.forEach((item) => {
         if (this !== item && item.select) {
           item.select(false);
         }
       });
 
-      if (!this.selected) this.select(true);
+      // Select this object if it's not already selected
+      this.select(true);
     });
 
     side.element.addEventListener('dblclick', () => {
@@ -84,12 +187,27 @@ GameObject.prototype.addSelectEventListeners = function () {
           item.select(true);
         }
       });
+
+      // Hide upgrades and building stuff
+      // TODO: Enable building from or upgrading multiple selected gameObjects
+      $('.ui-panel__build-list').style.display = 'none';
     });
   });
 };
 
 GameObject.prototype.kill = function () {
   this.model.element?.remove();
+
+  if (this.connectedTo) {
+    this.connectedTo.connectedTo = undefined;
+  }
+
+  // Get half the resources back
+  resources.mats.current = Math.min(
+    resources.mats.current + this.cost / 2,
+    resources.mats.capacity,
+  );
+
   gameObjectList.remove(this);
   // TODO (if space) remove mouse & click event listeners to prevent memory leak
 };

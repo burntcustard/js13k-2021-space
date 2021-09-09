@@ -9,6 +9,5 @@
 
 .viewport * {
   box-sizing: border-box;
-  backface-visibility: hidden;
   transform-style: preserve-3d;
 }

@@ -6,15 +6,12 @@ import Build from './build';
 import UI from './ui';
 import gameObjectList from './game-object-list';
 import { $, PI_4 } from './util';
-import Box from './shapes/box';
 import Block from './modules/block';
-import Solar from './modules/solar';
-import Pyramid from './shapes/pyramid';
-import Octagon from './shapes/octagon';
 import Light from './objects/light';
 import Cubemap from './shapes/cubemap';
 import Sun from './objects/sun';
 import Planet from './objects/planet';
+import ShipController from './ship-controller';
 
 const perfDebug = $('.debug .perf');
 
@@ -27,42 +24,6 @@ const skybox = new Cubemap({
 const sun = new Sun({ x: 40000, y: 40000, z: 10000, r: 200 });
 
 const planet = new Planet({ x: 900, y: -9000, r: 300 });
-
-const box = new Box({
-  w: 60,
-  h: 60,
-  x: 200,
-});
-box.spawn();
-
-// const stationBlock = block.new({ x: 0, z: 10 });
-const stationBlock = new Block({ x: 0 });
-stationBlock.spawn();
-stationBlock.enable();
-// const stationSolar = solar.new({ x: 90, z: 10 });
-const stationSolar = new Solar({ x: 90 });
-stationSolar.spawn();
-stationSolar.enable();
-
-const pyramid = new Pyramid({
-  w: 100,
-  h: 100,
-  y: 200,
-  z: 100,
-});
-pyramid.spawn();
-
-const octagon = new Octagon({
-  w: 100,
-  h: 70,
-  x: 150,
-  y: 200,
-  z: -10,
-  rz: 0.4,
-});
-octagon.spawn();
-
-gameObjectList.push(box, octagon, pyramid, stationBlock, stationSolar);
 
 // TODO: Put this somewhere else
 // const canvas = document.getElementsByTagName('canvas')[0];
@@ -102,6 +63,12 @@ const lights = [
   }),
 ];
 
+const stationBlock = new Block({});
+stationBlock.spawn();
+stationBlock.enable();
+
+gameObjectList.push(stationBlock);
+
 UI.populateBuildBar();
 
 let halfSecondCounter = 0;
@@ -117,6 +84,8 @@ function main(timestamp) {
   }
 
   doKeyboardInput();
+
+  ShipController.update(elapsed);
 
   gameObjectList.forEach((object) => {
     object.update(elapsed, lights);

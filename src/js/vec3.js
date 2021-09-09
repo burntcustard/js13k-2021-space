@@ -17,6 +17,22 @@ export default class Vec3 {
     );
   }
 
+  add(other) {
+    return new Vec3(
+      this.x + other.x,
+      this.y + other.y,
+      this.z + other.z,
+    );
+  }
+
+  minus(other) {
+    return new Vec3(
+      this.x - other.x,
+      this.y - other.y,
+      this.z - other.z,
+    );
+  }
+
   length() {
     return Math.hypot(this.x, this.y, this.z);
   }
@@ -27,6 +43,22 @@ export default class Vec3 {
 
   angleTo(other) {
     return Math.acos(this.dot(other) / (this.length() * other.length()));
+  }
+
+  distanceTo(other) {
+    return other.minus(this).length();
+  }
+
+  rotationX() {
+    return Math.atan2(this.z, this.y);
+  }
+
+  rotationY() {
+    return Math.atan2(this.z, this.x);
+  }
+
+  rotationZ() {
+    return Math.atan2(this.y, this.x);
   }
 
   normalise() {
@@ -40,6 +72,10 @@ export default class Vec3 {
       this.y * multiplier,
       this.z * multiplier,
     );
+  }
+
+  rotate(angleX, angleY, angleZ) {
+    return this.rotateX(angleX).rotateY(angleY).rotateZ(angleZ);
   }
 
   rotateX(angle) {
@@ -70,5 +106,9 @@ export default class Vec3 {
       this.x * sin + this.y * cos,
       this.z,
     );
+  }
+
+  equals(other) {
+    return this.x === other.x && this.y === other.y && this.z === other.z;
   }
 }

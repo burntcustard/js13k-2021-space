@@ -8,9 +8,7 @@ export default function Module(props) {
   this.cost = props.cost;
   this.power = props.power ?? 0;
   this.population = props.population ?? 0;
-
-  // TODO: Add event listener for clicking to interact with module
-  // TODO: Add even listener for hovering about to build thing on faces(?)
+  this.model.parent = this;
 }
 
 // Set Module prototype to an instance of a GameObject
@@ -49,7 +47,7 @@ Module.prototype.updatePower = function (elapsed) {
   }
 
   if (this.power > 0) {
-    // Add some power from the resources banks
+    // Add some power to the resources banks
     resources.power.current = Math.min(
       resources.power.current + this.power * (elapsed / 1000),
       resources.power.capacity,
@@ -61,12 +59,14 @@ Module.prototype.disable = function () {
   this.active = false;
   resources.power.use += this.power < 0 ? this.power : 0;
   resources.power.gen -= this.power > 0 ? this.power : 0;
+  if (this.selected) GameObject.prototype.updateBuildBarUI.call(this);
 };
 
 Module.prototype.enable = function () {
   this.active = true;
   resources.power.use -= this.power < 0 ? this.power : 0;
   resources.power.gen += this.power > 0 ? this.power : 0;
+  if (this.selected) GameObject.prototype.updateBuildBarUI.call(this);
 };
 
 /**

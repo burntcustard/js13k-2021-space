@@ -2,10 +2,8 @@ import resources from './resources';
 import Build from './build';
 import { $ } from './util';
 import gameObjectList from './game-object-list';
-
-import Block from './modules/block';
-import Solar from './modules/solar';
-import HabSm from './modules/hab-sm';
+import moduleList from './modules/module-list';
+import createBuildScreenHTML from './build-screen-html';
 
 const matsBar = $('.mats .fill');
 const matsDot = $('.mats .dot');
@@ -25,58 +23,47 @@ const offButton = $('.off');
 
 const UI = {};
 
-/* eslint-disable no-nested-ternary */
-UI.createBuildBarHTML = (Item) => `
-  <div>
-    <b>${Item.tag}</b>
-    <div>M:${Item.cost}${Item.population ? ` | Pop:${Item.population}` : ''}${Item.power < 0 ? ` | Use ϟ${-Item.power}` : Item.power > 0 ? ` | Gen ϟ${Item.power}` : ''}</div>
-  </div>
-  <div>
-    ${Item.desc}
-  </div>
-`;
-
 UI.buildBarList = [];
 
 UI.deselectAllBuildBarItems = () => {
-  UI.buildBarList.forEach((buildBarItem) => {
-    buildBarItem.element.setAttribute('aria-pressed', false);
+  UI.buildBarList.forEach((buildBarItemElement) => {
+    buildBarItemElement.setAttribute('aria-pressed', false);
   });
 };
 
 UI.populateBuildBar = () => {
-  UI.buildBarList = [Block, Solar, HabSm].map((Item) => {
-    const buildBarItem = { };
-    buildBarItem.element = document.createElement('button');
-    buildBarItem.element.className = `build-bar ${Item.className}`;
-    buildBarItem.element.addEventListener('click', () => {
+  UI.buildBarList = moduleList.map((Item) => {
+    const buildBarItemElement = document.createElement('button');
+    buildBarItemElement.className = `build-bar ${Item.className}`;
+    buildBarItemElement.addEventListener('click', () => {
       Build.setCurrentItem(Item);
 
-      gameObjectList.forEach((gameObject) => {
-        if (gameObject.selected) {
-          gameObject.select(false);
-        }
-      });
+      // Don't need to do this any more?
+      // gameObjectList.forEach((gameObject) => {
+      //   if (gameObject.selected) {
+      //     gameObject.select(false);
+      //   }
+      // });
 
       UI.buildBarList.forEach((other) => {
-        if (buildBarItem === other) {
-          other.element.setAttribute('aria-pressed', true);
+        if (buildBarItemElement === other) {
+          other.setAttribute('aria-pressed', true);
         } else {
-          other.element.setAttribute('aria-pressed', false);
+          other.setAttribute('aria-pressed', false);
         }
       });
     });
-    buildBarItem.element.addEventListener('mouseover', () => {
-      buildInfoElement.innerHTML = UI.createBuildBarHTML(Item);
+    buildBarItemElement.addEventListener('mouseover', () => {
+      buildInfoElement.innerHTML = createBuildScreenHTML(Item);
     });
-    buildBarItem.element.addEventListener('mouseleave', () => {
+    buildBarItemElement.addEventListener('mouseleave', () => {
       buildInfoElement.innerHTML = Build.currentItem
-        ? UI.createBuildBarHTML(Build.currentItem)
+        ? createBuildScreenHTML(Build.currentItem)
         : '';
     });
-    buildListElement.append(buildBarItem.element);
+    buildListElement.append(buildBarItemElement);
 
-    return buildBarItem;
+    return buildBarItemElement;
   });
 };
 
@@ -94,7 +81,7 @@ UI.update = () => {
   powerUse.innerText = `-${resources.power.use}`;
   const num = resources.power.gen - resources.power.use;
   powerNum.innerText = (num <= 0 ? '' : '+') + num;
-  powerNum.classList.toggle('neg', num > 0);
+  powerNum.classList.toggle('neg', num < 0);
   powerCap.innerText = `${Math.floor(resources.power.current)} /  ${resources.power.capacity}`;
 };
 
@@ -104,12 +91,30 @@ deleteButton.addEventListener('click', () => {
       gameObjectList[i].kill();
     }
   }
+
+  $('.ui-panel--btns').setAttribute('aria-hidden', true);
+  $('.ui-panel__build-info').classList.remove('ui-panel__build-info--select');
+  $('.ui-panel__build-info').innerHTML = ''; // Remove infos
+  $('.ui-panel__build-list').innerHTML = ''; // Remove object buttons
+  $('.ui-panel__build-list').style.display = '';
+  $('.ui-panel__build-list').append(...UI.buildBarList);
+
+  // Cancel building whatever is the current build item
+  UI.deselectAllBuildBarItems();
+  Build.setCurrentItem(false);
 });
 
 offButton.addEventListener('click', () => {
   // TODO: Make this actually enable and disable modules
-  const isDisabled = offButton.getAttribute('aria-pressed') !== 'true';
-  offButton.setAttribute('aria-pressed', isDisabled);
+  const isEnabled = offButton.getAttribute('aria-pressed') !== 'true';
+  offButton.setAttribute('aria-pressed', isEnabled);
+
+  for (let i = gameObjectList.length - 1; i > 0; i--) {
+    if (gameObjectList[i].selected) {
+      if (!isEnabled && gameObjectList[i].enable) gameObjectList[i].enable();
+      if (isEnabled && gameObjectList[i].disable) gameObjectList[i].disable();
+    }
+  }
 });
 
 export default UI;

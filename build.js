@@ -77,7 +77,7 @@ async function minifyJs(compiledJs) {
       // unsafe_proto: true,
       // booleans_as_integers: true
     },
-    mangle: !DEBUG,
+    mangle: !DEBUG ? { properties: 'true' } : false,
     module: true,
     sourceMap: DEVMODE ? {
       content: compiledJs.map,
@@ -133,9 +133,11 @@ async function bundleIntoHtml(css, js) {
   );
 
   // Inline JS
+  // (First replace $ with $$$ so we don't trigger special regex parameters)
+  // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/replace#specifying_a_string_as_a_parameter
   inlined = inlined.replace(
     /<script[^>]*><\/script>/,
-    `<script>${js}</script>`,
+    `<script>${js.toString().replace(/\$/g, '$$$')}</script>`,
   );
 
   // Extra HTML hacks to reduce filesize

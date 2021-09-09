@@ -1,0 +1,36 @@
+.shape.hab-sm .face.rect {
+  backface-visibility: visible;
+  background: #013a;
+}
+
+.shape.hab-sm .face::before {
+  background: #eee;
+}
+
+/* TODO: One of these has to be flipped - it'd be easier in the JS? */
+
+/* TODO: Save a few bytes by not using CSS vars? */
+
+/* Two big sides opposite each other */
+.shape.hab-sm .face.rect:nth-child(4n)::before {
+  --window-h: 8px;
+  --window-w: 20px;
+
+  background:
+    linear-gradient(
+      #0000 calc(50% + var(--window-h) - 1px),
+      var(--color-accent) 0 calc(50% + var(--window-h) + 6px),
+      #0000 0
+    ),
+    linear-gradient(
+      90deg,
+      #eee calc(50% - var(--window-w)),
+      #0000 0 calc(50% + var(--window-w)),
+      #eee 0
+    ),
+    linear-gradient(
+      #eee calc(50% - var(--window-h)),
+      #0000 0 calc(50% + var(--window-h)),
+      #eee 0
+    );
+}
