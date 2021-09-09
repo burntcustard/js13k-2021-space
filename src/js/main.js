@@ -10,6 +10,7 @@ import Block from './modules/block';
 import Light from './objects/light';
 import Cubemap from './shapes/cubemap';
 import ShipController from './ship-controller';
+import Sidewinder from './shapes/sidewinder';
 
 const perfDebug = $('.debug .perf');
 
@@ -37,6 +38,17 @@ const lights = [
 const stationBlock = new Block({});
 stationBlock.spawn();
 stationBlock.enable();
+
+const testShipModel = new Sidewinder({
+  w: 40,
+  d: 20,
+  h: 30,
+  x: 0,
+  y: 0,
+  z: 55,
+});
+testShipModel.update();
+testShipModel.spawn();
 
 gameObjectList.push(stationBlock);
 

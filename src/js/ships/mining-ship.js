@@ -1,4 +1,4 @@
-import Box from '../shapes/box';
+import Sidewinder from '../shapes/sidewinder';
 import Ship from './ship';
 
 const info = {
@@ -9,7 +9,7 @@ const info = {
 };
 
 export default function MiningShip({ x, y, z, parent }) {
-  this.model = new Box({
+  this.model = new Sidewinder({
     w: 40,
     d: 30,
     h: 30,
