@@ -10,6 +10,7 @@
 @import 'ship';
 @import 'object';
 @import 'reset';
+@import 'scaffold';
 @import 'scene';
 @import 'solar';
 @import 'ui-btns';
