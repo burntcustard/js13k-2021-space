@@ -28,20 +28,20 @@ export default function Sidewinder({ w, d, h, x, y, z, rx, ry, rz, className }) 
     }),
     // Top left
     new Face({
-      w: W_2,
+      w: W_2 + 1,
       h: d,
       z: 1,
-      x: -W_4,
+      x: -W_4 - 0.5,
       ry: -0.2,
       rx: 0.1,
       className: 'tri',
     }),
     // Top right
     new Face({
-      w: W_2,
+      w: W_2 + 1,
       h: d,
       z: 1,
-      x: W_4,
+      x: W_4 - 0.5,
       ry: 0.2,
       rx: 0.1,
       className: 'tri',
@@ -58,20 +58,20 @@ export default function Sidewinder({ w, d, h, x, y, z, rx, ry, rz, className }) 
     }),
     // Bottom left
     new Face({
-      w: W_2,
+      w: W_2 + 1,
       h: 20,
       z: -1,
-      x: -W_4,
+      x: -W_4 - 0.5,
       ry: PI + 0.2,
       rx: 0.1,
       className: 'tri',
     }),
     // Bottom right
     new Face({
-      w: W_2,
+      w: W_2 + 1,
       h: 20,
       z: -1,
-      x: W_4,
+      x: W_4 - 0.5,
       ry: PI - 0.2,
       rx: 0.1,
       className: 'tri',
@@ -84,7 +84,17 @@ export default function Sidewinder({ w, d, h, x, y, z, rx, ry, rz, className }) 
       rx: -PI_2,
       className: 'dia',
     }),
+    // Engine
+    new Face({
+      w: W_4,
+      h: 2,
+      y: D_2 + 0.1,
+      rx: -PI_2,
+      className: 'engine',
+    }),
   ];
+
+  this.sides[2].element.dataset.text = 3;
 
   this.sides.forEach((side) => {
     side.parent = this;

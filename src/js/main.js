@@ -47,7 +47,7 @@ const testShipModel = new Sidewinder({
   y: 0,
   z: 55,
 });
-testShipModel.update();
+testShipModel.update(0, lights);
 testShipModel.spawn();
 
 gameObjectList.push(stationBlock);
