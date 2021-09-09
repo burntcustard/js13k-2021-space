@@ -93,18 +93,21 @@
 
 .eco .use {
   margin-top: 5px;
-  color: #f20;
 }
 
 .eco .gen,
-.eco .nun.neg {
+.eco .num {
   color: #0f9;
 }
 
 .eco .num {
   margin-left: 4px;
-  color: #f20;
   font-size: 18px;
+}
+
+.eco .use,
+.eco .num.neg {
+  color: #f20;
 }
 
 .pop .icon {
