@@ -3,7 +3,7 @@ import Shape from './shape';
 import Face from './face';
 import { $, PI_2 } from '../util';
 import UI from '../ui';
-import camera from '../camera';
+import { camera } from '../camera';
 import gameObjectList from '../game-object-list';
 
 /**
@@ -90,5 +90,5 @@ Cubemap.prototype.update = function () {
     rotateX(${this.rx})
     rotateY(${this.ry})
     rotateZ(${this.rz})
-    scale3d(99, 99, 99)`;
+    scale3D(99, 99, 99)`;
 };

@@ -1,16 +1,8 @@
 import Module from './module';
 import BoxVisibleInner from '../shapes/box-visible-inner';
-import resources from '../resources';
-import { $, lerp } from '../util';
-import Ship from '../ships/ship';
 import MiningShip from '../ships/mining-ship';
 import ShipController from '../ship-controller';
-
-const MIN_MINING_TIME = 10000;
-const MAX_MINING_TIME = 30000;
-const SHIP_POWER_PER_S = 1;
-const SHIP_CHARGE_PER_S = 2;
-const SHIP_POWER_CAPACITY = (MAX_MINING_TIME / 1000) * SHIP_POWER_PER_S;
+import Vec3 from '../vec3';
 
 const info = {
   tag: 'Hangar',
@@ -56,57 +48,19 @@ Hangar.prototype.constructor = Hangar;
 Hangar.prototype.build = function () {
   Module.prototype.build.call(this);
 
+  this.facing = new Vec3(1, 0, 0).rotate(this.rx, this.ry, this.rz);
+  this.arrivalPoint = this.facing.resize(this.w).add(new Vec3(this.x, this.y, this.z));
+
   for (let i = 0; i < info.numberOfBays; i++) {
     const bay = {
       hangar: this,
       ship: null,
     };
     this.bays.push(bay);
-    ShipController.ships.push(new MiningShip({
-      x: this.x,
-      y: this.y,
-      z: this.z,
-      id: i, // TODO: This ID should be unique, just use UUID?
-      bay,
-    }));
   }
 
   ShipController.hangars.push(this);
   ShipController.bays.push(...this.bays);
-};
-
-Hangar.prototype.update = function (elapsed, lights) {
-  Module.prototype.update.call(this, elapsed, lights);
-
-  this.bays.forEach(({ ship }) => {
-    if (ship) {
-      switch (ship.status) {
-        case 'docked':
-          // Offload mats and start charging
-          resources.mats.current = Math.min(resources.mats.current + 50, resources.mats.capacity);
-          this.power -= SHIP_CHARGE_PER_S;
-          if (this.active) resources.power.use += SHIP_CHARGE_PER_S;
-          ship.status = 'charging';
-          break;
-        case 'charging':
-          if (this.active) {
-            // Charge ship until fully charged
-            ship.power = Math.min(
-              ship.power + SHIP_CHARGE_PER_S * (elapsed / 1000),
-              SHIP_POWER_CAPACITY,
-            );
-            if (ship.power === SHIP_POWER_CAPACITY) {
-              ship.status = 'ready';
-              this.power += SHIP_CHARGE_PER_S;
-              resources.power.use -= SHIP_CHARGE_PER_S;
-            }
-          }
-          break;
-        default:
-        // Unknown status, do nothing
-      }
-    }
-  });
 };
 
 Hangar.prototype.kill = function () {

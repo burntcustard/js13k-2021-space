@@ -1,21 +1,21 @@
 import Module from './module';
-import Box from '../shapes/box';
+import BoxScaffold from '../shapes/box-scaffold';
 import Build from '../build';
 
 const info = {
-  tag: 'Block', // Can't use 'name' because is reserved
-  desc: 'Basic building block',
-  className: 'block module',
+  tag: 'Scaffold', // Can't use 'name' because is reserved
+  desc: 'Alternative to the Block module',
+  className: 'scaffold module',
   cost: 10,
   w: 60,
   d: 60,
   h: 60,
 };
 
-export default function Block({
+export default function Scaffold({
   x, y, z, rx, ry, rz,
 }) {
-  this.model = new Box({
+  this.model = new BoxScaffold({
     w: info.w,
     h: info.h,
     d: info.d,
@@ -38,11 +38,11 @@ export default function Block({
   // TODO: Add hover selecty (not building) even listeners? Or just use :hover?
 }
 
-Object.assign(Block, info);
-Block.prototype = Object.create(Module.prototype);
-Block.prototype.constructor = Block;
+Object.assign(Scaffold, info);
+Scaffold.prototype = Object.create(Module.prototype);
+Scaffold.prototype.constructor = Scaffold;
 
-Block.prototype.build = function () {
+Scaffold.prototype.build = function () {
   // TODO: Block build animation
   Module.prototype.build.call(this);
 };

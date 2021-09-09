@@ -85,7 +85,13 @@ GameObject.prototype.populateBuildBar = function () {
       buildBarItemElement.className = `build-bar ${Item.className}`;
 
       buildBarItemElement.addEventListener('click', () => {
-        // TODO: Build a ship!
+        const newItem = new Item({
+          x: this.x,
+          y: this.y,
+          z: this.z,
+          parent: this,
+        });
+        newItem.spawn();
       });
 
       buildBarItemElement.addEventListener('mouseover', () => {

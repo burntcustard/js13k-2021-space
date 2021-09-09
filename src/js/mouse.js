@@ -1,5 +1,5 @@
 import { $ } from './util';
-import camera from './camera';
+import { camera } from './camera';
 
 export default function initMouse() {
   const viewport = $('.viewport');

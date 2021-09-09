@@ -6,8 +6,7 @@ const info = {
   tag: 'Hex Block',
   desc: 'Hexagonal building block',
   className: 'hex-block module',
-  cost: 1,
-  power: -10,
+  cost: 20,
   w: 60,
   d: 120,
 };

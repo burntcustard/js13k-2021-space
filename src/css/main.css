@@ -12,10 +12,14 @@
 @import 'camera';
 @import 'debug';
 @import 'eco';
+@import 'ship';
 @import 'object';
+@import 'planet';
 @import 'reset';
+@import 'scaffold';
 @import 'scene';
 @import 'solar';
+@import 'sun';
 @import 'ui-btns';
 @import 'ui-panel';
 @import 'ui';
