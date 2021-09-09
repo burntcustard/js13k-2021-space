@@ -25,6 +25,25 @@ button.build-bar.block::before {
     );
 }
 
+button.build-bar.scaffold::before {
+  width: 22px;
+  height: 18px;
+  background:
+    linear-gradient(
+      45deg,
+      #0000 0 calc(50% - 1px),
+      var(--color-secondary) 0 calc(50% + 2px),
+      #0000 0
+    ),
+    linear-gradient(
+      -45deg,
+      #0000 0 calc(50% - 1px),
+      var(--color-secondary) 0 calc(50% + 2px),
+      #0000 0
+    );
+  box-shadow: 0 0 0 3px var(--color-secondary);
+}
+
 button.build-bar.hex-block::before {
   width: 28px;
   height: 36px;
