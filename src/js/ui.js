@@ -81,7 +81,7 @@ UI.update = () => {
   powerUse.innerText = `-${resources.power.use}`;
   const num = resources.power.gen - resources.power.use;
   powerNum.innerText = (num <= 0 ? '' : '+') + num;
-  powerNum.classList.toggle('neg', num > 0);
+  powerNum.classList.toggle('neg', num < 0);
   powerCap.innerText = `${Math.floor(resources.power.current)} /  ${resources.power.capacity}`;
 };
 

@@ -202,6 +202,12 @@ GameObject.prototype.kill = function () {
     this.connectedTo.connectedTo = undefined;
   }
 
+  // Get half the resources back
+  resources.mats.current = Math.min(
+    resources.mats.current + this.cost / 2,
+    resources.mats.capacity,
+  );
+
   gameObjectList.remove(this);
   // TODO (if space) remove mouse & click event listeners to prevent memory leak
 };
