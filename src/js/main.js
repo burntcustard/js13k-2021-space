@@ -10,7 +10,6 @@ import Block from './modules/block';
 import Light from './objects/light';
 import Cubemap from './shapes/cubemap';
 import ShipController from './ship-controller';
-import Sidewinder from './shapes/sidewinder';
 
 const perfDebug = $('.debug .perf');
 
