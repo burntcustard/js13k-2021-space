@@ -4,10 +4,9 @@ import Build from '../build';
 
 const info = {
   tag: 'Scaffold', // Can't use 'name' because is reserved
-  desc: 'Cheap alternative to the block',
+  desc: 'Alternative to the Block module',
   className: 'scaffold module',
-  cost: 1,
-  power: 0,
+  cost: 10,
   w: 60,
   d: 60,
   h: 60,

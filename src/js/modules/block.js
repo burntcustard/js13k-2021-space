@@ -6,8 +6,7 @@ const info = {
   tag: 'Block', // Can't use 'name' because is reserved
   desc: 'Basic building block',
   className: 'block module',
-  cost: 1,
-  power: -15,
+  cost: 10,
   w: 60,
   d: 60,
   h: 60,
