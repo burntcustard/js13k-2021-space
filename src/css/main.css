@@ -2,9 +2,9 @@
 @import 'module';
 @import 'shapes';
 @import 'face';
+@import 'face--ao';
 @import 'face--build';
 @import 'face--debug';
-@import 'face--shadow';
 @import 'block';
 @import 'hexagon';
 @import 'build-bar';

@@ -29,9 +29,9 @@
 }
 
 .face:nth-child(8n)::before {
-  background: hsl(305, 100%, 50%, 0.9);
+  background: hsl(305, 100%, 50%, 0.8);
 }
 
 .face:nth-child(9n)::before {
-  background: hsl(340, 100%, 50%, 0.9);
+  background: hsl(340, 100%, 50%, 0.8);
 }
