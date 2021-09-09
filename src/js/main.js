@@ -39,17 +39,6 @@ const stationBlock = new Block({});
 stationBlock.spawn();
 stationBlock.enable();
 
-const testShipModel = new Sidewinder({
-  w: 40,
-  d: 20,
-  h: 30,
-  x: 0,
-  y: 0,
-  z: 55,
-});
-testShipModel.update(0, lights);
-testShipModel.spawn();
-
 gameObjectList.push(stationBlock);
 
 UI.populateBuildBar();

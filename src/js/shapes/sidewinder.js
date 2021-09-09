@@ -94,8 +94,6 @@ export default function Sidewinder({ w, d, h, x, y, z, rx, ry, rz, className }) 
     }),
   ];
 
-  this.sides[2].element.dataset.text = 3;
-
   this.sides.forEach((side) => {
     side.parent = this;
     // side.element.style.backfaceVisibility = 'visible';
