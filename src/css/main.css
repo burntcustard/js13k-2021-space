@@ -7,6 +7,7 @@
 @import 'camera';
 @import 'debug';
 @import 'eco';
+@import 'ship';
 @import 'object';
 @import 'reset';
 @import 'scaffold';

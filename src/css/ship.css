@@ -1,0 +1,30 @@
+.shape.ship .face::before {
+  background: var(--color-accent);
+  color: #fff;
+  content: attr(data-text);
+  font-size: 10px;
+  line-height: 26px;
+  text-align: center;
+}
+
+.shape.ship .face:nth-child(1)::before {
+  background:
+    linear-gradient(
+      var(--color-accent) 8px,
+      #000 0 12px,
+      var(--color-accent) 0
+    );
+}
+
+.shape.ship .face.engine {
+  background: #5ff;
+  box-shadow: 0 0 2px #5ff;
+}
+
+.shape.ship .face.engine::before {
+  /* Hight could be set depending on accellerating or not */
+  height: 16px;
+  backface-visibility: visible;
+  background: linear-gradient(#5ff, #0000);
+  transform: translateY(calc(-50% + 1px)) rotateX(90deg) translateY(50%);
+}
