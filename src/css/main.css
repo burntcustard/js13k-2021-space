@@ -9,6 +9,7 @@
 @import 'eco';
 @import 'object';
 @import 'reset';
+@import 'scaffold';
 @import 'scene';
 @import 'solar';
 @import 'ui-btns';
