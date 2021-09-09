@@ -1,7 +1,12 @@
 @import 'body';
-@import 'shapes';
 @import 'module';
+@import 'shapes';
+@import 'face';
+@import 'face--build';
+@import 'face--debug';
+@import 'face--shadow';
 @import 'block';
+@import 'hexagon';
 @import 'build-bar';
 @import 'build-bar-icons';
 @import 'camera';
@@ -19,3 +24,4 @@
 @import 'hangar';
 @import 'ui-info';
 @import 'frame';
+@import 'skybox';

@@ -1,0 +1,37 @@
+/* Temporary (hopefully) debug face colors */
+
+.face:nth-child(1n)::before {
+  background: hsl(0, 100%, 50%, 0.8);
+}
+
+.face:nth-child(2n)::before {
+  background: hsl(45, 100%, 50%, 0.8);
+}
+
+.face:nth-child(3n)::before {
+  background: hsl(90, 100%, 50%, 0.8);
+}
+
+.face:nth-child(4n)::before {
+  background: hsl(135, 100%, 50%, 0.8);
+}
+
+.face:nth-child(5n)::before {
+  background: hsl(180, 100%, 50%, 0.8);
+}
+
+.face:nth-child(6n)::before {
+  background: hsl(225, 100%, 50%, 0.8);
+}
+
+.face:nth-child(7n)::before {
+  background: hsl(270, 100%, 50%, 0.8);
+}
+
+.face:nth-child(8n)::before {
+  background: hsl(305, 100%, 50%, 0.9);
+}
+
+.face:nth-child(9n)::before {
+  background: hsl(340, 100%, 50%, 0.9);
+}
