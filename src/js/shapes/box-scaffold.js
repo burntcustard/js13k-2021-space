@@ -3,11 +3,11 @@ import Face from './face';
 import { PI, PI_2 } from '../util';
 
 /**
- * Create a box.
+ * Create a box with a duplicate set of faces on the "inside".
  * Depth defaults to width if ommitted.
  * @param {*} properties
  */
-export default function Box({ w, d = w, h, x, y, z, rx, ry, rz, className }) {
+export default function BoxScaffold({ w, d = w, h, x, y, z, rx, ry, rz, className }) {
   this.className = `${className ?? ''} box`;
   Shape.call(this, { w, d, h, x, y, z, rx, ry, rz, className: this.className });
 
@@ -101,5 +101,5 @@ export default function Box({ w, d = w, h, x, y, z, rx, ry, rz, className }) {
   this.element.append(...this.sides.map((side) => side.element));
 }
 
-Box.prototype = Object.create(Shape.prototype);
-Box.prototype.constructor = Box;
+BoxScaffold.prototype = Object.create(Shape.prototype);
+BoxScaffold.prototype.constructor = BoxScaffold;
