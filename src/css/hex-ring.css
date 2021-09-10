@@ -1,0 +1,3 @@
+.shape.hex-ring .face::before {
+  background: var(--color-primary);
+}
