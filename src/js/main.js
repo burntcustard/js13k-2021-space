@@ -85,7 +85,7 @@ function main(timestamp) {
 
   doKeyboardInput();
 
-  ShipController.update(elapsed);
+  ShipController.update(elapsed, lights);
 
   gameObjectList.forEach((object) => {
     object.update(elapsed, lights);

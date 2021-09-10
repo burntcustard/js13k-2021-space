@@ -2,7 +2,7 @@
   background: var(--color-accent);
   color: #fff;
   content: attr(data-text);
-  font-size: 10px;
+  font-size: 8px;
   line-height: 26px;
   text-align: center;
 }
@@ -11,7 +11,7 @@
   background:
     linear-gradient(
       var(--color-accent) 8px,
-      #000 0 12px,
+      #000 0 12px, /* Cockpit screen */
       var(--color-accent) 0
     );
 }
