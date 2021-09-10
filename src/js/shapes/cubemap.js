@@ -64,6 +64,7 @@ export default function Cubemap({ w, x, y, z, rx, ry, rz }) {
       if (side.dragged) return;
 
       gameObjectList.deselectAll();
+      $('.ui-panel--btns').setAttribute('aria-hidden', true);
       $('.ui-panel--info').setAttribute('aria-hidden', true);
       $('.ui-panel__build-info').classList.remove('ui-panel__build-info--select');
       $('.ui-panel__build-info').innerHTML = ''; // Remove infos
