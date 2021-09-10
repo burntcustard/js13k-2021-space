@@ -3,7 +3,6 @@
   clip-path: polygon(0 100%, 50% 0, 100% 100%);
 }
 
-/* Testing only clipping the main texture of a face instead of the whole thing */
 .dia::before,
 .dia::after {
   clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
