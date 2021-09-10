@@ -34,9 +34,12 @@ Ship.prototype.moveToDestination = function () {
   if (current.distanceTo(destination) < 1) {
     // At destination
     this.destination = null;
+    this.model.element.classList.remove('thrust');
     // TODO: Turn ship engine lights off?
     return;
   }
+
+  this.model.element.classList.add('thrust');
 
   const toDestination = destination.minus(current);
   const change = toDestination.resize(1); // TODO: Make speed not constant (acceleration?)
@@ -45,6 +48,7 @@ Ship.prototype.moveToDestination = function () {
   this.z += change.z;
 
   // Was having issues trying to have rx too so left just rz
+  // TODO: Rotate the ship model?
   this.rz = toDestination.rotationZ() + PI_2;
 };
 

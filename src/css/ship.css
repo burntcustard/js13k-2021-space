@@ -17,14 +17,31 @@
 }
 
 .shape.ship .face.engine {
-  background: #5ff;
-  box-shadow: 0 0 2px #5ff;
+  backface-visibility: visible;
+  background: #677;
+  box-shadow: 0 0 0 0 #5ff;
+  transition: all 1s;
+}
+
+.shape.ship.thrust .face.engine {
+  background: #6ff;
+  box-shadow: 0 0 3px 1px #5ff;
 }
 
 .shape.ship .face.engine::before {
-  /* Hight could be set depending on accellerating or not */
-  height: 16px;
+  display: none;
+}
+
+.shape.ship .face.engine::after {
+  top: 1px;
+  height: 8px;
   backface-visibility: visible;
   background: linear-gradient(#5ff, #0000);
-  transform: translateY(calc(-50% + 1px)) rotateX(90deg) translateY(50%);
+  transform: rotateX(90deg) scaleY(0);
+  transform-origin: top;
+  transition: all 1s;
+}
+
+.shape.ship.thrust .face.engine::after {
+  transform: rotateX(90deg) scaleY(2);
 }
