@@ -93,6 +93,9 @@ async function minifyJs(compiledJs) {
   code = code.replace(/detail/g, '_detail');
   code = code.replace(/parent/g, '_parent');
   code = code.replace(/update/g, '_update');
+  code = code.replace(/\.rx/g, '._rx');
+  code = code.replace(/\.ry/g, '._ry');
+  code = code.replace(/\.rz/g, '._rz');
   // code = code.replace(/direction/g, '_direction'); // Adds 1B ???
   // code = code.replace(/position/g, '_position'); // Breaks things
   // code = code.replace(/rotation/g, '_rotation'); // Breaks things
