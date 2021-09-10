@@ -35,6 +35,7 @@ export default function Solar({
   this.level = 0;
   this.maxLevel = 2;
   this.upgradeCost = 10;
+  this.info = info;
 
   Module.call(this, { x, y, z, rx, ry, rz, ...info });
 }

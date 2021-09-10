@@ -35,6 +35,10 @@ button.build-bar:disabled {
   color: #999;
 }
 
+button.build-bar:disabled::before {
+  opacity: 0.5;
+}
+
 button.build-bar:disabled::after {
   position: absolute;
   width: 100%;
