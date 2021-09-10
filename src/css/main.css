@@ -6,6 +6,7 @@
 @import 'face--build';
 @import 'face--debug';
 @import 'block';
+@import 'hex-ring';
 @import 'hexagon';
 @import 'build-bar';
 @import 'build-bar-icons';
