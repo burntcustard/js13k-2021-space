@@ -19,11 +19,11 @@ export default function MiningShip({ x, y, z, parent }) {
     className: info.className,
   });
 
-  // TODO: Swap the "3" for an ID number or string
-  this.model.sides[2].element.dataset.text = 3;
-
   // TODO: Spawn only in empty bays? Not bay 0?
   Ship.call(this, { x, y, z, parent, ...info });
+
+  // TODO: Swap the "3" for an ID number or string
+  this.model.sides[2].element.dataset.text = this.id;
 }
 
 Object.assign(MiningShip, info);

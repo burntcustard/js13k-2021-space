@@ -13,7 +13,7 @@ const ShipController = {
   hangars: [],
   bays: [],
   dockingQueue: [],
-  update(elapsed) {
+  update(elapsed, lights) {
     // Check if any ships are able to dock
     const emptyBays = this.bays.filter((bay) => bay.ship === null);
     while (emptyBays.length && this.dockingQueue.length) {
@@ -98,7 +98,7 @@ const ShipController = {
         // Unknown status, do nothing
       }
 
-      ship.update(elapsed);
+      ship.update(elapsed, lights);
     });
 
     $('.ship-controller').innerText = this.ships.map((ship) => `${ship.id}: `
