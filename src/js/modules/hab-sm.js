@@ -1,5 +1,5 @@
 import Module from './module';
-import SideOctabox from '../shapes/side-octabox';
+import Octabox from '../shapes/octabox';
 import Build from '../build';
 
 const info = {
@@ -17,7 +17,7 @@ const info = {
 export default function Hab({
   x, y, z, rx, ry, rz,
 }) {
-  this.model = new SideOctabox({
+  this.model = new Octabox({
     w: info.w,
     h: info.h,
     d: info.d,
