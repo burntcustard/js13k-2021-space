@@ -1,5 +1,5 @@
 import Build from '../build';
-import SideHexagon from '../shapes/side-hexagon';
+import Hexagon from '../shapes/hexagon';
 import Module from './module';
 
 const info = {
@@ -12,7 +12,7 @@ const info = {
 };
 
 export default function HexBlock({ x, y, z, rx, ry, rz }) {
-  this.model = new SideHexagon({
+  this.model = new Hexagon({
     w: info.w,
     d: info.d,
     x,

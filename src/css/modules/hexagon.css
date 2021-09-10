@@ -1,0 +1,3 @@
+.shape.hex-block .face::before {
+  background: var(--color-primary);
+}

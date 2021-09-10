@@ -1,0 +1,20 @@
+.face.ao-outer {
+  backface-visibility: visible !important;
+}
+
+.face.ao-outer::after {
+  box-shadow: 0 0 7px 3px #0006;
+
+  /* Make sure the shadow doesn't go the wrong side of the other shape face */
+  transform: translateZ(-0.5px);
+}
+
+.shape:not(.select):not(.hover) .face:not(.build-hover).ao::after {
+  box-sizing: border-box;
+  border: 2px solid #0000;
+  border-top-color: var(--ao-t, #0000);
+  border-right-color: var(--ao-r, #0000);
+  border-bottom-color: var(--ao-b, #0000);
+  border-left-color: var(--ao-l, #0000);
+  filter: blur(4px);
+}

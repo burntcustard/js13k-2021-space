@@ -1,41 +1,21 @@
-.shape,
-.face {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.face {
-  backface-visibility: hidden;
-}
-
-/* Face::befores are the base textures (walls, solar panels etc) */
-.face::before, {
-  position: absolute;
-  z-index: -1;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  box-sizing: border-box;
-  content: '';
-  filter: brightness(var(--l));
-}
-
-.tri::before {
+.tri::before,
+.tri::after {
   clip-path: polygon(0 100%, 50% 0, 100% 100%);
 }
 
-/* Testing only clipping the main texture of a face instead of the whole thing */
-.dia::before {
+.dia::before,
+.dia::after {
   clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);
 }
 
-.hex {
+.hex::before,
+.hex::after {
   clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
 }
 
-.hex-cut {
+.hex-cut,
+.hex-cut::before,
+.hex-cut::after {
   clip-path:
     polygon(
       25% 0%,
@@ -56,118 +36,16 @@
     );
 }
 
-.oct {
+.oct::before,
+.oct::after {
   clip-path: polygon(29.34% 0, 70.66% 0, 100% 29.34%, 100% 70.66%, 70.66% 100%, 29.34% 100%, 0 70.66%, 0 29.34%);
 }
 
-.octish {
+.octish::before,
+.octish::after {
   clip-path: polygon(15% 0, 85% 0, 100% 15%, 100% 85%, 85% 100%, 15% 100%, 0 85%, 0 15%);
 }
 
 .circle {
   border-radius: 50%;
-}
-
-/* Temporary (hopefully) debug face colors */
-
-.face:nth-child(1n)::before {
-  background: hsl(0, 100%, 50%, 0.8);
-}
-
-.face:nth-child(2n)::before {
-  background: hsl(45, 100%, 50%, 0.8);
-}
-
-.face:nth-child(3n)::before {
-  background: hsl(90, 100%, 50%, 0.8);
-}
-
-.face:nth-child(4n)::before {
-  background: hsl(135, 100%, 50%, 0.8);
-}
-
-.face:nth-child(5n)::before {
-  background: hsl(180, 100%, 50%, 0.8);
-}
-
-.face:nth-child(6n)::before {
-  background: hsl(225, 100%, 50%, 0.8);
-}
-
-.face:nth-child(7n)::before {
-  background: hsl(270, 100%, 50%, 0.8);
-}
-
-.face:nth-child(8n)::before {
-  background: hsl(305, 100%, 50%, 0.9);
-}
-
-.face:nth-child(9n)::before {
-  background: hsl(340, 100%, 50%, 0.9);
-}
-
-.skybox .face::before {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='filter'%3E%3CfeTurbulence baseFrequency='0.2'/%3E%3CfeColorMatrix values='0 0 0 9 -5 0 0 0 9 -5 0 0 0 9 -5 0 0 0 0 1'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23filter)'/%3E%3C/svg%3E");
-}
-
-.face.shadow-outer {
-  -webkit-backface-visibility: visible !important;
-}
-
-.face::after {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  box-sizing: border-box;
-  content: '';
-}
-
-.face.shadow-outer::after {
-  box-shadow: 0 0 7px 3px #0006;
-
-  /* Make sure the shadow doesn't go the wrong side of the other shape face */
-  transform: translateZ(-0.5px);
-}
-
-.shape:not(.select):not(.hover) .face:not(.build-hover).shadow-inner::after {
-  box-sizing: border-box;
-  border: 2px solid #0000;
-  border-top-color: var(--shadow-t, #0000);
-  border-right-color: var(--shadow-r, #0000);
-  border-bottom-color: var(--shadow-b, #0000);
-  border-left-color: var(--shadow-l, #0000);
-  filter: blur(4px);
-}
-
-/* ::after can be used for selection and box shadows? */
-.face.build-hover::after {
-  position: absolute;
-  width: 32px;
-  height: 32px;
-  box-sizing: border-box;
-  border-top: 3px solid #0000;
-  border-right: 3px solid #0ff;
-  border-bottom: 3px solid #0000;
-  border-left: 3px solid #0ff;
-  animation: spin 1.5s linear infinite;
-  -webkit-backface-visibility: hidden;
-  background: radial-gradient(#0ff 50%, #0000 0);
-  background-position: 50%;
-  background-repeat: no-repeat;
-  background-size: 20px 20px;
-  border-radius: 50%;
-  content: '';
-}
-
-.face.build-hover.err-cost::after,
-.face.build-hover.obstructed::after {
-  border-right-color: #f02b;
-  border-left-color: #f02b;
-  animation-duration: 5s;
-  background-image: radial-gradient(#f02 50%, #0000 0);
-}
-
-@keyframes spin {
-  0% { transform: rotate(0deg) translateZ(1px); }
-  100% { transform: rotate(360deg) translateZ(1px); }
 }

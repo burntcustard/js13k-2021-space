@@ -60,68 +60,68 @@ Build.addInnerShadows = (side) => {
 
   if (attachedToIndex === 0) {
     for (let i = 1; i < side.parent.sides.length - 1; i++) {
-      side.parent.sides[i].element.style.setProperty('--shadow-l', '#000');
-      side.parent.sides[i].element.classList.add('shadow-inner');
+      side.parent.sides[i].element.style.setProperty('--ao-l', '#000');
+      side.parent.sides[i].element.classList.add('ao');
     }
   }
 
   if (attachedToIndex === 1) {
-    side.parent.sides[0].element.classList.add('shadow-inner');
-    side.parent.sides[0].element.style.setProperty('--shadow-b', '#000');
-    // side.parent.sides[1].element.style.setProperty('--shadow-b', '#ff0');
-    side.parent.sides[2].element.classList.add('shadow-inner');
-    side.parent.sides[2].element.style.setProperty('--shadow-b', '#000');
-    side.parent.sides[3].element.classList.add('shadow-inner');
-    side.parent.sides[3].element.style.setProperty('--shadow-t', '#000');
-    // side.parent.sides[4].element.style.setProperty('--shadow-t', '#00f');
-    side.parent.sides[5].element.classList.add('shadow-inner');
-    side.parent.sides[5].element.style.setProperty('--shadow-b', '#000');
+    side.parent.sides[0].element.classList.add('ao');
+    side.parent.sides[0].element.style.setProperty('--ao-b', '#000');
+    // side.parent.sides[1].element.style.setProperty('--ao-b', '#ff0');
+    side.parent.sides[2].element.classList.add('ao');
+    side.parent.sides[2].element.style.setProperty('--ao-b', '#000');
+    side.parent.sides[3].element.classList.add('ao');
+    side.parent.sides[3].element.style.setProperty('--ao-t', '#000');
+    // side.parent.sides[4].element.style.setProperty('--ao-t', '#00f');
+    side.parent.sides[5].element.classList.add('ao');
+    side.parent.sides[5].element.style.setProperty('--ao-b', '#000');
   }
 
   if (attachedToIndex === 2) {
-    side.parent.sides[0].element.classList.add('shadow-inner');
-    side.parent.sides[0].element.style.setProperty('--shadow-r', '#000');
-    side.parent.sides[1].element.classList.add('shadow-inner');
-    side.parent.sides[1].element.style.setProperty('--shadow-t', '#000');
-    // side.parent.sides[2].element.style.setProperty('--shadow-r', '#000');
-    // side.parent.sides[3].element.style.setProperty('--shadow-l', '#000');
-    side.parent.sides[4].element.classList.add('shadow-inner');
-    side.parent.sides[4].element.style.setProperty('--shadow-b', '#000');
-    side.parent.sides[5].element.classList.add('shadow-inner');
-    side.parent.sides[5].element.style.setProperty('--shadow-l', '#000');
+    side.parent.sides[0].element.classList.add('ao');
+    side.parent.sides[0].element.style.setProperty('--ao-r', '#000');
+    side.parent.sides[1].element.classList.add('ao');
+    side.parent.sides[1].element.style.setProperty('--ao-t', '#000');
+    // side.parent.sides[2].element.style.setProperty('--ao-r', '#000');
+    // side.parent.sides[3].element.style.setProperty('--ao-l', '#000');
+    side.parent.sides[4].element.classList.add('ao');
+    side.parent.sides[4].element.style.setProperty('--ao-b', '#000');
+    side.parent.sides[5].element.classList.add('ao');
+    side.parent.sides[5].element.style.setProperty('--ao-l', '#000');
   }
 
   if (attachedToIndex === 3) {
-    side.parent.sides[0].element.classList.add('shadow-inner');
-    side.parent.sides[0].element.style.setProperty('--shadow-l', '#000');
-    side.parent.sides[1].element.classList.add('shadow-inner');
-    side.parent.sides[1].element.style.setProperty('--shadow-b', '#000');
-    // side.parent.sides[2].element.style.setProperty('--shadow-r', '#000');
-    // side.parent.sides[3].element.style.setProperty('--shadow-l', '#000');
-    side.parent.sides[4].element.classList.add('shadow-inner');
-    side.parent.sides[4].element.style.setProperty('--shadow-t', '#000');
-    side.parent.sides[5].element.classList.add('shadow-inner');
-    side.parent.sides[5].element.style.setProperty('--shadow-r', '#000');
+    side.parent.sides[0].element.classList.add('ao');
+    side.parent.sides[0].element.style.setProperty('--ao-l', '#000');
+    side.parent.sides[1].element.classList.add('ao');
+    side.parent.sides[1].element.style.setProperty('--ao-b', '#000');
+    // side.parent.sides[2].element.style.setProperty('--ao-r', '#000');
+    // side.parent.sides[3].element.style.setProperty('--ao-l', '#000');
+    side.parent.sides[4].element.classList.add('ao');
+    side.parent.sides[4].element.style.setProperty('--ao-t', '#000');
+    side.parent.sides[5].element.classList.add('ao');
+    side.parent.sides[5].element.style.setProperty('--ao-r', '#000');
   }
 
   if (attachedToIndex === 4) {
-    side.parent.sides[0].element.classList.add('shadow-inner');
-    side.parent.sides[0].element.style.setProperty('--shadow-t', '#000');
-    // side.parent.sides[1].element.style.setProperty('--shadow-b', '#ff0');
-    side.parent.sides[2].element.classList.add('shadow-inner');
-    side.parent.sides[2].element.style.setProperty('--shadow-t', '#000');
-    side.parent.sides[3].element.classList.add('shadow-inner');
-    side.parent.sides[3].element.style.setProperty('--shadow-b', '#000');
-    // side.parent.sides[4].element.style.setProperty('--shadow-t', '#000');
-    side.parent.sides[5].element.classList.add('shadow-inner');
-    side.parent.sides[5].element.style.setProperty('--shadow-t', '#000');
+    side.parent.sides[0].element.classList.add('ao');
+    side.parent.sides[0].element.style.setProperty('--ao-t', '#000');
+    // side.parent.sides[1].element.style.setProperty('--ao-b', '#ff0');
+    side.parent.sides[2].element.classList.add('ao');
+    side.parent.sides[2].element.style.setProperty('--ao-t', '#000');
+    side.parent.sides[3].element.classList.add('ao');
+    side.parent.sides[3].element.style.setProperty('--ao-b', '#000');
+    // side.parent.sides[4].element.style.setProperty('--ao-t', '#000');
+    side.parent.sides[5].element.classList.add('ao');
+    side.parent.sides[5].element.style.setProperty('--ao-t', '#000');
   }
 
   // Far side
   if (attachedToIndex === 5) {
     for (let i = 0; i < side.parent.sides.length - 1; i++) {
-      side.parent.sides[i].element.classList.add('shadow-inner');
-      side.parent.sides[i].element.style.setProperty('--shadow-r', '#000');
+      side.parent.sides[i].element.classList.add('ao');
+      side.parent.sides[i].element.style.setProperty('--ao-r', '#000');
     }
   }
 };
@@ -184,14 +184,14 @@ Build.addEventListenersTo = (side) => {
 
     if (Build.currentItemInstance.model.sides[0].w > side.w
       && side.parent.parent.tag === 'Block') {
-      side.element.classList.add('shadow-outer');
+      side.element.classList.add('ao-outer');
 
       Build.addInnerShadows(side);
     }
 
     if (Build.currentItemInstance.model.sides[0].w < side.w
       && Build.currentItemInstance.tag === 'Block') {
-      Build.currentItemInstance.model.sides[0].element.classList.add('shadow-outer');
+      Build.currentItemInstance.model.sides[0].element.classList.add('ao-outer');
 
       Build.addInnerShadows(Build.currentItemInstance.model.sides[0]);
     }

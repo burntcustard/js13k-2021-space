@@ -5,95 +5,92 @@ import Face from './face';
 import { PI, PI3_4, PI_2, PI_4, PI_8 } from '../util';
 
 /**
- * Create an irregular octagon.
+ * Create a irregular octagon that's just like a rounded square.
  * @param {*} properties
  */
-export default function Octagon({ w, h, x, y, z, rx, ry, rz, className }) {
-  this.className = `${className ?? ''} octagon`;
+export default function SideOctabox({ w, h, x, y, z, rx, ry, rz, className }) {
+  this.className = `${className ?? ''} octabox`;
   Shape.call(this, { w, d: w, h, x, y, z, rx, ry, rz, className: this.className });
 
   const W_2 = w * 0.5;
   const H_2 = h * 0.5;
-
-  const sideW1 = Math.floor(w * Math.tan(PI_8) * 1.74);
-  const sideW2 = Math.floor(w * Math.tan(PI_8) * 0.53);
-  const sideOffset = W_2 * 1.2 * Math.sin(PI_4);
+  const sideW1 = Math.floor(h * Math.tan(PI_8) * 1.74);
+  const sideW2 = Math.floor(h * Math.tan(PI_8) * 0.53);
+  const sideOffset = H_2 * 1.2 * Math.sin(PI_4);
 
   this.sides = [
     new Face({
-      w,
-      h: w,
-      z: -H_2,
-      rx: PI,
-      className: 'octish',
-    }),
-    new Face({
-      w: sideW1,
-      h,
-      y: W_2,
-      rx: -PI_2,
-    }),
-    new Face({
-      w: sideW2,
-      h,
-      x: sideOffset,
-      y: sideOffset,
-      rx: -PI_2,
-      rz: -PI_4,
-    }),
-    new Face({
-      w: sideW1,
+      w: h,
       h,
       x: W_2,
       rx: -PI_2,
       rz: -PI_2,
+      className: 'octish',
     }),
     new Face({
-      w: sideW2,
-      h,
-      x: sideOffset,
+      w,
+      h: sideW1,
+      z: -H_2,
+      rx: PI,
+    }),
+    new Face({
+      w,
+      h: sideW2,
+      y: sideOffset,
+      z: -sideOffset,
+      rx: -PI3_4,
+    }),
+    new Face({
+      w,
+      h: sideW1,
+      y: H_2,
+      rx: -PI_2,
+    }),
+    new Face({
+      w,
+      h: sideW2,
+      y: sideOffset,
+      z: sideOffset,
+      rx: -PI_4,
+    }),
+    new Face({
+      w,
+      h: sideW1,
+      z: H_2,
+    }),
+    new Face({
+      w,
+      h: sideW2,
       y: -sideOffset,
-      rx: -PI_2,
-      rz: -PI3_4,
+      z: sideOffset,
+      rx: PI_4,
     }),
     new Face({
-      w: sideW1,
-      h,
-      y: -W_2,
-      rx: -PI_2,
-      rz: -PI,
+      w,
+      h: sideW1,
+      y: -H_2,
+      rx: PI_2,
     }),
     new Face({
-      w: sideW2,
-      h,
-      x: -sideOffset,
+      w,
+      h: sideW2,
       y: -sideOffset,
-      rx: -PI_2,
-      rz: PI3_4,
+      z: -sideOffset,
+      rx: PI3_4,
     }),
     new Face({
-      w: sideW1,
+      w: h,
       h,
       x: -W_2,
       rx: -PI_2,
       rz: PI_2,
-    }),
-    new Face({
-      w: sideW2,
-      h,
-      x: -sideOffset,
-      y: sideOffset,
-      rx: -PI_2,
-      rz: PI_4,
-    }),
-    new Face({
-      w,
-      h: w,
-      z: H_2,
       className: 'octish',
     }),
   ];
-  this.sides.forEach((side) => { side.parent = this; });
+
+  this.sides.forEach((side) => {
+    side.parent = this;
+  });
 
   // TODO: Set octagon face clip-path in JS so it can be precise
   // this.sides[0].element.style.clipPath = `polygon(
@@ -102,5 +99,5 @@ export default function Octagon({ w, h, x, y, z, rx, ry, rz, className }) {
   this.element.append(...this.sides.map((side) => side.element));
 }
 
-Octagon.prototype = Object.create(Shape.prototype);
-Octagon.prototype.constructor = Octagon;
+SideOctabox.prototype = Object.create(Shape.prototype);
+SideOctabox.prototype.constructor = SideOctabox;

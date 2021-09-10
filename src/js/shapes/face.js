@@ -16,7 +16,6 @@ export default function Face({ w, h, x, y, z, rx, ry, rz, colour, className, par
   this.parent = parent;
   this.setSize();
   this.update();
-  // this.element.innerHTML = 'FACE';
 }
 
 Face.prototype.setSize = function () {

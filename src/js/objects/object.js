@@ -59,15 +59,23 @@ GameObject.prototype.populateBuildBar = function () {
   if (this.upgrade) {
     const buildBarItemElement = document.createElement('button');
     buildBarItemElement.className = 'build-bar upgrade';
-    if (this.level === this.maxLevel) {
-      buildBarItemElement.innerHTML = 'UPGRADE<br>[max]';
-      buildBarItemElement.disabled = true;
-    } else if (resources.mats.current < (this.upgradeCost * (this.level + 1))) {
-      buildBarItemElement.innerHTML = `UPGRADE<br>[M:${this.upgradeCost * (this.level + 1)}]`;
-      buildBarItemElement.disabled = true;
-    } else {
-      buildBarItemElement.innerHTML = `UPGRADE<br>[M:${this.upgradeCost * (this.level + 1)}]`;
-    }
+    buildBarItemElement.innerHTML = 'UPGRADE';
+
+    buildBarItemElement.disabled = this.level === this.maxLevel
+      || resources.mats.current < (this.upgradeCost * (this.level + 1));
+
+    buildBarItemElement.addEventListener('mouseover', () => {
+      buildInfoElement.innerHTML = createBuildScreenHTML({
+        tag: this.tag + '+'.repeat(this.level + 1),
+        cost: this.upgradeCost * (this.level + 1),
+        power: this.info.power * (this.level + 2),
+        desc: 'Upgrade',
+      });
+    });
+
+    buildBarItemElement.addEventListener('mouseleave', () => {
+      buildInfoElement.innerHTML = this.createSelectedObjectHTML();
+    });
 
     buildBarItemElement.addEventListener('click', () => {
       resources.mats.current -= this.upgradeCost * (this.level + 1);

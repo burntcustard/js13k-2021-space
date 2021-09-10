@@ -174,3 +174,12 @@ button.build-bar.ring[aria-pressed='true']::before {
 @keyframes rotate {
   100% { transform: rotate(360deg); }
 }
+
+button.build-bar.upgrade::before {
+  position: absolute;
+  z-index: -1;
+  width: 32px;
+  height: 32px;
+  background: #088;
+  clip-path: polygon(50% 0, 100% 45%, 75% 45%, 75% 100%, 25% 100%, 25% 45%, 0 45%);
+}
