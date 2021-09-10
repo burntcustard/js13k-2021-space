@@ -1,9 +1,9 @@
-.shape.hab-sm .face.rect {
+.hab-sm .face.rect {
   backface-visibility: visible;
   background: #013a;
 }
 
-.shape.hab-sm .face::before {
+.hab-sm .face::before {
   background: #eee;
 }
 
@@ -12,7 +12,7 @@
 /* TODO: Save a few bytes by not using CSS vars? */
 
 /* Two big sides opposite each other */
-.shape.hab-sm .face.rect:nth-child(4n)::before {
+.hab-sm .rect:nth-child(4n)::before {
   --window-h: 8px;
   --window-w: 20px;
 

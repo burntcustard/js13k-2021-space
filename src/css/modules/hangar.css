@@ -1,12 +1,13 @@
-.shape.box.hangar .face::before {
+.hangar .face::before {
   background: var(--color-secondary);
 }
 
-.shape.box.hangar .door {
+/* .hangar.door is more specific if we need it */
+.door {
   overflow: hidden;
 }
 
-.shape.box.hangar .door::before {
+.module.hangar .door::before {
   right: -50%;
   left: -50%;
   animation: slide 16s linear forwards infinite;
@@ -27,19 +28,19 @@
   100% { transform: translateX(-25%); }
 }
 
-.shape.box.hangar .door::after {
+.door::after {
   box-shadow: inset 0 0 2px 2px #def, inset 0 0 8px 2px #0af;
 }
 
-.shape.box.hangar .face:nth-child(2)::before {
+.hangar .face:nth-child(2)::before {
   background: #333;
   filter: none;
 }
 
-.shape.box.hangar .face:nth-child(9)::after,
-.shape.box.hangar .face:nth-child(11)::after,
-.shape.box.hangar .face:nth-child(13)::after,
-.shape.box.hangar .face:nth-child(15)::after, {
+.hangar .face:nth-child(9)::after,
+.hangar .face:nth-child(11)::after,
+.hangar .face:nth-child(13)::after,
+.hangar .face:nth-child(15)::after, {
   background:
     linear-gradient(90deg, #000a, #0008 82px, #0000 0),
     linear-gradient(90deg, #0000 82px, #fff 0, #0000 84px),

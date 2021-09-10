@@ -1,3 +1,3 @@
-.shape.block .face.rect::before {
+.block .face::before {
   background: var(--color-secondary);
 }
