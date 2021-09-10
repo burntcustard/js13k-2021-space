@@ -14,7 +14,6 @@ export default function Sidewinder({ w, d, h, x, y, z, rx, ry, rz, className }) 
   const W_2 = w / 2;
   const W_4 = w / 4;
   const D_2 = d / 2;
-  // const H_2 = h * 0.5;
 
   this.sides = [
     // Top
@@ -96,7 +95,6 @@ export default function Sidewinder({ w, d, h, x, y, z, rx, ry, rz, className }) 
 
   this.sides.forEach((side) => {
     side.parent = this;
-    // side.element.style.backfaceVisibility = 'visible';
   });
 
   this.element.append(...this.sides.map((side) => side.element));
