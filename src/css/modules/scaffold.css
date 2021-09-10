@@ -1,4 +1,4 @@
-.shape.scaffold .face.rect::before {
+.scaffold .face.rect::before {
   border: 3px solid var(--color-secondary);
   background:
     linear-gradient(
@@ -16,6 +16,6 @@
 }
 
 /* Shove the scaffolding inside inside a bit further */
-.shape.scaffold .face:nth-child(n+7)::before {
+.scaffold .face:nth-child(n+7)::before {
   transform: translateZ(1px);
 }

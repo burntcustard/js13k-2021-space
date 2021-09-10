@@ -3,7 +3,7 @@
  * to include the default as well, e.g:
  * animation: 1s build forwards, 2s extend forwards;
  */
-.module.shape:not(.frame) .face::before {
+.module:not(.frame) .face::before {
   animation: 1s build forwards;
 }
 
