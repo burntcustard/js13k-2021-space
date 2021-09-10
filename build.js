@@ -85,7 +85,23 @@ async function minifyJs(compiledJs) {
     } : false,
   };
 
-  const result = await terser.minify(compiledJs.code, minifyJsOptions);
+  let { code } = compiledJs;
+
+  // Replace some "terser reserved words" from source before minifying
+  // These are VERY LIKELY to break things
+  code = code.replace(/acceleration/g, '_acceleration');
+  code = code.replace(/detail/g, '_detail');
+  code = code.replace(/parent/g, '_parent');
+  code = code.replace(/update/g, '_update');
+  code = code.replace(/\.rx/g, '._rx');
+  code = code.replace(/\.ry/g, '._ry');
+  code = code.replace(/\.rz/g, '._rz');
+  // code = code.replace(/direction/g, '_direction'); // Adds 1B ???
+  // code = code.replace(/position/g, '_position'); // Breaks things
+  // code = code.replace(/rotation/g, '_rotation'); // Breaks things
+  code = code.replace(/color/g, '_color');
+
+  const result = await terser.minify(code, minifyJsOptions);
 
   if (result.error) {
     console.error('Terser minify failed: ', result.error.message);
