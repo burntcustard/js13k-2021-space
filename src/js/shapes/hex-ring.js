@@ -255,7 +255,7 @@ export default function HexRing({
     }),
   ];
 
-  this.sides.forEach((side) => { side.parent = this; side.element.style.backfaceVisibility = 'visible'; });
+  this.sides.forEach((side) => { side.parent = this; });
 
   this.element.style.setProperty('--t', `${thickness}px`);
   // This one is completely made up
