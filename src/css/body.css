@@ -1,10 +1,10 @@
 body {
-  --color-primary: #fff;
+  --color-primary: #eee;
   --color-secondary: #aaa;
   --color-accent: #f60;
 
   height: 100vh;
   margin: 0;
-  background: #111;
+  background: #000;
   font-family: monospace;
 }

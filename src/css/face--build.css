@@ -1,6 +1,5 @@
 /* ::after can be used for selection and box shadows? */
 .face.build-hover::after {
-  position: absolute;
   width: 32px;
   height: 32px;
   box-sizing: border-box;
@@ -9,13 +8,12 @@
   border-bottom: 3px solid #0000;
   border-left: 3px solid #0ff;
   animation: spin 1.5s linear infinite;
-  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
   background: radial-gradient(#0ff 50%, #0000 0);
   background-position: 50%;
   background-repeat: no-repeat;
   background-size: 20px 20px;
   border-radius: 50%;
-  content: '';
 }
 
 .face.build-hover.err-cost::after,

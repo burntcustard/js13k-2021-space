@@ -153,12 +153,3 @@
 .ui__hex .top .ui-panel {
   transform: rotateX(85deg) translateY(calc(6vmin - 16px));
 }
-
-.ui__hex .right > * {
-  /* display: flex;
-  overflow: visible;
-  width: 0;
-  justify-content: flex-end;
-  transform: rotateY(90deg);
-  transform-style: flat; */
-}

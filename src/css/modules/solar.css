@@ -9,7 +9,7 @@
 }
 
 .shape.box.solar .face::before {
-  background: #fff;
+  background: var(--color-primary);
 }
 
 .shape.box.solar .panel::before {

@@ -19,11 +19,11 @@
   box-shadow:
     30px -30px 60px #000e inset,
     9px 9px 20px #eef3 inset,
-    -1px 1px 3px 1px #fff8 inset;
+    -1px 1px 3px 1px #fff9 inset;
 }
 
 .planet .ring {
-  -webkit-backface-visibility: visible;
+  backface-visibility: visible;
   border-radius: 50%;
   box-shadow: 0 0 1px 4px #ff0;
 }

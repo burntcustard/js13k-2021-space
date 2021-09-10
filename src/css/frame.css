@@ -15,10 +15,6 @@
   pointer-events: none;
 }
 
-.frame.hab-sm .face {
-  background: none !important;
-}
-
 .frame .face::after {
   border: 2px solid #fffa;
   background: #fff2;

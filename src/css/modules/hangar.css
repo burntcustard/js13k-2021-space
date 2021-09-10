@@ -1,5 +1,5 @@
 .shape.box.hangar .face::before {
-  background: #aaa;
+  background: var(--color-secondary);
 }
 
 .shape.box.hangar .door {

@@ -6,7 +6,6 @@
   background: #333;
   box-shadow: 2px 2px inset #111, -2px -2px inset #222, inset 0 0 8px 8px #222;
   grid-template-columns: repeat(auto-fill, minmax(44px, 1fr));
-  pointer-events: all;
 }
 
 button.build-bar {
@@ -32,7 +31,7 @@ button.build-bar.upgrade {
 }
 
 button.build-bar:disabled {
-  color: #999;
+  color: #aaa;
 }
 
 button.build-bar:disabled::before {
@@ -104,7 +103,6 @@ button.build-bar[aria-pressed='true']:hover {
   box-shadow: 4px 4px 0 inset #0005, -3px -2px 0 inset #0005, 0 1px 3px #000;
   color: #fff;
   font-size: 14px;
-  pointer-events: all;
   text-shadow: 0 0 2px #000;
 }
 
