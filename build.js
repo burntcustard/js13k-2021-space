@@ -12,10 +12,12 @@ const postcssImport = require('postcss-easy-import');
 const cssnano = require('cssnano');
 const htmlMinify = require('html-minifier').minify;
 const JSZip = require('jszip');
+const { Packer } = require('roadroller');
 
 // Enabled/Disables browserSync live reloading rather than just building once
 const DEVMODE = process.argv.slice(2).includes('--watch');
 const DEBUG = process.argv.slice(2).includes('--debug');
+const PACK = process.argv.slice(2).includes('--pack');
 
 /**
  * Formats a duration number (ms) into a nice looking string with ansi-colors
@@ -168,6 +170,55 @@ async function bundleIntoHtml(css, js) {
 }
 
 /**
+ * Put JS & CSS into minified HTML files, with roadroller!
+ * @param  {string} css
+ * @param  {string} js
+ */
+async function bundleIntoHtmlWithRoadRoller(css, js) {
+  const startTime = Date.now();
+  console.log('Inlining JS & CSS with Roadroller (may take some time)...');
+
+  // Options: https://github.com/kangax/html-minifier#options-quick-reference
+  const htmlMinifyConfig = {
+    removeAttributeQuotes: true,
+    collapseWhitespace: true,
+  };
+
+  const html = fs.readFileSync('src/index.html', 'utf8');
+
+  let htmlNoScriptNoStyle = html;
+
+  htmlNoScriptNoStyle = htmlNoScriptNoStyle.replace(
+    /<script[^>]*><\/script>/,
+    '',
+  );
+  htmlNoScriptNoStyle = htmlNoScriptNoStyle.replace(
+    /<link rel="stylesheet"[^>]*>/,
+    '',
+  );
+
+  htmlNoScriptNoStyle = htmlMinify(htmlNoScriptNoStyle, htmlMinifyConfig);
+
+  const htmlForRoadroller = `document.write(\`<style>${css}</style>${htmlNoScriptNoStyle}\`);${js.toString()}`;
+
+  fs.writeFileSync('dist/index.pre-rr.html', htmlForRoadroller);
+
+  const packer = new Packer([{
+    data: htmlForRoadroller,
+    type: 'js',
+    action: 'eval',
+  }], {});
+
+  await packer.optimize();
+
+  const { firstLine, secondLine } = packer.makeDecoder();
+
+  fs.writeFileSync('dist/index.html', `<script>${firstLine} ${secondLine}</script>`);
+
+  logOutput(Date.now() - startTime, 'dist/index.html');
+}
+
+/**
  * Draw a fancy zip file size bar with KB and % values
  * @param  {number} used Size of zip file in bytes
  */
@@ -303,7 +354,11 @@ Promise.all([
   compileJs(),
 ]).then(async ([css, js]) => {
   // When both are finished, inline the CSS & JS into the HTML
-  await bundleIntoHtml(css, js);
+  if (PACK) {
+    await bundleIntoHtmlWithRoadRoller(css, js);
+  } else {
+    await bundleIntoHtml(css, js);
+  }
   // Then create the zip file and print it's size (before browserSync init)
   await zip();
 

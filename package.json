@@ -6,7 +6,8 @@
   "scripts": {
     "build": "node build.js",
     "watch": "node build.js --watch",
-    "debug": "node build.js --watch --debug"
+    "debug": "node build.js --watch --debug",
+    "pack": "node build.js --pack"
   },
   "repository": {
     "type": "git",
@@ -30,6 +31,7 @@
     "jszip": "^3.7.0",
     "postcss": "^8.3.6",
     "postcss-easy-import": "^3.0.0",
+    "roadroller": "^2.0.0",
     "rollup": "^2.55.1",
     "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-postcss": "^4.0.0",
