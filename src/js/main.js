@@ -23,7 +23,7 @@ const skybox = new Cubemap({
 
 const sun = new Sun({ x: 40000, y: 40000, z: 10000, r: 200 });
 
-const planet = new Planet({ x: 900, y: -9000, r: 300 });
+const planet = new Planet({ x: 900, y: -12000, z: -500, r: 300 });
 
 // TODO: Put this somewhere else
 // const canvas = document.getElementsByTagName('canvas')[0];
