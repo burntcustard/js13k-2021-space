@@ -18,6 +18,17 @@ function parse(data) {
   });
 }
 
+function load(data) {
+  for (let i = gameObjectList.length - 1; i >= 0; i--) {
+    gameObjectList[i].kill();
+  }
+  gameObjectList.splice(0, gameObjectList.length, ...parse(data));
+  gameObjectList.forEach((object) => {
+    object.spawn();
+    object.enable();
+  });
+}
+
 export default function initSaveAndLoad() {
   $('#save').addEventListener('click', () => {
     console.log(stringify());
@@ -25,15 +36,14 @@ export default function initSaveAndLoad() {
   });
 
   $('#load').addEventListener('click', () => {
-    for (let i = gameObjectList.length - 1; i >= 0; i--) {
-      gameObjectList[i].kill();
-    }
-    console.log(parse(localStorage.getItem('3DC5S')));
-    gameObjectList.splice(0, gameObjectList.length, ...parse(localStorage.getItem('3DC5S')));
-    gameObjectList.forEach((object) => {
-      object.spawn();
-      object.enable();
-    });
-    console.log(gameObjectList);
+    load(localStorage.getItem('3DC5S'));
+  });
+
+  $('#export').addEventListener('click', () => {
+    $('#export-text').value = stringify();
+  });
+
+  $('#import').addEventListener('click', () => {
+    load($('#import-text').value);
   });
 }
