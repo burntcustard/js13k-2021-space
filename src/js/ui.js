@@ -83,6 +83,7 @@ UI.update = () => {
     if (buildBarItemElement.Item.unlock && buildBarItemElement.Item.unlock()) {
       buildBarItemElement.Item.unlock = true;
       buildBarItemElement.classList.remove('disabled');
+      buildInfoElement.innerHTML = createBuildScreenHTML(buildBarItemElement.Item);
     }
   });
 

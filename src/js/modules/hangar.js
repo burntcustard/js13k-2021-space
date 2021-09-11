@@ -9,7 +9,7 @@ const info = {
   tag: 'Hangar',
   desc: 'Spawns ships which gather metal',
   className: 'hangar module',
-  cost: 35,
+  cost: 30,
   power: -10,
   unlock: () => resources.population.current > 2,
   unlockText: 'Reach 3 population',

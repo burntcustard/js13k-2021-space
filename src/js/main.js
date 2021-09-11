@@ -102,7 +102,7 @@ function main(timestamp) {
     const selectedObjects = gameObjectList.getSelectedList();
 
     if (selectedObjects.length === 1) {
-      if (selectedObjects[0].buildBarItemElement) {
+      if (selectedObjects[0].buildBarItemElement || selectedObjects[0].buildList) {
         selectedObjects[0].updateBuildBar();
       }
     }
@@ -111,7 +111,7 @@ function main(timestamp) {
     Build.update();
 
     if (resources.population.current < resources.population.capacity
-      && Math.floor(Math.random() * 1.02)) {
+      && Math.floor(Math.random() * 1.42)) {
       // TODO: Display a '+1' or some indicator that the population has gone up
       // TODO: Show a 'population capacity reached' indicator
       resources.population.current++;

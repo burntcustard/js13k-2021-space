@@ -57,15 +57,42 @@ GameObject.prototype.createSelectedObjectHTML = function () {
 
 GameObject.prototype.updateBuildBar = function () {
   if (this.upgrade) {
-    // If already unlocked, do nothing
-    if (this.info.unlockUpgrade[this.level] === true) {
-      return;
+    // You've unlockd the thing!
+    if (this.info.unlockUpgrade[this.level] !== true && this.info.unlockUpgrade[this.level]()) {
+      this.info.unlockUpgrade[this.level] = true;
     }
 
-    if (this.info.unlockUpgrade[this.level]()) {
-      this.info.unlockUpgrade[this.level] = true;
+    if (this.info.unlockUpgrade[this.level] === true
+      && resources.mats.current >= this.upgradeCost * (this.level + 1)) {
       this.buildBarItemElement.classList.remove('disabled');
+    } else {
+      this.buildBarItemElement.classList.add('disabled');
     }
+
+    if (this.buildBarItemElement.mouseIsOver) {
+      buildInfoElement.innerHTML = createBuildScreenHTML({
+        tag: this.tag + '+'.repeat(this.level + 1),
+        cost: this.upgradeCost * (this.level + 1),
+        power: this.info.power * (this.level + 2),
+        desc: 'Upgrade',
+        unlock: this.info.unlockUpgrade[this.level],
+        unlockText: this.info.unlockUpgradeText[this.level],
+      });
+    }
+  }
+
+  if (this.buildList) {
+    this.buildList.forEach((Item) => {
+      // TODO: Change this to figure out if has enough people to go in new ship
+      const hasRequiredPopulation = true;
+
+      if (!hasRequiredPopulation
+        || resources.mats.current < Item.cost) {
+        Item.buildBarItemElement.classList.add('disabled');
+      } else {
+        Item.buildBarItemElement.classList.remove('disabled');
+      }
+    });
   }
 };
 
@@ -81,10 +108,13 @@ GameObject.prototype.populateBuildBar = function () {
       this.buildBarItemElement.classList.add('disabled');
     }
 
-    this.buildBarItemElement.disabled = this.level === this.maxLevel
-      || resources.mats.current < (this.upgradeCost * (this.level + 1));
+    if (this.level === this.maxLevel
+      || resources.mats.current < (this.upgradeCost * (this.level + 1))) {
+      this.buildBarItemElement.classList.add('disabled');
+    }
 
     this.buildBarItemElement.addEventListener('mouseover', () => {
+      this.buildBarItemElement.mouseIsOver = true;
       buildInfoElement.innerHTML = createBuildScreenHTML({
         tag: this.tag + '+'.repeat(this.level + 1),
         cost: this.upgradeCost * (this.level + 1),
@@ -96,13 +126,27 @@ GameObject.prototype.populateBuildBar = function () {
     });
 
     this.buildBarItemElement.addEventListener('mouseleave', () => {
+      this.buildBarItemElement.mouseIsOver = false;
       buildInfoElement.innerHTML = this.createSelectedObjectHTML();
     });
 
     this.buildBarItemElement.addEventListener('click', () => {
+      if (this.info.unlockUpgrade[this.level] !== true
+        && resources.mats.current < (this.upgradeCost * (this.level + 1))) {
+        return;
+      }
+
       resources.mats.current -= this.upgradeCost * (this.level + 1);
       this.upgrade();
       this.populateBuildBar();
+      buildInfoElement.innerHTML = createBuildScreenHTML({
+        tag: this.tag + '+'.repeat(this.level + 1),
+        cost: this.upgradeCost * (this.level + 1),
+        power: this.info.power * (this.level + 2),
+        desc: 'Upgrade',
+        unlock: this.info.unlockUpgrade[this.level],
+        unlockText: this.info.unlockUpgradeText[this.level],
+      });
     });
 
     $('.ui-panel__build-list').innerHTML = '';
@@ -111,10 +155,23 @@ GameObject.prototype.populateBuildBar = function () {
 
   if (this.buildList) {
     this.buildList.forEach((Item) => {
-      const buildBarItemElement = document.createElement('button');
-      buildBarItemElement.className = `build-bar ${Item.className}`;
+      Item.buildBarItemElement = document.createElement('button');
+      Item.buildBarItemElement.className = `build-bar ${Item.className}`;
 
-      buildBarItemElement.addEventListener('click', () => {
+      // TODO: Change this to figure out if has enough people to go in new ship
+      const hasRequiredPopulation = true;
+
+      if (!hasRequiredPopulation || resources.mats.current < Item.cost) {
+        this.buildBarItemElement.classList.add('disabled');
+      }
+
+      Item.buildBarItemElement.addEventListener('click', () => {
+        if (!hasRequiredPopulation || resources.mats.current < Item.cost) {
+          return;
+        }
+
+        resources.mats.current -= Item.cost;
+
         const newItem = new Item({
           x: this.x,
           y: this.y,
@@ -124,16 +181,18 @@ GameObject.prototype.populateBuildBar = function () {
         newItem.spawn();
       });
 
-      buildBarItemElement.addEventListener('mouseover', () => {
+      Item.buildBarItemElement.addEventListener('mouseover', () => {
+        Item.buildBarItemElement.mouseIsOver = true;
         buildInfoElement.innerHTML = createBuildScreenHTML(Item);
       });
 
-      buildBarItemElement.addEventListener('mouseleave', () => {
+      Item.buildBarItemElement.addEventListener('mouseleave', () => {
+        Item.buildBarItemElement.mouseIsOver = false;
         buildInfoElement.innerHTML = this.createSelectedObjectHTML();
       });
 
       $('.ui-panel__build-list').innerHTML = '';
-      $('.ui-panel__build-list').append(buildBarItemElement);
+      $('.ui-panel__build-list').append(Item.buildBarItemElement);
     });
   }
 };
