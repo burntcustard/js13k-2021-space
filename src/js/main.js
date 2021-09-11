@@ -111,7 +111,7 @@ function main(timestamp) {
     Build.update();
 
     if (resources.population.current < resources.population.capacity
-      && Math.floor(Math.random() * 1.42)) {
+      && Math.floor(Math.random() * 1.1)) {
       // TODO: Display a '+1' or some indicator that the population has gone up
       // TODO: Show a 'population capacity reached' indicator
       resources.population.current++;
