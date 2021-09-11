@@ -104,7 +104,7 @@ button.build-bar.hangar::before {
     );
 }
 
-button.build-bar.hab-sm::before {
+button.build-bar.hab::before {
   width: 26px;
   height: 26px;
   background:

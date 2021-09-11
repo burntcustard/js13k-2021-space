@@ -1,8 +1,8 @@
 import Block from './block';
-import HabSm from './hab-sm';
+import Hab from './hab';
 import Hangar from './hangar';
 import HexBlock from './hex-block';
-import RingMd from './ring-md';
+import Ring from './ring';
 import Scaffold from './scaffold';
 import Solar from './solar';
 
@@ -11,9 +11,9 @@ const moduleList = [
   Block,
   HexBlock,
   Solar,
-  HabSm,
+  Hab,
   Hangar,
-  RingMd,
+  Ring,
 ];
 
 export default moduleList;

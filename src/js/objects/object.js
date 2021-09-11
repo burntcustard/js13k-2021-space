@@ -55,36 +55,58 @@ GameObject.prototype.createSelectedObjectHTML = function () {
   `;
 };
 
+GameObject.prototype.updateBuildBar = function () {
+  if (this.upgrade) {
+    // If already unlocked, do nothing
+    if (this.info.unlockUpgrade[this.level] === true) {
+      return;
+    }
+
+    if (this.info.unlockUpgrade[this.level]()) {
+      this.info.unlockUpgrade[this.level] = true;
+      this.buildBarItemElement.classList.remove('disabled');
+    }
+  }
+};
+
 GameObject.prototype.populateBuildBar = function () {
   if (this.upgrade) {
-    const buildBarItemElement = document.createElement('button');
-    buildBarItemElement.className = 'build-bar upgrade';
-    buildBarItemElement.innerHTML = 'UPGRADE';
+    this.buildBarItemElement = document.createElement('button');
+    this.buildBarItemElement.className = 'build-bar upgrade';
+    this.buildBarItemElement.innerHTML = 'UPGRADE';
 
-    buildBarItemElement.disabled = this.level === this.maxLevel
+    if (this.info.unlockUpgrade[this.level] === true || this.info.unlockUpgrade[this.level]()) {
+      this.info.unlockUpgrade[this.level] = true; // Now we've unlocked item forever!
+    } else {
+      this.buildBarItemElement.classList.add('disabled');
+    }
+
+    this.buildBarItemElement.disabled = this.level === this.maxLevel
       || resources.mats.current < (this.upgradeCost * (this.level + 1));
 
-    buildBarItemElement.addEventListener('mouseover', () => {
+    this.buildBarItemElement.addEventListener('mouseover', () => {
       buildInfoElement.innerHTML = createBuildScreenHTML({
         tag: this.tag + '+'.repeat(this.level + 1),
         cost: this.upgradeCost * (this.level + 1),
         power: this.info.power * (this.level + 2),
         desc: 'Upgrade',
+        unlock: this.info.unlockUpgrade[this.level],
+        unlockText: this.info.unlockUpgradeText[this.level],
       });
     });
 
-    buildBarItemElement.addEventListener('mouseleave', () => {
+    this.buildBarItemElement.addEventListener('mouseleave', () => {
       buildInfoElement.innerHTML = this.createSelectedObjectHTML();
     });
 
-    buildBarItemElement.addEventListener('click', () => {
+    this.buildBarItemElement.addEventListener('click', () => {
       resources.mats.current -= this.upgradeCost * (this.level + 1);
       this.upgrade();
       this.populateBuildBar();
     });
 
     $('.ui-panel__build-list').innerHTML = '';
-    $('.ui-panel__build-list').append(buildBarItemElement);
+    $('.ui-panel__build-list').append(this.buildBarItemElement);
   }
 
   if (this.buildList) {
@@ -122,6 +144,7 @@ GameObject.prototype.updateBuildBarUI = function () {
 
   // If no upgrades or things this thing can build:
   if (this.upgrade || this.buildList) {
+    // If there's only one module selected (can't do multi-build or multi-upgrade)
     if (gameObjectList.getSelectedList().length === 1) {
       $('.ui-panel__build-list').style.display = '';
       this.populateBuildBar();

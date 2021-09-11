@@ -7,7 +7,7 @@
 @import 'face--debug';
 @import 'modules/module';
 @import 'modules/block';
-@import 'modules/hab-sm';
+@import 'modules/hab';
 @import 'modules/hangar';
 @import 'modules/hex-ring';
 @import 'modules/hexagon';

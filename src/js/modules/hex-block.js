@@ -6,6 +6,8 @@ const info = {
   tag: 'Hex Block',
   desc: 'Hexagonal building block',
   className: 'hex-block module',
+  unlock: () => Build.itemHasBeenRotated,
+  unlockText: 'Rotate a module frame with \'r\'',
   cost: 20,
   w: 60,
   d: 120,

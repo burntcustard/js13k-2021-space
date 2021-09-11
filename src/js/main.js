@@ -99,6 +99,14 @@ function main(timestamp) {
 
   // Do some stuff only every half a second
   if (!halfSecondCounter) {
+    const selectedObjects = gameObjectList.getSelectedList();
+
+    if (selectedObjects.length === 1) {
+      if (selectedObjects[0].buildBarItemElement) {
+        selectedObjects[0].updateBuildBar();
+      }
+    }
+
     // TODO: Only update build if actually building something
     Build.update();
 

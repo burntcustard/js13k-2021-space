@@ -3,13 +3,25 @@ import GameObject from '../objects/object';
 import Box from '../shapes/box';
 import Vec3 from '../vec3';
 import { $ } from '../util';
+import gameObjectList from '../game-object-list';
+import resources from '../resources';
 
 const info = {
   tag: 'Solar Panel Basic',
   desc: 'Generates power',
   className: 'solar module',
-  cost: 35,
-  power: 10,
+  cost: 30,
+  power: 20,
+  unlock: () => gameObjectList.length > 1,
+  unlockText: 'Build a block',
+  unlockUpgrade: [
+    () => resources.population.current > 4,
+    () => resources.population.current > 14,
+  ],
+  unlockUpgradeText: [
+    'Reach 5 population',
+    'Reach 15 population',
+  ],
   w: 108,
   h: 2,
   d: 52,
