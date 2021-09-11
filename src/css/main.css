@@ -7,6 +7,7 @@
 @import 'face--debug';
 @import 'modules/module';
 @import 'modules/block';
+@import 'modules/block-multi';
 @import 'modules/hab';
 @import 'modules/hangar';
 @import 'modules/hex-ring';
