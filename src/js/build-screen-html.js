@@ -10,7 +10,7 @@ function createBuildScreenHTML(Item) {
   return `
     <div>
       <b>${unlocked ? Item.tag : 'LOCKED'}</b>
-      <div>${unlocked ? `${noEco ? '<b>' : ''}M:${Item.cost}${noEco ? '</b>' : ''}${Item.population ? ` | Pop:${Item.population}` : ''}${Item.power < 0 ? ` | Use ϟ${-Item.power}` : Item.power > 0 ? ` | Gen ϟ${Item.power}` : ''}` : ''}</div>
+      <div>${unlocked ? `${noEco ? '<b>' : ''}M:${Item.cost}${noEco ? '</b>' : ''}${Item.population ? ` | Pop:${Item.population}` : ''}${Item.power < 0 ? ` | Use ↯${-Item.power}` : Item.power > 0 ? ` | Gen ↯${Item.power}` : ''}` : ''}</div>
     </div>
     <div>
       ${unlocked ? (noEco ? 'INSUFFICIENT RESOURCES' : Item.desc) : `-  ${Item.unlockText}`}

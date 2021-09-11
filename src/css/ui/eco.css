@@ -15,6 +15,10 @@
   transition: all 0.2s;
 }
 
+.eco.power .dot {
+  -webkit-text-stroke: thin;
+}
+
 .eco.mats .dot:not(.empty) {
   border-right: 1px solid #0a9;
   border-bottom: 2px solid #0aa;

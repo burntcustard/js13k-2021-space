@@ -47,7 +47,7 @@ GameObject.prototype.createSelectedObjectHTML = function () {
   return `
     <div>
       <b>${this.tag + '+'.repeat(this.level ?? 0)}</b>
-      <div>${!this.active ? '<s>' : ''}${this.power < 0 ? `Use ϟ${-this.power}` : this.power > 0 ? `Gen ϟ${this.power}` : ''}${!this.active ? '</s>' : ''}</div>
+      <div>${!this.active ? '<s>' : ''}${this.power < 0 ? `Use ↯${-this.power}` : this.power > 0 ? `Gen ↯${this.power}` : ''}${!this.active ? '</s>' : ''}</div>
     </div>
     <div>
       ${this.desc}
