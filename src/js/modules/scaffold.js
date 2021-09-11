@@ -6,6 +6,8 @@ const info = {
   tag: 'Scaffold', // Can't use 'name' because is reserved
   desc: 'Alternative to the Block module',
   className: 'scaffold module',
+  unlock: () => false, // TODO
+  unlockText: 'Remove modules with del',
   cost: 10,
   w: 60,
   d: 60,

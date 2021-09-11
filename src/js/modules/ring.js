@@ -3,8 +3,8 @@ import HexRing from '../shapes/hex-ring';
 import Module from './module';
 
 const info = {
-  tag: 'Ring Medium',
-  desc: 'Rotating hexagon ring',
+  tag: 'Hab Ring',
+  desc: 'Rotating hexagon habition ring',
   className: 'ring',
   cost: 100,
   power: -20,
@@ -14,7 +14,7 @@ const info = {
   d: 540, // BIG
 };
 
-export default function RingMd({ x, y, z, rx, ry, rz }) {
+export default function Ring({ x, y, z, rx, ry, rz }) {
   this.model = new HexRing({
     w: info.w,
     d: info.d,
@@ -37,15 +37,15 @@ export default function RingMd({ x, y, z, rx, ry, rz }) {
   Build.addEventListenersTo(this.model.sides[7]);
 }
 
-Object.assign(RingMd, info);
-RingMd.prototype = Object.create(Module.prototype);
-RingMd.prototype.constructor = RingMd;
+Object.assign(Ring, info);
+Ring.prototype = Object.create(Module.prototype);
+Ring.prototype.constructor = Ring;
 
-RingMd.prototype.build = function () {
+Ring.prototype.build = function () {
   Module.prototype.build.call(this);
 };
 
-RingMd.prototype.update = function (elapsed = 0, lights) {
+Ring.prototype.update = function (elapsed = 0, lights) {
   Module.prototype.update.call(this, elapsed, lights);
 
   if (this.active) {

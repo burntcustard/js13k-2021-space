@@ -6,6 +6,7 @@ const info = {
   desc: 'Mining ship',
   className: 'mining ship',
   cost: 1,
+  unlock: true,
 };
 
 export default function MiningShip({ x, y, z, parent }) {

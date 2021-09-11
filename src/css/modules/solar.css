@@ -1,10 +1,9 @@
-/* TODO: Change specifity because hopefully all this is unnecessary */
-
-.solar:not(.frame) {
+/* Shape is needed so it doesn't mess with build bar transitions */
+.shape.solar:not(.frame) {
   transition: all 1s;
 }
 
-.solar:not(.frame) .face {
+.shape.solar:not(.frame) .face {
   transition: all 1s;
 }
 

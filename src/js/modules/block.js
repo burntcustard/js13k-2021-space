@@ -7,6 +7,7 @@ const info = {
   desc: 'Basic building block',
   className: 'block module',
   cost: 10,
+  unlock: true,
   w: 60,
   d: 60,
   h: 60,

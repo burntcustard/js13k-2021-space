@@ -35,15 +35,18 @@ UI.populateBuildBar = () => {
   UI.buildBarList = moduleList.map((Item) => {
     const buildBarItemElement = document.createElement('button');
     buildBarItemElement.className = `build-bar ${Item.className}`;
-    buildBarItemElement.addEventListener('click', () => {
-      Build.setCurrentItem(Item);
+    buildBarItemElement.Item = Item;
 
-      // Don't need to do this any more?
-      // gameObjectList.forEach((gameObject) => {
-      //   if (gameObject.selected) {
-      //     gameObject.select(false);
-      //   }
-      // });
+    if (Item.unlock === true || (Item.unlock && Item.unlock())) {
+      Item.unlock = true; // Now we've unlocked item forever!
+    } else {
+      buildBarItemElement.classList.add('disabled');
+    }
+
+    buildBarItemElement.addEventListener('click', () => {
+      if (Item.unlock !== true) return;
+
+      Build.setCurrentItem(Item);
 
       UI.buildBarList.forEach((other) => {
         if (buildBarItemElement === other) {
@@ -53,14 +56,17 @@ UI.populateBuildBar = () => {
         }
       });
     });
+
     buildBarItemElement.addEventListener('mouseover', () => {
       buildInfoElement.innerHTML = createBuildScreenHTML(Item);
     });
+
     buildBarItemElement.addEventListener('mouseleave', () => {
       buildInfoElement.innerHTML = Build.currentItem
         ? createBuildScreenHTML(Build.currentItem)
         : '';
     });
+
     buildListElement.append(buildBarItemElement);
 
     return buildBarItemElement;
@@ -68,6 +74,19 @@ UI.populateBuildBar = () => {
 };
 
 UI.update = () => {
+  UI.buildBarList.forEach((buildBarItemElement) => {
+    // If already unlocked, do nothing
+    if (buildBarItemElement.Item.unlock === true) {
+      return;
+    }
+
+    if (buildBarItemElement.Item.unlock && buildBarItemElement.Item.unlock()) {
+      buildBarItemElement.Item.unlock = true;
+      buildBarItemElement.classList.remove('disabled');
+      buildInfoElement.innerHTML = createBuildScreenHTML(buildBarItemElement.Item);
+    }
+  });
+
   matsBar.style.width = `${(100 / resources.mats.capacity) * resources.mats.current}%`;
   matsDot.classList.toggle('empty', resources.mats.current < 1);
   matsCap.innerText = `${Math.floor(resources.mats.current)} /  ${resources.mats.capacity}`;

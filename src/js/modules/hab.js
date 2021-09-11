@@ -1,14 +1,17 @@
 import Module from './module';
 import Octabox from '../shapes/octabox';
 import Build from '../build';
+import resources from '../resources';
 
 const info = {
-  tag: 'Hab Sm', // Can't use 'name' because is reserved
-  desc: 'Small habitation module',
-  className: 'hab-sm module',
-  cost: 10,
-  power: -10,
-  population: 5,
+  tag: 'Habitation',
+  desc: 'Increase population capacity',
+  className: 'hab module',
+  cost: 20,
+  power: -15,
+  population: 2,
+  unlock: () => resources.power.gen, // More than 0 power generation
+  unlockText: 'Generate power',
   w: 60,
   d: 84,
   h: 84,

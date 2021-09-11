@@ -211,6 +211,7 @@ Build.rotate = () => {
   // TODO: increment should be based on how many sides the selected item has
   Build.rotation = (Build.rotation + PI_2) % (PI * 2);
   Build.updateRotation();
+  Build.itemHasBeenRotated = true;
 };
 
 export default Build;

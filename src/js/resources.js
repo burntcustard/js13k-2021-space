@@ -1,7 +1,7 @@
 const resources = {
   mats: {
-    capacity: 1000,
-    current: 500,
+    capacity: 100,
+    current: 100,
   },
   population: {
     capacity: 1,
@@ -10,8 +10,8 @@ const resources = {
   power: {
     gen: 0,
     use: 0,
-    capacity: 100,
-    current: 100,
+    capacity: 500,
+    current: 500,
   },
 };
 

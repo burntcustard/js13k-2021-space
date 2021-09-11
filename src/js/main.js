@@ -99,11 +99,19 @@ function main(timestamp) {
 
   // Do some stuff only every half a second
   if (!halfSecondCounter) {
+    const selectedObjects = gameObjectList.getSelectedList();
+
+    if (selectedObjects.length === 1) {
+      if (selectedObjects[0].buildBarItemElement || selectedObjects[0].buildList) {
+        selectedObjects[0].updateBuildBar();
+      }
+    }
+
     // TODO: Only update build if actually building something
     Build.update();
 
     if (resources.population.current < resources.population.capacity
-      && Math.floor(Math.random() * 1.02)) {
+      && Math.floor(Math.random() * 1.1)) {
       // TODO: Display a '+1' or some indicator that the population has gone up
       // TODO: Show a 'population capacity reached' indicator
       resources.population.current++;
