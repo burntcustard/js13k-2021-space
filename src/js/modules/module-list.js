@@ -16,4 +16,8 @@ const moduleList = [
   Ring,
 ];
 
+moduleList.get = function (tag) {
+  return this.find((module) => module.tag === tag);
+};
+
 export default moduleList;

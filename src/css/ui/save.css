@@ -1,22 +1,27 @@
 .ui-left {
   z-index: 1;
   width: 0;
+  pointer-events: all;
   transform: translateX(-0.5vw);
 }
 
-.ui-panel--info {
+.hover-zone {
+  width: 20px;
+}
+
+.ui-panel--save {
   overflow: hidden;
-  width: 182px;
+  width: 0;
   padding: 8px 0;
 }
 
-.ui-panel--info[aria-hidden='true'] {
-  width: 0;
+.ui-left:hover .ui-panel--save {
+  width: 132px;
 }
 
 .ui-left .ui-panel__inner {
   display: flex;
-  width: 150px;
+  width: 100px;
   flex-direction: column;
   margin: 0 8px;
 }

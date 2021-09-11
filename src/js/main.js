@@ -12,6 +12,7 @@ import Cubemap from './shapes/cubemap';
 import Sun from './objects/sun';
 import Planet from './objects/planet';
 import ShipController from './ship-controller';
+import initSaveAndLoad from './save-load';
 
 const perfDebug = $('.debug .perf');
 
@@ -123,6 +124,7 @@ function main(timestamp) {
 
 initMouse();
 initKeyboard();
+initSaveAndLoad();
 
 $('#reset-rotation').addEventListener('click', () => {
   camera.rx = PI_4;
