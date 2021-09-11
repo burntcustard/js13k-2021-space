@@ -35,17 +35,44 @@ export default function Planet({ x, y, z, r }) {
   camera.followers.push(this);
 
   this.updateTransform = () => {
+    // These absolutes seem to *fix* the problem but I'm not sure they are
+    // correct or needed, it'll do for now
+    const angleX = Math.atan2(
+      camera.zoom * Math.cos(camera.rx) + Math.abs(this.z - camera.z),
+      camera.zoom * Math.sin(camera.rx) + Math.abs(this.y - camera.y),
+    ) - PI_2;
+
     const angleZ = Math.atan2(
       camera.zoom * Math.cos(camera.rz) - this.y - camera.y,
       camera.zoom * Math.sin(camera.rz) - this.x - camera.x,
-    );
+    ) - PI_2;
+
+    const sinRx = Math.sin(angleX);
+    const sinRz = Math.sin(angleZ);
+    const cosRx = Math.cos(angleX);
+    const cosRz = Math.cos(angleZ);
 
     this.bodyElement.style.transform = `
-      rotateZ(${angleZ - PI_2}rad)
-      rotateX(${-camera.rx}rad)
+      matrix3d(
+        ${cosRz},
+        ${sinRz},
+        0,
+        0,
+        ${-sinRz * cosRx},
+        ${cosRz * cosRx},
+        ${sinRx},
+        0,
+        ${sinRz * sinRx},
+        ${-cosRz * sinRx},
+        ${cosRx},
+        0,
+        0,
+        0,
+        0,
+        1
+      )
       scale(32)
     `;
-    // rotateY(${-camera.ry}rad) // We don't actually need Y rotation?
   };
 
   this.updateTransform();
