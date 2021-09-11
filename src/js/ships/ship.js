@@ -13,7 +13,7 @@ const maxSpeed = 10;
 export default function Ship({ x, y, z, parent }) {
   GameObject.call(this, { x, y, z });
   this.id = Ship.prototype.count++;
-  this.status = 'ready';
+  this.status = 0;
   this.timer = 0;
   this.power = 30;
   this.bay = null;
