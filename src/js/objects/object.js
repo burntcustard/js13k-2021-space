@@ -83,14 +83,18 @@ GameObject.prototype.updateBuildBar = function () {
 
   if (this.buildList) {
     this.buildList.forEach((Item) => {
-      // TODO: Change this to figure out if has enough people to go in new ship
-      const hasRequiredPopulation = true;
+      const populationInShips = Item.populationRequired * Item.prototype.count;
+      const hasRequiredPopulation = populationInShips < resources.population.current;
 
       if (!hasRequiredPopulation
         || resources.mats.current < Item.cost) {
         Item.buildBarItemElement.classList.add('disabled');
       } else {
         Item.buildBarItemElement.classList.remove('disabled');
+      }
+
+      if (Item.buildBarItemElement.mouseIsOver) {
+        buildInfoElement.innerHTML = createBuildScreenHTML(Item);
       }
     });
   }
@@ -158,11 +162,11 @@ GameObject.prototype.populateBuildBar = function () {
       Item.buildBarItemElement = document.createElement('button');
       Item.buildBarItemElement.className = `build-bar ${Item.className}`;
 
-      // TODO: Change this to figure out if has enough people to go in new ship
-      const hasRequiredPopulation = true;
+      const populationInShips = Item.populationRequired * Item.prototype.count;
+      const hasRequiredPopulation = populationInShips < resources.population.current;
 
       if (!hasRequiredPopulation || resources.mats.current < Item.cost) {
-        this.buildBarItemElement.classList.add('disabled');
+        Item.buildBarItemElement.classList.add('disabled');
       }
 
       Item.buildBarItemElement.addEventListener('click', () => {

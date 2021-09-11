@@ -5,8 +5,9 @@ const info = {
   tag: 'MiningShip',
   desc: 'Mining ship',
   className: 'mining ship',
-  cost: 1,
+  cost: 10,
   unlock: true,
+  populationRequired: 1,
 };
 
 export default function MiningShip({ x, y, z, parent }) {
