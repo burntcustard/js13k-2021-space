@@ -10,8 +10,8 @@ const info = {
   cost: 20,
   power: -15,
   population: 2,
-  unlock: () => resources.power.gen, // More than 0 power generation
-  unlockText: 'Generate power',
+  unlock: () => resources.power.gen > 10,
+  unlockText: 'Create a power gen module',
   w: 60,
   d: 84,
   h: 84,
