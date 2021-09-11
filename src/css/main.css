@@ -7,10 +7,12 @@
 @import 'face--debug';
 @import 'modules/module';
 @import 'modules/block';
+@import 'modules/block-multi';
 @import 'modules/hab';
 @import 'modules/hangar';
 @import 'modules/hex-ring';
 @import 'modules/hexagon';
+@import 'modules/hexagon-multi';
 @import 'modules/scaffold';
 @import 'modules/solar';
 @import 'ui/ui';

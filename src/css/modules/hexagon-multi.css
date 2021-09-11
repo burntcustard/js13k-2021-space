@@ -1,0 +1,21 @@
+.hex-block-multi .panel::before {
+  border: 2px solid #fff;
+  background:
+    repeating-linear-gradient(
+      to top,
+      #0000 0 9px,
+      #fff6 0 10px
+    ),
+    repeating-linear-gradient(
+      to right,
+      #0000 0 4px,
+      #fff9 0 5px
+    ),
+    /* Rotate this for lighting?... */
+    linear-gradient(
+      45deg,
+      #059,
+      #08a
+    );
+  background-repeat: no-repeat;
+}

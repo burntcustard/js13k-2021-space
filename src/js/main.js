@@ -6,7 +6,7 @@ import Build from './build';
 import UI from './ui';
 import gameObjectList from './game-object-list';
 import { $, PI_4 } from './util';
-import Block from './modules/block';
+import BlockMulti from './modules/block-multi';
 import Light from './objects/light';
 import Cubemap from './shapes/cubemap';
 import Sun from './objects/sun';
@@ -63,7 +63,7 @@ const lights = [
   }),
 ];
 
-const stationBlock = new Block({});
+const stationBlock = new BlockMulti({});
 stationBlock.spawn();
 stationBlock.enable();
 

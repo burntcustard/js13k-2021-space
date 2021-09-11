@@ -6,6 +6,7 @@ export default function Module(props) {
   this.tag = props.tag;
   this.desc = props.desc ?? '';
   this.cost = props.cost;
+  this.mats = props.mats ?? 0;
   this.power = props.power ?? 0;
   this.population = props.population ?? 0;
   this.model.parent = this;
@@ -53,12 +54,21 @@ Module.prototype.updatePower = function (elapsed) {
       resources.power.capacity,
     );
   }
+
+  if (this.mats > 0) {
+    // Add some mats to the resources banks
+    resources.mats.current = Math.min(
+      resources.mats.current + this.mats * (elapsed / 1000),
+      resources.mats.capacity,
+    );
+  }
 };
 
 Module.prototype.disable = function () {
   this.active = false;
   resources.power.use += this.power < 0 ? this.power : 0;
   resources.power.gen -= this.power > 0 ? this.power : 0;
+  resources.mats.gen -= this.mats > 0 ? this.mats : 0;
   if (this.selected) GameObject.prototype.updateBuildBarUI.call(this);
 };
 
@@ -66,6 +76,7 @@ Module.prototype.enable = function () {
   this.active = true;
   resources.power.use -= this.power < 0 ? this.power : 0;
   resources.power.gen += this.power > 0 ? this.power : 0;
+  resources.mats.gen += this.mats > 0 ? this.mats : 0;
   if (this.selected) GameObject.prototype.updateBuildBarUI.call(this);
 };
 
