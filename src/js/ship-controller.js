@@ -36,7 +36,9 @@ const ShipController = {
         case 'undocking':
           if (ship.destination === null) {
             ship.status = 'mining';
-            ship.destination = new Vec3(1000, 0, 0).rotateZ(Math.random() * PI * 2);
+            ship.destination = new Vec3(10000, 0, 0)
+              .rotateY(Math.random() * 1 - 0.5)
+              .rotateZ(Math.random() * PI * 2);
           }
           break;
         case 'mining':
@@ -49,7 +51,7 @@ const ShipController = {
           if (ship.timer === 0) {
             // Return to the station
             ship.status = 'returning';
-            ship.destination = { x: 0, y: 0, z: 100 };
+            ship.destination = new Vec3(ship.x, ship.y, ship.z).resize(500);
           }
           break;
         case 'returning':

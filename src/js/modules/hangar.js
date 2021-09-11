@@ -49,7 +49,7 @@ Hangar.prototype.build = function () {
   Module.prototype.build.call(this);
 
   this.facing = new Vec3(1, 0, 0).rotate(this.rx, this.ry, this.rz);
-  this.arrivalPoint = this.facing.resize(this.w).add(new Vec3(this.x, this.y, this.z));
+  this.arrivalPoint = this.facing.resize(100).add(new Vec3(this.x, this.y, this.z));
 
   for (let i = 0; i < info.numberOfBays; i++) {
     const bay = {

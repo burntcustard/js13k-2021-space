@@ -3,6 +3,13 @@ import ShipController from '../ship-controller';
 import { PI_2 } from '../util';
 import Vec3 from '../vec3';
 
+// Movement constants
+// Ship movement from here https://stackoverflow.com/a/55693280/2303034
+const targetRadius = 200;
+const accelerationFactor = 2;
+const minSpeed = 1;
+const maxSpeed = 10;
+
 export default function Ship({ x, y, z, parent }) {
   GameObject.call(this, { x, y, z });
   this.id = Ship.prototype.count++;
@@ -11,6 +18,7 @@ export default function Ship({ x, y, z, parent }) {
   this.power = 30;
   this.bay = null;
   this.speed = 0;
+  this.savedSpeed = 0;
   this.acceleration = 0.01;
 
   // Docking got moved to the constructor and just puts the ship in bay 0 for now.
@@ -27,28 +35,38 @@ Ship.prototype = Object.create(GameObject.prototype);
 Ship.prototype.constructor = Ship;
 Ship.prototype.count = 0;
 
-Ship.prototype.moveToDestination = function () {
+Ship.prototype.moveToDestination = function (elapsed) {
   const current = new Vec3(this.x, this.y, this.z);
   const destination = new Vec3(this.destination.x, this.destination.y, this.destination.z);
 
-  if (current.distanceTo(destination) < 1) {
+  const toDestination = destination.minus(current);
+  const distance = toDestination.length();
+
+  if (distance < 1) {
     // At destination
     this.destination = null;
+    this.speed = this.savedSpeed = 0;
     this.model.element.classList.remove('thrust');
-    // TODO: Turn ship engine lights off?
     return;
   }
 
   this.model.element.classList.add('thrust');
 
-  const toDestination = destination.minus(current);
-  const change = toDestination.resize(1); // TODO: Make speed not constant (acceleration?)
+  const elapsedSec = elapsed / 1000;
+  if (distance > targetRadius) {
+    // Accelerate
+    this.speed = this.savedSpeed = Math.min(this.speed + accelerationFactor * elapsedSec, maxSpeed);
+  } else {
+    // Decelerate
+    this.speed = Math.max(this.savedSpeed * (distance / targetRadius), minSpeed);
+  }
+
+  const change = toDestination.resize(this.speed);
   this.x += change.x;
   this.y += change.y;
   this.z += change.z;
 
   // Was having issues trying to have rx too so left just rz
-  // TODO: Rotate the ship model?
   this.rz = toDestination.rotationZ() + PI_2;
 };
 
@@ -56,7 +74,7 @@ Ship.prototype.update = function (elapsed, lights) {
   GameObject.prototype.update.call(this, elapsed, lights);
 
   if (this.destination) {
-    this.moveToDestination();
+    this.moveToDestination(elapsed);
   }
 };
 
