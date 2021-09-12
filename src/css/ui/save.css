@@ -5,50 +5,50 @@
   transform: translateX(-0.5vw);
 }
 
-.hover-zone {
-  width: 20px;
-}
-
-.ui-panel--save {
+.ui-panel--left {
+  display: flex;
   overflow: hidden;
-  width: 0;
+  width: 16px;
   padding: 8px 0;
+  color: #ccc;
+  font-weight: bold;
+  text-align: center;
 }
 
-.ui-left:hover .ui-panel--save {
+.menu {
+  writing-mode: vertical-lr;
+}
+
+.ui-left:hover .ui-panel--left {
   width: 132px;
 }
 
-.ui-panel--save .ui-panel__inner {
+.ui-panel--left .ui-panel__inner {
   display: flex;
   width: 100px;
   flex-direction: column;
-  margin: 0 8px;
+  margin: 0 8px 0 2px;
 }
 
-.ui-panel--save hr {
+.ui-panel--left hr {
   width: 100%;
   border: 1px solid #444;
   margin: 0;
 }
 
-.ui-panel--save input {
+.ui-panel--left input {
   width: 100%;
-  padding: 0 4px;
+  padding: 2px;
   margin-bottom: -2px;
   background: #333;
   box-shadow: 2px 2px inset #222;
   color: #ccc;
 }
 
-.ui-panel--save input:disabled {
-  background: #222;
-  color: #888;
-}
-
-.ui-panel--save button {
+.ui-panel--left button {
   display: flex;
   width: 100%;
+  width: 91px;
   height: 28px;
   align-items: center;
   justify-content: center;
@@ -63,17 +63,19 @@
   transition: background-color 0.2s;
 }
 
-.ui-panel--save button:active {
+.ui-panel--left button:active {
   border-top-width: 1px;
   border-right-width: 1px;
   border-bottom-width: 2px;
   border-left-width: 1px;
 }
 
-.ui-panel--save button:hover {
+.ui-panel--left button:hover {
   background: #999;
 }
 
-.ui-panel--save button:disabled {
-  background: #999;
+.save.disabled::after {
+  position: absolute;
+  right: 8px;
+  content: '✔';
 }

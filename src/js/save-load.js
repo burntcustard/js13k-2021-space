@@ -94,25 +94,25 @@ function load(data) {
 }
 
 export default function initSaveAndLoad() {
-  $('#save').addEventListener('click', () => {
+  $('.save').addEventListener('click', () => {
     localStorage.setItem('3DC5S', stringify());
-    $('#save').disabled = true;
-    $('#save').innerText = 'Saved';
+    $('.save').classList.add('disabled');
+    $('.save').innerText = 'Saved';
     setTimeout(() => {
-      $('#save').disabled = false;
-      $('#save').innerText = 'Save';
-    }, 2500);
+      $('.save').classList.remove('disabled');
+      $('.save').innerText = 'Save';
+    }, 3000);
   });
 
-  $('#load').addEventListener('click', () => {
+  $('.load').addEventListener('click', () => {
     load(localStorage.getItem('3DC5S'));
   });
 
-  $('#export').addEventListener('click', () => {
-    $('#export-text').value = stringify();
+  $('.export').addEventListener('click', () => {
+    $('.export-text').value = stringify();
   });
 
-  $('#import').addEventListener('click', () => {
-    load($('#import-text').value);
+  $('.import').addEventListener('click', () => {
+    load($('.import-text').value);
   });
 }
