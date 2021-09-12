@@ -5,7 +5,7 @@ const info = {
   tag: 'Mining Ship',
   desc: 'Gathers M from nearby space',
   className: 'mining ship',
-  cost: 10,
+  cost: 30,
   unlock: true,
   populationRequired: 1,
 };
