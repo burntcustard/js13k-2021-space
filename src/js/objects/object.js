@@ -139,7 +139,7 @@ GameObject.prototype.populateBuildBar = function () {
 
     this.buildBarItemElement.addEventListener('click', () => {
       if (this.info.unlockUpgrade[this.level] !== true
-        && resources.mats.current < (this.upgradeCost * (this.level + 1))) {
+        || resources.mats.current < (this.upgradeCost * (this.level + 1))) {
         return;
       }
 
