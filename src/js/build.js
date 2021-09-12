@@ -1,6 +1,7 @@
 /* eslint-disable prefer-destructuring */
 import resources from './resources';
 import gameObjectList from './game-object-list';
+import achievements from './achievements';
 import Vec3 from './vec3';
 import { PI, PI_2 } from './util';
 
@@ -183,14 +184,14 @@ Build.addEventListenersTo = (side) => {
     side.element.classList.add('obstructed'); // TODO: Refactor this er somehow
 
     if (Build.currentItemInstance.model.sides[0].w > side.w
-      && side.parent.parent.tag === 'Block') {
+      && ['Block', 'Multi Purpose Block'].includes(side.parent.parent.tag)) {
       side.element.classList.add('ao-outer');
 
       Build.addInnerShadows(side);
     }
 
     if (Build.currentItemInstance.model.sides[0].w < side.w
-      && Build.currentItemInstance.tag === 'Block') {
+      && ['Block', 'Multi Purpose Block'].includes(Build.currentItemInstance.tag)) {
       Build.currentItemInstance.model.sides[0].element.classList.add('ao-outer');
 
       Build.addInnerShadows(Build.currentItemInstance.model.sides[0]);
@@ -211,7 +212,7 @@ Build.rotate = () => {
   // TODO: increment should be based on how many sides the selected item has
   Build.rotation = (Build.rotation + PI_2) % (PI * 2);
   Build.updateRotation();
-  Build.itemHasBeenRotated = true;
+  achievements.buildItemHasBeenRotated = true;
 };
 
 export default Build;

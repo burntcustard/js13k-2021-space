@@ -1,12 +1,13 @@
 import Build from '../build';
 import Hexagon from '../shapes/hexagon';
 import Module from './module';
+import achievements from '../achievements';
 
 const info = {
   tag: 'Hex Block',
   desc: 'Hexagonal building block',
   className: 'hex-block module',
-  unlock: () => Build.itemHasBeenRotated,
+  unlock: () => achievements.buildItemHasBeenRotated,
   unlockText: 'Rotate a module frame with \'r\'',
   cost: 20,
   w: 60,

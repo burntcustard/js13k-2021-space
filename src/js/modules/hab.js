@@ -5,7 +5,7 @@ import resources from '../resources';
 
 const info = {
   tag: 'Habitation',
-  desc: 'Increase population capacity',
+  desc: 'Increases population capacity',
   className: 'hab module',
   cost: 20,
   power: -15,

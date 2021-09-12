@@ -7,7 +7,22 @@ button.build-bar::before {
 button.build-bar.block::before {
   width: 26px;
   height: 26px;
-  background: #fff;
+  background:
+    conic-gradient(
+      #fff 65deg,
+      #ccc 0 180deg,
+      #999 0 295deg,
+      #fff 0
+    );
+  clip-path:
+    polygon(
+      50% 0,
+      100% 25%,
+      100% 75%,
+      50% 100%,
+      0 75%,
+      0 25%
+    );
 }
 
 button.build-bar.scaffold::before {
@@ -29,9 +44,30 @@ button.build-bar.scaffold::before {
   box-shadow: 0 0 0 3px var(--color-secondary);
 }
 
-button.build-bar.hex-block::before {
-  width: 30px;
+button.build-bar.block-multi::before {
+  width: 26px;
   height: 26px;
+  background:
+    conic-gradient(
+      #08a 65deg,
+      #ccc 0 180deg,
+      #999 0 295deg,
+      #08a 0
+    );
+  clip-path:
+    polygon(
+      50% 0,
+      100% 25%,
+      100% 75%,
+      50% 100%,
+      0 75%,
+      0 25%
+    );
+}
+
+button.build-bar.hex-block::before {
+  width: 26px;
+  height: 22px;
   background: #fff;
   clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
 }
@@ -130,6 +166,25 @@ button.build-bar.ring[aria-pressed='true']::before {
 
 @keyframes rotate {
   100% { transform: rotate(360deg); }
+}
+
+button.build-bar.store.power::before {
+  width: 15px;
+  height: 24px;
+  background:
+    linear-gradient(
+      90deg,
+      #0003 4px,
+      #0000 0 11px,
+      #0005 0
+    ),
+    linear-gradient(
+      var(--color-accent) 3px,
+      var(--color-secondary) 0 7px,
+      var(--color-accent) 0 17px,
+      var(--color-secondary) 0 21px,
+      var(--color-accent) 0
+    );
 }
 
 button.build-bar.mining.ship::before {

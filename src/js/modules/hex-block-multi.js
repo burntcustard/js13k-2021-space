@@ -4,7 +4,7 @@ import Module from './module';
 
 const info = {
   tag: 'Hex Block',
-  desc: 'Hexagonal building block',
+  desc: 'Hexagonal block with solar panels',
   className: 'hex-block hex-block-multi module',
   unlock: () => Build.itemHasBeenRotated,
   unlockText: '',

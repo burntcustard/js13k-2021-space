@@ -96,6 +96,7 @@
 }
 
 .eco .use {
+  min-width: 34px;
   margin-top: 5px;
 }
 

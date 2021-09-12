@@ -1,4 +1,5 @@
 import GameObject from '../objects/object';
+import achievements from '../achievements';
 import resources from '../resources';
 
 export default function Module(props) {
@@ -123,5 +124,6 @@ Module.prototype.shutdown = function () {
 
 Module.prototype.kill = function () {
   this.disable();
+  achievements.modulesDeleted++;
   GameObject.prototype.kill.call(this);
 };

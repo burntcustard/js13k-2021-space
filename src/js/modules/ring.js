@@ -1,13 +1,17 @@
 import Build from '../build';
 import HexRing from '../shapes/hex-ring';
 import Module from './module';
+import resources from '../resources';
 
 const info = {
   tag: 'Hab Ring',
   desc: 'Rotating hexagon habition ring',
   className: 'ring',
   cost: 100,
-  power: -20,
+  power: -40,
+  population: 15,
+  unlock: () => resources.population.current > 24,
+  unlockText: 'Reach 25 population',
   baseW: 60,
   baseD: 50,
   w: 60,

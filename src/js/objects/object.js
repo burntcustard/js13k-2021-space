@@ -58,7 +58,9 @@ GameObject.prototype.createSelectedObjectHTML = function () {
 GameObject.prototype.updateBuildBar = function () {
   if (this.upgrade) {
     // You've unlockd the thing!
-    if (this.info.unlockUpgrade[this.level] !== true && this.info.unlockUpgrade[this.level]()) {
+    if (this.info.unlockUpgrade[this.level]
+      && this.info.unlockUpgrade[this.level] !== true
+      && this.info.unlockUpgrade[this.level]()) {
       this.info.unlockUpgrade[this.level] = true;
     }
 
@@ -76,7 +78,7 @@ GameObject.prototype.updateBuildBar = function () {
         power: this.info.power * (this.level + 2),
         desc: 'Upgrade',
         unlock: this.info.unlockUpgrade[this.level],
-        unlockText: this.info.unlockUpgradeText[this.level],
+        unlockText: this.info.unlockUpgradeText[this.level] || 'Max upgrade level reached',
       });
     }
   }
@@ -106,7 +108,8 @@ GameObject.prototype.populateBuildBar = function () {
     this.buildBarItemElement.className = 'build-bar upgrade';
     this.buildBarItemElement.innerHTML = 'UPGRADE';
 
-    if (this.info.unlockUpgrade[this.level] === true || this.info.unlockUpgrade[this.level]()) {
+    if (this.info.unlockUpgrade[this.level]
+      && (this.info.unlockUpgrade[this.level] === true || this.info.unlockUpgrade[this.level]())) {
       this.info.unlockUpgrade[this.level] = true; // Now we've unlocked item forever!
     } else {
       this.buildBarItemElement.classList.add('disabled');
@@ -125,7 +128,7 @@ GameObject.prototype.populateBuildBar = function () {
         power: this.info.power * (this.level + 2),
         desc: 'Upgrade',
         unlock: this.info.unlockUpgrade[this.level],
-        unlockText: this.info.unlockUpgradeText[this.level],
+        unlockText: this.info.unlockUpgradeText[this.level] || 'Max upgrade level reached',
       });
     });
 
@@ -149,7 +152,7 @@ GameObject.prototype.populateBuildBar = function () {
         power: this.info.power * (this.level + 2),
         desc: 'Upgrade',
         unlock: this.info.unlockUpgrade[this.level],
-        unlockText: this.info.unlockUpgradeText[this.level],
+        unlockText: this.info.unlockUpgradeText[this.level] || 'Max upgrade level reached',
       });
     });
 

@@ -4,6 +4,7 @@ import Box from '../shapes/box';
 import Vec3 from '../vec3';
 import { $ } from '../util';
 import gameObjectList from '../game-object-list';
+import achievements from '../achievements';
 import resources from '../resources';
 
 const info = {
@@ -60,6 +61,7 @@ Solar.prototype.instancesBuilt = 0;
 
 Solar.prototype.upgrade = function () {
   this.setLevel(this.level + 1);
+  achievements.solarHasBeenUpgraded = true; // TODO: Move this variable to somewhere more sensible?
 };
 
 Solar.prototype.setLevel = function (level) {
