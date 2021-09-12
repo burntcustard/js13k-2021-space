@@ -43,5 +43,11 @@
 }
 
 .shape.ship.thrust .face.engine::after {
+  opacity: 0.5;
+  transform: rotateX(90deg) scaleY(1);
+}
+
+.shape.ship.thrust-l .face.engine::after {
+  opacity: 1;
   transform: rotateX(90deg) scaleY(2);
 }

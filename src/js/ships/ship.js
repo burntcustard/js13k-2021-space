@@ -56,9 +56,11 @@ Ship.prototype.moveToDestination = function (elapsed) {
   if (distance > targetRadius) {
     // Accelerate
     this.speed = this.savedSpeed = Math.min(this.speed + accelerationFactor * elapsedSec, maxSpeed);
+    this.model.element.classList.add('thrust-l');
   } else {
     // Decelerate
     this.speed = Math.max(this.savedSpeed * (distance / targetRadius), minSpeed);
+    this.model.element.classList.remove('thrust-l');
   }
 
   const change = toDestination.resize(this.speed);
