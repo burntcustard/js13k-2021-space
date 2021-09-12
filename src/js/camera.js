@@ -1,4 +1,4 @@
-import { $, toRad, toDeg, clamp } from './util';
+import { $, toRad, clamp } from './util';
 import settings from './settings';
 
 const cameraElement = $('.camera');

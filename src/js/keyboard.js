@@ -1,6 +1,7 @@
 import Build from './build';
 import { camera } from './camera';
 import gameObjectList from './game-object-list';
+import SceneController from './scene-controller';
 import UI from './ui';
 import { $ } from './util';
 
@@ -35,6 +36,10 @@ function deselectAll() {
 
 export function initKeyboard() {
   document.addEventListener('keydown', (event) => {
+    if (!SceneController.started) {
+      SceneController.start();
+    }
+
     const key = event.key.toLowerCase();
     keyDown.add(key);
     if (key === 'r') Build.rotate();

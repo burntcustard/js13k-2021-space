@@ -6,7 +6,7 @@ import { initKeyboard, doKeyboardInput } from './keyboard';
 import Build from './build';
 import UI from './ui';
 import gameObjectList from './game-object-list';
-import { $ } from './util';
+import { $, PI_2, PI_8 } from './util';
 import BlockMulti from './modules/block-multi';
 import Light from './objects/light';
 import Cubemap from './shapes/cubemap';
@@ -14,6 +14,7 @@ import Sun from './objects/sun';
 import Planet from './objects/planet';
 import ShipController from './ship-controller';
 import initSaveAndLoad from './save-load';
+import SceneController from './scene-controller';
 
 // const perfDebug = $('.debug .perf');
 
@@ -100,6 +101,12 @@ function main(timestamp) {
   gameObjectList.forEach((object) => {
     object.update(elapsed, lights);
   });
+
+  if (!SceneController.started) {
+    camera.rx = Math.sin(timestamp / 10000) * PI_8 + PI_2;
+    camera.rz -= 0.002;
+    camera.setTransform();
+  }
 
   camera.update(elapsed);
   skybox.update();

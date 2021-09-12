@@ -1,0 +1,16 @@
+.splash {
+  position: absolute;
+  top: 0;
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+
+.splash h1 {
+  margin: 0;
+  font-size: 120px;
+}
