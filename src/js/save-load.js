@@ -19,6 +19,7 @@ function stringify() {
       connectedTo: object.connectedTo ? `${gameObjectList.indexOf(object.connectedTo.parent.parent)}:${object.connectedTo.parent.sides.indexOf(object.connectedTo)}` : undefined,
     })),
     resources,
+    unlocks: moduleList.map((module) => module.unlock === true),
   });
 }
 
@@ -48,6 +49,11 @@ function load(data) {
   resources.mats = parsed.resources.mats;
   resources.power = parsed.resources.power;
   resources.population = parsed.resources.population;
+
+  // Load unlocks
+  parsed.unlocks.forEach((unlocked, i) => {
+    if (unlocked) moduleList[i].unlocked = true;
+  });
 }
 
 export default function initSaveAndLoad() {
