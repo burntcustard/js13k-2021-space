@@ -25,11 +25,38 @@ export default function BoxVisibleInner({
       rx: -PI_2,
       rz: PI_2,
     }),
+    // Bottom
+    new Face({
+      w,
+      h: d,
+      z: -H_2,
+      rx: PI,
+    }),
+    // Left
+    new Face({
+      w,
+      h,
+      y: D_2,
+      rx: -PI_2,
+    }),
+    // Right
+    new Face({
+      w,
+      h,
+      y: -D_2,
+      rx: PI_2,
+    }),
+    // Top
+    new Face({
+      w,
+      h: d,
+      z: H_2,
+    }),
     // Back wall
     new Face({
       w: d - wallThickness * 2,
       h: h - wallThickness * 2,
-      x: 0,
+      x: -W_2 + wallThickness,
       rx: PI_2,
       rz: PI_2,
     }),
@@ -75,20 +102,8 @@ export default function BoxVisibleInner({
     new Face({
       w,
       h: d,
-      z: -H_2,
-      rx: PI,
-    }),
-    new Face({
-      w,
-      h: d,
       z: H_2 - wallThickness,
       rx: PI,
-    }),
-    new Face({
-      w,
-      h,
-      y: D_2,
-      rx: -PI_2,
     }),
     new Face({
       w,
@@ -99,33 +114,14 @@ export default function BoxVisibleInner({
     new Face({
       w,
       h,
-      y: -D_2,
-      rx: PI_2,
-    }),
-    new Face({
-      w,
-      h,
       y: D_2 - wallThickness,
       rx: PI_2,
     }),
     new Face({
       w,
       h: d,
-      z: H_2,
-    }),
-    new Face({
-      w,
-      h: d,
       z: -H_2 + wallThickness,
     }),
-    // new Face({
-    //   w: d,
-    //   h,
-    //   x: W_2,
-    //   rx: -PI_2,
-    //   rz: -PI_2,
-    // }),
-
   ];
 
   this.sides.forEach((side) => {

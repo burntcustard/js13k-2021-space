@@ -1,3 +1,4 @@
+import Build from '../build';
 import Module from './module';
 import BoxVisibleInner from '../shapes/box-visible-inner';
 import MiningShip from '../ships/mining-ship';
@@ -35,11 +36,15 @@ export default function Hangar({ x, y, z, rx, ry, rz }) {
     middleWallOffset: 8,
   });
 
-  this.model.sides[2].element.className += ' door';
+  this.model.sides[6].element.className += ' door';
   this.model.update();
 
   this.bays = [];
   this.buildList = [MiningShip];
+
+  for (let i = 0; i < 5; i++) {
+    Build.addEventListenersTo(this.model.sides[i]);
+  }
 
   Module.call(this, { x, y, z, rx, ry, rz, ...info });
 }
