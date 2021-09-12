@@ -1,4 +1,5 @@
 import Block from './block';
+import BlockMulti from './block-multi';
 import Hab from './hab';
 import Hangar from './hangar';
 import HexBlock from './hex-block';
@@ -8,8 +9,9 @@ import Solar from './solar';
 import StorePower from './store-power';
 
 const moduleList = [
-  Scaffold,
   Block,
+  Scaffold,
+  BlockMulti,
   HexBlock,
   Solar,
   Hab,

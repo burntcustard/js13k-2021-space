@@ -1,15 +1,18 @@
 import Module from './module';
 import Box from '../shapes/box';
 import Build from '../build';
+import resources from '../resources';
 
 const info = {
-  tag: 'Multi Purpose Block', // Can't use 'name' because is reserved
+  tag: 'Multi Block', // Can't use 'name' because is reserved
   desc: 'Generates a small amount of ↯ & M',
   className: 'block-multi module',
-  cost: 10,
-  unlock: true,
+  cost: 40,
   mats: 0.5,
   power: 10,
+  population: 1,
+  unlock: () => resources.population.current > 39,
+  unlockText: 'Reach 40 population',
   w: 60,
   d: 60,
   h: 60,

@@ -7,7 +7,22 @@ button.build-bar::before {
 button.build-bar.block::before {
   width: 26px;
   height: 26px;
-  background: #fff;
+  background:
+    conic-gradient(
+      #fff 65deg,
+      #ccc 0 180deg,
+      #999 0 295deg,
+      #fff 0
+    );
+  clip-path:
+    polygon(
+      50% 0,
+      100% 25%,
+      100% 75%,
+      50% 100%,
+      0 75%,
+      0 25%
+    );
 }
 
 button.build-bar.scaffold::before {
@@ -29,9 +44,30 @@ button.build-bar.scaffold::before {
   box-shadow: 0 0 0 3px var(--color-secondary);
 }
 
-button.build-bar.hex-block::before {
-  width: 30px;
+button.build-bar.block-multi::before {
+  width: 26px;
   height: 26px;
+  background:
+    conic-gradient(
+      #08a 65deg,
+      #ccc 0 180deg,
+      #999 0 295deg,
+      #08a 0
+    );
+  clip-path:
+    polygon(
+      50% 0,
+      100% 25%,
+      100% 75%,
+      50% 100%,
+      0 75%,
+      0 25%
+    );
+}
+
+button.build-bar.hex-block::before {
+  width: 26px;
+  height: 22px;
   background: #fff;
   clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
 }

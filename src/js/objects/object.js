@@ -78,7 +78,7 @@ GameObject.prototype.updateBuildBar = function () {
         power: this.info.power * (this.level + 2),
         desc: 'Upgrade',
         unlock: this.info.unlockUpgrade[this.level],
-        unlockText: this.info.unlockUpgradeText[this.level] || '- Max upgrade level reached',
+        unlockText: this.info.unlockUpgradeText[this.level] || 'Max upgrade level reached',
       });
     }
   }
@@ -128,7 +128,7 @@ GameObject.prototype.populateBuildBar = function () {
         power: this.info.power * (this.level + 2),
         desc: 'Upgrade',
         unlock: this.info.unlockUpgrade[this.level],
-        unlockText: this.info.unlockUpgradeText[this.level] || '- Max upgrade level reached',
+        unlockText: this.info.unlockUpgradeText[this.level] || 'Max upgrade level reached',
       });
     });
 
@@ -152,7 +152,7 @@ GameObject.prototype.populateBuildBar = function () {
         power: this.info.power * (this.level + 2),
         desc: 'Upgrade',
         unlock: this.info.unlockUpgrade[this.level],
-        unlockText: this.info.unlockUpgradeText[this.level] || '- Max upgrade level reached',
+        unlockText: this.info.unlockUpgradeText[this.level] || 'Max upgrade level reached',
       });
     });
 

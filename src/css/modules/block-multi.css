@@ -23,7 +23,7 @@
     );
 }
 
-/* Solar */
+/* Solar top face */
 .block-multi .face:nth-child(5)::before {
   background-image:
     linear-gradient(

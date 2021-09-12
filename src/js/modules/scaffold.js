@@ -9,7 +9,7 @@ const info = {
   className: 'scaffold module',
   unlock: () => achievements.modulesDeleted > 4,
   unlockText: 'Remove 5 modules with delete',
-  cost: 10,
+  cost: 20,
   w: 60,
   d: 60,
   h: 60,

@@ -184,14 +184,14 @@ Build.addEventListenersTo = (side) => {
     side.element.classList.add('obstructed'); // TODO: Refactor this er somehow
 
     if (Build.currentItemInstance.model.sides[0].w > side.w
-      && side.parent.parent.tag === 'Block') {
+      && ['Block', 'Multi Purpose Block'].includes(side.parent.parent.tag)) {
       side.element.classList.add('ao-outer');
 
       Build.addInnerShadows(side);
     }
 
     if (Build.currentItemInstance.model.sides[0].w < side.w
-      && Build.currentItemInstance.tag === 'Block') {
+      && ['Block', 'Multi Purpose Block'].includes(Build.currentItemInstance.tag)) {
       Build.currentItemInstance.model.sides[0].element.classList.add('ao-outer');
 
       Build.addInnerShadows(Build.currentItemInstance.model.sides[0]);
