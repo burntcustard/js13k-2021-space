@@ -4,7 +4,7 @@ import settings from './settings';
 const cameraElement = $('.camera');
 const scene = $('.scene');
 const viewport = $('.viewport');
-const cameraDebug = $('.debug .view');
+// const cameraDebug = $('.debug .view');
 
 function Camera() {
   this.x = 0;
@@ -84,7 +84,7 @@ function Camera() {
       this.dZoom = 0;
     }
 
-    cameraDebug.innerText = `Position: ${Math.round(this.x)}x, ${Math.round(this.y)}y, ${Math.round(this.z)}z\nRotation: ${Math.round(toDeg(this.rx))}°x, ${Math.round(toDeg(this.rz))}°z\nZoom: ${Math.round(this.zoom)}px`;
+    // cameraDebug.innerText = `Position: ${Math.round(this.x)}x, ${Math.round(this.y)}y, ${Math.round(this.z)}z\nRotation: ${Math.round(toDeg(this.rx))}°x, ${Math.round(toDeg(this.rz))}°z\nZoom: ${Math.round(this.zoom)}px`;
   };
 }
 

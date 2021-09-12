@@ -15,7 +15,7 @@ import Planet from './objects/planet';
 import ShipController from './ship-controller';
 import initSaveAndLoad from './save-load';
 
-const perfDebug = $('.debug .perf');
+// const perfDebug = $('.debug .perf');
 
 let previousTimestamp;
 
@@ -99,7 +99,7 @@ function main(timestamp) {
   skybox.update();
 
   previousTimestamp = timestamp;
-  perfDebug.innerText = `Elapsed: ${elapsed.toFixed(2)} FPS: ${(1000 / elapsed).toFixed()}`;
+  // perfDebug.innerText = `Elapsed: ${elapsed.toFixed(2)} FPS: ${(1000 / elapsed).toFixed()}`;
 
   // Do some stuff only every half a second
   if (!halfSecondCounter) {
@@ -145,17 +145,17 @@ initMouse();
 initKeyboard();
 initSaveAndLoad();
 
-$('#reset-rotation').addEventListener('click', () => {
-  camera.rx = PI_4;
-  camera.rz = PI_4;
-  camera.setTransform();
-});
-
-$('#reset-position').addEventListener('click', () => {
-  camera.x = 0;
-  camera.y = 0;
-  camera.z = 0;
-  camera.setTransform();
-});
+// $('#reset-rotation').addEventListener('click', () => {
+//   camera.rx = PI_4;
+//   camera.rz = PI_4;
+//   camera.setTransform();
+// });
+//
+// $('#reset-position').addEventListener('click', () => {
+//   camera.x = 0;
+//   camera.y = 0;
+//   camera.z = 0;
+//   camera.setTransform();
+// });
 
 window.requestAnimationFrame(main);
