@@ -278,6 +278,9 @@ GameObject.prototype.addSelectEventListeners = function () {
     });
 
     side.element.addEventListener('dblclick', () => {
+      // You're building something not selecting, do nothing
+      if (Build.currentItem) return;
+
       gameObjectList.forEach((item) => {
         if (this.tag === item.tag && item.select) {
           item.select(true);
