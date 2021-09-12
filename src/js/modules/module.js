@@ -28,7 +28,7 @@ Module.prototype.update = function (elapsed, lights) {
   if (this.restartTimer) {
     this.restartTimer = Math.max(this.restartTimer - elapsed, 0);
 
-    if (this.restartTimer === 0) {
+    if (!this.active && this.restartTimer === 0) {
       this.enable();
     }
   }

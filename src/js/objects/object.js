@@ -182,7 +182,7 @@ GameObject.prototype.populateBuildBar = function () {
           x: this.x,
           y: this.y,
           z: this.z,
-          parent: this,
+          parent: gameObjectList.getSelectedList()[0],
         });
         newItem.spawn();
       });
