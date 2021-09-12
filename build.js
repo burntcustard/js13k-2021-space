@@ -134,6 +134,7 @@ async function bundleIntoHtml(css, js) {
   const htmlMinifyConfig = {
     removeAttributeQuotes: true,
     collapseWhitespace: true,
+    removeComments: true,
   };
 
   const html = fs.readFileSync('src/index.html', 'utf8');
@@ -182,6 +183,7 @@ async function bundleIntoHtmlWithRoadRoller(css, js) {
   const htmlMinifyConfig = {
     removeAttributeQuotes: true,
     collapseWhitespace: true,
+    removeComments: true,
   };
 
   const html = fs.readFileSync('src/index.html', 'utf8');
