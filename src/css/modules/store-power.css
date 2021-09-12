@@ -1,0 +1,47 @@
+.store.power .face::before {
+  background: var(--color-accent);
+  background:
+    linear-gradient(
+      var(--color-accent) 0 4px,
+      var(--color-secondary) 0 12px,
+      var(--color-accent) 0 48px,
+      var(--color-secondary) 0 56px,
+      var(--color-accent) 0
+    );
+}
+
+.store.power .face.oct::before {
+  background: var(--color-secondary);
+  background-image:
+    linear-gradient(
+      #0000 0 10px,
+      #0003 12px,
+      var(--color-primary) 0 18px,
+      #0003 0,
+      #0000 20px
+    ),
+    radial-gradient(
+      #0000 0 40%,
+      #0003 0,
+      #0000 50% 60%,
+      #0003 65%,
+      var(--color-accent) 0
+    );
+}
+
+.store.power .indicator {
+  width: 7px;
+  height: 30px;
+  background: #111;
+}
+
+.store.power .indicator::before {
+  position: absolute;
+  right: 0;
+  bottom: 0; /* Would save a few B being 'top' but would be upside down */
+  left: 0;
+  height: var(--curr);
+  background: #ff0;
+  box-shadow: inset 0 0 0 0.5px #333, 0 0 6px #fd0;
+  content: '';
+}

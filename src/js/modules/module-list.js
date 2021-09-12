@@ -5,6 +5,7 @@ import HexBlock from './hex-block';
 import Ring from './ring';
 import Scaffold from './scaffold';
 import Solar from './solar';
+import StorePower from './store-power';
 
 const moduleList = [
   Scaffold,
@@ -14,6 +15,7 @@ const moduleList = [
   Hab,
   Hangar,
   Ring,
+  StorePower,
 ];
 
 export default moduleList;

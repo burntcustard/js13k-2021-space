@@ -15,8 +15,8 @@ export default function Octagon({ w, h, x, y, z, rx, ry, rz, className }) {
   const W_2 = w * 0.5;
   const H_2 = h * 0.5;
 
-  const sideW = w * Math.tan(PI_8);
-  const sideOffset = W_2 * Math.sin(PI_4);
+  const sideW = w * Math.tan(PI_8) + 0.1;
+  const sideOffset = W_2 * Math.sin(PI_4) - 0.1;
 
   this.sides = [
     new Face({
@@ -29,7 +29,7 @@ export default function Octagon({ w, h, x, y, z, rx, ry, rz, className }) {
     new Face({
       w: sideW,
       h,
-      y: W_2,
+      y: W_2 - 0.1,
       rx: -PI_2,
     }),
     new Face({
@@ -43,7 +43,7 @@ export default function Octagon({ w, h, x, y, z, rx, ry, rz, className }) {
     new Face({
       w: sideW,
       h,
-      x: W_2,
+      x: W_2 - 0.1,
       rx: -PI_2,
       rz: -PI_2,
     }),
@@ -58,7 +58,7 @@ export default function Octagon({ w, h, x, y, z, rx, ry, rz, className }) {
     new Face({
       w: sideW,
       h,
-      y: -W_2,
+      y: -W_2 + 0.1,
       rx: -PI_2,
       rz: -PI,
     }),
@@ -73,7 +73,7 @@ export default function Octagon({ w, h, x, y, z, rx, ry, rz, className }) {
     new Face({
       w: sideW,
       h,
-      x: -W_2,
+      x: -W_2 + 0.1,
       rx: -PI_2,
       rz: PI_2,
     }),
@@ -92,6 +92,11 @@ export default function Octagon({ w, h, x, y, z, rx, ry, rz, className }) {
       className: 'oct',
     }),
   ];
+
+  this.sides.forEach((side) => {
+    side.parent = this;
+  });
+
   // TODO: Set octagon face clip-path in JS so it can be precise
   // this.sides[0].element.style.clipPath = `polygon(
   //   29.34% 0, 70.66% 0, 100% 29.34%, 100% 70.66%, 70.66% 100%, 29.34% 100%, 0 70.66%, 0 29.34%
