@@ -11,6 +11,7 @@
   padding: 2vmin;
   perspective: 300px;
   pointer-events: none;
+  user-select: none;
 }
 
 .ui * {
