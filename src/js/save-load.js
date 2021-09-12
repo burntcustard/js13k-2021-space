@@ -42,6 +42,7 @@ function load(data) {
   gameObjectList.splice(0, gameObjectList.length, ...savedObjects);
   gameObjectList.forEach((object) => {
     object.spawn();
+    object.build();
     object.enable();
   });
 
