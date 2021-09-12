@@ -17,7 +17,6 @@ const info = {
   w: 90,
   h: 84,
   d: 120,
-  numberOfBays: 2,
 };
 
 export default function Hangar({ x, y, z, rx, ry, rz }) {
@@ -59,13 +58,10 @@ Hangar.prototype.build = function () {
   this.facing = new Vec3(1, 0, 0).rotate(this.rx, this.ry, this.rz);
   this.arrivalPoint = this.facing.resize(200).add(new Vec3(this.x, this.y, this.z));
 
-  for (let i = 0; i < info.numberOfBays; i++) {
-    const bay = {
-      hangar: this,
-      ship: null,
-    };
-    this.bays.push(bay);
-  }
+  this.bays.push({
+    hangar: this,
+    ship: null,
+  });
 
   ShipController.hangars.push(this);
   ShipController.bays.push(...this.bays);
