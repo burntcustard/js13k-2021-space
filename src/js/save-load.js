@@ -4,6 +4,7 @@ import resources from './resources';
 import ShipController from './ship-controller';
 import MiningShip from './ships/mining-ship';
 import Ship from './ships/ship';
+import UI from './ui';
 import { $ } from './util';
 
 const { localStorage } = window;
@@ -66,8 +67,9 @@ function load(data) {
 
   // Load unlocks
   parsed.unlocks.forEach((unlocked, i) => {
-    if (unlocked) moduleList[i].unlocked = true;
+    if (unlocked) moduleList[i].unlock = true;
   });
+  UI.refreshUnlocks();
 
   // Load ships
   ShipController.ships.forEach((ship) => {

@@ -104,6 +104,16 @@ UI.update = () => {
   powerCap.innerText = `${Math.floor(resources.power.current)} /  ${resources.power.capacity}`;
 };
 
+UI.refreshUnlocks = () => {
+  UI.buildBarList.forEach((buildBarItemElement) => {
+    // Called after loading to refresh unlocks
+    if (buildBarItemElement.Item.unlock === true) {
+      buildBarItemElement.classList.remove('disabled');
+      buildInfoElement.innerHTML = createBuildScreenHTML(buildBarItemElement.Item);
+    }
+  });
+};
+
 deleteButton.addEventListener('click', () => {
   for (let i = gameObjectList.length - 1; i > 0; i--) {
     if (gameObjectList[i].selected) {
