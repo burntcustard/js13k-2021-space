@@ -35,6 +35,14 @@ export default function Hab({
 
   Module.call(this, { x, y, z, rx, ry, rz, ...info });
 
+  this.lights = [{}, {}];
+  this.lights[0] = document.createElement('div');
+  this.lights[0].className = 'light';
+  this.model.sides[3].element.append(this.lights[0]);
+  this.lights[1] = document.createElement('div');
+  this.lights[1].className = 'light';
+  this.model.sides[7].element.append(this.lights[1]);
+
   // Add build listeners to the larger sides, and the top (or is it bottom?)
   // We may need to add to the other top/bottom/whatever-the-end-is as well
   this.model.sides.forEach((side, i) => {

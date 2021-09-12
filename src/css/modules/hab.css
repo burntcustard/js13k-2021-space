@@ -1,6 +1,10 @@
-.hab .face.rect {
+.hab .face {
   backface-visibility: visible;
-  background: #013a;
+  filter: none !important;
+}
+
+.hab .face.rect {
+  background: #013a; /* Window color */
 }
 
 .hab .face::before {
@@ -12,25 +16,66 @@
 /* TODO: Save a few bytes by not using CSS vars? */
 
 /* Two big sides opposite each other */
-.hab .rect:nth-child(4n)::before {
-  --window-h: 8px;
-  --window-w: 20px;
-
+.hab .rect:nth-child(4)::before {
   background:
     linear-gradient(
-      #0000 calc(50% + var(--window-h) - 1px),
-      var(--color-accent) 0 calc(50% + var(--window-h) + 6px),
+      #0000 16px,
+      var(--color-accent) 0 23px,
       #0000 0
     ),
     linear-gradient(
       90deg,
-      #eee calc(50% - var(--window-w)),
-      #0000 0 calc(50% + var(--window-w)),
-      #eee 0
+      var(--color-primary) 10px,
+      #0000 0 50px,
+      var(--color-primary) 0
     ),
     linear-gradient(
-      #eee calc(50% - var(--window-h)),
-      #0000 0 calc(50% + var(--window-h)),
-      #eee 0
+      var(--color-primary) 23px,
+      #0000 0 37px,
+      var(--color-primary) 0
     );
+}
+
+.hab .rect:nth-child(8)::before {
+  background:
+    linear-gradient(
+      0deg,
+      #0000 16px,
+      var(--color-accent) 0 23px,
+      #0000 0
+    ),
+    linear-gradient(
+      90deg,
+      var(--color-primary) 10px,
+      #0000 0 50px,
+      var(--color-primary) 0
+    ),
+    linear-gradient(
+      var(--color-primary) 23px,
+      #0000 0 37px,
+      var(--color-primary) 0
+    );
+}
+
+.hab .light {
+  width: 40px;
+  height: 14px;
+  box-shadow: 0 0 8px 4px #fff3;
+  transition: all 0.5s;
+}
+
+.shape.hab.disabled .light {
+  animation: 1s infinite alarm alternate;
+}
+
+@keyframes alarm {
+  0% {
+    background: #0000;
+    box-shadow: 0 0 8px 4px #fff3;
+  }
+
+  50% {
+    background: #f113;
+    box-shadow: 0 0 8px 4px #f117;
+  }
 }
