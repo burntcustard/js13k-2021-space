@@ -66,7 +66,8 @@ StorePower.prototype.build = function () {
 };
 
 StorePower.prototype.kill = function () {
-  resources.power.capacty -= 500;
+  resources.power.capacity -= 500;
+  resources.power.current = Math.min(resources.power.current, resources.power.capacity);
 
   Module.prototype.kill.call(this);
 };
