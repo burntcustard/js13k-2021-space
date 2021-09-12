@@ -67,6 +67,7 @@ Module.prototype.updatePower = function (elapsed) {
 
 Module.prototype.disable = function () {
   this.active = false;
+  this.model.element.classList.add('disabled');
   resources.power.use += this.power < 0 ? this.power : 0;
   resources.power.gen -= this.power > 0 ? this.power : 0;
   resources.mats.gen -= this.mats > 0 ? this.mats : 0;
@@ -75,6 +76,7 @@ Module.prototype.disable = function () {
 
 Module.prototype.enable = function () {
   this.active = true;
+  this.model.element.classList.remove('disabled');
   resources.power.use -= this.power < 0 ? this.power : 0;
   resources.power.gen += this.power > 0 ? this.power : 0;
   resources.mats.gen += this.mats > 0 ? this.mats : 0;
