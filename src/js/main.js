@@ -6,7 +6,7 @@ import { initKeyboard, doKeyboardInput } from './keyboard';
 import Build from './build';
 import UI from './ui';
 import gameObjectList from './game-object-list';
-import { $, PI_4 } from './util';
+import { $ } from './util';
 import BlockMulti from './modules/block-multi';
 import Light from './objects/light';
 import Cubemap from './shapes/cubemap';
@@ -24,10 +24,13 @@ const skybox = new Cubemap({
 });
 
 // eslint-disable-next-line no-unused-vars
-const sun = new Sun({ x: 40000, y: 40000, z: 10000, r: 200 });
+new Sun({ x: 40000, y: 40000, z: 10000, r: 200 });
 
 // eslint-disable-next-line no-unused-vars
-const planet = new Planet({ x: 900, y: -12000, z: -500, r: 300 });
+new Planet({ x: 900, y: -9000, r: 300, className: 'e' });
+
+// eslint-disable-next-line no-unused-vars
+new Planet({ x: -100000, y: 100000, z: -100, r: 100, className: 'm' });
 
 // TODO: Put this somewhere else
 // const canvas = document.getElementsByTagName('canvas')[0];

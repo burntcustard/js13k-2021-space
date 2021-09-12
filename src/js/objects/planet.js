@@ -1,32 +1,31 @@
 import { camera } from '../camera';
 import { PI_2 } from '../util';
 
-export default function Planet({ x, y, z, r }) {
+export default function Planet({ x, y, z, r, className, ring }) {
   this.x = x ?? 0;
   this.y = y ?? 0;
   this.z = z ?? 0;
   this.r = r ?? 0;
 
   this.element = document.createElement('div');
-  this.element.className = 'planet';
-  this.element.style.transform = `
-    translate3D(${this.x}px, ${this.y}px, ${this.z}px)
-  `;
+  this.element.className = `planet ${className}`;
+  this.element.style.transform = `translate3D(${this.x}px, ${this.y}px, ${this.z}px)`;
 
   this.bodyElement = document.createElement('div');
   this.bodyElement.style.width = `${r * 2}px`;
   this.bodyElement.style.height = `${r * 2}px`;
   this.bodyElement.className = 'circle body';
+  this.element.append(this.bodyElement);
 
-  this.ringElement = document.createElement('div');
-  this.ringElement.style.width = `${r * 8}px`;
-  this.ringElement.style.height = `${r * 8}px`;
-  this.ringElement.className = 'ring';
-  this.ringElement.style.transform = `
-    scale3D(8, 8, 8)
-  `;
+  if (ring) {
+    this.ringElement = document.createElement('div');
+    this.ringElement.style.width = `${r * 8}px`;
+    this.ringElement.style.height = `${r * 8}px`;
+    this.ringElement.className = 'ring';
+    this.ringElement.style.transform = 'scale3D(8, 8, 8)';
+    this.element.append(this.ringElement);
+  }
 
-  this.element.append(this.bodyElement, this.ringElement);
   // TODO: A new filter for whatever type of planet this is
   // this.element.style.filter = 'url(#noise)';
   document.querySelector('.scene').append(this.element);
