@@ -1,10 +1,10 @@
 import { camera } from '../camera';
 
 export default function Sun({ x, y, z, r }) {
-  this.x = x ?? 0;
-  this.y = y ?? 0;
-  this.z = z ?? 0;
-  this.r = r ?? 0;
+  this.x = x;
+  this.y = y;
+  this.z = z;
+  this.r = r;
   this.color = '#f90'; // TODO: Replace with fancy background & lighting color?
   this.element = document.createElement('div');
   this.element.className = 'face circle sun';

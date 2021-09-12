@@ -20,7 +20,6 @@ function Camera() {
   this.moveY = 0;
   this.moveX = 0;
   this.followers = [];
-  this.followers = [];
   this.perspective = settings.camera.perspective;
   viewport.style.perspective = `${this.perspective}px`;
 
@@ -89,15 +88,6 @@ function Camera() {
 
     // cameraDebug.innerText = `Position: ${Math.round(this.x)}x, ${Math.round(this.y)}y, ${Math.round(this.z)}z\nRotation: ${Math.round(toDeg(this.rx))}°x, ${Math.round(toDeg(this.rz))}°z\nZoom: ${Math.round(this.zoom)}px`;
   };
-}
-
-export function followCameraUpdate(camera) {
-  this.element.style.transform = `
-    translate3D(${this.x}px, ${this.y}px, ${this.z}px)
-    rotateZ(${-camera.rz}rad)
-    rotateY(${-camera.ry}rad)
-    rotateX(${-camera.rx}rad)
-  `;
 }
 
 export const camera = new Camera();

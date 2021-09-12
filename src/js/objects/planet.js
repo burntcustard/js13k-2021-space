@@ -1,30 +1,17 @@
 import { camera } from '../camera';
 import { PI_2 } from '../util';
 
-export default function Planet({ x, y, z, r, className, ring }) {
+export default function Planet({ x, y, z, r, className }) {
   this.x = x ?? 0;
   this.y = y ?? 0;
   this.z = z ?? 0;
   this.r = r ?? 0;
 
   this.element = document.createElement('div');
-  this.element.className = `planet ${className}`;
-  this.element.style.transform = `translate3D(${this.x}px, ${this.y}px, ${this.z}px)`;
-
-  this.bodyElement = document.createElement('div');
-  this.bodyElement.style.width = `${r * 2}px`;
-  this.bodyElement.style.height = `${r * 2}px`;
-  this.bodyElement.className = 'circle body';
-  this.element.append(this.bodyElement);
-
-  if (ring) {
-    this.ringElement = document.createElement('div');
-    this.ringElement.style.width = `${r * 8}px`;
-    this.ringElement.style.height = `${r * 8}px`;
-    this.ringElement.className = 'ring';
-    this.ringElement.style.transform = 'scale3D(8, 8, 8)';
-    this.element.append(this.ringElement);
-  }
+  this.element.className = `planet circle ${className}`;
+  // this.element.style.transform = ``;
+  this.element.style.width = `${r * 2}px`;
+  this.element.style.height = `${r * 2}px`;
 
   // TODO: A new filter for whatever type of planet this is
   // this.element.style.filter = 'url(#noise)';
@@ -51,7 +38,8 @@ export default function Planet({ x, y, z, r, className, ring }) {
     const cosRx = Math.cos(angleX);
     const cosRz = Math.cos(angleZ);
 
-    this.bodyElement.style.transform = `
+    this.element.style.transform = `
+      translate3D(${this.x}px, ${this.y}px, ${this.z}px)
       matrix3d(
         ${cosRz},
         ${sinRz},

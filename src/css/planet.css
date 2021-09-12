@@ -1,28 +1,12 @@
 .planet {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  pointer-events: none;
-}
-
-.planet * {
-  position: absolute;
-}
-
-.planet .body {
   box-shadow:
     30px -30px 60px #000e inset,
     9px 9px 20px #eef3 inset,
     -1px 1px 3px 1px #fff9 inset;
+  pointer-events: none;
 }
 
-.planet .ring {
-  backface-visibility: visible;
-  border-radius: 50%;
-  box-shadow: 0 0 1px 4px #ff0;
-}
-
-.planet.e .body {
+.planet.e {
   background: #039;
   background-image:
     linear-gradient(
@@ -36,7 +20,7 @@
     );
 }
 
-.planet.m .body {
+.planet.m {
   background: #777;
   box-shadow:
     -30px -30px 60px #000e inset,
