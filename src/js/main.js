@@ -22,8 +22,10 @@ const skybox = new Cubemap({
   w: 2048,
 });
 
+// eslint-disable-next-line no-unused-vars
 const sun = new Sun({ x: 40000, y: 40000, z: 10000, r: 200 });
 
+// eslint-disable-next-line no-unused-vars
 const planet = new Planet({ x: 900, y: -12000, z: -500, r: 300 });
 
 // TODO: Put this somewhere else
