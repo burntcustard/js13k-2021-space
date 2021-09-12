@@ -15,6 +15,17 @@
   padding: 8px 0;
 }
 
+.ui-left:hover .ui-panel--save {
+  width: 132px;
+}
+
+.ui-panel--save .ui-panel__inner {
+  display: flex;
+  width: 100px;
+  flex-direction: column;
+  margin: 0 8px;
+}
+
 .ui-panel--save hr {
   width: 100%;
   border: 1px solid #444;
@@ -35,17 +46,6 @@
   color: #888;
 }
 
-.ui-left:hover .ui-panel--save {
-  width: 132px;
-}
-
-.ui-left .ui-panel__inner {
-  display: flex;
-  width: 100px;
-  flex-direction: column;
-  margin: 0 8px;
-}
-
 .ui-panel--save button {
   display: flex;
   width: 100%;
@@ -60,7 +60,6 @@
   background: #aaa;
   box-shadow: 0 0 0 1px #3339;
   font-weight: bold;
-  text-shadow: 0 0 1px #000;
   transition: background-color 0.2s;
 }
 
@@ -72,6 +71,9 @@
 }
 
 .ui-panel--save button:hover {
-  /* box-shadow: 0 0 6px #bbb, 0 0 0 1px #333; */
+  background: #999;
+}
+
+.ui-panel--save button:disabled {
   background: #999;
 }

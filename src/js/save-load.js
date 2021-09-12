@@ -31,8 +31,13 @@ function load(data) {
 
 export default function initSaveAndLoad() {
   $('#save').addEventListener('click', () => {
-    console.log(stringify());
     localStorage.setItem('3DC5S', stringify());
+    $('#save').disabled = true;
+    $('#save').innerText = 'Saved';
+    setTimeout(() => {
+      $('#save').disabled = false;
+      $('#save').innerText = 'Save';
+    }, 2500);
   });
 
   $('#load').addEventListener('click', () => {
