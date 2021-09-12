@@ -3,7 +3,7 @@ import BoxVisibleInner from '../shapes/box-visible-inner';
 import MiningShip from '../ships/mining-ship';
 import ShipController from '../ship-controller';
 import Vec3 from '../vec3';
-import resources from '../resources';
+import achievements from '../achievements';
 
 const info = {
   tag: 'Hangar',
@@ -11,7 +11,7 @@ const info = {
   className: 'hangar module',
   cost: 30,
   power: -10,
-  unlock: () => resources.population.current > 2,
+  unlock: () => achievements.population > 2,
   unlockText: 'Reach 3 population',
   w: 90,
   h: 84,

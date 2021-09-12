@@ -1,7 +1,7 @@
 import Build from '../build';
 import HexRing from '../shapes/hex-ring';
 import Module from './module';
-import resources from '../resources';
+import achievements from '../achievements';
 
 const info = {
   tag: 'Hab Ring',
@@ -10,7 +10,7 @@ const info = {
   cost: 100,
   power: -40,
   population: 15,
-  unlock: () => resources.population.current > 24,
+  unlock: () => achievements.population > 24,
   unlockText: 'Reach 25 population',
   baseW: 60,
   baseD: 50,

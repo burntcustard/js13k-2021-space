@@ -6,7 +6,7 @@ const info = {
   tag: 'Hex Block',
   desc: 'Hexagonal block with solar panels',
   className: 'hex-block hex-block-multi module',
-  unlock: () => Build.itemHasBeenRotated,
+  unlock: () => true,
   unlockText: '',
   cost: 90,
   w: 60,

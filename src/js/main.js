@@ -1,4 +1,5 @@
 import { camera } from './camera';
+import achievements from './achievements';
 import resources from './resources';
 import initMouse from './mouse';
 import { initKeyboard, doKeyboardInput } from './keyboard';
@@ -110,11 +111,28 @@ function main(timestamp) {
     // TODO: Only update build if actually building something
     Build.update();
 
-    if (resources.population.current < resources.population.capacity
-      && Math.floor(Math.random() * 1.1)) {
-      // TODO: Display a '+1' or some indicator that the population has gone up
-      // TODO: Show a 'population capacity reached' indicator
-      resources.population.current++;
+    if (resources.population.current <= resources.population.capacity) {
+      $('.ui-panel.ui-panel--top').classList.remove('neg');
+      $('.pop .err').innerHTML = '';
+    }
+
+    if (resources.population.current < resources.population.capacity) {
+      if (Math.floor(Math.random() * 1.1)) {
+        // TODO: Display a '+1' or some indicator that the population has gone up
+        // TODO: Show a 'population capacity reached' indicator
+        resources.population.current++;
+        achievements.population = Math.max(achievements.population, resources.population.current);
+        console.log(achievements.population);
+      }
+    }
+
+    if (resources.population.current > resources.population.capacity) {
+      $('.ui-panel.ui-panel--top').classList.add('neg');
+      $('.pop .err').innerHTML = 'EXCEEDS<br>CAPACITY';
+
+      if (Math.floor(Math.random() * 1.1)) {
+        resources.population.current--;
+      }
     }
 
     UI.update();
