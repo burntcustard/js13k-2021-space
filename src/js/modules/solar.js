@@ -60,6 +60,7 @@ Solar.prototype.instancesBuilt = 0;
 
 Solar.prototype.upgrade = function () {
   this.setLevel(this.level + 1);
+  resources.solarHasBeenUpgraded = true; // TODO: Move this variable to somewhere more sensible?
 };
 
 Solar.prototype.setLevel = function (level) {
