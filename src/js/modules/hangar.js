@@ -74,5 +74,10 @@ Hangar.prototype.build = function () {
 Hangar.prototype.kill = function () {
   ShipController.hangars = ShipController.hangars.filter((hangar) => hangar !== this);
   ShipController.bays = ShipController.bays.filter((bay) => !this.bays.includes(bay));
+  ShipController.ships.filter((ship) => this.bays.includes(ship.bay)).forEach((ship) => {
+    ship.status = 4;
+    ShipController.dockingQueue.push(ship);
+    ship.destination = null;
+  });
   Module.prototype.kill.call(this);
 };
