@@ -10,12 +10,6 @@
 }
 
 .planet .body {
-  background:
-    linear-gradient(
-      blue,
-      red,
-      blue
-    );
   box-shadow:
     30px -30px 60px #000e inset,
     9px 9px 20px #eef3 inset,
@@ -26,4 +20,27 @@
   backface-visibility: visible;
   border-radius: 50%;
   box-shadow: 0 0 1px 4px #ff0;
+}
+
+.planet.e .body {
+  background: #039;
+  background-image:
+    linear-gradient(
+      #fff3,
+      #039 10%,
+      #029 20%,
+      #039 50%,
+      #029 80%,
+      #039 90%,
+      #fff3
+    );
+}
+
+.planet.m .body {
+  background: #777;
+  box-shadow:
+    -30px -30px 60px #000e inset,
+    9px 9px 20px #eef3 inset,
+    1px 1px 3px 1px #fff9 inset;
+  filter: drop-shadow(0 0 20px #fff3) drop-shadow(0 0 100px #000) drop-shadow(0 0 100px #000) drop-shadow(0 0 100px #000);
 }
