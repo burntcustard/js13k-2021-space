@@ -71,6 +71,7 @@ Module.prototype.disable = function () {
   resources.power.use += this.power < 0 ? this.power : 0;
   resources.power.gen -= this.power > 0 ? this.power : 0;
   resources.mats.gen -= this.mats > 0 ? this.mats : 0;
+  resources.population.capacity -= this.population;
   if (this.selected) GameObject.prototype.updateBuildBarUI.call(this);
 };
 
@@ -80,6 +81,7 @@ Module.prototype.enable = function () {
   resources.power.use -= this.power < 0 ? this.power : 0;
   resources.power.gen += this.power > 0 ? this.power : 0;
   resources.mats.gen += this.mats > 0 ? this.mats : 0;
+  resources.population.capacity += this.population;
   if (this.selected) GameObject.prototype.updateBuildBarUI.call(this);
 };
 
@@ -108,10 +110,6 @@ Module.prototype.build = function () {
   this.model.element.classList.remove('frame');
   this.model.element.style.display = ''; // Remove 'display: none'
   GameObject.prototype.addSelectEventListeners.call(this);
-
-  // You can't lose population capacity once it's been added?
-  resources.population.capacity += this.population;
-
   this.enable();
 };
 

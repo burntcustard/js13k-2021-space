@@ -4,7 +4,7 @@ const resources = {
     current: 100,
   },
   population: {
-    capacity: 1,
+    capacity: 0,
     current: 1,
   },
   power: {

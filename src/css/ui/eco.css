@@ -115,9 +115,38 @@
   color: #f20;
 }
 
+.pop {
+  flex-direction: column;
+  gap: 0;
+}
+
+.pop .ui-panel__inner {
+  flex-direction: column;
+  align-items: stretch;
+  padding: 0;
+  gap: 0;
+}
+
+.pop .info {
+  display: flex;
+  align-items: center;
+  padding: 8px;
+}
+
+.pop .err {
+  background: #f33;
+  font-size: 11px;
+  text-align: center;
+}
+
+.pop .err:not(:empty) {
+  padding: 4px 8px;
+}
+
 .pop .icon {
   width: 20px;
   height: 20px;
+  margin: 0 3px;
   border-radius: 50%;
   box-shadow: inset 0 -2px 0 6px #333; /* Outer circle + head */
 }
@@ -142,6 +171,16 @@
 .pop .cur,
 .pop .cap {
   display: flex;
-  min-width: 16px;
+  min-width: 22px;
   justify-content: center;
+}
+
+.ui-panel.ui-panel--top.neg {
+  background:
+    repeating-linear-gradient(
+      -45deg,
+      #000 3px,
+      #ff0 0 6px,
+      #000 0 9px
+    );
 }

@@ -1,7 +1,7 @@
 import Module from './module';
 import Box from '../shapes/box';
 import Build from '../build';
-import resources from '../resources';
+import achievements from '../achievements';
 
 const info = {
   tag: 'Multi Block', // Can't use 'name' because is reserved
@@ -11,7 +11,7 @@ const info = {
   mats: 0.5,
   power: 10,
   population: 1,
-  unlock: () => resources.population.current > 39,
+  unlock: () => achievements.population > 39,
   unlockText: 'Reach 40 population',
   w: 60,
   d: 60,
