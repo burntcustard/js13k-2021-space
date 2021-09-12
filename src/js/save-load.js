@@ -7,7 +7,17 @@ const { localStorage } = window;
 
 function stringify() {
   return JSON.stringify({
-    objects: gameObjectList.map(({ tag, x, y, z, rx, ry, rz }) => ({ tag, x, y, z, rx, ry, rz })),
+    objects: gameObjectList.map((object) => ({
+      tag: object.tag,
+      x: object.x,
+      y: object.y,
+      z: object.z,
+      rx: object.rx,
+      ry: object.ry,
+      rz: object.rz,
+      level: object.level,
+      connectedTo: object.connectedTo ? `${gameObjectList.indexOf(object.connectedTo.parent.parent)}:${object.connectedTo.parent.sides.indexOf(object.connectedTo)}` : undefined,
+    })),
     resources,
   });
 }
@@ -19,10 +29,15 @@ function load(data) {
   for (let i = gameObjectList.length - 1; i >= 0; i--) {
     gameObjectList[i].kill();
   }
-  const savedObjects = parsed.objects.map((saved) => {
-    const Module = moduleList.get(saved.tag);
-    return new Module(saved);
-  });
+  const savedObjects = parsed.objects.map((saved) => new (moduleList.get(saved.tag))(saved));
+  for (let i = 0; i < savedObjects.length; i++) {
+    if (parsed.objects[i].connectedTo) {
+      const [module, side] = parsed.objects[i].connectedTo.split(':');
+      savedObjects[i].connectedTo = savedObjects[module].model.sides[side];
+    }
+    if (parsed.objects[i].level) savedObjects[i].setLevel(parsed.objects[i].level);
+  }
+  // if (saved.level) module.setLevel(saved.level);
   gameObjectList.splice(0, gameObjectList.length, ...savedObjects);
   gameObjectList.forEach((object) => {
     object.spawn();
