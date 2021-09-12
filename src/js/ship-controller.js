@@ -95,10 +95,10 @@ const ShipController = {
     });
 
     // TODO: Remove debug code
-    $('.ship-controller').innerText = this.ships.map((ship) => `${ship.id}: `
-      + `${statusMap.get(ship.status)}${ship.status === 'mining' ? `(${Math.floor(ship.timer / 1000)})` : ''} `
-      + `↯${Math.floor(ship.power)}`)
-      .join('\n');
+    // $('.ship-controller').innerText = this.ships.map((ship) => `${ship.id}: `
+    //   + `${statusMap.get(ship.status)}${ship.status === 'mining' ? `(${Math.floor(ship.timer / 1000)})` : ''} `
+    //   + `↯${Math.floor(ship.power)}`)
+    //   .join('\n');
   },
 };
 
