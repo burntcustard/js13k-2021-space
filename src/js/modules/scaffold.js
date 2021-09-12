@@ -1,13 +1,14 @@
 import Module from './module';
 import BoxScaffold from '../shapes/box-scaffold';
 import Build from '../build';
+import achievements from '../achievements';
 
 const info = {
   tag: 'Scaffold', // Can't use 'name' because is reserved
   desc: 'Alternative to the Block module',
   className: 'scaffold module',
-  unlock: () => false, // TODO
-  unlockText: 'Remove modules with del',
+  unlock: () => achievements.modulesDeleted > 4,
+  unlockText: 'Remove 5 modules with delete',
   cost: 10,
   w: 60,
   d: 60,

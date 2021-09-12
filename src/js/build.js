@@ -1,6 +1,7 @@
 /* eslint-disable prefer-destructuring */
 import resources from './resources';
 import gameObjectList from './game-object-list';
+import achievements from './achievements';
 import Vec3 from './vec3';
 import { PI, PI_2 } from './util';
 
@@ -211,7 +212,7 @@ Build.rotate = () => {
   // TODO: increment should be based on how many sides the selected item has
   Build.rotation = (Build.rotation + PI_2) % (PI * 2);
   Build.updateRotation();
-  Build.itemHasBeenRotated = true;
+  achievements.buildItemHasBeenRotated = true;
 };
 
 export default Build;

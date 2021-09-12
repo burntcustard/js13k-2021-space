@@ -1,6 +1,7 @@
 import Module from './module';
 import Octagon from '../shapes/octagon';
 import Build from '../build';
+import achievements from '../achievements';
 import resources from '../resources';
 
 const info = {
@@ -8,7 +9,7 @@ const info = {
   desc: 'Increase power capacity by 500',
   className: 'store power module',
   cost: 20,
-  unlock: () => resources.solarHasBeenUpgraded,
+  unlock: () => achievements.solarHasBeenUpgraded,
   unlockText: 'Upgrade a solar panel',
   w: 30,
   d: 30,
