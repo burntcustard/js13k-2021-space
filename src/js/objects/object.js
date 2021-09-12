@@ -165,15 +165,14 @@ GameObject.prototype.populateBuildBar = function () {
       Item.buildBarItemElement = document.createElement('button');
       Item.buildBarItemElement.className = `build-bar ${Item.className}`;
 
-      const populationInShips = Item.populationRequired * Item.prototype.count;
-      const hasRequiredPopulation = populationInShips < resources.population.current;
-
-      if (!hasRequiredPopulation || resources.mats.current < Item.cost) {
+      if (Item.populationRequired * Item.prototype.count >= resources.population.current
+        || resources.mats.current < Item.cost) {
         Item.buildBarItemElement.classList.add('disabled');
       }
 
       Item.buildBarItemElement.addEventListener('click', () => {
-        if (!hasRequiredPopulation || resources.mats.current < Item.cost) {
+        if (Item.populationRequired * Item.prototype.count >= resources.population.current
+          || resources.mats.current < Item.cost) {
           return;
         }
 

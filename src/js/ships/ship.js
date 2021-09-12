@@ -6,7 +6,7 @@ import Vec3 from '../vec3';
 // Movement constants
 // Ship movement from here https://stackoverflow.com/a/55693280/2303034
 const targetRadius = 200;
-const accelerationFactor = 2;
+const accelerationFactor = 1.5;
 const minSpeed = 1;
 const maxSpeed = 10;
 

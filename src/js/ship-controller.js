@@ -39,8 +39,7 @@ const ShipController = {
 
     this.ships.forEach((ship) => {
       if (ship.status === 0
-        && ship.bay.hangar.active
-        && resources.mats.current < resources.mats.capacity) {
+        && ship.bay.hangar.active) {
         // Ready: undock when hanger is active and capacity for mats
         ship.undock();
         ship.status = 1;
@@ -49,7 +48,7 @@ const ShipController = {
         // Undocking: once undocked travel to a random point
         ship.status = 2;
         ship.destination = new Vec3(10000, 0, 0)
-          .rotateY(Math.random() * 1 - 0.5)
+          .rotateY(Math.random() * 0.4 - 0.2)
           .rotateZ(Math.random() * PI * 2);
       } else if (ship.status === 2) {
         // Mining: wait until the timer is elapsed then return to the station
@@ -75,7 +74,7 @@ const ShipController = {
         ship.status = 7;
       } else if (ship.status === 7) {
         // Docked: unload mats and start charging
-        resources.mats.current = Math.min(resources.mats.current + 50, resources.mats.capacity);
+        resources.mats.current = Math.min(resources.mats.current + 25, resources.mats.capacity);
         ship.bay.hangar.power -= SHIP_CHARGE_PER_S;
         if (ship.bay.hangar.active) resources.power.use += SHIP_CHARGE_PER_S;
         ship.status = 8;
