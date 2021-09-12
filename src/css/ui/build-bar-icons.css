@@ -132,6 +132,25 @@ button.build-bar.ring[aria-pressed='true']::before {
   100% { transform: rotate(360deg); }
 }
 
+button.build-bar.store.power::before {
+  width: 15px;
+  height: 24px;
+  background:
+    linear-gradient(
+      90deg,
+      #0003 4px,
+      #0000 0 11px,
+      #0005 0
+    ),
+    linear-gradient(
+      var(--color-accent) 3px,
+      var(--color-secondary) 0 7px,
+      var(--color-accent) 0 17px,
+      var(--color-secondary) 0 21px,
+      var(--color-accent) 0
+    );
+}
+
 button.build-bar.mining.ship::before {
   width: 30px;
   height: 30px;
