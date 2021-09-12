@@ -6,7 +6,7 @@ import resources from '../resources';
 
 const info = {
   tag: 'Energy Storage',
-  desc: 'Increase power capacity by 500',
+  desc: 'Increases power capacity by 500',
   className: 'store power module',
   cost: 20,
   unlock: () => achievements.solarHasBeenUpgraded,

@@ -2,8 +2,8 @@ import Sidewinder from '../shapes/sidewinder';
 import Ship from './ship';
 
 const info = {
-  tag: 'MiningShip',
-  desc: 'Mining ship',
+  tag: 'Mining Ship',
+  desc: 'Gathers M from nearby space',
   className: 'mining ship',
   cost: 10,
   unlock: true,

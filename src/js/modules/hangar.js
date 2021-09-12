@@ -7,7 +7,7 @@ import resources from '../resources';
 
 const info = {
   tag: 'Hangar',
-  desc: 'Spawns ships which gather metal',
+  desc: 'Creates ships to gather resources',
   className: 'hangar module',
   cost: 30,
   power: -10,
