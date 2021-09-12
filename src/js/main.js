@@ -27,7 +27,7 @@ const skybox = new Cubemap({
 new Sun({ x: 40000, y: 40000, z: 10000, r: 200 });
 
 // eslint-disable-next-line no-unused-vars
-new Planet({ x: 900, y: -9000, r: 300, className: 'e' });
+new Planet({ x: 900, y: -10000, r: 300, className: 'e' });
 
 // eslint-disable-next-line no-unused-vars
 new Planet({ x: -100000, y: 100000, z: -100, r: 100, className: 'm' });
