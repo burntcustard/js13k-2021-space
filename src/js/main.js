@@ -125,7 +125,6 @@ function main(timestamp) {
         // TODO: Show a 'population capacity reached' indicator
         resources.population.current++;
         achievements.population = Math.max(achievements.population, resources.population.current);
-        console.log(achievements.population);
       }
     }
 
