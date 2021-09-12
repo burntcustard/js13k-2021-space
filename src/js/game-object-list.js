@@ -11,11 +11,10 @@ gameObjectList.getSelectedList = function () {
 };
 
 gameObjectList.killSelected = function () {
-  for (let i = this.length - 1; i > 0; i--) {
-    if (this[i].selected) {
-      this[i].kill();
-    }
-  }
+  // Delete if it's not the starting block
+  this.find((object, index) => index > 0 && object.selected)?.kill();
+  // Deselect so the starting block doesn't keep its highlight
+  this.deselectAll();
 };
 
 // TODO: Remove because the upgrade UI doesn't let you upgrade >1 thing at once?

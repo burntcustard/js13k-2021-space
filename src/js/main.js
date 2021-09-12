@@ -13,6 +13,7 @@ import Cubemap from './shapes/cubemap';
 import Sun from './objects/sun';
 import Planet from './objects/planet';
 import ShipController from './ship-controller';
+import initSaveAndLoad from './save-load';
 
 const perfDebug = $('.debug .perf');
 
@@ -22,8 +23,10 @@ const skybox = new Cubemap({
   w: 2048,
 });
 
+// eslint-disable-next-line no-unused-vars
 const sun = new Sun({ x: 40000, y: 40000, z: 10000, r: 200 });
 
+// eslint-disable-next-line no-unused-vars
 const planet = new Planet({ x: 900, y: -12000, z: -500, r: 300 });
 
 // TODO: Put this somewhere else
@@ -141,6 +144,7 @@ function main(timestamp) {
 
 initMouse();
 initKeyboard();
+initSaveAndLoad();
 
 $('#reset-rotation').addEventListener('click', () => {
   camera.rx = PI_4;
