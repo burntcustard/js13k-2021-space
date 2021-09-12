@@ -1,4 +1,4 @@
-import { $, toRad, toDeg } from './util';
+import { $, toRad, toDeg, clamp } from './util';
 import settings from './settings';
 
 const cameraElement = $('.camera');
@@ -47,8 +47,8 @@ function Camera() {
 
   this.changeZoom = (value) => {
     this.zoom += (value * this.zoom * settings.camera.zoomSpeed) / 500;
-    this.followers.forEach((f) => f.updateTransform(this));
     this.setZoom();
+    this.followers.forEach((f) => f.updateTransform(this));
   };
 
   this.update = (elapsed) => {
@@ -71,8 +71,11 @@ function Camera() {
         this.moveX = 0;
       }
 
-      this.x += this.dx * settings.camera.panSpeed * (this.zoom / 300) * elapsed;
-      this.y += this.dy * settings.camera.panSpeed * (this.zoom / 300) * elapsed;
+      const xDiff = this.dx * settings.camera.panSpeed * (this.zoom / 300) * elapsed;
+      const yDiff = this.dy * settings.camera.panSpeed * (this.zoom / 300) * elapsed;
+
+      this.x = clamp(this.x + xDiff, -settings.camera.bounds, settings.camera.bounds);
+      this.y = clamp(this.y + yDiff, -settings.camera.bounds, settings.camera.bounds);
       this.dx = 0;
       this.dy = 0;
       this.setTransform();
