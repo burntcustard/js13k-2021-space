@@ -1,9 +1,16 @@
-.hab .face.rect {
+.hab .face,
+.hab .face::before {
   backface-visibility: visible;
+}
+
+.hab .face.rect {
   background: #013a;
 }
 
 .hab .face::before {
+  --window-h: 8px;
+  --window-w: 20px;
+
   background: #eee;
 }
 
@@ -12,12 +19,30 @@
 /* TODO: Save a few bytes by not using CSS vars? */
 
 /* Two big sides opposite each other */
-.hab .rect:nth-child(4n)::before {
-  --window-h: 8px;
-  --window-w: 20px;
-
+.hab .rect:nth-child(4)::before {
   background:
     linear-gradient(
+      #0000 calc(50% + var(--window-h) - 1px),
+      var(--color-accent) 0 calc(50% + var(--window-h) + 6px),
+      #0000 0
+    ),
+    linear-gradient(
+      90deg,
+      #eee calc(50% - var(--window-w)),
+      #0000 0 calc(50% + var(--window-w)),
+      #eee 0
+    ),
+    linear-gradient(
+      #eee calc(50% - var(--window-h)),
+      #0000 0 calc(50% + var(--window-h)),
+      #eee 0
+    );
+}
+
+.hab .rect:nth-child(8)::before {
+  background:
+    linear-gradient(
+      0deg,
       #0000 calc(50% + var(--window-h) - 1px),
       var(--color-accent) 0 calc(50% + var(--window-h) + 6px),
       #0000 0
