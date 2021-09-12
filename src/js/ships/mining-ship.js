@@ -10,7 +10,7 @@ const info = {
   populationRequired: 1,
 };
 
-export default function MiningShip({ x, y, z, parent }) {
+export default function MiningShip({ x, y, z, bay }) {
   this.model = new Sidewinder({
     w: 40,
     d: 20,
@@ -21,8 +21,7 @@ export default function MiningShip({ x, y, z, parent }) {
     className: info.className,
   });
 
-  // TODO: Spawn only in empty bays? Not bay 0?
-  Ship.call(this, { x, y, z, parent, ...info });
+  Ship.call(this, { x, y, z, bay, ...info });
 
   // TODO: Swap the "3" for an ID number or string
   this.model.sides[2].element.dataset.text = this.id;

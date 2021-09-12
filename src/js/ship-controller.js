@@ -38,8 +38,7 @@ const ShipController = {
     }
 
     this.ships.forEach((ship) => {
-      if (ship.status === 0
-        && ship.bay.hangar.active) {
+      if (ship.status === 0 && ship.bay.hangar.active) {
         // Ready: undock when hanger is active and capacity for mats
         ship.undock();
         ship.status = 1;
@@ -94,9 +93,8 @@ const ShipController = {
       ship.update(elapsed, lights);
     });
 
-    // TODO: Remove debug code
     // $('.ship-controller').innerText = this.ships.map((ship) => `${ship.id}: `
-    //   + `${statusMap.get(ship.status)}${ship.status === 'mining' ? `(${Math.floor(ship.timer / 1000)})` : ''} `
+    //   + `${statusMap.get(ship.status)}${ship.status === 2 ? `(${Math.floor(ship.timer / 1000)})` : ''} `
     //   + `↯${Math.floor(ship.power)}`)
     //   .join('\n');
   },

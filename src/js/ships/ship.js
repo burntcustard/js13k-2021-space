@@ -10,7 +10,7 @@ const accelerationFactor = 1.5;
 const minSpeed = 1;
 const maxSpeed = 10;
 
-export default function Ship({ x, y, z, parent }) {
+export default function Ship({ x, y, z, bay }) {
   GameObject.call(this, { x, y, z });
   this.id = Ship.prototype.count++;
   this.status = 0;
@@ -21,9 +21,7 @@ export default function Ship({ x, y, z, parent }) {
   this.savedSpeed = 0;
   this.acceleration = 0.01;
 
-  // Docking got moved to the constructor and just puts the ship in bay 0 for now.
-  // It was done/is by the shipcontroller before, so... I might have broken things.
-  this.dock(parent.bays[0]);
+  if (bay) this.dock(bay);
 
   // TODO: Have a set amount that each ship can carry, allow for better ships
   // with a bigger cargo hold?

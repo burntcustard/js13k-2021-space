@@ -38,7 +38,6 @@ GameObject.prototype.update = function (elapsed, lights) {
  */
 GameObject.prototype.spawn = function () {
   this.model.spawn();
-  this.update();
 };
 
 /* eslint-disable no-nested-ternary */
@@ -182,7 +181,7 @@ GameObject.prototype.populateBuildBar = function () {
           x: this.x,
           y: this.y,
           z: this.z,
-          parent: gameObjectList.getSelectedList()[0],
+          bay: gameObjectList.getSelectedList()[0].bays[0],
         });
         newItem.spawn();
       });
