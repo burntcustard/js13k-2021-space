@@ -8,7 +8,7 @@
 }
 
 .hab .face::before {
-  background: #eee;
+  background: var(--color-primary);
 }
 
 /* TODO: One of these has to be flipped - it'd be easier in the JS? */

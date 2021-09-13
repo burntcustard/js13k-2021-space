@@ -15,7 +15,12 @@
   text-align: center;
 }
 
+.hover-zone {
+  width: 25px;
+}
+
 .menu {
+  font-size: 14px;
   writing-mode: vertical-lr;
 }
 
@@ -36,9 +41,10 @@
   margin: 0;
 }
 
-.ui-panel--left input {
+input {
   width: 100%;
   padding: 2px;
+  margin-top: -7px;
   margin-bottom: -2px;
   background: #333;
   box-shadow: 2px 2px inset #222;
@@ -78,4 +84,13 @@
   position: absolute;
   right: 8px;
   content: '✔';
+}
+
+.color {
+  display: flex;
+}
+
+.color input {
+  width: 30px;
+  height: 30px;
 }

@@ -82,6 +82,40 @@ gameObjectList.push(stationBlock);
 
 UI.populateBuildBar();
 
+// console.log(document.body.style.getPropertyValue('--color-primary'));
+
+// document.body.style.setProperty()
+
+// document.body.style.setProperty('--color-primary', event.target.value)
+
+const primary = $('.primary');
+primary.value = '#eeeeee';
+document.body.style.setProperty('--color-primary', primary.value);
+primary.addEventListener('input', () => {
+  document.body.style.setProperty('--color-primary', primary.value);
+});
+const secondary = $('.secondary');
+secondary.value = '#aaaaaa';
+document.body.style.setProperty('--color-secondary', secondary.value);
+secondary.addEventListener('input', () => {
+  document.body.style.setProperty('--color-secondary', secondary.value);
+});
+const accent = $('.accent');
+accent.value = '#ff6600';
+document.body.style.setProperty('--color-accent', accent.value);
+accent.addEventListener('input', () => {
+  document.body.style.setProperty('--color-accent', accent.value);
+});
+
+$('.c-reset').addEventListener('click', () => {
+  primary.value = '#eeeeee';
+  document.body.style.setProperty('--color-primary', primary.value);
+  secondary.value = '#aaaaaa';
+  document.body.style.setProperty('--color-secondary', secondary.value);
+  accent.value = '#ff6600';
+  document.body.style.setProperty('--color-accent', accent.value);
+});
+
 let tenthSecondCounter = 0;
 
 function main(timestamp) {

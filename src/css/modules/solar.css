@@ -12,7 +12,7 @@
 }
 
 .solar .panel::before {
-  border: 2px solid #fff;
+  border: 2px solid var(--color-primary);
   background:
     repeating-linear-gradient(
       to top,
