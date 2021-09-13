@@ -106,6 +106,7 @@ function main(timestamp) {
     camera.rx = Math.sin(timestamp / 10000) * PI_8 + PI_2;
     camera.rz -= 0.002;
     camera.setTransform();
+    camera.followers.forEach((f) => f.updateTransform(camera));
   }
 
   camera.update(elapsed);
