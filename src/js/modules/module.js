@@ -37,8 +37,10 @@ Module.prototype.update = function (elapsed, lights) {
 Module.prototype.updatePower = function (elapsed) {
   if (this.power < 0) {
     // Grab some power from the resources banks
-    resources.power.current += this.power * (elapsed / 1000);
-    resources.power.current = Math.max(resources.power.current, 0);
+    resources.power.current = Math.max(
+      resources.power.current + this.power * (elapsed / 1000),
+      0,
+    );
 
     // You used all the power and now this module is shutting down!
     if (resources.power.current === 0) {
@@ -47,9 +49,11 @@ Module.prototype.updatePower = function (elapsed) {
   }
 
   if (this.power > 0) {
-    // Add some power to the resources banks
-    resources.power.current += this.power * (elapsed / 1000);
-    resources.power.current = Math.min(resources.power.current, resources.power.capacity);
+    // Add some power from the resources banks
+    resources.power.current = Math.min(
+      resources.power.current + this.power * (elapsed / 1000),
+      resources.power.capacity,
+    );
   }
 
   if (this.mats > 0) {

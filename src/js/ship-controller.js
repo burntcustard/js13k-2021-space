@@ -33,10 +33,10 @@ const ShipController = {
       const bay = emptyBays.pop();
       const ship = this.dockingQueue.pop();
       ship.dock(bay);
-      window.setTimeout(() => {
+      setTimeout(() => {
         ship.status = 5;
         ship.destination = bay.hangar.arrivalPoint;
-      }, 3000);
+      }, 5000);
     }
 
     this.ships.forEach((ship) => {

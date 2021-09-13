@@ -101,7 +101,7 @@ UI.update = () => {
   const num = resources.power.gen - resources.power.use;
   powerNum.innerText = (num <= 0 ? '' : '+') + num;
   powerNum.classList.toggle('neg', num < 0);
-  powerCap.innerText = `${Math.floor(resources.power.current)} /  ${resources.power.capacity}`;
+  powerCap.innerText = `${Math.round(resources.power.current)} /  ${resources.power.capacity}`;
 };
 
 UI.refreshUnlocks = () => {

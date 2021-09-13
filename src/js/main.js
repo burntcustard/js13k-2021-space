@@ -82,16 +82,16 @@ gameObjectList.push(stationBlock);
 
 UI.populateBuildBar();
 
-let halfSecondCounter = 0;
+let tenthSecondCounter = 0;
 
 function main(timestamp) {
   window.requestAnimationFrame(main);
 
   if (previousTimestamp === undefined) previousTimestamp = timestamp;
   const elapsed = timestamp - previousTimestamp;
-  halfSecondCounter += elapsed;
-  if (halfSecondCounter > 500) {
-    halfSecondCounter = 0;
+  tenthSecondCounter += elapsed;
+  if (tenthSecondCounter > 100) {
+    tenthSecondCounter = 0;
   }
 
   doKeyboardInput();
@@ -114,8 +114,8 @@ function main(timestamp) {
   previousTimestamp = timestamp;
   // perfDebug.innerText = `Elapsed: ${elapsed.toFixed(2)} FPS: ${(1000 / elapsed).toFixed()}`;
 
-  // Do some stuff only every half a second
-  if (!halfSecondCounter) {
+  // Do some stuff 10x a second
+  if (!tenthSecondCounter) {
     const selectedObjects = gameObjectList.getSelectedList();
 
     if (selectedObjects.length === 1) {
