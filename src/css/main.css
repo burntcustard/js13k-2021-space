@@ -4,7 +4,7 @@
 @import 'face';
 @import 'face--ao';
 @import 'face--build';
-@import 'face--debug';
+/* @import 'face--debug'; */
 @import 'modules/module';
 @import 'modules/block';
 @import 'modules/block-multi';
@@ -24,7 +24,7 @@
 @import 'ui/btns';
 @import 'ui/save';
 @import 'camera';
-@import 'debug';
+/* @import 'debug'; */
 @import 'ship';
 @import 'object';
 @import 'planet';

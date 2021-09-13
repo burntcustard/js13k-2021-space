@@ -7,10 +7,10 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  color: white;
+  color: #000;
 }
 
-.splash h1 {
+h1 {
   margin: 0;
   font-size: 120px;
 }

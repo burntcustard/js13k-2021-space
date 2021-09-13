@@ -3,7 +3,7 @@
 }
 
 .face.ao-outer::after {
-  box-shadow: 0 0 7px 3px #0006;
+  box-shadow: 0 0 7px 3px #0005;
 
   /* Make sure the shadow doesn't go the wrong side of the other shape face */
   transform: translateZ(-0.5px);
