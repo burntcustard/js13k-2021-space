@@ -109,10 +109,10 @@ export default function initSaveAndLoad() {
   });
 
   $('.export').addEventListener('click', () => {
-    $('.export-text').value = stringify();
+    $('.export.text').value = stringify();
   });
 
   $('.import').addEventListener('click', () => {
-    load($('.import-text').value);
+    load($('.import.text').value);
   });
 }
