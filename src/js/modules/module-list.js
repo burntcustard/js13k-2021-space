@@ -16,8 +16,8 @@ const moduleList = [
   Solar,
   Hab,
   Hangar,
-  Ring,
   StorePower,
+  Ring,
 ];
 
 moduleList.get = function (tag) {
