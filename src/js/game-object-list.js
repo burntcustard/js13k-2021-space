@@ -12,19 +12,27 @@ gameObjectList.getSelectedList = function () {
 
 gameObjectList.killSelected = function () {
   // Delete if it's not the starting block
-  this.find((object, index) => index > 0 && object.selected)?.kill();
+  // this.find((object, index) => index > 0 && object.selected)?.kill();
+
+  // Above wasn't deleting multiple items when multiple things were selected
+  for (let i = gameObjectList.length - 1; i; --i) {
+    if (gameObjectList[i].selected) {
+      gameObjectList[i].kill();
+    }
+  }
+
   // Deselect so the starting block doesn't keep its highlight
   this.deselectAll();
 };
 
-// TODO: Remove because the upgrade UI doesn't let you upgrade >1 thing at once?
-gameObjectList.upgradeSelected = function () {
-  for (let i = this.length - 1; i > 0; i--) {
-    if (this[i].selected && this[i].upgrade && this[i].level < this[i].maxLevel) {
-      this[i].upgrade();
-    }
-  }
-};
+// // TODO: Remove because the upgrade UI doesn't let you upgrade >1 thing at once?
+// gameObjectList.upgradeSelected = function () {
+//   for (let i = this.length - 1; i > 0; i--) {
+//     if (this[i].selected && this[i].upgrade && this[i].level < this[i].maxLevel) {
+//       this[i].upgrade();
+//     }
+//   }
+// };
 
 // Deslect any selected game objects
 gameObjectList.deselectAll = function () {
