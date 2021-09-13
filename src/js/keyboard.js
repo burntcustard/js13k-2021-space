@@ -40,24 +40,22 @@ export function initKeyboard() {
       SceneController.start();
     }
 
-    const key = event.key.toLowerCase();
-    keyDown.add(key);
-    if (key === 'r') Build.rotate();
-    if (key === 'delete') deleteSelected();
-    if (key === 'u') gameObjectList.upgradeSelected(); // TODO: Remove?
-    if (key === 'escape') deselectAll();
+    keyDown.add(event.code);
+    if (event.key.toLowerCase() === 'r') Build.rotate();
+    if (event.key.toLowerCase() === 'delete') deleteSelected();
+    if (event.key.toLowerCase() === 'escape') deselectAll();
   });
 
   document.addEventListener('keyup', (event) => {
-    keyDown.delete(event.key.toLowerCase());
+    keyDown.delete(event.code);
   });
 }
 
 export function doKeyboardInput() {
-  if (keyDown.has('w')) camera.moveY += 1;
-  if (keyDown.has('a')) camera.moveX -= 1;
-  if (keyDown.has('s')) camera.moveY -= 1;
-  if (keyDown.has('d')) camera.moveX += 1;
-  if (keyDown.has('z')) camera.dZoom += 1;
-  if (keyDown.has('x')) camera.dZoom -= 1;
+  if (keyDown.has('KeyW')) camera.moveY += 1;
+  if (keyDown.has('KeyA')) camera.moveX -= 1;
+  if (keyDown.has('KeyS')) camera.moveY -= 1;
+  if (keyDown.has('KeyD')) camera.moveX += 1;
+  if (keyDown.has('KeyZ')) camera.dZoom += 1;
+  if (keyDown.has('KeyX')) camera.dZoom -= 1;
 }
