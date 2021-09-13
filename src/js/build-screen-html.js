@@ -14,7 +14,7 @@ function createBuildScreenHTML(Item) {
       <div>${unlocked ? `${noEco ? '<b>' : ''}M:${Item.cost}${noEco ? '</b>' : ''}${popNeeded ? ` | ${morePopNeeded ? '<b>' : ''}Pop Needed:${popNeeded}${morePopNeeded ? '</b>' : ''}` : Item.population ? ` | Pop:${Item.population}` : ''}${Item.power < 0 ? ` | Use ↯${-Item.power}` : Item.power > 0 ? ` | Gen ↯${Item.power}` : ''}` : ''}</div>
     </div>
     <div>
-      ${!morePopNeeded ? (unlocked ? (noEco ? 'INSUFFICIENT RESOURCES' : Item.desc) : `-  ${Item.unlockText}`) : 'MORE POPULATION REQUIRED'}
+      ${!morePopNeeded ? (unlocked ? (noEco ? 'INSUFFICIENT RESOURCES' : Item.desc) : `-  ${Item.unlockText}`) : 'INSUFFICIENT POPULATION'}
     </div>
   `;
 }

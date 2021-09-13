@@ -5,7 +5,7 @@ import Vec3 from './vec3';
 const MIN_MINING_TIME = 10000;
 const MAX_MINING_TIME = 30000;
 const SHIP_POWER_PER_S = 1;
-const SHIP_CHARGE_PER_S = 2;
+const SHIP_CHARGE_PER_S = 3;
 const SHIP_POWER_CAPACITY = (MAX_MINING_TIME / 1000) * SHIP_POWER_PER_S;
 
 // TODO: Remove debug code
@@ -33,8 +33,10 @@ const ShipController = {
       const bay = emptyBays.pop();
       const ship = this.dockingQueue.pop();
       ship.dock(bay);
-      ship.status = 5;
-      ship.destination = bay.hangar.arrivalPoint;
+      window.setTimeout(() => {
+        ship.status = 5;
+        ship.destination = bay.hangar.arrivalPoint;
+      }, 3000);
     }
 
     this.ships.forEach((ship) => {
